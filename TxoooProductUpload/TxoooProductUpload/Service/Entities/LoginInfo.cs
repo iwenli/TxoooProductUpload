@@ -10,6 +10,7 @@ namespace TxoooProductUpload.Service.Entities
     /// </summary>
     class LoginInfo
     {
+
         /// <summary>
         /// 获得或设置当前的显示名
         /// </summary>
@@ -24,5 +25,12 @@ namespace TxoooProductUpload.Service.Entities
         /// 登录密码
         /// </summary>
         public string Password { get; set; }
+    }
+
+    class UserInfo {
+
+        public int user_id { get; set; }
+        public string nick_name { get; set; }
+        public string head_pic { get; set; }
     }
 }

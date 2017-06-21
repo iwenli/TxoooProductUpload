@@ -1,10 +1,15 @@
-﻿using System;
+﻿using FSLib.Network.Http;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TxoooProductUpload.Network;
 using TxoooProductUpload.Service.Entities;
+using TxoooProductUpload.Service.Entities.Web;
 
 namespace TxoooProductUpload.Service
 {
@@ -82,7 +87,7 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="verifyPoints"></param>
         /// <returns></returns>
-        public async Task<Exception> LoginAsync(string username, string password, List<Point> verifyPoints)
+        public async Task<Exception> LoginAsync(string username, string password)
         {
             IsLogined = false;
             LoginInfo = new LoginInfo()
@@ -90,59 +95,65 @@ namespace TxoooProductUpload.Service
                 UserName = username,
                 Password = password
             };
-            var loginData = new Dictionary<string, string>()
+            var loginData = new 
             {
-                ["loginUserDTO.user_name"] = LoginInfo.UserName,
-                ["userDTO.password"] = LoginInfo.Password,
-                ["randCode"] = verifyPoints.Select(s => s.X + "," + s.Y).JoinAsString(",")
+                userName = LoginInfo.UserName,
+                passWord= LoginInfo.Password
             };
-            var loginCheck = NetClient.Create<WebResponseResult<LoginAsyncResult>>(
-                                             HttpMethod.Post,
-                                            "https://kyfw.12306.cn/otn/login/loginAysnSuggest",
-                                            "https://kyfw.12306.cn/otn/login/init",
-                                            loginData
-                );
-            await loginCheck.SendTask();
+            //var loginCheck = NetClient.Create<WebResponseResult<LoginAsyncResult>>(
+            //                                 HttpMethod.Post,
+            //                                "https://passport.7518.cn/Txooo/SalesV2/Passport/Ajax/SalesAjax.ajax/LoginV2",
+            //                                "https://0.u.7518.cn",
+            //                                loginData
+            //    );
+            var loginCheck = NetClient.Create<string>(
+                                            HttpMethod.Post,
+                                           "https://passport.7518.cn/Txooo/SalesV2/Passport/Ajax/SalesAjax.ajax/LoginV2",
+                                           "https://0.u.7518.cn",
+                                           loginData
+               );
+
+            //商户api
+            //登录 https://testmch.7518.cn/Txooo/Sales/Mch/Passport/Ajax/MchAjax.ajax/LoginV2   u p
+            //获取token https://testmch.7518.cn/open/Passport/Login   u p
+
+            //var loginCheck = NetClient.Create<string>(
+            //                                HttpMethod.Post,
+            //                               "https://testmch.7518.cn/Txooo/Sales/Mch/Passport/Ajax/MchAjax.ajax/LoginV2",
+            //                               "https://testmch.7518.cn/",
+            //                               loginData
+            //   );
+            await loginCheck.SendAsync();
             if (!loginCheck.IsValid())
             {
                 return loginCheck.Exception ?? new Exception("未能提交请求");
             }
-
-            if (!loginCheck.Result.Data.IsSuceess)
+            var loginResult = JsonConvert.DeserializeObject<LoginAsyncResult>(loginCheck.Result.Replace("(", "").Replace(")", ""));
+            if (!loginResult.IsSuceess)
             {
-                return new Exception(loginCheck.Result.GetErrorMessage());
+                return new Exception(loginResult.msg);
             }
-
-            //登录成功
-            var postLogin = NetClient.Create<string>(
-                                                     HttpMethod.Post,
-                                                    "https://kyfw.12306.cn/otn/login/userLogin",
-                                                    "https://kyfw.12306.cn/otn/login/init"
-                );
-            await postLogin.SendTask(); //这里的返回值我们不care ....
 
             //登录好了。等等。。我们好像想拿到显示的中文名？
             //所以多加一个请求吧。
             var realNameCtx = NetClient.Create<string>(
-                                                     HttpMethod.Get,
-                                                    "https://kyfw.12306.cn/otn/index/initMy12306",
-                                                    "https://kyfw.12306.cn/otn/login/init"
+                                                     HttpMethod.Post,
+                                                    "https://0.u.7518.cn/Txooo/SalesV2/Member/Ajax/UserAjax.ajax/GetUserInfo",
+                                                    "https://0.u.7518.cn/Member/team.html"
                 );
-            await realNameCtx.SendTask();
-
+            await realNameCtx.SendAsync();
             if (realNameCtx.IsValid())
             {
                 //匹配出名字信息
-                var realMatch = Regex.Match(realNameCtx.Result, @"user_name\s*=\s*['""]([^'""]+)['""]", RegexOptions.Singleline);
-                if (realMatch.Success)
+                if (realNameCtx.Result != "nouser")
                 {
-                    LoginInfo.DisplayName = realMatch.GetGroupValue(1).DecodeFromJsExpression();
+                    LoginInfo.DisplayName = JsonConvert.DeserializeObject<List<UserInfo>>(realNameCtx.Result.Replace("\r\n",""))[0].nick_name;
                 }
             }
             //这里失败了我们就随便起个名字，嗯。
             if (LoginInfo.DisplayName.IsNullOrEmpty())
                 LoginInfo.DisplayName = "路人甲";
-
+            
 
 
             IsLogined = true;

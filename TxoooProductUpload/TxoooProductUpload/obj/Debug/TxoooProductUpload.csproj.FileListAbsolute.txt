@@ -1,0 +1,15 @@
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\TxoooProductUpload.exe.config
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.Properties.Resources.resources
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.csproj.GenerateResource.Cache
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\TxoooProductUpload.exe
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\TxoooProductUpload.pdb
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\FSLib.Extension.dll
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\FSLib.Network.dll
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\Newtonsoft.Json.dll
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\FSLib.Extension.xml
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\FSLib.Network.xml
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\Newtonsoft.Json.xml
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.exe
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.pdb
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.UI.Main.Login.resources
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.UI.Main.MainForm.resources
