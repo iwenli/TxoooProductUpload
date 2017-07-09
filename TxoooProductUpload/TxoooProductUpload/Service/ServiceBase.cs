@@ -23,7 +23,7 @@ namespace TxoooProductUpload.Service
         public ServiceContext ServiceContext { get; private set; }
 
         /// <summary>
-        /// 获得当前关联的12306会话
+        /// 获得当前关联的会话
         /// </summary>
         public Session Session { get { return ServiceContext.Session; } }
 

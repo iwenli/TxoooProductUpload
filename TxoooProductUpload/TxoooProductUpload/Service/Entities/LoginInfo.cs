@@ -25,12 +25,25 @@ namespace TxoooProductUpload.Service.Entities
         /// 登录密码
         /// </summary>
         public string Password { get; set; }
-    }
 
-    class UserInfo {
+        /// <summary>
+        /// 登陆者商户信息
+        /// </summary>
+        public MchInfo MchInfo { get; set; }
+}
 
-        public int user_id { get; set; }
-        public string nick_name { get; set; }
-        public string head_pic { get; set; }
+    class MchInfo
+    {
+        public int UserId { get; set; }
+        public int MchId { get; set; }
+        public string NickName { get; set; }
+        public string HeaPic { get; set; }
+        public int MchClass { get; set; }
+        public string ComName { get; set; }
+        public string MchLogo { get; set; }
+        public int FreeCheckDay { get; set; }
+        public string NewMsg { get; set; }
+        public int TemplateOpen { get; set; }
+        public int AgentId { get; set; }
     }
 }

@@ -11,9 +11,11 @@ using System.Windows.Forms;
 namespace TxoooProductUpload.UI.Main
 {
     using System.Diagnostics;
+    using System.Runtime.InteropServices;
     using System.Text.RegularExpressions;
     using TxoooProductUpload.Service;
     using TxoooProductUpload.Service.Entities;
+    using TxoooProductUpload.Common;
 
     public partial class MainForm : Form
     {
@@ -33,19 +35,30 @@ namespace TxoooProductUpload.UI.Main
 
         #region 状态栏和工具栏事件
 
+        /// <summary>
+        /// 初始化工具栏
+        /// </summary>
         void InitToolbar()
         {
             tsExit.Click += (s, e) => Close();
-            tsLogin.Enabled = !(tsLogout.Enabled = _context.Session.IsLogined);
+            tsLogin.Enabled = !(tsImgManage.Enabled =
+               tsDataPack.Enabled =
+               btnOneKeyOk.Enabled = txtOneKeyUrl.Enabled =
+               tsLogout.Enabled = _context.Session.IsLogined);
             tsLogin.Click += (s, e) => new Login(_context).ShowDialog(this);
             tsLogout.Click += (s, e) => _context.Session.Logout();
+            this.txtOneKeyUrl.SetHintText("请输入天猫、淘宝、京东、阿里巴巴等商品链接");
             //捕捉登录状态变化事件，在登录状态发生变化的时候重设登录状态
             _context.Session.IsLoginedChanged += (s, e) =>
             {
-                tsLogin.Enabled = !(tsLogout.Enabled = _context.Session.IsLogined);
+                tsLogin.Enabled = !(tsImgManage.Enabled =
+                tsDataPack.Enabled =
+                btnOneKeyOk.Enabled = txtOneKeyUrl.Enabled =
+                tsLogout.Enabled = _context.Session.IsLogined);
                 tsLogin.Text = _context.Session.IsLogined ? string.Format("已登录为【{0} ({1})】", _context.Session.LoginInfo.DisplayName, _context.Session.LoginInfo.UserName) : "登录(&I)";
             };
-            ts1688.Click += (s, e) => ProcessProduct();
+            btnOneKeyOk.Click += (s, e) => ProcessProduct();
+            txtOneKeyUrl.Click += (s, e) => ClipboardToTextBox();
         }
 
         /// <summary>
@@ -82,10 +95,10 @@ namespace TxoooProductUpload.UI.Main
             stProgress.Visible = true;
             stProgress.Maximum = maxItemsCount > 0 ? maxItemsCount : 100;
             stProgress.Style = maxItemsCount > 0 ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
-            //if (disableForm)
-            //{
-            //    btnQueryTicket.Enabled = false;
-            //}
+            if (disableForm)
+            {
+                btnOneKeyOk.Enabled = false;
+            }
         }
 
         /// <summary>
@@ -95,30 +108,12 @@ namespace TxoooProductUpload.UI.Main
         {
             stStatus.Text = "就绪.";
             stProgress.Visible = false;
-            //btnQueryTicket.Enabled = true;
+            btnOneKeyOk.Enabled = true;
         }
 
         #endregion
 
-        #region 查询参数编辑
-
-        /// <summary>
-        /// 初始化查询参数编辑
-        /// </summary>
-        void InitQueryParamEdit()
-        {
-            //dtDate.MinDate = DateTime.Now.Date;
-            //dtDate.MaxDate = DateTime.Now.Date.AddDays(59);
-            //dtDate.Value = DateTime.Now.AddDays(1);
-            //dtDate.MaxDate = DateTime.Now.Date.AddDays(_context.DataService.MaxSellDays);
-            //dtDate.Value = DateTime.Now.Date.AddDays(_context.DataService.DefaultDayOffset);
-
-            //var allstationText = _context.StationDataService.AllStations.Select(s => (object)(s.FirstLetter.PadRight(5, ' ') + s.Name + "\t" + s.Code)).ToArray();
-            //cbFrom.Items.AddRange(allstationText);
-            //cbTo.Items.AddRange(allstationText);
-        }
-
-        #endregion
+        
 
         #region 服务接入
 
@@ -130,7 +125,7 @@ namespace TxoooProductUpload.UI.Main
         async Task InitServiceContext()
         {
             _context = new ServiceContext();
-            BeginOperation("正在初始化站点数据...", 0, true);
+            BeginOperation("正在初始化配置信息...", 0, true);
             await Task.Delay(1000);
             //await _context.StationDataService.LoadStationDatasAsync();
             EndOperation();
@@ -138,89 +133,27 @@ namespace TxoooProductUpload.UI.Main
 
         #endregion
 
-        #region 查票
-
-         
-        //private void DgvTickets_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-        //{
-        //    if (_result == null)
-        //        return;
-
-
-        //    var index = e.ColumnIndex;
-        //    var data = _result[e.RowIndex];
-        //    if (index == 1)
-        //    {
-        //        //发站
-        //        if (data.IsFirstStation)
-        //        {
-        //            e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
-        //        }
-        //    }
-        //    else if (index == 3)
-        //    {
-        //        //到站
-        //        if (data.IsLastStation)
-        //        {
-        //            e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
-        //        }
-        //    }
-        //    else if (index >= 6 && index <= 16)
-        //    {
-        //        var text = e.Value.ToString();
-        //        if (text == "" || text == "无" || text == "--" || text == "*")
-        //        {
-        //            e.CellStyle.ForeColor = Color.Gray;
-        //        }
-        //        else if (text == "有" || char.IsDigit(text[0]))
-        //        {
-        //            e.CellStyle.ForeColor = Color.Blue;
-        //            e.CellStyle.Font = new Font(e.CellStyle.Font, FontStyle.Bold);
-        //        }
-        //    }
-        //}
-
-
-        ///// <summary>
-        ///// 从选择的字符串获得电报码
-        ///// </summary>
-        ///// <param name="str"></param>
-        ///// <returns></returns>
-        //bool GetTeleCode(string str, out string name, out string code)
-        //{
-        //    name = code = null;
-
-        //    if (str.IsNullOrEmpty()) return false;
-
-        //    var args = Regex.Split(str, @"\s+");
-        //    if (args.Length != 3)
-        //        return false;
-
-        //    name = args[1];
-        //    code = args[2];
-        //    return true;
-        //}
-
+        #region 一键上传
         ProductResult _result;
-
-
         async Task ProcessProduct()
         {
-            string productUrl = "https://detail.1688.com/offer/552578137902.html";
-
+            string productUrl = txtOneKeyUrl.Text.Trim();
+            productUrl = "https://detail.1688.com/offer/552578137902.html";
+            //"https://item.taobao.com/item.htm?id=547040661236";
+            //"https://detail.tmall.com/item.htm?id=528221266420";
             if (string.IsNullOrEmpty(productUrl))
             {
                 MessageBox.Show(this, "哎呀，没有商品链接，逗我呢 o(╯□╰)o", "哎呀", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                txtOneKeyUrl.Focus();
                 return;
             }
 
             _result = null;
             Exception exception = null;
-
-            BeginOperation("正在处理...", 0);
+            BeginOperation("正在处理...", 0, true);
             try
             {
-                _result = await _context.Ali1688Service.ProcessProduct(productUrl);
+                _result = await _context.UrlConvertProductService.ProcessProduct(productUrl);
             }
             catch (Exception ex)
             {
@@ -237,10 +170,32 @@ namespace TxoooProductUpload.UI.Main
             }
             else
             {
-                stStatus.Text = "查询出错，错误信息：" + exception.Message;
+                stStatus.Text = "处理出错，错误信息：" + exception.Message;
             }
         }
 
+        #endregion
+
+        #region 单击文本框将剪切板内容复制到文本框
+        /// <summary>
+        /// 单击文本框将剪切板内容复制到文本框
+        /// </summary>
+        void ClipboardToTextBox()
+        {
+            Regex urlReg = new Regex("item.taobao.com|detail.tmall.com|detail.1688.com|item.jd.com");//url
+            if (string.IsNullOrEmpty(txtOneKeyUrl.Text))
+            {
+                string getTxt = Clipboard.GetText();
+                if (urlReg.IsMatch(getTxt))
+                {
+                    txtOneKeyUrl.Text = getTxt;
+                }
+            }
+            else
+            {
+                txtOneKeyUrl.SelectAll();
+            }
+        }
         #endregion
     }
 }

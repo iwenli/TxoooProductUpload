@@ -10,6 +10,7 @@ using System.Windows.Forms;
 namespace TxoooProductUpload.UI
 {
     using Service;
+    using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
     /// <summary>
@@ -34,6 +35,7 @@ namespace TxoooProductUpload.UI
         {
 
         }
+
 
     }
 }

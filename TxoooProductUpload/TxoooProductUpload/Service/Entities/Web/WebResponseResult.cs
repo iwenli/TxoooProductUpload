@@ -16,17 +16,22 @@ namespace TxoooProductUpload.Service.Entities.Web
         /// <summary>
         /// 状态
         /// </summary>
-        public bool Status { get; private set; }
+        public bool success { get; private set; }
 
         /// <summary>
         /// 数据
         /// </summary>
-        public T Data { get; private set; }
+        public T[] Data { get; private set; }
 
         /// <summary>
         /// 响应的错误信息
         /// </summary>
-        public string[] Messages { get; private set; }
+        public string msg { get; private set; }
+
+        /// <summary>
+        /// api类型
+        /// </summary>
+        public string type { get; private set; }
 
         /// <summary>
         /// 获得响应的错误信息
@@ -34,7 +39,7 @@ namespace TxoooProductUpload.Service.Entities.Web
         /// <returns></returns>
         public string GetErrorMessage()
         {
-            return Messages == null || Messages.Length == 0 ? "" : Messages.JoinAsString("; ");
+            return msg == null || msg.Length == 0 ? "" : msg.JoinAsString("; ");
         }
     }
 }

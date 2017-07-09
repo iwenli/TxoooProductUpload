@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace TxoooProductUpload.UI.Main
 {
+    using TxoooProductUpload.Common;
     using TxoooProductUpload.Service;
     partial class Login : Form
     {
@@ -19,10 +20,12 @@ namespace TxoooProductUpload.UI.Main
         {
             _context = context;
             InitializeComponent();
+            this.txtUserName.SetHintText("请输入注册手机号");
         }
 
         private async void btnOk_Click(object sender, EventArgs e)
         {
+            this.btnOk.Enabled = false;
             var username = txtUserName.Text;
             var password = txtPassword.Text;
 
@@ -30,15 +33,17 @@ namespace TxoooProductUpload.UI.Main
             {
                 MessageBox.Show("输入用户名和密码哦！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
-            } 
-
-            var result = await _context.Session.LoginAsync(username, password);
+            }
+            this.btnOk.Text = "正在登陆.";
+            var result = await _context.Session.LoginAsync(username, password.MD5().ToLower());
             if (result == null)
             {
                 Close();
                 return;
             }
+            this.btnOk.Text = "登录(&O)"; 
             MessageBox.Show("登录失败：" + result.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            this.btnOk.Enabled = true;
         }
     }
 }

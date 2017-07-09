@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using TxoooProductUpload.Common;
 using TxoooProductUpload.Network;
 using TxoooProductUpload.Service.Entities;
 using TxoooProductUpload.Service.Entities.Web;
@@ -24,14 +25,12 @@ namespace TxoooProductUpload.Service
         {
             NetClient = new NetClient();
         }
-
         /// <summary>
         /// 获得当前使用的网络对象，每个网络对象都是会话关联的。
         /// </summary>
         public NetClient NetClient { get; private set; }
 
         LoginInfo _loginInfo;
-
         /// <summary>
         /// 获得当前的登录信息
         /// </summary>
@@ -95,40 +94,26 @@ namespace TxoooProductUpload.Service
                 UserName = username,
                 Password = password
             };
-            var loginData = new 
+            var loginData = new
             {
-                userName = LoginInfo.UserName,
-                passWord= LoginInfo.Password
+                username = LoginInfo.UserName,
+                password = LoginInfo.Password
             };
-            //var loginCheck = NetClient.Create<WebResponseResult<LoginAsyncResult>>(
-            //                                 HttpMethod.Post,
-            //                                "https://passport.7518.cn/Txooo/SalesV2/Passport/Ajax/SalesAjax.ajax/LoginV2",
-            //                                "https://0.u.7518.cn",
-            //                                loginData
-            //    );
-            var loginCheck = NetClient.Create<string>(
+
+            var loginCheck = NetClient.Create<LoginAsyncResult>(
                                             HttpMethod.Post,
-                                           "https://passport.7518.cn/Txooo/SalesV2/Passport/Ajax/SalesAjax.ajax/LoginV2",
-                                           "https://0.u.7518.cn",
+                                           ApiList.Login,
+                                           "https://mch.7518.cn/",
                                            loginData
                );
 
-            //商户api
-            //登录 https://testmch.7518.cn/Txooo/Sales/Mch/Passport/Ajax/MchAjax.ajax/LoginV2   u p
-            //获取token https://testmch.7518.cn/open/Passport/Login   u p
 
-            //var loginCheck = NetClient.Create<string>(
-            //                                HttpMethod.Post,
-            //                               "https://testmch.7518.cn/Txooo/Sales/Mch/Passport/Ajax/MchAjax.ajax/LoginV2",
-            //                               "https://testmch.7518.cn/",
-            //                               loginData
-            //   );
             await loginCheck.SendAsync();
             if (!loginCheck.IsValid())
             {
                 return loginCheck.Exception ?? new Exception("未能提交请求");
             }
-            var loginResult = JsonConvert.DeserializeObject<LoginAsyncResult>(loginCheck.Result.Replace("(", "").Replace(")", ""));
+            var loginResult = loginCheck.Result;
             if (!loginResult.IsSuceess)
             {
                 return new Exception(loginResult.msg);
@@ -136,25 +121,25 @@ namespace TxoooProductUpload.Service
 
             //登录好了。等等。。我们好像想拿到显示的中文名？
             //所以多加一个请求吧。
-            var realNameCtx = NetClient.Create<string>(
+            var realNameCtx = NetClient.Create<WebResponseResult<MchInfo>>(
                                                      HttpMethod.Post,
-                                                    "https://0.u.7518.cn/Txooo/SalesV2/Member/Ajax/UserAjax.ajax/GetUserInfo",
-                                                    "https://0.u.7518.cn/Member/team.html"
+                                                    ApiList.GetMchStateInfo,
+                                                    "https://0.u.7518.cn/",
+                                                    loginResult
                 );
             await realNameCtx.SendAsync();
             if (realNameCtx.IsValid())
             {
                 //匹配出名字信息
-                if (realNameCtx.Result != "nouser")
+                if (realNameCtx.Result.success && realNameCtx.Result.Data.Length > 0)
                 {
-                    LoginInfo.DisplayName = JsonConvert.DeserializeObject<List<UserInfo>>(realNameCtx.Result.Replace("\r\n",""))[0].nick_name;
+                    _loginInfo.MchInfo = realNameCtx.Result.Data[0];
+                    LoginInfo.DisplayName = _loginInfo.MchInfo.ComName + "-" + _loginInfo.MchInfo.NickName;
                 }
             }
             //这里失败了我们就随便起个名字，嗯。
             if (LoginInfo.DisplayName.IsNullOrEmpty())
                 LoginInfo.DisplayName = "路人甲";
-            
-
 
             IsLogined = true;
 

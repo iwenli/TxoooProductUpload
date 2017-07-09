@@ -13,7 +13,7 @@ namespace TxoooProductUpload.Service
         public ServiceContext()
         {
             Session = new Session();
-            Ali1688Service = new Ali1688Service(this);
+            UrlConvertProductService = new UrlConvertProductService();
             //OrderQueueService = new OrderQueueService(this);
             //OrderSubmitService = new OrderSubmitService(this);
             //PassengerService = new PassengerService(this);
@@ -29,9 +29,9 @@ namespace TxoooProductUpload.Service
         public Session Session { get; private set; }
 
         /// <summary>
-        /// 获得当前1688商品解析服务
+        /// 获得当前解析商品服务
         /// </summary>
-        public Ali1688Service Ali1688Service { get; private set; }
+        public UrlConvertProductService UrlConvertProductService { get; private set; }
 
 
         ///// <summary>
