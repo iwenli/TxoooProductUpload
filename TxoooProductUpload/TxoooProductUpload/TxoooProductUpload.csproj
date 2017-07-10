@@ -147,6 +147,8 @@
     <None Include="Resources\vc-marker.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="html\1688.html" />
+    <Content Include="html\m.1688.html" />
     <Content Include="html\taobao.html" />
     <Content Include="html\tmall.html" />
     <Content Include="pdf2word.ico" />

@@ -38,48 +38,43 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(33, 76);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(22, 51);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 18);
+            this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "密  码";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(33, 32);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(22, 21);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(62, 18);
+            this.label2.Size = new System.Drawing.Size(41, 12);
             this.label2.TabIndex = 0;
             this.label2.Text = "用户名";
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(104, 27);
-            this.txtUserName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtUserName.Location = new System.Drawing.Point(69, 18);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(301, 28);
+            this.txtUserName.Size = new System.Drawing.Size(202, 21);
             this.txtUserName.TabIndex = 0;
-            this.txtUserName.Text = "17712345678";
+            this.txtUserName.Text = "18310807769";
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(104, 68);
-            this.txtPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPassword.Location = new System.Drawing.Point(69, 45);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '❤';
-            this.txtPassword.Size = new System.Drawing.Size(301, 28);
+            this.txtPassword.Size = new System.Drawing.Size(202, 21);
             this.txtPassword.TabIndex = 1;
-            this.txtPassword.Text = "00";
+            this.txtPassword.Text = "000";
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(148, 128);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnOk.Location = new System.Drawing.Point(99, 85);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(153, 50);
+            this.btnOk.Size = new System.Drawing.Size(102, 33);
             this.btnOk.TabIndex = 2;
             this.btnOk.Text = "登录(&O)";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -88,16 +83,15 @@
             // Login
             // 
             this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(447, 195);
+            this.ClientSize = new System.Drawing.Size(298, 130);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUserName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Login";

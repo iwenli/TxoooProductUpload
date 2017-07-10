@@ -13,7 +13,7 @@ namespace TxoooProductUpload.Service
         public ServiceContext()
         {
             Session = new Session();
-            UrlConvertProductService = new UrlConvertProductService();
+            UrlConvertProductService = new UrlConvertProductService(this);
             //OrderQueueService = new OrderQueueService(this);
             //OrderSubmitService = new OrderSubmitService(this);
             //PassengerService = new PassengerService(this);

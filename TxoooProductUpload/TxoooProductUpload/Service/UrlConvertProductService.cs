@@ -11,24 +11,31 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Forms;
 using TxoooProductUpload.Common;
+using TxoooProductUpload.Network;
 using TxoooProductUpload.Service.Entities;
 
 namespace TxoooProductUpload.Service
 {
-    class UrlConvertProductService
+    class UrlConvertProductService : ServiceBase
     {
-       
-       /// <summary>
-       /// 处理URL商品
-       /// </summary>
-       /// <param name="productUrl">京东、淘宝、天猫、阿里巴巴商品详情页url</param>
-       /// <returns></returns>
+        public UrlConvertProductService(ServiceContext context) : base(context)
+        {
+        }
+
+        /// <summary>
+        /// 处理URL商品
+        /// </summary>
+        /// <param name="productUrl">京东、淘宝、天猫、阿里巴巴商品详情页url</param>
+        /// <returns></returns>
         public async Task<ProductResult> ProcessProduct(string productUrl)
         {
             Regex taobaoReg = new Regex("item.taobao.com");//淘宝url
             Regex tianmaoReg = new Regex("detail.tmall.com");//天猫
             Regex aliReg = new Regex("detail.1688.com");//阿里巴巴
             Regex jdReg = new Regex("item.jd.com");//京东
+
+            Regex mAliReg = new Regex("m.1688.com");//阿里巴巴手机
+
             if (taobaoReg.Match(productUrl).Success)
             {
                 return GetInfoByTaobaoUrl(productUrl);
@@ -38,6 +45,10 @@ namespace TxoooProductUpload.Service
                 return GetInfoByTmallUrl(productUrl);
             }
             else if (aliReg.Match(productUrl).Success)
+            {
+                return GetInfoByAli(productUrl.Replace("detail.1688.com", "m.1688.com"));
+            }
+            else if (mAliReg.Match(productUrl).Success)
             {
                 return GetInfoByAli(productUrl);
             }
@@ -88,7 +99,7 @@ namespace TxoooProductUpload.Service
             StringBuilder sbHml = new StringBuilder();
             WebBrowser browser = new WebBrowser();
             browser.Navigate(url);
-            var result =  WaitWebPageLoad(browser);
+            var result = WaitWebPageLoad(browser);
             while (!result)
             {
                 result = WaitWebPageLoad(browser);
@@ -99,32 +110,32 @@ namespace TxoooProductUpload.Service
             return sbHml;
         }
 
-        ///// <summary>
-        ///// 延迟系统时间，但系统又能同时能执行其它任务；
-        ///// </summary>
-        ///// <param name="Millisecond"></param>
-        //private static void Delay(int Millisecond) //延迟系统时间，但系统又能同时能执行其它任务；
-        //{
-        //    DateTime current = DateTime.Now;
-        //    while (current.AddMilliseconds(Millisecond) > DateTime.Now)
-        //    {
-        //        Application.DoEvents();//转让控制权            
-        //    }
-        //    return;
-        //}
+        /// <summary>
+        /// 延迟系统时间，但系统又能同时能执行其它任务；
+        /// </summary>
+        /// <param name="Millisecond"></param>
+        private static void Delay(int Millisecond) //延迟系统时间，但系统又能同时能执行其它任务；
+        {
+            DateTime current = DateTime.Now;
+            while (current.AddMilliseconds(Millisecond) > DateTime.Now)
+            {
+                Application.DoEvents();//转让控制权            
+            }
+            return;
+        }
 
         /// <summary>
         /// 判断页面是否加载完毕
         /// </summary>
         /// <param name="webBrowser1"></param>
         /// <returns></returns>
-        private  bool WaitWebPageLoad(WebBrowser webBrowser)
+        private bool WaitWebPageLoad(WebBrowser webBrowser)
         {
             int i = 0;
             string sUrl;
             while (true)
             {
-                Task.Delay(50);//系统延迟50毫秒，够少了吧！
+                Delay(50);//系统延迟50毫秒，够少了吧！
                 if (webBrowser.ReadyState == WebBrowserReadyState.Complete) //先判断是否发生完成事件。
                 {
                     if (!webBrowser.IsBusy) //再判断是浏览器是否繁忙                  
@@ -156,7 +167,7 @@ namespace TxoooProductUpload.Service
         /// </summary>
         ///<param name="TmallUrl">天猫地址</param>
         /// <returns>商品实体信息</returns>
-        private  ProductResult GetInfoByTmallUrl(string TmallUrl)
+        private ProductResult GetInfoByTmallUrl(string TmallUrl)
         {
             ProductResult taoModel = new ProductResult();
             string Imgstr, str = "";
@@ -211,7 +222,7 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="TaobaoUrl">淘宝商品地址</param>
         /// <returns>淘宝商品信息</returns>
-        private  ProductResult GetInfoByTaobaoUrl(string TaobaoUrl)
+        private ProductResult GetInfoByTaobaoUrl(string TaobaoUrl)
         {
             ProductResult taoModel = new ProductResult();
             string Imgstr, str = "";
@@ -259,13 +270,14 @@ namespace TxoooProductUpload.Service
             ProductResult taoModel = new ProductResult();
             StringBuilder str = new StringBuilder();
             string Imgstr = "";
-            str = GetStrByBorwserUrl(AliUrl);
-            Regex myRegex = new Regex("(?<=data-tfs-url=\\\").+(?=\\\" data-enable)");//指定其正则验证式
-            Regex imgaeRegex = new Regex("https://\\S+.alicdn.com/.+.400.jpg|http://\\S+.alicdn.com/.+.400.jpg|//\\S+.alicdn.com/.+.400.jpg");//商品图片
+            str.Append(NetClient.Create<string>(HttpMethod.Get, AliUrl).Send().Result);// GetStrByBorwserUrl(AliUrl);
+            Regex myRegex = new Regex("(?<=\"detailUrl\":\").+(?=\",\"discount\")");//详情
+            Regex imgaeRegex = new Regex("(?<=\"originalImageURI\":\").+?(?=\"})");//商品主图
+            //Regex imgaeRegex = new Regex("https://\\S+?.alicdn.com/.+?.310.jpg|http://\\S?+.alicdn.com/.+?.310.jpg|//\\S+?.alicdn.com/.+?.310.jpg");//商品主图
             Regex detailimgRegex = new Regex("https://\\S+.alicdn.com\\S+jpg|http://\\S+.alicdn.com\\S+jpg|//\\S+.alicdn.com\\S+jpg");//商品详细图片
             Regex ZkPriceRegex = new Regex("(?<=\"comboPrice\":\").+(?=\",\"defaultPromType\")");//折扣后价格
             Regex PriceRegex = new Regex("(?<=\"reservePrice\":\").+(?=\",\"rootCatId\")");//默认价格
-            Regex shopNameRegex = new Regex("(?<=\"sellerNickName\":\").+(?=\",\"spuId\")");//店铺名称
+            Regex shopNameRegex = new Regex("(?<=\"companyName\":\").+(?=\",\"coupons\")");//店铺名称
             Regex titleRegex = new Regex("(?<=class=\"d-title\">).+(?=</h1>)");
             Regex PriceNowRegex = new Regex("");
             string detailImg = myRegex.Match(str.ToString()).Value;//从指定内容中匹配字符串
@@ -279,7 +291,7 @@ namespace TxoooProductUpload.Service
                 {
                     tempmat = "http:" + tempmat;
                 }
-                tempmat = tempmat.Replace(".400x400", "");
+                tempmat = tempmat.Replace(".310x310", "");
                 if (!imgUrl.Contains(tempmat))
                 {
                     imgUrl += tempmat + "|";
@@ -289,7 +301,7 @@ namespace TxoooProductUpload.Service
             string shopname = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
             string title = titleRegex.Match(str.ToString()).Value;
             //imgUrl = "商品图片："+imgUrl.Substring(0,imgUrl.Length-12);
-            Imgstr = GetStrByBorwserUrl(detailImg).ToString();
+            Imgstr = NetClient.Create<string>(HttpMethod.Get, detailImg).Send().Result;   //GetStrByBorwserUrl(detailImg).ToString();
             MatchCollection matches1 = detailimgRegex.Matches(Imgstr, 0);
             string DetailimgUrl = "";
             foreach (Match mat in matches1)

@@ -17,7 +17,7 @@ namespace TxoooProductUpload.Common
         /// <summary>
         /// 是否测试环境
         /// </summary>
-        public bool IsTest
+        public static bool IsTest
         {
             set
             {
@@ -28,7 +28,7 @@ namespace TxoooProductUpload.Common
         /// <summary>
         /// 是否ssl
         /// </summary>
-        public bool IsHttps
+        public static bool IsHttps
         {
             set
             {
@@ -53,12 +53,24 @@ namespace TxoooProductUpload.Common
         /// <summary>
         /// 登陆
         /// </summary>
-        public static string Login = Host + @"App/MchInfo.mch/Login"; 
+        public static string Login
+        {
+            get
+            {
+                return Host + @"App/MchInfo.mch/Login";
+            }
+        }
 
         /// <summary>
         /// 获取商户信息
         /// </summary>
-        public static string GetMchStateInfo = Host + @"App/Account.mch/GetMchStateInfo";
+        public static string GetMchStateInfo
+        {
+            get
+            {
+                return Host + @"App/Account.mch/GetMchStateInfo";
+            }
+        }
 
         ///// <summary>
         ///// 获取地域信息
@@ -68,6 +80,12 @@ namespace TxoooProductUpload.Common
         /// <summary>
         /// 上传图片
         /// </summary>
-        public static string UpdateImgFile = Host + @"App/Helper.api/UpdateImgFile";
+        public static string UpdateImgFile
+        {
+            get
+            {
+                return Host + @"App/Helper.api/UpdateImgFile";
+            }
+        }
     }
 }

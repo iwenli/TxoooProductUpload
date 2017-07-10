@@ -29,3 +29,4 @@ D:\iwenli\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\Txo
 D:\iwenli\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.csproj.GenerateResource.Cache
 D:\iwenli\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.exe
 D:\iwenli\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.pdb
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.csprojResolveAssemblyReference.cache

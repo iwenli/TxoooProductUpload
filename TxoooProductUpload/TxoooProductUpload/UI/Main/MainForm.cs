@@ -139,8 +139,13 @@ namespace TxoooProductUpload.UI.Main
         {
             string productUrl = txtOneKeyUrl.Text.Trim();
             productUrl = "https://detail.1688.com/offer/552578137902.html";
+            //http://m.1688.com/offer/552578137902.html
+
             //"https://item.taobao.com/item.htm?id=547040661236";
+            // http://h5.m.taobao.com/awp/core/detail.htm?id=547040661236
+
             //"https://detail.tmall.com/item.htm?id=528221266420";
+            // https://detail.m.tmall.com/item.htm?id=528221266420
             if (string.IsNullOrEmpty(productUrl))
             {
                 MessageBox.Show(this, "哎呀，没有商品链接，逗我呢 o(╯□╰)o", "哎呀", MessageBoxButtons.OK, MessageBoxIcon.Information);

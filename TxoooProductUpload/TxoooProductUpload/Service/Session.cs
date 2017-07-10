@@ -24,7 +24,9 @@ namespace TxoooProductUpload.Service
         public Session()
         {
             NetClient = new NetClient();
+            ApiList.IsTest = true;
         }
+        
         /// <summary>
         /// 获得当前使用的网络对象，每个网络对象都是会话关联的。
         /// </summary>
