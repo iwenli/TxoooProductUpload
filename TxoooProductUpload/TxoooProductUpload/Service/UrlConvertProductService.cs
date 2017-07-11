@@ -46,11 +46,11 @@ namespace TxoooProductUpload.Service
             }
             else if (aliReg.Match(productUrl).Success)
             {
-                return GetInfoByAli(productUrl.Replace("detail.1688.com", "m.1688.com"));
+                return  await GetInfoByAli(productUrl.Replace("detail.1688.com", "m.1688.com"));
             }
             else if (mAliReg.Match(productUrl).Success)
             {
-                return GetInfoByAli(productUrl);
+                return await GetInfoByAli(productUrl);
             }
             else if (jdReg.Match(productUrl).Success)
             {
@@ -265,21 +265,30 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="AliUrl"></param>
         /// <returns></returns>
-        public ProductResult GetInfoByAli(string AliUrl)
+        public async Task<ProductResult>  GetInfoByAli(string AliUrl)
         {
             ProductResult taoModel = new ProductResult();
             StringBuilder str = new StringBuilder();
             string Imgstr = "";
-            str.Append(NetClient.Create<string>(HttpMethod.Get, AliUrl).Send().Result);// GetStrByBorwserUrl(AliUrl);
+
+            #region 发送请求 获取页面HTML
+            var getAliHtml = NetClient.Create<string>(HttpMethod.Get, AliUrl);
+            await getAliHtml.SendAsync();
+            if (!getAliHtml.IsValid())
+            {
+                new Exception("未能提交请求");
+            }
+            str.Append(getAliHtml.Result); // GetStrByBorwserUrl(AliUrl); 
+            #endregion
+            #region 解析页面HTML
             Regex myRegex = new Regex("(?<=\"detailUrl\":\").+(?=\",\"discount\")");//详情
             Regex imgaeRegex = new Regex("(?<=\"originalImageURI\":\").+?(?=\"})");//商品主图
             //Regex imgaeRegex = new Regex("https://\\S+?.alicdn.com/.+?.310.jpg|http://\\S?+.alicdn.com/.+?.310.jpg|//\\S+?.alicdn.com/.+?.310.jpg");//商品主图
             Regex detailimgRegex = new Regex("https://\\S+.alicdn.com\\S+jpg|http://\\S+.alicdn.com\\S+jpg|//\\S+.alicdn.com\\S+jpg");//商品详细图片
-            Regex ZkPriceRegex = new Regex("(?<=\"comboPrice\":\").+(?=\",\"defaultPromType\")");//折扣后价格
-            Regex PriceRegex = new Regex("(?<=\"reservePrice\":\").+(?=\",\"rootCatId\")");//默认价格
+            //Regex ZkPriceRegex = new Regex("(?<=\"discountPriceRanges\":[{\"price\":\").+(?=\",\"convertPrice\")");//折扣后价格
+            Regex PriceRegex = new Regex("(?<=\"discountPriceRanges\":\\[{\"price\":\").+?(?=\",\"convertPrice\")");//默认价格
             Regex shopNameRegex = new Regex("(?<=\"companyName\":\").+(?=\",\"coupons\")");//店铺名称
             Regex titleRegex = new Regex("(?<=class=\"d-title\">).+(?=</h1>)");
-            Regex PriceNowRegex = new Regex("");
             string detailImg = myRegex.Match(str.ToString()).Value;//从指定内容中匹配字符串
             MatchCollection matchs = imgaeRegex.Matches(str.ToString(), 0);
             string imgUrl = "";
@@ -322,7 +331,8 @@ namespace TxoooProductUpload.Service
             taoModel.ThumImg = imgUrl;
             taoModel.DetailImg = DetailimgUrl;
             taoModel.Source = "阿里巴巴";
-            taoModel.SourceUrl = AliUrl;
+            taoModel.SourceUrl = AliUrl; 
+            #endregion
             return taoModel;
         }
         #endregion

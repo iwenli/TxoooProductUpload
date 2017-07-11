@@ -87,5 +87,17 @@ namespace TxoooProductUpload.Common
                 return Host + @"App/Helper.api/UpdateImgFile";
             }
         }
+
+        /// <summary>
+        /// 获取商品分类
+        /// </summary>
+        public static string GetProductClassByParentIdV3
+        {
+            get
+            {
+                // return Host + @"App/Helper.api/UpdateImgFile";
+                return (_isHttps ? @"https://" : @"http://") + @"0.t.7518.cn/Txooo/SalesV2/Shop/Ajax/ShopOpenAjax.ajax/GetProductClassByParentIdV3";
+            }
+        }
     }
 }

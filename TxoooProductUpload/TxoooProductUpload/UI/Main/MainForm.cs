@@ -42,6 +42,7 @@ namespace TxoooProductUpload.UI.Main
         {
             tsExit.Click += (s, e) => Close();
             tsLogin.Enabled = !(tsImgManage.Enabled =
+               tsClass1.Enabled = tsClass2.Enabled = tsClass3.Enabled =
                tsDataPack.Enabled =
                btnOneKeyOk.Enabled = txtOneKeyUrl.Enabled =
                tsLogout.Enabled = _context.Session.IsLogined);
@@ -52,6 +53,7 @@ namespace TxoooProductUpload.UI.Main
             _context.Session.IsLoginedChanged += (s, e) =>
             {
                 tsLogin.Enabled = !(tsImgManage.Enabled =
+                tsClass1.Enabled = tsClass2.Enabled = tsClass3.Enabled =
                 tsDataPack.Enabled =
                 btnOneKeyOk.Enabled = txtOneKeyUrl.Enabled =
                 tsLogout.Enabled = _context.Session.IsLogined);
@@ -59,6 +61,11 @@ namespace TxoooProductUpload.UI.Main
             };
             btnOneKeyOk.Click += (s, e) => ProcessProduct();
             txtOneKeyUrl.Click += (s, e) => ClipboardToTextBox();
+
+            //CombBox级联事件
+            tsClass1.SelectedIndexChanged += (s, e) => tsClass_SelectedIndexChanged(s,e);
+            tsClass2.SelectedIndexChanged += (s, e) => tsClass_SelectedIndexChanged(s, e);
+            tsClass3.SelectedIndexChanged += (s, e) => tsClass_SelectedIndexChanged(s, e);
         }
 
         /// <summary>
@@ -113,7 +120,31 @@ namespace TxoooProductUpload.UI.Main
 
         #endregion
 
-        
+
+        async Task tsClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ToolStripComboBox currentTsCombbox = sender as ToolStripComboBox;
+            ToolStripComboBox updateCombbox;
+            if (currentTsCombbox.Name == "tsClass1") { updateCombbox = tsClass2; }
+            else if (currentTsCombbox.Name == "tsClass2") { updateCombbox = tsClass3; }
+            else
+            {
+                if (currentTsCombbox.Name == "tsClass3")
+                {
+                    tsClass4.Text = currentTsCombbox.Text;
+                }
+                return;
+            }
+            long id = (currentTsCombbox.SelectedItem as ProductClassInfo).ClassId;
+            var classList = await _context.ClassDataService.LoadClaassDatasAsync(id);
+            updateCombbox.Items.Clear();
+            foreach (var item in classList)
+            {
+                updateCombbox.Items.Add(item);
+            }
+        }
+
+
 
         #region 服务接入
 
@@ -127,7 +158,10 @@ namespace TxoooProductUpload.UI.Main
             _context = new ServiceContext();
             BeginOperation("正在初始化配置信息...", 0, true);
             await Task.Delay(1000);
-            //await _context.StationDataService.LoadStationDatasAsync();
+            foreach (var item in _context.ClassDataService.RootClassList)
+            {
+                tsClass1.Items.Add(item);
+            }
             EndOperation();
         }
 
@@ -155,7 +189,7 @@ namespace TxoooProductUpload.UI.Main
 
             _result = null;
             Exception exception = null;
-            BeginOperation("正在处理...", 0, true);
+            BeginOperation("正在解析商品...", 0, true);
             try
             {
                 _result = await _context.UrlConvertProductService.ProcessProduct(productUrl);
@@ -171,7 +205,7 @@ namespace TxoooProductUpload.UI.Main
 
             if (_result != null)
             {
-                stStatus.Text = string.Format("处理成功");
+                stStatus.Text = string.Format("解析成功商品来源：" + _result.Source);
             }
             else
             {
@@ -201,6 +235,6 @@ namespace TxoooProductUpload.UI.Main
                 txtOneKeyUrl.SelectAll();
             }
         }
-        #endregion
+        #endregion 
     }
 }

@@ -17,7 +17,7 @@ namespace TxoooProductUpload.Service
             //OrderQueueService = new OrderQueueService(this);
             //OrderSubmitService = new OrderSubmitService(this);
             //PassengerService = new PassengerService(this);
-            //StationDataService = new StationDataService(this);
+            ClassDataService = new ClassDataService(this);
             //VerifyCodeService = new VerifyCodeService(this);
             //TicketQueryService = new TicketQueryService(this);
             //DataService = new DataService(this);
@@ -49,10 +49,10 @@ namespace TxoooProductUpload.Service
         ///// </summary>
         //public PassengerService PassengerService { get; private set; }
 
-        ///// <summary>
-        ///// 获得当前的车站数据服务
-        ///// </summary>
-        //public StationDataService StationDataService { get; private set; }
+        /// <summary>
+        /// 获得商品分类数据
+        /// </summary>
+        public ClassDataService ClassDataService { get; private set; }
 
         ///// <summary>
         ///// 获得当前的验证码服务
