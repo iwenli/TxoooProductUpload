@@ -72,10 +72,16 @@ namespace TxoooProductUpload.Common
             }
         }
 
-        ///// <summary>
-        ///// 获取地域信息
-        ///// </summary>
-        //public static string GetArea = Host + @"App/Product.mch/GetArea";
+        /// <summary>
+        /// 获取地域信息
+        /// </summary>
+        public static string GetArea
+        {
+            get
+            {
+                return Host + @"App/Product.mch/GetArea";
+            }
+        }
 
         /// <summary>
         /// 上传图片

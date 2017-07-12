@@ -42,6 +42,16 @@ namespace TxoooProductUpload.Service
             private set { _loginInfo = value; }
         }
 
+        LoginAsyncResult _token;
+        /// <summary>
+        /// APP接口调用Token
+        /// </summary>
+        public LoginAsyncResult Token
+        {
+            get { return _token; }
+            private set { _token = value; }
+        }
+
         /// <summary>
         /// 获得当前是否已经登录
         /// </summary>
@@ -115,19 +125,19 @@ namespace TxoooProductUpload.Service
             {
                 return loginCheck.Exception ?? new Exception("未能提交请求");
             }
-            var loginResult = loginCheck.Result;
-            if (!loginResult.IsSuceess)
+            _token = loginCheck.Result;
+            if (!_token.IsSuceess)
             {
-                return new Exception(loginResult.msg);
+                return new Exception(_token.msg);
             }
 
             //登录好了。等等。。我们好像想拿到显示的中文名？
             //所以多加一个请求吧。
             var realNameCtx = NetClient.Create<WebResponseResult<MchInfo>>(
-                                                     HttpMethod.Post,
+                                                     HttpMethod.Get,
                                                     ApiList.GetMchStateInfo,
                                                     "https://0.u.7518.cn/",
-                                                    loginResult
+                                                    _token
                 );
             await realNameCtx.SendAsync();
             if (realNameCtx.IsValid())

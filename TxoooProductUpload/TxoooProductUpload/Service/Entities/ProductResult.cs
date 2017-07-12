@@ -74,7 +74,7 @@ namespace TxoooProductUpload.Service.Entities
         /// <summary>
         /// 商品类别id
         /// </summary>
-        public int product_type { set; get; }
+        public long product_type { set; get; }
 
         /// <summary>
         /// 商品详情

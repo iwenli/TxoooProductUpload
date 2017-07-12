@@ -13,14 +13,9 @@ namespace TxoooProductUpload.Service
         public ServiceContext()
         {
             Session = new Session();
-            UrlConvertProductService = new UrlConvertProductService(this);
-            //OrderQueueService = new OrderQueueService(this);
-            //OrderSubmitService = new OrderSubmitService(this);
-            //PassengerService = new PassengerService(this);
+            UrlConvertProductService = new UrlConvertProductService(this); 
             ClassDataService = new ClassDataService(this);
-            //VerifyCodeService = new VerifyCodeService(this);
-            //TicketQueryService = new TicketQueryService(this);
-            //DataService = new DataService(this);
+            AreaDataService = new AreaDataService(this);
         }
 
         /// <summary>
@@ -32,41 +27,16 @@ namespace TxoooProductUpload.Service
         /// 获得当前解析商品服务
         /// </summary>
         public UrlConvertProductService UrlConvertProductService { get; private set; }
-
-
-        ///// <summary>
-        ///// 获得当前的订单排队服务
-        ///// </summary>
-        //public OrderQueueService OrderQueueService { get; private set; }
-
-        ///// <summary>
-        ///// 获得当前的订单提交服务
-        ///// </summary>
-        //public OrderSubmitService OrderSubmitService { get; private set; }
-
-        ///// <summary>
-        ///// 获得当前的联系人服务
-        ///// </summary>
+         
         //public PassengerService PassengerService { get; private set; }
-
+        /// <summary>
+        /// 获得发货地数据
+        /// </summary>
+        public AreaDataService AreaDataService { get; private set; }
         /// <summary>
         /// 获得商品分类数据
         /// </summary>
         public ClassDataService ClassDataService { get; private set; }
 
-        ///// <summary>
-        ///// 获得当前的验证码服务
-        ///// </summary>
-        //public VerifyCodeService VerifyCodeService { get; private set; }
-
-        ///// <summary>
-        ///// 获得当前的查票服务
-        ///// </summary>
-        //public TicketQueryService TicketQueryService { get; private set; }
-
-        ///// <summary>
-        ///// 数据服务
-        ///// </summary>
-        //public DataService DataService { get; private set; }
     }
 }
