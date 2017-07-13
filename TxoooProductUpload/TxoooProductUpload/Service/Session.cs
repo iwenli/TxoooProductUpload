@@ -130,7 +130,7 @@ namespace TxoooProductUpload.Service
             {
                 return new Exception(_token.msg);
             }
-
+            
             //登录好了。等等。。我们好像想拿到显示的中文名？
             //所以多加一个请求吧。
             var realNameCtx = NetClient.Create<WebResponseResult<MchInfo>>(

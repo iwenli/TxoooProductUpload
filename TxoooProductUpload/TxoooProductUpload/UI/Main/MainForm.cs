@@ -20,10 +20,49 @@ namespace TxoooProductUpload.UI.Main
     public partial class MainForm : Form
     {
 
+        #region 商品上传需要的参数
+        //product_id商品id
+        //new_old新品1，二手2
+        //product_imgs商品图片逗号分隔
+        //product_name名称
+        //product_brand品牌
+        //region_code发货地代码（直辖市id：2,3,10,23）
+        //region_name 发货地名称
+        //is_virtual是否虚拟商品1是，0否
+        //product_ispostage是否包邮（True包邮，Flase不包邮）
+        //product_postage邮费详情{"postage":"10","append":"5","limit":"7"}（postage运费，append每增加一件加，limit宝贝数量达到）
+        //refund支持七天无理由1支持，0不支持
+        //product_type商品类别id（最底级）
+        //product_details商品详情
+        //submit_product提交或保存商品（1提交，0保存）
+        //product_details_type 详情类型（0手机，1pc）
+        //product_type_service 商品分类类型 （1产品，2服务）
+
+        //map_id_+数字 规格id（新增规格默认值0）
+        //json_info_+数字 规格名称（数字从0开始顺序排列，如：json_info_0，json_info_1）
+        //market_price_+数字 市场价
+        //price_+数字 会员价
+        //remain_inventory_+数字 库存
+        //property_map_img_数字 图片
+        //is_default_+数字 是否默认
+        //radio_num_+数字 结算比例
+
+        //share_id_+数字推广语id
+        //share_content_+数字 推广语（数字从0开始顺序排列，如：share_content_0，share_content_1）
+        #endregion
 
         long _classId = 0;
         long _regionCode = 0;
         string _regionName = string.Empty;
+        int _new_old = 1;
+        bool _is_virtual = false;
+        bool _product_ispostage = false;
+        int _refund = 1;
+        int _postage = 0;
+        int _append = 0;
+        int _limit = 0;
+
+
 
         public MainForm()
         {
@@ -36,8 +75,39 @@ namespace TxoooProductUpload.UI.Main
             await InitServiceContext();
             InitToolbar();
             InitStatusBar();
+            InitFormControl();
             //InitQueryParamEdit();
         }
+
+        void InitFormControl()
+        {
+
+            btnOneKeyOk.Click += async (s, e) => await ProcessProduct();
+            txtOneKeyUrl.Click += (s, e) => ClipboardToTextBox();
+
+            //分类CombBox级联事件
+            tsClass1.SelectedIndexChanged += async (s, e) => await cbClass_SelectedIndexChanged(s, e);
+            tsClass2.SelectedIndexChanged += async (s, e) => await cbClass_SelectedIndexChanged(s, e);
+            tsClass3.SelectedIndexChanged += async (s, e) => await cbClass_SelectedIndexChanged(s, e);
+
+            //发货地CombBox级联事件
+            cbArea1.SelectedIndexChanged += async (s, e) => await cbArea_SelectedIndexChanged(s, e);
+            cbArea2.SelectedIndexChanged += async (s, e) => await cbArea_SelectedIndexChanged(s, e);
+            cbArea3.SelectedIndexChanged += async (s, e) => await cbArea_SelectedIndexChanged(s, e);
+
+            //RadioButton Change事件 
+            rbTypeNew.CheckedChanged += (s, e) => rb_CheckedChanged(s, e);
+            rbVirtualTrue.CheckedChanged += (s, e) => rb_CheckedChanged(s, e);
+            rbPostageTrue.CheckedChanged += (s, e) => rb_CheckedChanged(s, e);
+            rbRefundTrue.CheckedChanged += (s, e) => rb_CheckedChanged(s, e);
+
+            //NumericUpDown Change事件    
+            tbPostage.ValueChanged += (s, e) => tb_CheckedChanged(s, e);
+            tbappend.ValueChanged += (s, e) => tb_CheckedChanged(s, e);
+            tbLinit.ValueChanged += (s, e) => tb_CheckedChanged(s, e);
+
+        }
+
 
         #region 状态栏和工具栏事件
 
@@ -82,19 +152,6 @@ namespace TxoooProductUpload.UI.Main
 
                  }
              };
-
-            btnOneKeyOk.Click += (s, e) => ProcessProduct();
-            txtOneKeyUrl.Click += (s, e) => ClipboardToTextBox();
-
-            //分类CombBox级联事件
-            tsClass1.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
-            tsClass2.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
-            tsClass3.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
-
-            //发货地CombBox级联事件
-            cbArea1.SelectedIndexChanged += (s, e) => cbArea_SelectedIndexChanged(s, e);
-            cbArea2.SelectedIndexChanged += (s, e) => cbArea_SelectedIndexChanged(s, e);
-            cbArea3.SelectedIndexChanged += (s, e) => cbArea_SelectedIndexChanged(s, e);
         }
 
         /// <summary>
@@ -206,6 +263,7 @@ namespace TxoooProductUpload.UI.Main
             return true;
         }
         #endregion
+
         #region 发货地相关
         /// <summary>
         /// 分类ComboBoxChanged事件
@@ -265,8 +323,6 @@ namespace TxoooProductUpload.UI.Main
         #endregion
 
 
-
-
         #region 服务接入
 
         ServiceContext _context;
@@ -303,14 +359,17 @@ namespace TxoooProductUpload.UI.Main
                 txtOneKeyUrl.Focus();
                 return;
             }
-            if (!CheckClass()) { return; }
+
+            //if (!CheckClass() || !CheckArea() || !CheckBaseInfo()) { return; }
 
             _result = null;
             Exception exception = null;
             BeginOperation("正在解析商品...", 0, true);
             try
             {
-                _result = await _context.UrlConvertProductService.ProcessProduct(productUrl);
+                //_result = _context.UrlConvertProductService.ProcessProduct(productUrl);
+                await _context.CommonService.UploadImg("http://avatar.csdn.net/2/5/C/1_weini_xiong.jpg");
+                
             }
             catch (Exception ex)
             {
@@ -355,6 +414,91 @@ namespace TxoooProductUpload.UI.Main
                 txtOneKeyUrl.SelectAll();
             }
         }
-        #endregion 
+        #endregion
+
+        /// <summary>
+        /// RadioButton Change事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void rb_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton currentButton = sender as RadioButton;
+            switch (currentButton.Name)
+            {
+                case "rbTypeNew":  //发布类型为新品
+                    _new_old = Convert.ToInt32(rbTypeNew.Checked);
+                    stStatus.Text = "发布类型为新品：" + (_new_old == 1 ? "新品" : "二手");
+                    break;
+                case "rbVirtualTrue":  //是虚拟商品
+                    _is_virtual = rbVirtualTrue.Checked;
+                    stStatus.Text = "是虚拟商品：" + (_is_virtual ? "是" : "不是");
+
+                    if (_is_virtual)//如果是虚拟商品  包邮 和 退货 不可设置
+                    {
+                        tbPostage.Value = tbappend.Value = tbLinit.Value = _postage = _append = _limit = 0;
+                        rbPostageTrue.Checked = rbRefundTrue.Checked = false;
+                        rbPostageFalse.Checked = rbRefundFalse.Checked = true;
+                    }
+                    gbIspostage.Enabled = gbRefund.Enabled = gbPostage.Enabled = !_is_virtual;
+
+                    break;
+                case "rbPostageTrue":  //包邮
+                    _product_ispostage = rbPostageTrue.Checked;
+                    stStatus.Text = "是否包邮：" + (_product_ispostage ? "包邮" : "不包邮");
+
+                    if (_product_ispostage)//包邮则清空包邮设置
+                    {
+                        tbPostage.Value = tbappend.Value = tbLinit.Value = _postage = _append = _limit = 0;
+                    }
+                    gbPostage.Enabled = !_product_ispostage;
+                    break;
+                case "rbRefundTrue":  //支持7天无理由退货
+                    _refund = Convert.ToInt32(rbRefundTrue.Checked);
+                    stStatus.Text = "是否支持7天无理由退货：" + (_refund == 1 ? "支持" : "不支持");
+                    break;
+            }
+
+        }
+        /// <summary>
+        /// 邮费  Change事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void tb_CheckedChanged(object sender, EventArgs e)
+        { 
+            NumericUpDown currentButton = sender as NumericUpDown;
+            switch (currentButton.Name)
+            {
+                case "tbPostage":  //邮费
+                    _postage = Convert.ToInt32( tbPostage.Value);
+                    stStatus.Text = "当前邮费金额：" + _postage;
+                    break;
+                case "tbappend":  //递增邮费
+                    _append = Convert.ToInt32(tbappend.Value);
+                    stStatus.Text = "当前每增加一件邮费金额：" + _append;
+
+                    break;
+                case "tbLinit":  //包邮件数
+                    _limit = Convert.ToInt32(tbLinit.Value);
+                    stStatus.Text = "当前满足包邮件数：" + _limit;
+                    break;
+            }
+
+        }
+        /// <summary>
+        /// 验证基本信息
+        /// </summary>
+        /// <returns></returns>
+        bool CheckBaseInfo()
+        {
+            if (!_product_ispostage && _postage == 0)
+            {
+                MessageBox.Show("还没有设置邮费哟^_^", "创业赚钱");
+                tbPostage.Focus();
+                return false;
+            }
+            return true;
+        }
     }
 }

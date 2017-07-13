@@ -16,6 +16,7 @@ namespace TxoooProductUpload.Service
             UrlConvertProductService = new UrlConvertProductService(this); 
             ClassDataService = new ClassDataService(this);
             AreaDataService = new AreaDataService(this);
+            CommonService = new CommonService(this);
         }
 
         /// <summary>
@@ -27,8 +28,7 @@ namespace TxoooProductUpload.Service
         /// 获得当前解析商品服务
         /// </summary>
         public UrlConvertProductService UrlConvertProductService { get; private set; }
-         
-        //public PassengerService PassengerService { get; private set; }
+
         /// <summary>
         /// 获得发货地数据
         /// </summary>
@@ -37,6 +37,11 @@ namespace TxoooProductUpload.Service
         /// 获得商品分类数据
         /// </summary>
         public ClassDataService ClassDataService { get; private set; }
+
+        /// <summary>
+        /// 通用数据服务
+        /// </summary>
+        public CommonService CommonService { get; private set; }
 
     }
 }
