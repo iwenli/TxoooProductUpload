@@ -345,7 +345,8 @@ namespace TxoooProductUpload.UI.Main
         async Task ProcessProduct()
         {
             string productUrl = txtOneKeyUrl.Text.Trim();
-            productUrl = "https://detail.1688.com/offer/552578137902.html";
+            productUrl = "https://m.1688.com/offer/553470493129.html";
+                //"https://detail.1688.com/offer/552578137902.html";
             //http://m.1688.com/offer/552578137902.html
 
             //"https://item.taobao.com/item.htm?id=547040661236";
@@ -367,9 +368,9 @@ namespace TxoooProductUpload.UI.Main
             BeginOperation("正在解析商品...", 0, true);
             try
             {
-                //_result = _context.UrlConvertProductService.ProcessProduct(productUrl);
-                await _context.CommonService.UploadImg("http://avatar.csdn.net/2/5/C/1_weini_xiong.jpg");
-                
+                _result = await _context.UrlConvertProductService.ProcessProduct(productUrl);
+                //await _context.CommonService.UploadImg("http://avatar.csdn.net/2/5/C/1_weini_xiong.jpg");
+
             }
             catch (Exception ex)
             {
@@ -383,6 +384,7 @@ namespace TxoooProductUpload.UI.Main
             if (_result != null)
             {
                 stStatus.Text = string.Format("解析成功商品来源：" + _result.Source);
+                //开始处理图片
 
                 _result.product_type = _classId;
             }
@@ -466,12 +468,12 @@ namespace TxoooProductUpload.UI.Main
         /// <param name="sender"></param>
         /// <param name="e"></param>
         void tb_CheckedChanged(object sender, EventArgs e)
-        { 
+        {
             NumericUpDown currentButton = sender as NumericUpDown;
             switch (currentButton.Name)
             {
                 case "tbPostage":  //邮费
-                    _postage = Convert.ToInt32( tbPostage.Value);
+                    _postage = Convert.ToInt32(tbPostage.Value);
                     stStatus.Text = "当前邮费金额：" + _postage;
                     break;
                 case "tbappend":  //递增邮费
