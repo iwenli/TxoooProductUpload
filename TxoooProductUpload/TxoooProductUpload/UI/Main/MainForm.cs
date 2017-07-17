@@ -345,8 +345,8 @@ namespace TxoooProductUpload.UI.Main
         async Task ProcessProduct()
         {
             string productUrl = txtOneKeyUrl.Text.Trim();
-            productUrl = "https://m.1688.com/offer/553470493129.html";
-                //"https://detail.1688.com/offer/552578137902.html";
+            productUrl = productUrl == "" ? "https://m.1688.com/offer/553470493129.html" : productUrl;
+            //"https://detail.1688.com/offer/552578137902.html";
             //http://m.1688.com/offer/552578137902.html
 
             //"https://item.taobao.com/item.htm?id=547040661236";
@@ -386,7 +386,7 @@ namespace TxoooProductUpload.UI.Main
                 stStatus.Text = string.Format("解析成功商品来源：" + _result.Source);
                 //开始处理图片
 
-                _result.product_type = _classId;
+               // _result.product_type = _classId;
             }
             else
             {

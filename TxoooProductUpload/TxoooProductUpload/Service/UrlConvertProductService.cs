@@ -205,11 +205,9 @@ namespace TxoooProductUpload.Service
             {
                 DetailimgUrl += mat.Value + "|";
             }
-            taoModel.product_name = title;
+            taoModel.ProductName = title;
             taoModel.ShopName = shopname;
             taoModel.ProductPrice = price;
-            taoModel.ThumImg = imgUrl;
-            taoModel.DetailImg = DetailimgUrl;
             taoModel.Source = "天猫";
             taoModel.SourceUrl = TmallUrl;
             return taoModel;
@@ -248,11 +246,9 @@ namespace TxoooProductUpload.Service
             {
                 DetailimgUrl += mat.Value + "|";
             }
-            taoModel.product_name = title;
+            taoModel.ProductName = title;
             taoModel.ShopName = shopname;
             taoModel.ProductPrice = price;
-            taoModel.ThumImg = imgUrl;
-            taoModel.DetailImg = DetailimgUrl;
             taoModel.Source = "淘宝";
             taoModel.SourceUrl = TaobaoUrl;
             return taoModel;
@@ -286,33 +282,30 @@ namespace TxoooProductUpload.Service
             //Regex imgaeRegex = new Regex("https://\\S+?.alicdn.com/.+?.310.jpg|http://\\S?+.alicdn.com/.+?.310.jpg|//\\S+?.alicdn.com/.+?.310.jpg");//商品主图
             Regex detailimgRegex = new Regex("https://\\S+.alicdn.com\\S+jpg|http://\\S+.alicdn.com\\S+jpg|//\\S+.alicdn.com\\S+jpg");//商品详细图片
             //Regex ZkPriceRegex = new Regex("(?<=\"discountPriceRanges\":[{\"price\":\").+(?=\",\"convertPrice\")");//折扣后价格
-            Regex PriceRegex = new Regex("(?<=\"discountPriceRanges\":\\[{\"price\":\").+?(?=\",\"convertPrice\")");//默认价格
-            Regex shopNameRegex = new Regex("(?<=\"companyName\":\").+(?=\",\"coupons\")");//店铺名称
-            Regex titleRegex = new Regex("(?<=class=\"d-title\">).+(?=</h1>)");
-            string detailImg = myRegex.Match(str.ToString()).Value;//从指定内容中匹配字符串
-            MatchCollection matchs = imgaeRegex.Matches(str.ToString(), 0);
-            string imgUrl = "";
+            Regex PriceRegex = new Regex("(?<=\"discountPriceRanges\":\\[{\"price\":\").+?(?=\",\"convertPrice\")");//原价
+            //Regex PriceRegex = new Regex("(?<=\"discountPrice\":\").+?(?=\",)");//售价
+            Regex shopNameRegex = new Regex("(?<=\"companyName\":\").+?(?=\",)");//店铺名称
+            Regex titleRegex = new Regex("(?<=\"subject\":).+?(?=,\")");  //标题
+            Regex SKURegex = new Regex("(?<=\"skuProps\":).+(?=,\"subject\")");  //SKU
+             
+            //主图
+            MatchCollection matchs = imgaeRegex.Matches(str.ToString(), 0); 
             foreach (Match mat in matchs)
             {
                 string tempmat = mat.Value;
-                //tempmat = "http:" + tempmat;
                 if (!tempmat.StartsWith("http"))
                 {
                     tempmat = "http:" + tempmat;
                 }
                 tempmat = tempmat.Replace(".310x310", "");
-                if (!imgUrl.Contains(tempmat))
+                if (!taoModel.ThumImg.Contains(tempmat))
                 {
-                    imgUrl += tempmat + "|";
+                    taoModel.ThumImg.Add(tempmat);
                 }
-            }
-            string price = PriceRegex.Match(str.ToString()).Value;
-            string shopname = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
-            string title = titleRegex.Match(str.ToString()).Value;
-            //imgUrl = "商品图片："+imgUrl.Substring(0,imgUrl.Length-12);
-            Imgstr = NetClient.Create<string>(HttpMethod.Get, detailImg).Send().Result;   //GetStrByBorwserUrl(detailImg).ToString();
-            MatchCollection matches1 = detailimgRegex.Matches(Imgstr, 0);
-            string DetailimgUrl = "";
+            }  
+            //详情图片
+            Imgstr = NetClient.Create<string>(HttpMethod.Get, myRegex.Match(str.ToString()).Value).Send().Result;   //GetStrByBorwserUrl(detailImg).ToString();
+            MatchCollection matches1 = detailimgRegex.Matches(Imgstr, 0); 
             foreach (Match mat in matches1)
             {
                 string tempmat = mat.Value;
@@ -320,16 +313,16 @@ namespace TxoooProductUpload.Service
                 {
                     tempmat = "http:" + tempmat;
                 }
-                if (!DetailimgUrl.Contains(tempmat))
+                if (!taoModel.DetailImg.Contains(tempmat))
                 {
-                    DetailimgUrl += tempmat + "|";
+                    taoModel.DetailImg.Add( tempmat);
                 }
             }
-            taoModel.product_name = title;
-            taoModel.ShopName = shopname;
-            taoModel.ProductPrice = price;
-            taoModel.ThumImg = imgUrl;
-            taoModel.DetailImg = DetailimgUrl;
+            
+            taoModel.SKU = JsonConvert.DeserializeObject<List<Sku1688Info>>(SKURegex.Match(str.ToString()).Value);//SKU
+            taoModel.ProductName = titleRegex.Match(str.ToString()).Value;
+            taoModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
+            taoModel.ProductPrice = PriceRegex.Match(str.ToString()).Value;
             taoModel.Source = "阿里巴巴";
             taoModel.SourceUrl = AliUrl; 
             #endregion
@@ -370,11 +363,9 @@ namespace TxoooProductUpload.Service
             {
                 DetailimgUrl += string.Concat("http:", mat.Value, "|");
             }
-            taoModel.product_name = title;
+            taoModel.ProductName = title;
             taoModel.ProductPrice = "";
             taoModel.ShopName = "";
-            taoModel.ThumImg = imgUrl;
-            taoModel.DetailImg = DetailimgUrl;
             taoModel.Source = "京东";
             taoModel.SourceUrl = JdUrl;
             return taoModel;

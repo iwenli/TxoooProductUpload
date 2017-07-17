@@ -45,7 +45,7 @@ namespace TxoooProductUpload.Common
             {
                 return
                     (_isHttps ? @"https://" : @"http://") +
-                    (_isTest ? @"apitest.7518.cn/" : @"api.7518.cn/");
+                    (_isTest ? @"apimchtest.7518.cn/" : @"api.7518.cn/");
             }
         }
         #endregion
