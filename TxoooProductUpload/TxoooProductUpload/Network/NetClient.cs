@@ -13,7 +13,7 @@ namespace TxoooProductUpload.Network
     /// <summary>
     /// 基于FSLIB.NETWORK的网络层扩展，进一步抽象以便于后期提供功能
     /// </summary>
-    class NetClient : HttpClient
+    public class NetClient : HttpClient
     {
         /// <summary>
         /// 默认构造函数

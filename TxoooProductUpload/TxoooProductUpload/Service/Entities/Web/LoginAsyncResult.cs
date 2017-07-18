@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TxoooProductUpload.Service.Entities.Web
 {
-    class LoginAsyncResult
+    public class LoginAsyncResult
     {
         public bool success { get; set; }
         public string msg { get; set; }

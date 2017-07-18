@@ -285,9 +285,11 @@ namespace TxoooProductUpload.Service
             Regex PriceRegex = new Regex("(?<=\"discountPriceRanges\":\\[{\"price\":\").+?(?=\",\"convertPrice\")");//原价
             //Regex PriceRegex = new Regex("(?<=\"discountPrice\":\").+?(?=\",)");//售价
             Regex shopNameRegex = new Regex("(?<=\"companyName\":\").+?(?=\",)");//店铺名称
-            Regex titleRegex = new Regex("(?<=\"subject\":).+?(?=,\")");  //标题
+            Regex titleRegex = new Regex("(?<=\"subject\":\").+?(?=\",)");  //标题
             Regex SKURegex = new Regex("(?<=\"skuProps\":).+(?=,\"subject\")");  //SKU
-             
+            Regex LocationRegex = new Regex("(?<=\"location\":\").+?(?=\",)");  //发货地
+            Regex SalesCountRegex = new Regex("(?<=\"saleCount\":\").+?(?=\"})");  //销量
+            Regex RateTotalsRegex = new Regex("(?<=\"rateTotals\":\").+?(?=\",)");  //销量
             //主图
             MatchCollection matchs = imgaeRegex.Matches(str.ToString(), 0); 
             foreach (Match mat in matchs)
@@ -323,6 +325,8 @@ namespace TxoooProductUpload.Service
             taoModel.ProductName = titleRegex.Match(str.ToString()).Value;
             taoModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
             taoModel.ProductPrice = PriceRegex.Match(str.ToString()).Value;
+            taoModel.Location = LocationRegex.Match(str.ToString()).Value;
+            taoModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
             taoModel.Source = "阿里巴巴";
             taoModel.SourceUrl = AliUrl; 
             #endregion

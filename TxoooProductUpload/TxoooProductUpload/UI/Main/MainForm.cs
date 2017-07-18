@@ -61,6 +61,7 @@ namespace TxoooProductUpload.UI.Main
         int _postage = 0;
         int _append = 0;
         int _limit = 0;
+        int _typeService = 1;
 
 
 
@@ -221,6 +222,7 @@ namespace TxoooProductUpload.UI.Main
 
             if (currentTsCombbox.Name == "tsClass1")
             {
+                _typeService = selectDate.ClassId == 1 ? 1 : 2;
                 updateCombbox = tsClass2;
                 tsClass2.Text = tsClass3.Text = string.Empty;
                 tsClass2.Items.Clear();
@@ -384,9 +386,20 @@ namespace TxoooProductUpload.UI.Main
             if (_result != null)
             {
                 stStatus.Text = string.Format("解析成功商品来源：" + _result.Source);
-                //开始处理图片
-
-               // _result.product_type = _classId;
+                //开始处理本地参数
+                _result.product_type = _classId;
+                _result.region_code = _regionCode;
+                _result.region_name = _regionName;
+                _result.new_old  = _new_old;
+                _result.is_virtual = Convert.ToInt32( _is_virtual);
+                _result.product_ispostage = _product_ispostage;
+                _result.refund = _refund;
+                _result.Postage = _postage;
+                _result.Append = _append;
+                _result.Limit = _limit;
+                _result.product_type_service = _typeService;
+                _result.product_brand = tbBrand.Text.Trim();
+                rchBoxLog.Text = _result.ToString();
             }
             else
             {
@@ -402,7 +415,7 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void ClipboardToTextBox()
         {
-            Regex urlReg = new Regex("item.taobao.com|detail.tmall.com|detail.1688.com|item.jd.com");//url
+            Regex urlReg = new Regex("item.taobao.com|detail.tmall.com|detail.1688.com|item.jd.com|m.1688.com");//url
             if (string.IsNullOrEmpty(txtOneKeyUrl.Text))
             {
                 string getTxt = Clipboard.GetText();
