@@ -16,7 +16,12 @@ namespace TxoooProductUpload.Service.Entities
         /// <summary>
         /// 获得当前的服务上下文
         /// </summary>
-        public ServiceContext ServiceContext { get; private set; }
+        public ServiceContext ServiceContext { get; set; }
+
+        public ProductResult(ServiceContext content) : this()
+        {
+            ServiceContext = content;
+        }
 
         public ProductResult()
         {
@@ -27,18 +32,7 @@ namespace TxoooProductUpload.Service.Entities
             product_details_type = 0;
         }
         #region api相关
-
-        //long _classId = 0;
-        //long _regionCode = 0;
-        //string _regionName = string.Empty;
-        //int _new_old = 1;
-        //bool _is_virtual = false;
-        //bool _product_ispostage = false;
-        //int _refund = 1;
-        //int _postage = 0;
-        //int _append = 0;
-        //int _limit = 0;
-
+         
         /// <summary>
         /// 商品id
         /// </summary>
@@ -52,25 +46,8 @@ namespace TxoooProductUpload.Service.Entities
         /// <summary>
         /// 商品主图,逗号分隔
         /// </summary>
-        public string product_imgs
-        {
-            get
-            {
-                if (ThumImg == null || ThumImg.Count == 0)
-                {
-                    return string.Empty;
-                }
-                else
-                {
-                    List<string> imgList = new List<string>();
-                    foreach (var item in ThumImg)
-                    {
-                        imgList.Add(ServiceContext.CommonService.UploadImg(item).Result);
-                    }
-                    return imgList.Join(",");
-                }
-            }
-        }
+        public string product_imgs { set; get; }
+       
 
         /// <summary>
         ///  商品名称
@@ -117,11 +94,12 @@ namespace TxoooProductUpload.Service.Entities
         /// 商品类别id
         /// </summary>
         public long product_type { set; get; }
-
+         
         /// <summary>
         /// 商品详情
         /// </summary>
         public string product_details { set; get; }
+       
 
         /// <summary>
         /// 提交或保存商品（1提交，0保存）
@@ -275,6 +253,8 @@ namespace TxoooProductUpload.Service.Entities
             paramSb.AppendFormat("\"is_virtual\" : {0},", is_virtual);
             paramSb.AppendFormat("\"product_ispostage\" : {0},", product_ispostage);
             paramSb.AppendFormat("\"refund\" : {0},", refund);
+            paramSb.AppendFormat("\"product_imgs\" : \"{0}\", ", product_imgs);
+            paramSb.AppendFormat("\"product_details\" : \"{0}\",", product_details);
             if (!product_brand.IsNullOrEmpty())
             { //品牌
                 paramSb.AppendFormat("\"product_brand\" : \"{0}\",", product_brand);

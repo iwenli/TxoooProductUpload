@@ -263,7 +263,7 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<ProductResult>  GetInfoByAli(string AliUrl)
         {
-            ProductResult taoModel = new ProductResult();
+            ProductResult taoModel = new ProductResult(ServiceContext);
             StringBuilder str = new StringBuilder();
             string Imgstr = "";
 

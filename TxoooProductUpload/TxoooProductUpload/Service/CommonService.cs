@@ -17,6 +17,7 @@ namespace TxoooProductUpload.Service
         public CommonService(ServiceContext context) : base(context)
         {
         }
+         
 
         /// <summary>
         /// 上传图片,成功返回url,失败返回空字符串
@@ -68,8 +69,9 @@ namespace TxoooProductUpload.Service
             {
                 new Exception("CommonService.UploadImg未能提交请求");
             }
-             
-            if (stCtx.Result.success) {
+
+            if (stCtx.Result.success)
+            {
                 return stCtx.Result.msg;
             }
             return string.Empty;
