@@ -102,7 +102,7 @@ namespace TxoooProductUpload.Common
             get
             {
                 // return Host + @"App/Helper.api/UpdateImgFile";
-                return (_isHttps ? @"https://" : @"http://") + @"0.t.7518.cn/Txooo/SalesV2/Shop/Ajax/ShopOpenAjax.ajax/GetProductClassByParentIdV3";
+                return (_isHttps ? @"https://" : @"http://") + @"1.t.7518.cn/Txooo/SalesV2/Shop/Ajax/ShopOpenAjax.ajax/GetProductClassByParentIdV3";
             }
         }
     }
