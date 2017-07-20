@@ -105,5 +105,16 @@ namespace TxoooProductUpload.Common
                 return (_isHttps ? @"https://" : @"http://") + @"1.t.7518.cn/Txooo/SalesV2/Shop/Ajax/ShopOpenAjax.ajax/GetProductClassByParentIdV3";
             }
         }
+
+        /// <summary>
+        /// 上传商品
+        /// </summary>
+        public static string AddProduct4
+        {
+            get
+            {
+                return Host + @"App/Product.mch/AddProduct4";
+            }
+        }
     }
 }

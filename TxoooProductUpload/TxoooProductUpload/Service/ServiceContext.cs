@@ -17,6 +17,7 @@ namespace TxoooProductUpload.Service
             ClassDataService = new ClassDataService(this);
             AreaDataService = new AreaDataService(this);
             CommonService = new CommonService(this);
+            ProductService = new ProductService(this);
         }
 
         /// <summary>
@@ -43,5 +44,9 @@ namespace TxoooProductUpload.Service
         /// </summary>
         public CommonService CommonService { get; private set; }
 
+        /// <summary>
+        /// 商品对接tx服务
+        /// </summary>
+        public ProductService ProductService { get; private set; }
     }
 }

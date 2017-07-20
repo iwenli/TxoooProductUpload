@@ -32,7 +32,7 @@ namespace TxoooProductUpload.Service.Entities
             product_details_type = 0;
         }
         #region api相关
-         
+
         /// <summary>
         /// 商品id
         /// </summary>
@@ -47,7 +47,7 @@ namespace TxoooProductUpload.Service.Entities
         /// 商品主图,逗号分隔
         /// </summary>
         public string product_imgs { set; get; }
-       
+
 
         /// <summary>
         ///  商品名称
@@ -94,12 +94,12 @@ namespace TxoooProductUpload.Service.Entities
         /// 商品类别id
         /// </summary>
         public long product_type { set; get; }
-         
+
         /// <summary>
         /// 商品详情
         /// </summary>
         public string product_details { set; get; }
-       
+
 
         /// <summary>
         /// 提交或保存商品（1提交，0保存）
@@ -115,56 +115,14 @@ namespace TxoooProductUpload.Service.Entities
         /// </summary>
         public int product_type_service { set; get; }
 
-
-        ///// <summary>
-        ///// 规格id（新增规格默认值0）
-        ///// </summary>
-        //public int map_id_0 { set; get; }
-
-        ///// <summary>
-        ///// 规格名称（数字从0开始顺序排列，如：json_info_0，json_info_1）
-        ///// </summary>
-        //public int json_info_0 { set; get; }
-
-        ///// <summary>
-        ///// 市场价
-        ///// </summary>
-        //public int market_price_0 { set; get; }
-
-        ///// <summary>
-        ///// 会员价
-        ///// </summary>
-        //public int price_0 { set; get; }
-
-        ///// <summary>
-        ///// 库存
-        ///// </summary>
-        //public int remain_inventory_0 { set; get; }
-
-        ///// <summary>
-        /////  图片
-        ///// </summary>
-        //public int property_map_img_0 { set; get; }
-
-        ///// <summary>
-        ///// 是否默认
-        ///// </summary>
-        //public int is_default_0 { set; get; }
-
-        ///// <summary>
-        ///// 结算比例
-        ///// </summary>
-        //public int radio_num_0 { set; get; }
-
-        ///// <summary>
-        /////  推广语id
-        ///// </summary>
-        //public int share_id_0 { set; get; }
-
-        ///// <summary>
-        ///// 推广语（数字从0开始顺序排列，如：share_content_0，share_content_1）
-        ///// </summary>
-        //public string share_content_0 { set; get; }
+        /// <summary>
+        /// 商品sku json
+        /// </summary>
+        public string product_property { set; get; }
+        /// <summary>
+        /// 推广语集合json
+        /// </summary>
+        public string share { set; get; }
         #endregion
 
         #region 设置的参数
@@ -251,10 +209,8 @@ namespace TxoooProductUpload.Service.Entities
             paramSb.AppendFormat("\"region_name\" : \"{0}\",", region_name);
             paramSb.AppendFormat("\"submit_product\" : {0},", submit_product);
             paramSb.AppendFormat("\"is_virtual\" : {0},", is_virtual);
-            paramSb.AppendFormat("\"product_ispostage\" : {0},", product_ispostage);
+            paramSb.AppendFormat("\"product_ispostage\" : {0},", product_ispostage.ToString().ToLower());
             paramSb.AppendFormat("\"refund\" : {0},", refund);
-            paramSb.AppendFormat("\"product_imgs\" : \"{0}\", ", product_imgs);
-            paramSb.AppendFormat("\"product_details\" : \"{0}\",", product_details);
             if (!product_brand.IsNullOrEmpty())
             { //品牌
                 paramSb.AppendFormat("\"product_brand\" : \"{0}\",", product_brand);
@@ -263,8 +219,15 @@ namespace TxoooProductUpload.Service.Entities
             {
                 paramSb.Append("\"product_postage\" : {");
                 paramSb.AppendFormat("\"postage\":{0},\"append\":{1},\"limit\":{2}", Postage, Append, Limit);
-                paramSb.Append("}");
+                paramSb.Append("},");
             }
+            paramSb.Append(product_property);
+            if (!share.IsNullOrEmpty())
+            { //推广语
+                paramSb.Append(share);
+            }
+            //paramSb.AppendFormat("\"product_imgs\" : \"{0}\", ", product_imgs);
+            //paramSb.AppendFormat("\"product_details\" : \"{0}\"", product_details);
             paramSb.Append("}");
 
             return paramSb.ToString();
@@ -272,8 +235,6 @@ namespace TxoooProductUpload.Service.Entities
             //    "is_default_0" = True; 
             //    "json_info_0" = "\U5e38\U89c4"; 
             //    "price_0" = 100; 
-            //    "product_details" = "<p></p><img src=\"https://img.txooo.com/2017/06/19/a4f258eb654da2f08df81eadf902578c.jpg\"/><p></p><img src=\"https://img.txooo.com/2017/04/10/ab5cfed05a4b4002e5a792a91fcb479f.jpg\"/><p></p><img src=\"https://img.txooo.com/2017/06/20/a466f3629713e6db28de65488898f65f.jpg\"/><p></p><img src=\"https://img.txooo.com/2017/06/20/702a3caf04e8ce5e52b37bc1152d8ed3.jpg\"/>";
-            //    "product_imgs" = "https://img.txooo.com/2017/06/19/c48e78c819d71acf6d8fafeb75008325.jpg,https://img.txooo.com/2017/06/19/e7cfb47ad20b5ea1aa3a3f85f41d08cd.jpg,https://img.txooo.com/2017/06/19/d00ec1764153c8cb514d00b91e66cb58.jpg,https://img.txooo.com/2017/06/19/4810b68a1c880c753d12e6964bd3bdaf.jpg";
             //    "property_map_img_0" = "https://img.txooo.com/2017/06/19/aca8612f1889e34ddc0c757bdf8f9bae.jpg";
             //    "radio_num_0" = 10;
             //    "remain_inventory_0" = 80;
