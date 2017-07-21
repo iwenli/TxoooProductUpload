@@ -54,7 +54,7 @@ namespace TxoooProductUpload.Service
             //        region_name = "北京市",
             //        remain_inventory_0 = 80,
             //        share_content_0 = "分享码",
-            //        share_id_0 = 0,
+            //        share_id_0 = 0, 
             //        submit_product = 1
             //    };
             var stCtx = ServiceContext.Session.NetClient
