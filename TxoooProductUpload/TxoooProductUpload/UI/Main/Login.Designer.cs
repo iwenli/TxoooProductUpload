@@ -33,6 +33,7 @@
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
+            this.cbIsTest = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -72,7 +73,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(99, 85);
+            this.btnOk.Location = new System.Drawing.Point(169, 90);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(102, 33);
             this.btnOk.TabIndex = 2;
@@ -80,12 +81,26 @@
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
+            // cbIsTest
+            // 
+            this.cbIsTest.AutoSize = true;
+            this.cbIsTest.Checked = true;
+            this.cbIsTest.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbIsTest.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbIsTest.Location = new System.Drawing.Point(64, 96);
+            this.cbIsTest.Name = "cbIsTest";
+            this.cbIsTest.Size = new System.Drawing.Size(99, 21);
+            this.cbIsTest.TabIndex = 3;
+            this.cbIsTest.Text = "是否测试环境";
+            this.cbIsTest.UseVisualStyleBackColor = true;
+            // 
             // Login
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(298, 130);
+            this.ClientSize = new System.Drawing.Size(298, 145);
+            this.Controls.Add(this.cbIsTest);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUserName);
@@ -109,5 +124,6 @@
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.CheckBox cbIsTest;
     }
 }

@@ -198,38 +198,36 @@ namespace TxoooProductUpload.Service.Entities
         /// <returns></returns>
         public override string ToString()
         {
-            StringBuilder paramSb = new StringBuilder("{");
-            paramSb.AppendFormat("\"product_id\" : {0},", product_id);
-            paramSb.AppendFormat("\"new_old\" : {0},", new_old);
-            paramSb.AppendFormat("\"product_details_type\" : {0},", product_details_type);
-            paramSb.AppendFormat("\"product_name\" : \"{0}\",", ProductName);
-            paramSb.AppendFormat("\"product_type\" : {0},", product_type);
-            paramSb.AppendFormat("\"product_type_service\" : {0},", product_type_service);
-            paramSb.AppendFormat("\"region_code\" : {0},", region_code);
-            paramSb.AppendFormat("\"region_name\" : \"{0}\",", region_name);
-            paramSb.AppendFormat("\"submit_product\" : {0},", submit_product);
-            paramSb.AppendFormat("\"is_virtual\" : {0},", is_virtual);
-            paramSb.AppendFormat("\"product_ispostage\" : {0},", product_ispostage.ToString().ToLower());
-            paramSb.AppendFormat("\"refund\" : {0},", refund);
+            StringBuilder paramSb = new StringBuilder();
+            paramSb.AppendFormat("product_id={0}", product_id);
+            paramSb.AppendFormat("&new_old={0}", new_old);
+            paramSb.AppendFormat("&product_details_type={0}", product_details_type);
+            paramSb.AppendFormat("&product_name={0}", ProductName);
+            paramSb.AppendFormat("&product_type={0}", product_type);
+            paramSb.AppendFormat("&product_type_service={0}", product_type_service);
+            paramSb.AppendFormat("&region_code={0}", region_code);
+            paramSb.AppendFormat("&region_name={0}", region_name);
+            paramSb.AppendFormat("&submit_product={0}", submit_product);
+            paramSb.AppendFormat("&is_virtual={0}", is_virtual);
+            paramSb.AppendFormat("&product_ispostage={0}", product_ispostage.ToString().ToLower());
+            paramSb.AppendFormat("&refund={0}", refund);
             if (!product_brand.IsNullOrEmpty())
             { //品牌
-                paramSb.AppendFormat("\"product_brand\" : \"{0}\",", product_brand);
+                paramSb.AppendFormat("&product_brand={0}", product_brand);
             }
             if (!product_ispostage)   //如果不包邮设置邮费
             {
-                paramSb.Append("\"product_postage\" : {");
-                paramSb.AppendFormat("\"postage\":{0},\"append\":{1},\"limit\":{2}", Postage, Append, Limit);
-                paramSb.Append("},");
+                paramSb.Append("&product_postage={");
+                paramSb.AppendFormat("\"postage\":\"{0}\",\"append\":\"{1}\",\"limit\":\"{2}\"", Postage, Append, Limit);
+                paramSb.Append("}");
             }
-            paramSb.Append(product_property);
+            //paramSb.Append(product_property);
             if (!share.IsNullOrEmpty())
             { //推广语
                 paramSb.Append(share);
             }
-            //paramSb.AppendFormat("\"product_imgs\" : \"{0}\", ", product_imgs);
-            //paramSb.AppendFormat("\"product_details\" : \"{0}\"", product_details);
-            paramSb.Append("}");
-
+            paramSb.AppendFormat("&product_imgs={0}", product_imgs);
+            paramSb.AppendFormat("&product_details={0}", product_details);
             return paramSb.ToString();
             //    "{
             //    "is_default_0" = True; 

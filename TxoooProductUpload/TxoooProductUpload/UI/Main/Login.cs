@@ -21,11 +21,16 @@ namespace TxoooProductUpload.UI.Main
             _context = context;
             InitializeComponent();
             this.txtUserName.SetHintText("请输入注册手机号");
+
+            cbIsTest.CheckedChanged += (s, e) =>
+            {
+                ApiList.IsTest = (s as CheckBox).Checked;
+            };
         }
 
         private async void btnOk_Click(object sender, EventArgs e)
         {
-            this.btnOk.Enabled = false;
+            this.btnOk.Enabled = this.cbIsTest.Enabled = false;
             var username = txtUserName.Text;
             var password = txtPassword.Text;
 
@@ -41,9 +46,9 @@ namespace TxoooProductUpload.UI.Main
                 Close();
                 return;
             }
-            this.btnOk.Text = "登录(&O)"; 
+            this.btnOk.Text = "登录(&O)";
             MessageBox.Show("登录失败：" + result.Message, "提示", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            this.btnOk.Enabled = true;
+            this.btnOk.Enabled = this.cbIsTest.Enabled = true;
         }
     }
 }

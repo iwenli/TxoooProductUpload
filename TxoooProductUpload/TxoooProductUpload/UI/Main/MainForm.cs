@@ -63,8 +63,6 @@ namespace TxoooProductUpload.UI.Main
         int _limit = 0;
         int _typeService = 1;
 
-
-
         public MainForm()
         {
             InitializeComponent();
@@ -122,7 +120,27 @@ namespace TxoooProductUpload.UI.Main
                 tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled =
                tsLogout.Enabled = _context.Session.IsLogined);
             tsLogin.Click += (s, e) => new Login(_context).ShowDialog(this);
-            tsLogout.Click += (s, e) => _context.Session.Logout();
+            tsLogout.Click += (s, e) =>
+            {
+                //清空数据
+                foreach (Control ctl in gbArea.Controls)
+                {
+                    if (ctl is ComboBox)
+                    {
+                        ctl.Text = string.Empty;
+                        (ctl as ComboBox).Items.Clear();
+                    }
+                }
+                foreach (Control ctl in gbClass.Controls)
+                {
+                    if (ctl is ComboBox)
+                    {
+                        ctl.Text = string.Empty;
+                        (ctl as ComboBox).Items.Clear();
+                    }
+                }
+                _context.Session.Logout();
+            };
             this.txtOneKeyUrl.SetHintText("请输入天猫、淘宝、京东、阿里巴巴等商品链接");
             //捕捉登录状态变化事件，在登录状态发生变化的时候重设登录状态
             _context.Session.IsLoginedChanged += async (s, e) =>
@@ -385,73 +403,73 @@ namespace TxoooProductUpload.UI.Main
 
             if (_result != null)
             {
-                //#region 处理主图
-                //try
-                //{
-                //    await Task.Delay(500);
-                //    if (_result.ThumImg == null || _result.ThumImg.Count == 0)
-                //    {
-                //        _result.product_imgs = string.Empty;
-                //    }
-                //    else
-                //    {
-                //        List<string> imgList = new List<string>();
-                //        index = 1;
-                //        //排除sku主图
-                //        var skuImgs = _result.SKU.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.imageUrl.IsNullOrEmpty()).Select(m => m.imageUrl).ToList();
-                //        var thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
-                //        foreach (var item in thumImg)
-                //        {
-                //            BeginOperation(string.Format("正在上传第[{0}]张主图...", index), 0, true);
-                //            var txImgUrl = await _context.CommonService.UploadImg(item);
-                //            imgList.Add(txImgUrl);
-                //            EndOperation(string.Format("第[{0}]张主图上传完成，返回结果{1}...", index++, txImgUrl));
-                //        }
-                //        _result.product_imgs = imgList.Join(",");
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    exception = ex;
-                //}
-                //#endregion
+                #region 处理主图
+                try
+                {
+                    await Task.Delay(500);
+                    if (_result.ThumImg == null || _result.ThumImg.Count == 0)
+                    {
+                        _result.product_imgs = string.Empty;
+                    }
+                    else
+                    {
+                        List<string> imgList = new List<string>();
+                        index = 1;
+                        //排除sku主图
+                        var skuImgs = _result.SKU.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.imageUrl.IsNullOrEmpty()).Select(m => m.imageUrl).ToList();
+                        var thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
+                        foreach (var item in thumImg)
+                        {
+                            BeginOperation(string.Format("正在上传第[{0}]张主图...", index), 0, true);
+                            var txImgUrl = await _context.CommonService.UploadImg(item);
+                            imgList.Add(txImgUrl);
+                            EndOperation(string.Format("第[{0}]张主图上传完成，返回结果{1}...", index++, txImgUrl));
+                        }
+                        _result.product_imgs = imgList.Join(",");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+                #endregion
 
-                //#region 处理详情
-                //try
-                //{
-                //    await Task.Delay(500);
-                //    if (_result.product_details.IsNullOrEmpty())
-                //    {
-                //        if (_result.DetailImg == null || _result.DetailImg.Count == 0)
-                //        {
-                //            _result.product_details = string.Empty;
-                //        }
-                //        else
-                //        {
-                //            List<string> detailList = new List<string>();
-                //            index = 1;
-                //            foreach (var item in _result.DetailImg)
-                //            {
-                //                BeginOperation(string.Format("正在处理第[{0}]张详情图片...", index), 0, true);
-                //                detailList.Add(string.Format("<p></p><img src=\\\"{0}\\\">", await _context.CommonService.UploadImg(item)));
-                //                EndOperation(string.Format("第[{0}]张详情图片护理完成...", index++));
-                //            }
-                //            _result.product_details = detailList.Join("");
-                //        }
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-                //    exception = ex;
-                //}
-                //#endregion
+                #region 处理详情
+                try
+                {
+                    await Task.Delay(500);
+                    if (_result.product_details.IsNullOrEmpty())
+                    {
+                        if (_result.DetailImg == null || _result.DetailImg.Count == 0)
+                        {
+                            _result.product_details = string.Empty;
+                        }
+                        else
+                        {
+                            List<string> detailList = new List<string>();
+                            index = 1;
+                            foreach (var item in _result.DetailImg)
+                            {
+                                BeginOperation(string.Format("正在处理第[{0}]张详情图片...", index), 0, true);
+                                detailList.Add(string.Format("<p></p><img src=\\\"{0}\\\">", await _context.CommonService.UploadImg(item)));
+                                EndOperation(string.Format("第[{0}]张详情图片护理完成...", index++));
+                            }
+                            _result.product_details = detailList.Join("");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exception = ex;
+                }
+                #endregion
 
                 #region 生成SKU
                 try
                 {
                     await Task.Delay(500);
                     //0-编号 1-sku名称（颜色+尺码） 2-价格 3-图片 4-是否默认（id=0为默认）
-                    string propertyFormat = "\"map_id_{0}\":0,\"json_info_{0}\":\"{1}\",\"price_{0}\":{2},\"market_price_{0}\":{2},\"remain_inventory_{0}\":100,\"property_map_img_{0}\":\"{3}\",\"radio_num_{0}\":10,\"is_default_{0}\":{4},";
+                    string propertyFormat = "&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}=100&property_map_img_{0}={3}&radio_num_{0}=10&is_default_{0}={4}";
                     index = 0;
                     var colorList = _result.SKU.Where(m => m.prop == "颜色").FirstOrDefault().value;
                     BeginOperation("开始处理商品SKU...", colorList.Length, true);
@@ -505,7 +523,7 @@ namespace TxoooProductUpload.UI.Main
                 rchBoxLog.Text = _result.ToString();
                 //开始上传商品
                 var productUploadResult = _context.ProductService.UploadProduct(_result);
-                
+
             }
             else
             {

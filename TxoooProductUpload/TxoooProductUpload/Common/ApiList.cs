@@ -113,7 +113,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return Host + @"App/Product.mch/AddProduct4";
+                return @"http://lapi.7518.cn/App/Product.mch/AddProduct4";
             }
         }
     }

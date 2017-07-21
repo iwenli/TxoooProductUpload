@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ApiList.cs" />
+    <Compile Include="Common\Parameters.cs" />
     <Compile Include="Common\ControlExpression.cs" />
     <Compile Include="Common\StringExpression.cs" />
     <Compile Include="Network\NetClient.cs" />
