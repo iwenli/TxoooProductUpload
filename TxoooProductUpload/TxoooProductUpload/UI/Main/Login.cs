@@ -40,7 +40,7 @@ namespace TxoooProductUpload.UI.Main
                 return;
             }
             this.btnOk.Text = "正在登陆.";
-            var result = await _context.Session.LoginAsync(username, password.MD5().ToLower());
+            var result = await _context.Session.LoginAsync(username, password);
             if (result == null)
             {
                 Close();

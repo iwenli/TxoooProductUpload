@@ -14,10 +14,11 @@ namespace TxoooProductUpload.Service
 {
     class CommonService : ServiceBase
     {
+        const string _sqlFormatInsertIMg = @"INSERT INTO iwenli_image(SourceUrl,ToooUrl,UserId,Remard) values('{0}','{1}',{2},'{3}')";
+
         public CommonService(ServiceContext context) : base(context)
         {
         }
-         
 
         /// <summary>
         /// 上传图片,成功返回url,失败返回空字符串
@@ -34,7 +35,16 @@ namespace TxoooProductUpload.Service
             {
                 new Exception("CommonService.DowloadImage未能提交请求");
             }
-            return await UploadImg(stCtx.Result);
+            var imgUrl = await UploadImg(stCtx.Result);
+            try
+            {
+                DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertIMg, url, imgUrl, ServiceContext.Session.Token.userid, string.Empty));
+            }
+            catch (Exception ex)
+            {
+                new Exception("CommonService.DowloadImage.DbHelperOleDb异常" + ex.Message);
+            }
+            return imgUrl;
         }
 
         /// <summary>

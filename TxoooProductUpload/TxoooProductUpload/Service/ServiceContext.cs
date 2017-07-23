@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.OleDb;
 using System.Linq;
 using System.Text;
+using TxoooProductUpload.Common;
 
 namespace TxoooProductUpload.Service
 {
@@ -18,7 +20,12 @@ namespace TxoooProductUpload.Service
             AreaDataService = new AreaDataService(this);
             CommonService = new CommonService(this);
             ProductService = new ProductService(this);
+            CacheContext = CacheContext.Instance;
+            CacheContext.Init();
         }
+         
+
+        public OleDbConnection OleDbConnection { set; get; }
 
         /// <summary>
         /// 获得当前的会话状态
@@ -48,5 +55,9 @@ namespace TxoooProductUpload.Service
         /// 商品对接tx服务
         /// </summary>
         public ProductService ProductService { get; private set; }
+        /// <summary>
+        /// 缓存上下文
+        /// </summary>
+        public CacheContext CacheContext { get; private set; }
     }
 }

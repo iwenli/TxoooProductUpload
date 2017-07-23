@@ -19,6 +19,7 @@ namespace TxoooProductUpload.Service.Entities
         public int Order { get; set; }
         public string ImgUrl { get; set; }
 
+        public List<double> RadioNums { get; set; }
         public override string ToString()
         {
             return ClassName + " | " + ClassId;

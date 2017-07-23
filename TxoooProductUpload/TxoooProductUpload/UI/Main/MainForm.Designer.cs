@@ -43,6 +43,7 @@ namespace TxoooProductUpload.UI.Main
             this.st = new System.Windows.Forms.StatusStrip();
             this.stStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.stProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -73,7 +74,6 @@ namespace TxoooProductUpload.UI.Main
             this.rbTypeNew = new System.Windows.Forms.RadioButton();
             this.gbArea = new System.Windows.Forms.GroupBox();
             this.lbArea = new System.Windows.Forms.Label();
-            this.cbArea3 = new System.Windows.Forms.ComboBox();
             this.cbArea2 = new System.Windows.Forms.ComboBox();
             this.cbArea1 = new System.Windows.Forms.ComboBox();
             this.gbClass = new System.Windows.Forms.GroupBox();
@@ -81,12 +81,11 @@ namespace TxoooProductUpload.UI.Main
             this.tsClass3 = new System.Windows.Forms.ComboBox();
             this.tsClass2 = new System.Windows.Forms.ComboBox();
             this.tsClass1 = new System.Windows.Forms.ComboBox();
-            this.rchBoxLog = new System.Windows.Forms.RichTextBox();
+            this.txtLog = new System.Windows.Forms.RichTextBox();
             this.gbSearch = new System.Windows.Forms.GroupBox();
             this.btnOneKeyOk = new System.Windows.Forms.Button();
             this.txtOneKeyUrl = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.ts.SuspendLayout();
             this.st.SuspendLayout();
             this.gbSetting.SuspendLayout();
@@ -214,6 +213,12 @@ namespace TxoooProductUpload.UI.Main
             this.stProgress.Size = new System.Drawing.Size(400, 24);
             this.stProgress.Visible = false;
             // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(603, 25);
+            this.toolStripStatusLabel2.Spring = true;
+            // 
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Image = global::TxoooProductUpload.Properties.Resources.globe_16;
@@ -283,6 +288,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbPostage.Controls.Add(this.label2);
             this.gbPostage.Controls.Add(this.label1);
             this.gbPostage.Controls.Add(this.lblPostage);
+            this.gbPostage.Enabled = false;
             this.gbPostage.Location = new System.Drawing.Point(374, 9);
             this.gbPostage.Name = "gbPostage";
             this.gbPostage.Size = new System.Drawing.Size(372, 62);
@@ -360,22 +366,22 @@ namespace TxoooProductUpload.UI.Main
             // rbPostageFalse
             // 
             this.rbPostageFalse.AutoSize = true;
-            this.rbPostageFalse.Checked = true;
             this.rbPostageFalse.Location = new System.Drawing.Point(63, 23);
             this.rbPostageFalse.Name = "rbPostageFalse";
             this.rbPostageFalse.Size = new System.Drawing.Size(38, 21);
             this.rbPostageFalse.TabIndex = 2;
-            this.rbPostageFalse.TabStop = true;
             this.rbPostageFalse.Text = "否";
             this.rbPostageFalse.UseVisualStyleBackColor = true;
             // 
             // rbPostageTrue
             // 
             this.rbPostageTrue.AutoSize = true;
+            this.rbPostageTrue.Checked = true;
             this.rbPostageTrue.Location = new System.Drawing.Point(19, 23);
             this.rbPostageTrue.Name = "rbPostageTrue";
             this.rbPostageTrue.Size = new System.Drawing.Size(38, 21);
             this.rbPostageTrue.TabIndex = 3;
+            this.rbPostageTrue.TabStop = true;
             this.rbPostageTrue.Tag = "1";
             this.rbPostageTrue.Text = "是";
             this.rbPostageTrue.UseVisualStyleBackColor = true;
@@ -537,7 +543,6 @@ namespace TxoooProductUpload.UI.Main
             // gbArea
             // 
             this.gbArea.Controls.Add(this.lbArea);
-            this.gbArea.Controls.Add(this.cbArea3);
             this.gbArea.Controls.Add(this.cbArea2);
             this.gbArea.Controls.Add(this.cbArea1);
             this.gbArea.Dock = System.Windows.Forms.DockStyle.Left;
@@ -561,18 +566,10 @@ namespace TxoooProductUpload.UI.Main
             this.lbArea.TabIndex = 1;
             this.lbArea.Text = "未选择";
             // 
-            // cbArea3
-            // 
-            this.cbArea3.FormattingEnabled = true;
-            this.cbArea3.Location = new System.Drawing.Point(6, 90);
-            this.cbArea3.Name = "cbArea3";
-            this.cbArea3.Size = new System.Drawing.Size(195, 25);
-            this.cbArea3.TabIndex = 0;
-            // 
             // cbArea2
             // 
             this.cbArea2.FormattingEnabled = true;
-            this.cbArea2.Location = new System.Drawing.Point(6, 56);
+            this.cbArea2.Location = new System.Drawing.Point(6, 90);
             this.cbArea2.Name = "cbArea2";
             this.cbArea2.Size = new System.Drawing.Size(195, 25);
             this.cbArea2.TabIndex = 0;
@@ -636,24 +633,25 @@ namespace TxoooProductUpload.UI.Main
             this.tsClass1.Size = new System.Drawing.Size(195, 25);
             this.tsClass1.TabIndex = 0;
             // 
-            // rchBoxLog
+            // txtLog
             // 
-            this.rchBoxLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.rchBoxLog.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.rchBoxLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            this.rchBoxLog.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.rchBoxLog.Location = new System.Drawing.Point(0, 248);
-            this.rchBoxLog.Margin = new System.Windows.Forms.Padding(2);
-            this.rchBoxLog.Name = "rchBoxLog";
-            this.rchBoxLog.Size = new System.Drawing.Size(1186, 373);
-            this.rchBoxLog.TabIndex = 6;
-            this.rchBoxLog.Text = "";
+            this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.txtLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.txtLog.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.txtLog.Location = new System.Drawing.Point(0, 256);
+            this.txtLog.Margin = new System.Windows.Forms.Padding(2);
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(1186, 365);
+            this.txtLog.TabIndex = 6;
+            this.txtLog.Text = "";
             // 
             // gbSearch
             // 
             this.gbSearch.Controls.Add(this.btnOneKeyOk);
             this.gbSearch.Controls.Add(this.txtOneKeyUrl);
             this.gbSearch.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbSearch.Enabled = false;
             this.gbSearch.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.gbSearch.Location = new System.Drawing.Point(0, 195);
             this.gbSearch.Name = "gbSearch";
@@ -693,19 +691,13 @@ namespace TxoooProductUpload.UI.Main
             this.txtOneKeyUrl.TabIndex = 4;
             this.txtOneKeyUrl.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
-            // toolStripStatusLabel2
-            // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(603, 25);
-            this.toolStripStatusLabel2.Spring = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1186, 651);
             this.Controls.Add(this.gbSearch);
-            this.Controls.Add(this.rchBoxLog);
+            this.Controls.Add(this.txtLog);
             this.Controls.Add(this.gbSetting);
             this.Controls.Add(this.st);
             this.Controls.Add(this.ts);
@@ -765,7 +757,7 @@ namespace TxoooProductUpload.UI.Main
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton tsDataPack;
         private System.Windows.Forms.GroupBox gbSetting;
-        private System.Windows.Forms.RichTextBox rchBoxLog;
+        private System.Windows.Forms.RichTextBox txtLog;
         private System.Windows.Forms.GroupBox gbClass;
         private System.Windows.Forms.ComboBox tsClass3;
         private System.Windows.Forms.ComboBox tsClass2;
@@ -773,7 +765,6 @@ namespace TxoooProductUpload.UI.Main
         private System.Windows.Forms.Label tsClass4;
         private System.Windows.Forms.GroupBox gbArea;
         private System.Windows.Forms.Label lbArea;
-        private System.Windows.Forms.ComboBox cbArea3;
         private System.Windows.Forms.ComboBox cbArea2;
         private System.Windows.Forms.ComboBox cbArea1;
         private System.Windows.Forms.GroupBox gbBase;

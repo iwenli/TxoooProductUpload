@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TxoooProductUpload.Service.Entities
 {
+    using Common;
     using Service.Entities.Web;
 
     /// <summary>
@@ -176,7 +177,15 @@ namespace TxoooProductUpload.Service.Entities
         /// <summary>
         /// 商品来源SKU
         /// </summary>
-        public List<Sku1688Info> SKU { get; set; }
+        public List<SkuTmallInfo> SKUTmall { get; set; }
+        /// <summary>
+        /// 商品来源SKU
+        /// </summary>
+        public List<Sku1688Info> SKU1688 { get; set; }
+        /// <summary>
+        /// 商品来源SKU
+        /// </summary>
+        public SkuJdInfo SKUJD { get; set; }
         /// <summary>
         /// 发货地
         /// </summary>
@@ -189,8 +198,14 @@ namespace TxoooProductUpload.Service.Entities
         /// 评论数
         /// </summary>
         public string RateTotals { get; set; }
+        /// <summary>
+        /// 商品来源详情源码
+        /// </summary>
+        public string DetailHtml { get; set; }
+        
 
         #endregion
+
 
         /// <summary>
         /// 生成商品上传信息
@@ -198,50 +213,60 @@ namespace TxoooProductUpload.Service.Entities
         /// <returns></returns>
         public override string ToString()
         {
-            StringBuilder paramSb = new StringBuilder();
-            paramSb.AppendFormat("product_id={0}", product_id);
-            paramSb.AppendFormat("&new_old={0}", new_old);
-            paramSb.AppendFormat("&product_details_type={0}", product_details_type);
-            paramSb.AppendFormat("&product_name={0}", ProductName);
-            paramSb.AppendFormat("&product_type={0}", product_type);
-            paramSb.AppendFormat("&product_type_service={0}", product_type_service);
-            paramSb.AppendFormat("&region_code={0}", region_code);
-            paramSb.AppendFormat("&region_name={0}", region_name);
-            paramSb.AppendFormat("&submit_product={0}", submit_product);
-            paramSb.AppendFormat("&is_virtual={0}", is_virtual);
-            paramSb.AppendFormat("&product_ispostage={0}", product_ispostage.ToString().ToLower());
-            paramSb.AppendFormat("&refund={0}", refund);
-            if (!product_brand.IsNullOrEmpty())
-            { //品牌
-                paramSb.AppendFormat("&product_brand={0}", product_brand);
-            }
+            Parameters parameters = new Parameters();
+            parameters.Add("product_id", product_id);
+            parameters.Add("new_old", new_old);
+            parameters.Add("product_details_type", product_details_type);
+            parameters.Add("product_name", ProductName);
+            parameters.Add("product_type", product_type);
+            parameters.Add("product_type_service", product_type_service);
+            parameters.Add("region_code", region_code);
+            parameters.Add("region_name", region_name);
+            parameters.Add("submit_product", submit_product);
+            parameters.Add("is_virtual", is_virtual);
+            parameters.Add("product_ispostage", product_ispostage.ToString().ToLower());
+            parameters.Add("refund", refund);
+            parameters.Add("product_imgs", product_imgs);
+            parameters.Add("product_details", product_details);
+            parameters.Add("product_brand", product_brand);//品牌
+
             if (!product_ispostage)   //如果不包邮设置邮费
             {
-                paramSb.Append("&product_postage={");
-                paramSb.AppendFormat("\"postage\":\"{0}\",\"append\":\"{1}\",\"limit\":\"{2}\"", Postage, Append, Limit);
-                paramSb.Append("}");
+                parameters.Add("product_postage", "{" + string.Format("\"postage\":\"{0}\",\"append\":\"{1}\",\"limit\":\"{2}\"", Postage, Append, Limit) + "}");
             }
-            //paramSb.Append(product_property);
+            #region 推广语
             if (!share.IsNullOrEmpty())
-            { //推广语
-                paramSb.Append(share);
+            {
+                var shareList = share.Split('|');
+                for (int i = 0; i < shareList.Length; i++)
+                {
+                    parameters.Add("share_id_" + i, 0);
+                    parameters.Add("share_content_" + i, product_details);
+                }
             }
-            paramSb.AppendFormat("&product_imgs={0}", product_imgs);
-            paramSb.AppendFormat("&product_details={0}", product_details);
-            return paramSb.ToString();
-            //    "{
-            //    "is_default_0" = True; 
-            //    "json_info_0" = "\U5e38\U89c4"; 
-            //    "price_0" = 100; 
-            //    "property_map_img_0" = "https://img.txooo.com/2017/06/19/aca8612f1889e34ddc0c757bdf8f9bae.jpg";
-            //    "radio_num_0" = 10;
-            //    "remain_inventory_0" = 80;
-            //    "share_content_0" = "\U63a8\U5e7f";
-            //    "share_id_0" = 22769;
-            //}"
+            #endregion
+            return parameters.BuildQueryString(false) + product_property;
+        }
 
+        /// <summary>
+        /// 识别发货地
+        /// </summary>
+        /// <returns></returns>
+        public bool DiscernLcation()
+        {
+            var result = true;
+            var area = ServiceContext.CacheContext.Cache.AreaList.Where(
+                m => m.region_name.Contains(Location.Substring(Location.Length - 2))).FirstOrDefault();
+            if (area != null)
+            {
+                region_name = area.region_name;
+                region_code = area.region_code;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
         }
     }
-
-
 }

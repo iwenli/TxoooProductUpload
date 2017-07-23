@@ -18,6 +18,10 @@ namespace TxoooProductUpload.Service
     /// </summary>
     class ProductService : ServiceBase
     {
+        const string _sqlFormatInsertProduct = @"INSERT INTO iwenli_product(ProductName,Source,SourceUrl,ShopName,DetailHtml,ProductPrice,SKU,Location,SalesCount"
+                                        + @",RateTotals,product_id,product_imgs,product_details,product_brand,UserId) VALUES("
+                                        + @"'{0}','{1}','{2}','{3}','{4}',{5},'{6}','{7}',{8},{9},{10},'{11}','{12}','{13}',{14})";
+
         public ProductService(ServiceContext context) : base(context)
         {
         }
@@ -30,42 +34,31 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<WebResponseResult<string>> UploadProduct(ProductResult product)
         {
-
-            //    var data = new {
-            //        is_default_0 = true,
-            //        is_virtual = 0,
-            //        json_info_0 = "均码",
-            //        new_old = 1,
-            //        price_0 = 100,
-            //        product_brand = "品牌",
-            //        product_details = "<p></p><img src=\"https://img.txooo.com/2017/06/19/a4f258eb654da2f08df81eadf902578c.jpg\"/><p></p><img src=\"https://img.txooo.com/2017/04/10/ab5cfed05a4b4002e5a792a91fcb479f.jpg\"/><p></p><img src=\"https://img.txooo.com/2017/06/20/a466f3629713e6db28de65488898f65f.jpg\"/><p></p><img src=\"https://img.txooo.com/2017/06/20/702a3caf04e8ce5e52b37bc1152d8ed3.jpg\"/>",
-            //        product_details_type = 0,
-            //        product_id = 21683,
-            //        product_imgs = "https://img.txooo.com/2017/06/19/c48e78c819d71acf6d8fafeb75008325.jpg,https://img.txooo.com/2017/06/19/e7cfb47ad20b5ea1aa3a3f85f41d08cd.jpg,https://img.txooo.com/2017/06/19/d00ec1764153c8cb514d00b91e66cb58.jpg,https://img.txooo.com/2017/06/19/4810b68a1c880c753d12e6964bd3bdaf.jpg",
-            //        product_ispostage = true,
-            //        product_name = "龙哥测试接口上传",
-            //        product_postage = "",
-            //        product_type = 619,
-            //        product_type_service = 1,
-            //        property_map_img_0 = "https://img.txooo.com/2017/06/19/aca8612f1889e34ddc0c757bdf8f9bae.jpg",
-            //        radio_num_0 = 10,
-            //        refund = 1,
-            //        region_code = 110000,
-            //        region_name = "北京市",
-            //        remain_inventory_0 = 80,
-            //        share_content_0 = "分享码",
-            //        share_id_0 = 0, 
-            //        submit_product = 1
-            //    };
             var stCtx = ServiceContext.Session.NetClient
-               .Create<WebResponseResult<string>>(HttpMethod.Post, ApiList.AddProduct4 + string.Format("?userid={0}&token={1}",
-               ServiceContext.Session.Token.userid, ServiceContext.Session.Token.token), data: product.ToString());
+               .Create<WebResponseResult<string>>(HttpMethod.Post, ApiList.AddProduct4, data: product.ToString());
             //
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
                 new Exception("ProductService.UploadProduct未能提交请求");
             }
+
+            //入库记录
+            if (stCtx.Result.success)
+            {
+                product.product_id = Convert.ToInt32(stCtx.Result.msg);
+            }
+            try
+            {
+                DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertProduct, product.ProductName, product.Source, product.SourceUrl, product.ShopName,
+                 product.DetailHtml.Replace("'", "\'"), product.ProductPrice, product.product_property, product.Location, product.SalesCount == null ? "0" : product.SalesCount, product.RateTotals == null ? "0" : product.RateTotals, product.product_id,
+                 product.product_imgs, product.product_details, product.product_brand, ServiceContext.Session.Token.userid));
+            }
+            catch (Exception ex)
+            {
+                new Exception("ProductService.UploadProduct.DbHelperOleDb异常" + ex.Message);
+            }
+           
             return stCtx.Result;
         }
     }

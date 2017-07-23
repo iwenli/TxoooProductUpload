@@ -16,41 +16,10 @@ namespace TxoooProductUpload.UI.Main
     using TxoooProductUpload.Service;
     using TxoooProductUpload.Service.Entities;
     using TxoooProductUpload.Common;
+    using Newtonsoft.Json;
 
     public partial class MainForm : Form
     {
-
-        #region 商品上传需要的参数
-        //product_id商品id
-        //new_old新品1，二手2
-        //product_imgs商品图片逗号分隔
-        //product_name名称
-        //product_brand品牌
-        //region_code发货地代码（直辖市id：2,3,10,23）
-        //region_name 发货地名称
-        //is_virtual是否虚拟商品1是，0否
-        //product_ispostage是否包邮（True包邮，Flase不包邮）
-        //product_postage邮费详情{"postage":"10","append":"5","limit":"7"}（postage运费，append每增加一件加，limit宝贝数量达到）
-        //refund支持七天无理由1支持，0不支持
-        //product_type商品类别id（最底级）
-        //product_details商品详情
-        //submit_product提交或保存商品（1提交，0保存）
-        //product_details_type 详情类型（0手机，1pc）
-        //product_type_service 商品分类类型 （1产品，2服务）
-
-        //map_id_+数字 规格id（新增规格默认值0）
-        //json_info_+数字 规格名称（数字从0开始顺序排列，如：json_info_0，json_info_1）
-        //market_price_+数字 市场价
-        //price_+数字 会员价
-        //remain_inventory_+数字 库存
-        //property_map_img_数字 图片
-        //is_default_+数字 是否默认
-        //radio_num_+数字 结算比例
-
-        //share_id_+数字推广语id
-        //share_content_+数字 推广语（数字从0开始顺序排列，如：share_content_0，share_content_1）
-        #endregion
-
         long _classId = 0;
         long _regionCode = 0;
         string _regionName = string.Empty;
@@ -58,7 +27,7 @@ namespace TxoooProductUpload.UI.Main
         bool _is_virtual = false;
         bool _product_ispostage = false;
         int _refund = 1;
-        int _postage = 0;
+        int _postage = 1;
         int _append = 0;
         int _limit = 0;
         int _typeService = 1;
@@ -75,9 +44,12 @@ namespace TxoooProductUpload.UI.Main
             InitToolbar();
             InitStatusBar();
             InitFormControl();
-            //InitQueryParamEdit();
         }
 
+        #region 状态栏和工具栏事件
+        /// <summary>
+        /// 页面功能控件事件
+        /// </summary>
         void InitFormControl()
         {
 
@@ -85,14 +57,13 @@ namespace TxoooProductUpload.UI.Main
             txtOneKeyUrl.Click += (s, e) => ClipboardToTextBox();
 
             //分类CombBox级联事件
-            tsClass1.SelectedIndexChanged += async (s, e) => await cbClass_SelectedIndexChanged(s, e);
-            tsClass2.SelectedIndexChanged += async (s, e) => await cbClass_SelectedIndexChanged(s, e);
-            tsClass3.SelectedIndexChanged += async (s, e) => await cbClass_SelectedIndexChanged(s, e);
+            tsClass1.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
+            tsClass2.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
+            tsClass3.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
 
             //发货地CombBox级联事件
-            cbArea1.SelectedIndexChanged += async (s, e) => await cbArea_SelectedIndexChanged(s, e);
-            cbArea2.SelectedIndexChanged += async (s, e) => await cbArea_SelectedIndexChanged(s, e);
-            cbArea3.SelectedIndexChanged += async (s, e) => await cbArea_SelectedIndexChanged(s, e);
+            cbArea1.SelectedIndexChanged += (s, e) => cbArea_SelectedIndexChanged(s, e);
+            cbArea2.SelectedIndexChanged += (s, e) => cbArea_SelectedIndexChanged(s, e);
 
             //RadioButton Change事件 
             rbTypeNew.CheckedChanged += (s, e) => rb_CheckedChanged(s, e);
@@ -106,10 +77,6 @@ namespace TxoooProductUpload.UI.Main
             tbLinit.ValueChanged += (s, e) => tb_CheckedChanged(s, e);
 
         }
-
-
-        #region 状态栏和工具栏事件
-
         /// <summary>
         /// 初始化工具栏
         /// </summary>
@@ -119,60 +86,89 @@ namespace TxoooProductUpload.UI.Main
             tsLogin.Enabled = !(tsImgManage.Enabled =
                 tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled =
                tsLogout.Enabled = _context.Session.IsLogined);
-            tsLogin.Click += (s, e) => new Login(_context).ShowDialog(this);
-            tsLogout.Click += (s, e) =>
-            {
-                //清空数据
-                foreach (Control ctl in gbArea.Controls)
-                {
-                    if (ctl is ComboBox)
-                    {
-                        ctl.Text = string.Empty;
-                        (ctl as ComboBox).Items.Clear();
-                    }
-                }
-                foreach (Control ctl in gbClass.Controls)
-                {
-                    if (ctl is ComboBox)
-                    {
-                        ctl.Text = string.Empty;
-                        (ctl as ComboBox).Items.Clear();
-                    }
-                }
-                _context.Session.Logout();
-            };
+            tsLogin.Click += Login;
+            tsLogout.Click += Logout;
             this.txtOneKeyUrl.SetHintText("请输入天猫、淘宝、京东、阿里巴巴等商品链接");
             //捕捉登录状态变化事件，在登录状态发生变化的时候重设登录状态
-            _context.Session.IsLoginedChanged += async (s, e) =>
-             {
-                 tsLogin.Enabled = !(tsImgManage.Enabled =
-                  tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled =
-                 tsLogout.Enabled = _context.Session.IsLogined);
-                 tsLogin.Text = _context.Session.IsLogined ? string.Format("已登录为【{0} ({1})】", _context.Session.LoginInfo.DisplayName, _context.Session.LoginInfo.UserName) : "登录(&I)";
-                 if (_context.Session.IsLogined)
-                 {
-                     try
-                     {
-                         foreach (var item in _context.ClassDataService.RootClassList)
-                         {
-                             tsClass1.Items.Add(item);
-                         }
-                         var areaList = await _context.AreaDataService.LoadAreaDatasAsync();
-                         foreach (var item in areaList)
-                         {
-                             cbArea1.Items.Add(item);
-                         }
-                     }
-                     catch (Exception ex)
-                     {
-
-                         throw;
-                     }
-
-                 }
-             };
+            _context.Session.IsLoginedChanged += async (s, e) => await LoginedChanged();
         }
 
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Login(object sender, EventArgs e)
+        {
+            AppendLog("登录中...");
+            new Login(_context).ShowDialog(this);
+        }
+        /// <summary>
+        /// 注销
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Logout(object sender, EventArgs e)
+        {
+            //清空数据
+            foreach (Control ctl in gbArea.Controls)
+            {
+                if (ctl is ComboBox)
+                {
+                    ctl.Text = string.Empty;
+                    (ctl as ComboBox).Items.Clear();
+                }
+            }
+            foreach (Control ctl in gbClass.Controls)
+            {
+                if (ctl is ComboBox)
+                {
+                    ctl.Text = string.Empty;
+                    (ctl as ComboBox).Items.Clear();
+                }
+            }
+            txtLog.Text = string.Empty;
+            _context.CacheContext.Save();
+            _context.Session.Logout();
+        }
+
+
+        /// <summary>
+        /// 登录状态变化
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        async Task LoginedChanged()
+        {
+            {
+                tsLogin.Enabled = !(tsImgManage.Enabled =
+                 tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled =
+                tsLogout.Enabled = _context.Session.IsLogined);
+                tsLogin.Text = _context.Session.IsLogined ? string.Format("已登录为【{0} ({1})】", _context.Session.LoginInfo.DisplayName, _context.Session.LoginInfo.UserName) : "登录(&I)";
+                if (_context.Session.IsLogined)
+                {
+                    AppendLog("登录成功...");
+                    AppendLog(tsLogin.Text);
+                    try
+                    {
+                        BeginOperation("开始更新缓存数据...");
+                        await _context.CacheContext.Update(_context);
+                        //绑定combobox
+                        tsClass1.DataSource = _context.ClassDataService.RootClassList;
+                        cbArea1.DataSource = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == 1).ToList();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        EndOperation("缓存更新完成...");
+                    }
+
+                }
+            }
+        }
         /// <summary>
         /// 初始化状态栏
         /// </summary>
@@ -204,6 +200,7 @@ namespace TxoooProductUpload.UI.Main
         void BeginOperation(string opName, int maxItemsCount = 100, bool disableForm = false)
         {
             stStatus.Text = opName.DefaultForEmpty("正在操作，请稍等...");
+            AppendLog(stStatus.Text);
             stProgress.Visible = true;
             stProgress.Maximum = maxItemsCount > 0 ? maxItemsCount : 100;
             stProgress.Style = maxItemsCount > 0 ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
@@ -218,130 +215,43 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void EndOperation(string opName = "就绪.")
         {
+            AppendLog(opName);
             stStatus.Text = opName;
             stProgress.Visible = false;
             btnOneKeyOk.Enabled = true;
         }
 
-        #endregion
-
-        #region 分类相关
         /// <summary>
-        /// 分类ComboBoxChanged事件
+        /// 添加日志
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        async Task cbClass_SelectedIndexChanged(object sender, EventArgs e)
+        /// <param name="message"></param>
+        /// <param name="args"></param>
+        void AppendLog(string message, params object[] args)
         {
-            ComboBox currentTsCombbox = sender as ComboBox;
-            ComboBox updateCombbox;
-            var selectDate = currentTsCombbox.SelectedItem as ProductClassInfo;
-
-            if (currentTsCombbox.Name == "tsClass1")
+            if (InvokeRequired)
             {
-                _typeService = selectDate.ClassId == 1 ? 1 : 2;
-                updateCombbox = tsClass2;
-                tsClass2.Text = tsClass3.Text = string.Empty;
-                tsClass2.Items.Clear();
-                tsClass3.Items.Clear();
+                Invoke(new Action(() =>
+                {
+                    AppendLog(message, args);
+                }));
+                return;
             }
-            else if (currentTsCombbox.Name == "tsClass2")
+            string timeL = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            txtLog.AppendText(timeL + " => ");
+            //txtLog.AppendText(Environment.NewLine);  //换行显示
+
+            if (args == null || args.Length == 0)
             {
-                updateCombbox = tsClass3;
-                tsClass3.Text = string.Empty;
-                tsClass3.Items.Clear();
+                txtLog.AppendText(message);
             }
             else
             {
-                if (currentTsCombbox.Name == "tsClass3")
-                {
-                    stStatus.Text = tsClass4.Text = "当前选择分类：" + selectDate.ClassName;
-                    _classId = selectDate.ClassId;
-                }
-                return;
+                txtLog.AppendText(string.Format(message, args));
             }
-            var classList = await _context.ClassDataService.LoadClassDatasAsync(selectDate.ClassId);
-            foreach (var item in classList)
-            {
-                updateCombbox.Items.Add(item);
-            }
-        }
-
-        /// <summary>
-        /// 验证分类是否选择
-        /// </summary>
-        /// <returns></returns>
-        bool CheckClass()
-        {
-            if (_classId == 0)
-            {
-                MessageBox.Show("还没有选择分类呐^_^", "创业赚钱");
-                tsClass1.Focus();
-                return false;
-            }
-            return true;
+            txtLog.AppendText(Environment.NewLine);
+            txtLog.ScrollToCaret();
         }
         #endregion
-
-        #region 发货地相关
-        /// <summary>
-        /// 分类ComboBoxChanged事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        async Task cbArea_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox currentTsCombbox = sender as ComboBox;
-            ComboBox updateCombbox;
-            var selectDate = currentTsCombbox.SelectedItem as AreaInfo;
-
-            if (currentTsCombbox.Name == "cbArea1")
-            {
-                updateCombbox = cbArea2;
-                cbArea2.Text = cbArea3.Text = string.Empty;
-                cbArea2.Items.Clear();
-                cbArea3.Items.Clear();
-            }
-            else if (currentTsCombbox.Name == "cbArea2")
-            {
-                updateCombbox = cbArea3;
-                cbArea3.Text = string.Empty;
-                cbArea3.Items.Clear();
-            }
-            else
-            {
-                if (currentTsCombbox.Name == "cbArea3")
-                {
-                    _regionName = stStatus.Text = lbArea.Text = "当前选择发货地：" + selectDate.region_name;
-                    _regionCode = selectDate.region_code;
-                }
-                return;
-            }
-            var list = await _context.AreaDataService.LoadAreaDatasAsync(selectDate.region_id);
-            foreach (var item in list)
-            {
-                updateCombbox.Items.Add(item);
-            }
-        }
-
-        /// <summary>
-        /// 验证分类是否选择
-        /// </summary>
-        /// <returns></returns>
-        bool CheckArea()
-        {
-            if (_regionCode == 0)
-            {
-                MessageBox.Show("还没有选择发货地哟^_^", "创业赚钱");
-                cbArea1.Focus();
-                return false;
-            }
-            return true;
-        }
-        #endregion
-
 
         #region 服务接入
 
@@ -365,7 +275,7 @@ namespace TxoooProductUpload.UI.Main
         async Task ProcessProduct()
         {
             string productUrl = txtOneKeyUrl.Text.Trim();
-            productUrl = productUrl == "" ? "https://m.1688.com/offer/553470493129.html" : productUrl;
+            productUrl = productUrl == "" ? "https://detail.tmall.com/item.htm?id=537253492455" : productUrl;
             //"https://detail.1688.com/offer/552578137902.html";
             //http://m.1688.com/offer/552578137902.html
 
@@ -381,26 +291,27 @@ namespace TxoooProductUpload.UI.Main
                 return;
             }
 
-            if (!CheckClass() || !CheckArea() || !CheckBaseInfo()) { return; }
+            //if (!CheckClass() || !CheckArea() || !CheckBaseInfo()) { return; }
 
             _result = null;
-            Exception exception = null;
             int index = 0;
             BeginOperation(string.Format("正在解析商品[{0}]...", productUrl), 0, true);
             try
             {
                 _result = await _context.UrlConvertProductService.ProcessProduct(productUrl);
-                //await _context.CommonService.UploadImg("http://avatar.csdn.net/2/5/C/1_weini_xiong.jpg");
             }
             catch (Exception ex)
             {
-                exception = ex;
+                AppendLog("解析商品出错，错误信息：{0}", ex.Message);
+                return;
             }
             finally
             {
-                EndOperation("解析商品完成，开始上传主图");
+                EndOperation(string.Format("解析商品完成,商品来源：{0}，开始上传主图", _result.Source));
             }
+            return;
 
+            #region 上传
             if (_result != null)
             {
                 #region 处理主图
@@ -416,7 +327,7 @@ namespace TxoooProductUpload.UI.Main
                         List<string> imgList = new List<string>();
                         index = 1;
                         //排除sku主图
-                        var skuImgs = _result.SKU.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.imageUrl.IsNullOrEmpty()).Select(m => m.imageUrl).ToList();
+                        var skuImgs = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.imageUrl.IsNullOrEmpty()).Select(m => m.imageUrl).ToList();
                         var thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
                         foreach (var item in thumImg)
                         {
@@ -430,7 +341,8 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    exception = ex;
+                    AppendLog("上传主图出错，错误信息：{0}", ex.Message);
+                    return;
                 }
                 #endregion
 
@@ -460,7 +372,8 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    exception = ex;
+                    AppendLog("处理详情出错，错误信息：{0}", ex.Message);
+                    return;
                 }
                 #endregion
 
@@ -471,7 +384,7 @@ namespace TxoooProductUpload.UI.Main
                     //0-编号 1-sku名称（颜色+尺码） 2-价格 3-图片 4-是否默认（id=0为默认）
                     string propertyFormat = "&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}=100&property_map_img_{0}={3}&radio_num_{0}=10&is_default_{0}={4}";
                     index = 0;
-                    var colorList = _result.SKU.Where(m => m.prop == "颜色").FirstOrDefault().value;
+                    var colorList = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value;
                     BeginOperation("开始处理商品SKU...", colorList.Length, true);
                     foreach (var colorItem in colorList)
                     {
@@ -480,36 +393,36 @@ namespace TxoooProductUpload.UI.Main
                         {
                             colorImg = await _context.CommonService.UploadImg(colorItem.imageUrl);
                         }
-                        foreach (var sizeItem in _result.SKU.Where(m => m.prop == "尺码").FirstOrDefault().value)
+                        foreach (var sizeItem in _result.SKU1688.Where(m => m.prop == "尺码").FirstOrDefault().value)
                         {
                             var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
                             _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
+                            AppendLog(name + "处理完成...");
                         }
                     }
-                    EndOperation("SKU处理完成，开始附加本地设置...");
+                    EndOperation("SKU处理完成...");
                 }
                 catch (Exception ex)
                 {
-                    exception = ex;
-                }
-                #endregion
-
-                #region 推广语
-                index = 0;
-                string share = tbShare.Text.Trim();
-                if (!share.IsNullOrEmpty())
-                {
-                    foreach (var item in tbShare.Text.Trim().Split('|'))
-                    {
-                        _result.share += string.Format("\"share_id_{0}\":0,\"share_content_{0}\":\"{1}\",", index++, item);
-                    }
+                    AppendLog("生成SKU出错，错误信息：{0}", ex.Message);
+                    return;
                 }
                 #endregion
 
                 #region 处理本地参数
+                AppendLog("开始附加本地设置...");
                 _result.product_type = _classId;
-                _result.region_code = _regionCode;
-                _result.region_name = _regionName;
+                AppendLog("尝试自动识别发货地...");
+                if (!_result.DiscernLcation())
+                {
+                    AppendLog("识别失败，使用系统设置...");
+                }
+                else
+                {
+                    AppendLog("识别成功，当前产品发货地已更改为：{0}", _result.region_name);
+                    _result.region_code = _regionCode;
+                    _result.region_name = _regionName;
+                }
                 _result.new_old = _new_old;
                 _result.is_virtual = Convert.ToInt32(_is_virtual);
                 _result.product_ispostage = _product_ispostage;
@@ -518,17 +431,33 @@ namespace TxoooProductUpload.UI.Main
                 _result.Append = _append;
                 _result.Limit = _limit;
                 _result.product_type_service = _typeService;
-                _result.product_brand = tbBrand.Text.Trim();
+                _result.product_brand = tbBrand.Text.Trim();  //品牌
+                _result.share = tbShare.Text.Trim(); //分享
                 #endregion
-                rchBoxLog.Text = _result.ToString();
-                //开始上传商品
-                var productUploadResult = _context.ProductService.UploadProduct(_result);
 
-            }
-            else
-            {
-                stStatus.Text = "处理出错，错误信息：" + exception.Message;
-            }
+                #region 开始上传商品
+                try
+                {
+                    BeginOperation("开始上传商品...", 0, true);
+                    var productUploadResult = await _context.ProductService.UploadProduct(_result);
+
+                    if (productUploadResult.success)
+                    {
+                        AppendLog("上传成功，商品id={0}...", productUploadResult.msg);
+                    }
+                    else
+                    {
+                        AppendLog("上传失败，原因：{0}...", productUploadResult.msg);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AppendLog("生成SKU出错，错误信息：{0}", ex.Message);
+                }
+                #endregion
+                EndOperation();
+            } 
+            #endregion
         }
 
         #endregion
@@ -539,7 +468,7 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void ClipboardToTextBox()
         {
-            Regex urlReg = new Regex("item.taobao.com|detail.tmall.com|detail.1688.com|item.jd.com|m.1688.com");//url
+            Regex urlReg = new Regex("h5.m.taobao.com/awp/core/detail.htm|item.taobao.com|detail.tmall.com|detail.m.tmall.com|detail.1688.com|item.jd.com|item.m.jd.com|m.1688.com");//url
             if (string.IsNullOrEmpty(txtOneKeyUrl.Text))
             {
                 string getTxt = Clipboard.GetText();
@@ -555,6 +484,129 @@ namespace TxoooProductUpload.UI.Main
         }
         #endregion
 
+        #region 分类相关
+        /// <summary>
+        /// 分类ComboBoxChanged事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        void cbClass_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox currentTsCombbox = sender as ComboBox;
+            ComboBox updateCombbox;
+            var selectDate = currentTsCombbox.SelectedItem as ProductClassInfo;
+
+            if (currentTsCombbox.Name == "tsClass1")
+            {
+                _typeService = selectDate.ClassId == 1 ? 1 : 2;
+                updateCombbox = tsClass2;
+                tsClass2.Text = tsClass3.Text = string.Empty;
+                tsClass2.Items.Clear();
+                tsClass3.Items.Clear();
+            }
+            else if (currentTsCombbox.Name == "tsClass2")
+            {
+                updateCombbox = tsClass3;
+                tsClass3.Text = string.Empty;
+                tsClass3.Items.Clear();
+            }
+            else
+            {
+                if (currentTsCombbox.Name == "tsClass3")
+                {
+                    stStatus.Text = tsClass4.Text = "当前选择分类：" + selectDate.ClassName;
+                    _classId = selectDate.ClassId;
+                }
+                return;
+            }
+            var classList = _context.CacheContext.Cache.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
+            foreach (var item in classList)
+            {
+                updateCombbox.Items.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// 验证分类是否选择
+        /// </summary>
+        /// <returns></returns>
+        bool CheckClass()
+        {
+            if (_classId == 0)
+            {
+                MessageBox.Show("还没有选择分类呐^_^", "创业赚钱");
+                tsClass1.Focus();
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region 发货地相关
+        /// <summary>
+        /// 分类ComboBoxChanged事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        void cbArea_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox currentTsCombbox = sender as ComboBox;
+            ComboBox updateCombbox;
+            var selectDate = currentTsCombbox.SelectedItem as AreaInfo;
+
+            if (currentTsCombbox.Name == "cbArea1")
+            {
+                updateCombbox = cbArea2;
+                cbArea2.Text = string.Empty;
+                cbArea2.Items.Clear();
+                //过滤直辖市
+                if (new int[] { 110000, 120000, 310000, 500000 }.Contains(selectDate.region_code))
+                {
+                    _regionName = selectDate.region_name;
+                    stStatus.Text = lbArea.Text = "当前选择发货地：" + selectDate.region_name;
+                    _regionCode = selectDate.region_code;
+                    cbArea2.Enabled = false;
+                    return;
+                }
+                cbArea2.Enabled = true;
+            }
+            else
+            {
+                if (currentTsCombbox.Name == "cbArea2")
+                {
+                    _regionName = selectDate.region_name;
+                    stStatus.Text = lbArea.Text = "当前选择发货地：" + selectDate.region_name;
+                    _regionCode = selectDate.region_code;
+                }
+                return;
+            }
+            var list = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == selectDate.region_id).ToList();
+            //await _context.AreaDataService.LoadAreaDatasAsync(selectDate.region_id);
+            foreach (var item in list)
+            {
+                updateCombbox.Items.Add(item);
+            }
+        }
+
+        /// <summary>
+        /// 验证分类是否选择
+        /// </summary>
+        /// <returns></returns>
+        bool CheckArea()
+        {
+            if (_regionCode == 0)
+            {
+                MessageBox.Show("还没有选择发货地哟^_^", "创业赚钱");
+                cbArea1.Focus();
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region 验证
         /// <summary>
         /// RadioButton Change事件
         /// </summary>
@@ -567,11 +619,11 @@ namespace TxoooProductUpload.UI.Main
             {
                 case "rbTypeNew":  //发布类型为新品
                     _new_old = Convert.ToInt32(rbTypeNew.Checked);
-                    stStatus.Text = "发布类型为新品：" + (_new_old == 1 ? "新品" : "二手");
+                    AppendLog("发布类型变更为：" + (_new_old == 1 ? "新品" : "二手"));
                     break;
                 case "rbVirtualTrue":  //是虚拟商品
                     _is_virtual = rbVirtualTrue.Checked;
-                    stStatus.Text = "是虚拟商品：" + (_is_virtual ? "是" : "不是");
+                    AppendLog("是否虚拟商品变更为：" + (_is_virtual ? "是" : "不是"));
 
                     if (_is_virtual)//如果是虚拟商品  包邮 和 退货 不可设置
                     {
@@ -584,7 +636,7 @@ namespace TxoooProductUpload.UI.Main
                     break;
                 case "rbPostageTrue":  //包邮
                     _product_ispostage = rbPostageTrue.Checked;
-                    stStatus.Text = "是否包邮：" + (_product_ispostage ? "包邮" : "不包邮");
+                    AppendLog("是否包邮变更为：" + (_product_ispostage ? "包邮" : "不包邮"));
 
                     if (_product_ispostage)//包邮则清空包邮设置
                     {
@@ -594,7 +646,7 @@ namespace TxoooProductUpload.UI.Main
                     break;
                 case "rbRefundTrue":  //支持7天无理由退货
                     _refund = Convert.ToInt32(rbRefundTrue.Checked);
-                    stStatus.Text = "是否支持7天无理由退货：" + (_refund == 1 ? "支持" : "不支持");
+                    AppendLog("是否支持7天无理由退货变更为：" + (_refund == 1 ? "支持" : "不支持"));
                     break;
             }
 
@@ -639,5 +691,6 @@ namespace TxoooProductUpload.UI.Main
             }
             return true;
         }
+        #endregion
     }
 }

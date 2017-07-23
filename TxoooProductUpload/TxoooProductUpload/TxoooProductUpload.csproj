@@ -11,9 +11,25 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\jsonZhang\Desktop\txooo7518\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -39,16 +55,38 @@
   <PropertyGroup>
     <StartupObject>TxoooProductUpload.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>5E2F60807D55E84E9EF8A74D4F8CB88F848E2A09</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>TxoooProductUpload_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSLib.Extension, Version=1.4.2.0, Culture=neutral, PublicKeyToken=61d6a007a0eb6994, processorArchitecture=MSIL">
-      <HintPath>..\packages\extension.fishlee.net.1.4.2.0\lib\net40\FSLib.Extension.dll</HintPath>
-    </Reference>
-    <Reference Include="FSLib.Network, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eb0741d7f117d5c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\network.fishlee.net.2.2.0.0\lib\net45\FSLib.Network.dll</HintPath>
+    <Reference Include="FSLib.Extension, Version=1.4.3.0, Culture=neutral, PublicKeyToken=61d6a007a0eb6994, processorArchitecture=MSIL">
+      <HintPath>..\packages\extension.fishlee.net.1.4.3.0\lib\net45\FSLib.Extension.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="FSLib.Network, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eb0741d7f117d5c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\network.fishlee.net.2.2.2.0\lib\net45\FSLib.Network.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleUpdater, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c532149a76b9a64b, processorArchitecture=MSIL">
+      <HintPath>..\packages\fishlee.net.simpleupdater.4.3.0.0\lib\net45\SimpleUpdater.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -66,17 +104,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ApiList.cs" />
+    <Compile Include="Common\AppConfig.cs" />
+    <Compile Include="Common\DbHelperOleDb.cs" />
     <Compile Include="Common\Parameters.cs" />
     <Compile Include="Common\ControlExpression.cs" />
     <Compile Include="Common\StringExpression.cs" />
+    <Compile Include="Common\Update.cs" />
     <Compile Include="Network\NetClient.cs" />
     <Compile Include="App.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\AreaDataService.cs" />
     <Compile Include="Service\ClassDataService.cs" />
+    <Compile Include="Service\CacheContext.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\CommonService.cs" />
-    <Compile Include="Service\Entities\1688SkuInfo.cs" />
+    <Compile Include="Service\Entities\SkuInfo.cs" />
     <Compile Include="Service\Entities\AreaInfo.cs" />
     <Compile Include="Service\Entities\ComboboxItem.cs" />
     <Compile Include="Service\Entities\ProductClassInfo.cs" />
@@ -120,6 +162,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="html\mTaobao.com" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -132,6 +175,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="txooo7518\" />
     <Folder Include="UI\ImageUpload\" />
   </ItemGroup>
   <ItemGroup>
@@ -156,8 +200,10 @@
     <None Include="Resources\vc-marker.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="data\txooo.mdb" />
     <Content Include="html\1688.html" />
     <Content Include="html\m.1688.html" />
+    <Content Include="html\mTmall.html" />
     <Content Include="html\taobao.html" />
     <Content Include="html\tmall.html" />
     <Content Include="pdf2word.ico" />
@@ -166,6 +212,18 @@
     <None Include="Resources\processon.ico" />
     <None Include="Resources\sync.ico" />
     <None Include="Resources\Postman.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -26,7 +26,7 @@ namespace TxoooProductUpload.Service
             NetClient = new NetClient();
             ApiList.IsTest = true;
         }
-        
+
         /// <summary>
         /// 获得当前使用的网络对象，每个网络对象都是会话关联的。
         /// </summary>
@@ -91,6 +91,7 @@ namespace TxoooProductUpload.Service
             LoginInfo = null;
             NetClient = new NetClient();
             IsLogined = false;
+
         }
 
         /// <summary>
@@ -109,17 +110,13 @@ namespace TxoooProductUpload.Service
             var loginData = new
             {
                 username = LoginInfo.UserName,
-                password = LoginInfo.Password
+                password = LoginInfo.Password.MD5().ToLower()
             };
+            //网页登录
+            var webResult = await NetClient.Create<LoginAsyncResult>(HttpMethod.Post, ApiList.MchWebLogin, ApiList.HostMch, data: LoginInfo).SendAsync();
 
-            var loginCheck = NetClient.Create<LoginAsyncResult>(
-                                            HttpMethod.Post,
-                                           ApiList.Login,
-                                           "https://mch.7518.cn/",
-                                           loginData
-               );
-
-
+            //app登陆
+            var loginCheck = NetClient.Create<LoginAsyncResult>(HttpMethod.Post, ApiList.Login, data: loginData);
             await loginCheck.SendAsync();
             if (!loginCheck.IsValid())
             {
@@ -130,7 +127,7 @@ namespace TxoooProductUpload.Service
             {
                 return new Exception(_token.msg);
             }
-            
+
             //登录好了。等等。。我们好像想拿到显示的中文名？
             //所以多加一个请求吧。
             var realNameCtx = NetClient.Create<WebResponseResult<MchInfo>>(
@@ -154,7 +151,7 @@ namespace TxoooProductUpload.Service
                 LoginInfo.DisplayName = "路人甲";
 
             IsLogined = true;
-
+            ApiList.Token = _token;
             return null;
         }
     }

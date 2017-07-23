@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<AuProject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <UpdateInfo>
+    <AppName>创业赚钱商家工具  - by iwenli</AppName>
+    <AppVersion>2.0.0.0</AppVersion>
+    <PublishUrl>http://iwenli.org</PublishUrl>
+    <ExecuteTimeout>0</ExecuteTimeout>
+    <TreatErrorAsNotUpdated>false</TreatErrorAsNotUpdated>
+    <PromptUserBeforeAutomaticUpgrade>true</PromptUserBeforeAutomaticUpgrade>
+    <AutoCloseSucceedWindow>true</AutoCloseSucceedWindow>
+    <Desc>修复问题#2 命令行打开的项目可能无法保存
+修复问题#5 命令行模式无法继续更新
+修复问题#6 特定情况下如果需要回滚，则只有显式被删除的文件被还原
+修复问题#7 多服务器模式下，如果不传递AppDirectory以及AppVersion参数将会导致抛出异常
+修复问题#8 多服务器模式下，如果服务器地址无法连接，则无法继续切换服务器
+增强功能#9 在VS中调试时，如果启用了VS宿主进程，则版本号会识别错误</Desc>
+    <DeleteMethod>None</DeleteMethod>
+    <PackageSize>0</PackageSize>
+    <ForceUpdate>false</ForceUpdate>
+    <Packages />
+    <HideBeforeExecuteWindow>false</HideBeforeExecuteWindow>
+    <HideAfterExecuteWindow>false</HideAfterExecuteWindow>
+    <MustUpdate>false</MustUpdate>
+    <AutoExitCurrentProcess>false</AutoExitCurrentProcess>
+    <AutoEndProcessesWithinAppDir>true</AutoEndProcessesWithinAppDir>
+    <AutoKillProcesses>false</AutoKillProcesses>
+    <RequreAdminstrorPrivilege>false</RequreAdminstrorPrivilege>
+  </UpdateInfo>
+  <DefaultFileVerificationLevel>Size Hash</DefaultFileVerificationLevel>
+  <DefaultUpdateMethod>VersionCompare</DefaultUpdateMethod>
+  <Files>
+    <ProjectItem>
+      <Path>bin\FSLib.Extension.dll</Path>
+      <UpdateMethod>VersionCompare</UpdateMethod>
+      <FileVerificationLevel>None</FileVerificationLevel>
+    </ProjectItem>
+    <ProjectItem>
+      <Path>bin\FSLib.Network.dll</Path>
+      <UpdateMethod>VersionCompare</UpdateMethod>
+      <FileVerificationLevel>None</FileVerificationLevel>
+    </ProjectItem>
+    <ProjectItem>
+      <Path>bin\log4net.dll</Path>
+      <UpdateMethod>VersionCompare</UpdateMethod>
+      <FileVerificationLevel>None</FileVerificationLevel>
+    </ProjectItem>
+    <ProjectItem>
+      <Path>bin\Newtonsoft.Json.dll</Path>
+      <UpdateMethod>VersionCompare</UpdateMethod>
+      <FileVerificationLevel>None</FileVerificationLevel>
+    </ProjectItem>
+    <ProjectItem>
+      <Path>TxoooProductUpload.exe</Path>
+      <UpdateMethod>VersionCompare</UpdateMethod>
+      <FileVerificationLevel>Version</FileVerificationLevel>
+    </ProjectItem>
+  </Files>
+  <ApplicationDirectory>uploadFile</ApplicationDirectory>
+  <DestinationDirectory>uploadPackage</DestinationDirectory>
+  <CreateCompatiblePackage>true</CreateCompatiblePackage>
+  <CompressPackage>true</CompressPackage>
+  <EnableIncreaseUpdate>true</EnableIncreaseUpdate>
+  <VersionUpdateSrc>C:\Users\jsonZhang\Desktop\txooo7518\uploadFile\TxoooProductUpload.exe</VersionUpdateSrc>
+  <PackageExtension>zip</PackageExtension>
+  <UseRandomPackageNaming>true</UseRandomPackageNaming>
+  <CleanBeforeBuild>true</CleanBeforeBuild>
+  <ComponentFlags />
+</AuProject>

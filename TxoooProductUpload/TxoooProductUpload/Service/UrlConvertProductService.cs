@@ -30,23 +30,34 @@ namespace TxoooProductUpload.Service
         public async Task<ProductResult> ProcessProduct(string productUrl)
         {
             Regex taobaoReg = new Regex("item.taobao.com");//淘宝url
-            Regex tianmaoReg = new Regex("detail.tmall.com");//天猫
+            Regex tmallReg = new Regex("detail.tmall.com");//天猫
             Regex aliReg = new Regex("detail.1688.com");//阿里巴巴
             Regex jdReg = new Regex("item.jd.com");//京东
 
             Regex mAliReg = new Regex("m.1688.com");//阿里巴巴手机
-
+            Regex mJdReg = new Regex("item.m.jd.com");//京东手机
+            Regex mTmallReg = new Regex("detail.m.tmall.com");//天猫手机
+            Regex mTaobaoReg = new Regex("h5.m.taobao.com/awp/core/detail.htm");// 淘宝无线
             if (taobaoReg.Match(productUrl).Success)
             {
-                return GetInfoByTaobaoUrl(productUrl);
+                var id = new Regex("id=(\\d+)&").Match(productUrl).Groups[1].Value;
+                return await GetInfoByTaobaoUrl("https://h5.m.taobao.com/awp/core/detail.htm?id="+ id);
             }
-            else if (tianmaoReg.Match(productUrl).Success)
+            else if (mTaobaoReg.Match(productUrl).Success)
             {
-                return GetInfoByTmallUrl(productUrl);
+                return await GetInfoByTaobaoUrl(productUrl);
+            }
+            else if (tmallReg.Match(productUrl).Success)
+            {
+                return await GetInfoByTmallUrl(productUrl.Replace("detail.tmall.com", "detail.m.tmall.com"));
+            }
+            else if (mTmallReg.Match(productUrl).Success)
+            {
+                return await GetInfoByTmallUrl(productUrl);
             }
             else if (aliReg.Match(productUrl).Success)
             {
-                return  await GetInfoByAli(productUrl.Replace("detail.1688.com", "m.1688.com"));
+                return await GetInfoByAli(productUrl.Replace("detail.1688.com", "m.1688.com"));
             }
             else if (mAliReg.Match(productUrl).Success)
             {
@@ -54,7 +65,11 @@ namespace TxoooProductUpload.Service
             }
             else if (jdReg.Match(productUrl).Success)
             {
-                return GetInfoByJd(productUrl);
+                return await GetInfoByJd(productUrl.Replace("item.jd.com", "item.m.jd.com/product"));
+            }
+            else if (mJdReg.Match(productUrl).Success)
+            {
+                return await GetInfoByJd(productUrl);
             }
             return null;
         }
@@ -165,52 +180,104 @@ namespace TxoooProductUpload.Service
         /// <summary>
         /// 根据天猫商品地址获取商品信息
         /// </summary>
-        ///<param name="TmallUrl">天猫地址</param>
+        ///<param name="url">天猫地址</param>
         /// <returns>商品实体信息</returns>
-        private ProductResult GetInfoByTmallUrl(string TmallUrl)
+        private async Task<ProductResult> GetInfoByTmallUrl(string url)
         {
-            ProductResult taoModel = new ProductResult();
-            string Imgstr, str = "";
-            str = GetStrByUrl(TmallUrl, "gb2312");
-            Regex myRegex = new Regex("(?<=descUrl\":\").+(?=\",\"fetchDcUrl\")");//指定其正则验证式
-            Regex imgaeRegex = new Regex("http://img.+60x60q90.jpg|https://img.+60x60q90.jpg|//img.+60x60q90.jpg");//商品图片
-            Regex detailimgRegex = new Regex("https://img\\S+jpg|http://img\\S+jpg");//商品详细图片
-            Regex ZkPriceRegex = new Regex("(?<=\"comboPrice\":\").+(?=\",\"defaultPromType\")");//折扣后价格
-            Regex PriceRegex = new Regex("(?<=\"reservePrice\":\").+(?=\",\"rootCatId\")");//默认价格
-            Regex shopNameRegex = new Regex("(?<=\"sellerNickName\":\").+(?=\",\"spuId\")");//店铺名称
-            Regex titleRegex = new Regex("(?<=\"title\":\").+(?=\",\"userId\":\")");
-            Regex PriceNowRegex = new Regex("");
+            ProductResult productModel = new ProductResult(ServiceContext);
+            string str = "";
+            var getTmallHtml = NetClient.Create<string>(HttpMethod.Get, url);
+            getTmallHtml.Request.AllowAutoRedirect = true;
+            await getTmallHtml.SendAsync();
+            if (!getTmallHtml.IsValid())
+            {
+                new Exception("未能提交请求");
+            }
+            str = getTmallHtml.Result;  //GetStrByUrl(url, "gb2312");//
+            Regex myRegex = new Regex("(?<=>商品图片</h3>)[\\s\\S]+?(?<=</div>\\s*</div>\\s*</div>)");//详情
+            Regex imgaeRegex = new Regex("(?<=src=\").+?(?=_640x640q50.jpg)");//商品主图
+            Regex detailimgRegex = new Regex("(?<=data-ks-lazyload=\").+?(?=\")");//商品详细图片
+            Regex priceRegex = new Regex("(?<=\"price\":\")\\d+\\.\\d{1,2}");    //售价
+            Regex shopNameRegex = new Regex("(?<=\"shop-t\">).+?(?=</div>)");//店铺名称
+            Regex titleRegex = new Regex("(?<=\"title\":\").+?(?=\",)");  //标题
+            Regex SKURegex = new Regex("(?<=skuName\":).+(?<=}]}])");  //SKU
+            Regex LocationRegex = new Regex("(?<=\"deliveryAddress\":\").+?(?=\",)");  //发货地
+            Regex SalesCountRegex = new Regex("(?<=\"sellCount\":).+?(?=,)");  //销量
+            Regex RateTotalsRegex = new Regex("(?<=\"rateCounts\":).+?(?=,)");  //评价
+
             string detailImg = myRegex.Match(str).Value;//从指定内容中匹配字符串
-            MatchCollection matchs = imgaeRegex.Matches(str, 0);
-            string imgUrl = "";
+            MatchCollection matchs = imgaeRegex.Matches(new Regex("(?=s-showcase)[\\s\\S]+?(?<=</div>\\s*</div>)").Match(str).Value, 0);
             foreach (Match mat in matchs)
             {
                 string tempmat = mat.Value;
-                //tempmat = "http:" + tempmat;
                 if (!tempmat.StartsWith("http"))
                 {
                     tempmat = "http:" + tempmat;
                 }
-                tempmat = tempmat.Replace("_60x60q90.jpg", "");
-                imgUrl += tempmat + "|";
+                if (!productModel.ThumImg.Contains(tempmat))
+                {
+                    productModel.ThumImg.Add(tempmat);
+                }
             }
-            string price = PriceRegex.Match(str).Value;
-            string shopname = shopNameRegex.Match(str).Value.UnicodeToString();
-            string title = titleRegex.Match(str).Value;
-            //imgUrl = "商品图片："+imgUrl.Substring(0,imgUrl.Length-12);
-            Imgstr = GetStrByUrl("http:" + detailImg, "gb2312").Substring(10);
-            MatchCollection matches1 = detailimgRegex.Matches(Imgstr, 0);
-            string DetailimgUrl = "";
+            //详情图片
+            productModel.DetailHtml = myRegex.Match(str).Value;
+            MatchCollection matches1 = detailimgRegex.Matches(productModel.DetailHtml, 0);
             foreach (Match mat in matches1)
             {
-                DetailimgUrl += mat.Value + "|";
+                string tempmat = mat.Value;
+                if (!tempmat.StartsWith("http"))
+                {
+                    tempmat = "http:" + tempmat;
+                }
+                if (!productModel.DetailImg.Contains(tempmat))
+                {
+                    productModel.DetailImg.Add(tempmat);
+                }
             }
-            taoModel.ProductName = title;
-            taoModel.ShopName = shopname;
-            taoModel.ProductPrice = price;
-            taoModel.Source = "天猫";
-            taoModel.SourceUrl = TmallUrl;
-            return taoModel;
+
+            productModel.SKUTmall = JsonConvert.DeserializeObject<List<SkuTmallInfo>>(SKURegex.Match(str.ToString()).Value);//SKU
+            //处理SKU图片
+            var skuColor = productModel.SKUTmall.FirstOrDefault(m => m.text.Contains("颜色"));
+            var colorImg = new Regex("(?<=skuPics\":{).*?(?=})").Match(str).Value;
+            if (skuColor != null)
+            {
+                string[] colorImgList;
+                if (colorImg.IsNullOrEmpty()) {
+                    colorImgList = new string[] { };
+                }
+                else {
+                    colorImgList = colorImg.Split(',');
+                }
+                //如果没有SKU图片  从主图拿
+                for (int i = 0; i < skuColor.values.Length; i++)
+                {
+                    var img = string.Empty;
+                    if (colorImgList.Length < skuColor.values.Length)
+                    {
+                        img = productModel.ThumImg.FirstOrDefault();
+                    }
+                    else
+                    {
+                        img = colorImgList.FirstOrDefault(m => m.Contains(skuColor.values[i].id)).Split(':')[2].Replace("\"", "");
+                    }
+                    if (!img.StartsWith("http"))
+                    {
+                        img = "http:" + img;
+                    }
+                    skuColor.values[i].image = img;
+                }
+            }
+
+            productModel.ProductName = titleRegex.Match(str.ToString()).Value;
+            productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
+            productModel.ProductPrice = priceRegex.Match(str.ToString()).Value;
+            productModel.Location = LocationRegex.Match(str.ToString()).Value;
+            productModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
+            productModel.RateTotals = RateTotalsRegex.Match(str.ToString()).Value;
+
+            productModel.Source = "天猫";
+            productModel.SourceUrl = url;
+            return productModel;
         }
         #endregion
 
@@ -218,40 +285,117 @@ namespace TxoooProductUpload.Service
         /// <summary>
         /// 根据淘宝商品地址获取商品信息
         /// </summary>
-        /// <param name="TaobaoUrl">淘宝商品地址</param>
+        /// <param name="url">淘宝商品地址</param>
         /// <returns>淘宝商品信息</returns>
-        private ProductResult GetInfoByTaobaoUrl(string TaobaoUrl)
+        private async Task<ProductResult> GetInfoByTaobaoUrl(string url)
         {
-            ProductResult taoModel = new ProductResult();
-            string Imgstr, str = "";
-            str = GetStrByUrl(TaobaoUrl, "gb2312");
-            Regex myRegex = new Regex("(?<=location\\.protocol===\'http:\' \\? \').+(?=' :)");//指定其正则验证式
-            Regex detailimgRegex = new Regex("https://img\\S+jpg|http://img\\S+jpg");//商品详细图片
-            Regex imgaeRegex = new Regex("(?<=auctionImages    : \\[).+(?=])");//商品图片
-            Regex PriceRegex = new Regex("(?<=price:).+(?=,)");//默认价格
-            Regex shopNameRegex = new Regex("(?<=shopName         : ').+(?=',)");//店铺名称
-            Regex titleRegex = new Regex("(?<=title.).+(?=-淘宝网)");//商品名称
-            string detailImg = myRegex.Match(str).Value.Replace("\"", "").Replace("'", "").Replace(":", "").Trim();//从指定内容中匹配字符串
-            string imgUrl = imgaeRegex.Match(str).Value;
-            MatchCollection matchs = imgaeRegex.Matches(str, 0);
-            imgUrl = imgUrl.Replace("\"", "").Replace(",", "|").Replace("//", "http://").Trim();
-            string price = PriceRegex.Match(str).Value;
-            string shopname = shopNameRegex.Match(str).Value.UnicodeToString();
-            string title = titleRegex.Match(str).Value;
-            //imgUrl = "商品图片："+imgUrl.Substring(0,imgUrl.Length-12);
-            Imgstr = GetStrByUrl("http:" + detailImg, "gb2312");
-            MatchCollection matches1 = detailimgRegex.Matches(Imgstr, 0);
-            string DetailimgUrl = "";
+            ProductResult productModel = new ProductResult(ServiceContext);
+            string str = "";
+            var getTmallHtml = NetClient.Create<string>(HttpMethod.Get, url);
+            getTmallHtml.Request.AllowAutoRedirect = true;
+            await getTmallHtml.SendAsync();
+            if (!getTmallHtml.IsValid())
+            {
+                new Exception("未能提交请求");
+            }
+            str = getTmallHtml.Result;  //GetStrByUrl(url, "gb2312");//
+            Regex myRegex = new Regex("(?<=>商品图片</h3>)[\\s\\S]+?(?<=</div>\\s*</div>\\s*</div>)");//详情
+            Regex imgaeRegex = new Regex("(?<=src=\").+?(?=_640x640q50.jpg)");//商品主图
+            Regex detailimgRegex = new Regex("(?<=data-ks-lazyload=\").+?(?=\")");//商品详细图片
+            Regex priceRegex = new Regex("(?<=\"price\":\")\\d+\\.\\d{1,2}");    //售价
+            Regex shopNameRegex = new Regex("(?<=\"shop-t\">).+?(?=</div>)");//店铺名称
+            Regex titleRegex = new Regex("(?<=\"title\":\").+?(?=\",)");  //标题
+            Regex SKURegex = new Regex("(?<=skuName\":).+(?<=}]}])");  //SKU
+            Regex LocationRegex = new Regex("(?<=\"deliveryAddress\":\").+?(?=\",)");  //发货地
+            Regex SalesCountRegex = new Regex("(?<=\"sellCount\":).+?(?=,)");  //销量
+            Regex RateTotalsRegex = new Regex("(?<=\"rateCounts\":).+?(?=,)");  //评价
+
+            //基本信息
+            //http://unszacs.m.taobao.com/h5/mtop.taobao.detail.getdetail/6.0/?api=mtop.taobao.detail.getdetail&type=jsonp&dataType=jsonp&callback=mtopjsonp1&data={"exParams":"{\"spm\":\"a230r.1.14.116.ebb2eb2xXnVyH\",\"id\":\"550019724604\",\"ns\":\"1\",\"abbucket\":\"3\"}","itemNumId":"550019724604"}
+            //http://unszacs.m.taobao.com/h5/mtop.taobao.detail.getdetail/6.0/?appKey=12574478&t=1500831036955&sign=4fcd89c8c775d3775777c102b95f32d3&api=mtop.taobao.detail.getdetail&v=6.0&ttid=2016%40taobao_h5_2.0.0&isSec=0&ecode=0&AntiFlood=true&AntiCreep=true&H5Request=true&type=jsonp&dataType=jsonp&callback=mtopjsonp1&data=%7B%22exParams%22%3A%22%7B%5C%22spm%5C%22%3A%5C%22a230r.1.14.116.ebb2eb2xXnVyH%5C%22%2C%5C%22id%5C%22%3A%5C%22550019724604%5C%22%2C%5C%22ns%5C%22%3A%5C%221%5C%22%2C%5C%22abbucket%5C%22%3A%5C%223%5C%22%7D%22%2C%22itemNumId%22%3A%22550019724604%22%7D
+            //详情
+            //http://acs.m.taobao.com/h5/mtop.wdetail.getitemdescx/4.1/?appKey=12574478&t=1500831037700&sign=406d6b4389a051641ef2813dc96c4837&api=mtop.wdetail.getItemDescx&v=4.1&isSec=0&ecode=0&H5Request=true&type=jsonp&dataType=jsonp&callback=mtopjsonp1&data=%7B%22item_num_id%22%3A%22550019724604%22%2C%22type%22%3A%220%22%7D
+
+
+            //http://acs.m.taobao.com/h5/mtop.wdetail.getitemdescx/4.1/?appKey=12574478&t=1500832287064&sign=9d5876b51efe0c0544fb80a768d6b611&api=mtop.wdetail.getItemDescx&v=4.1&isSec=0&ecode=0&H5Request=true&type=jsonp&dataType=jsonp&callback=mtopjsonp1&data=%7B%22item_num_id%22%3A%22550019724604%22%2C%22type%22%3A%220%22%7D
+            //http://acs.m.taobao.com/h5/mtop.wdetail.getitemdescx/4.1/?appKey=12574478&t=1500832478815&sign=1ad1c7e3d10a35911609dd9c1ccd0087&api=mtop.wdetail.getItemDescx&v=4.1&isSec=0&ecode=0&H5Request=true&type=jsonp&dataType=jsonp&callback=mtopjsonp1&data=%7B%22item_num_id%22%3A%22550019724604%22%2C%22type%22%3A%220%22%7D
+            //21281452        c211167c6bd43f3a2971fc66836a4ed3
+
+            string detailImg = myRegex.Match(str).Value;//从指定内容中匹配字符串
+            MatchCollection matchs = imgaeRegex.Matches(new Regex("(?=s-showcase)[\\s\\S]+?(?<=</div>\\s*</div>)").Match(str).Value, 0);
+            foreach (Match mat in matchs)
+            {
+                string tempmat = mat.Value;
+                if (!tempmat.StartsWith("http"))
+                {
+                    tempmat = "http:" + tempmat;
+                }
+                if (!productModel.ThumImg.Contains(tempmat))
+                {
+                    productModel.ThumImg.Add(tempmat);
+                }
+            }
+            //详情图片
+            productModel.DetailHtml = myRegex.Match(str).Value;
+            MatchCollection matches1 = detailimgRegex.Matches(productModel.DetailHtml, 0);
             foreach (Match mat in matches1)
             {
-                DetailimgUrl += mat.Value + "|";
+                string tempmat = mat.Value;
+                if (!tempmat.StartsWith("http"))
+                {
+                    tempmat = "http:" + tempmat;
+                }
+                if (!productModel.DetailImg.Contains(tempmat))
+                {
+                    productModel.DetailImg.Add(tempmat);
+                }
             }
-            taoModel.ProductName = title;
-            taoModel.ShopName = shopname;
-            taoModel.ProductPrice = price;
-            taoModel.Source = "淘宝";
-            taoModel.SourceUrl = TaobaoUrl;
-            return taoModel;
+
+            productModel.SKUTmall = JsonConvert.DeserializeObject<List<SkuTmallInfo>>(SKURegex.Match(str.ToString()).Value);//SKU
+            //处理SKU图片
+            var skuColor = productModel.SKUTmall.FirstOrDefault(m => m.text.Contains("颜色"));
+            var colorImg = new Regex("(?<=skuPics\":{).*?(?=})").Match(str).Value;
+            if (skuColor != null)
+            {
+                string[] colorImgList;
+                if (colorImg.IsNullOrEmpty())
+                {
+                    colorImgList = new string[] { };
+                }
+                else
+                {
+                    colorImgList = colorImg.Split(',');
+                }
+                //如果没有SKU图片  从主图拿
+                for (int i = 0; i < skuColor.values.Length; i++)
+                {
+                    var img = string.Empty;
+                    if (colorImgList.Length < skuColor.values.Length)
+                    {
+                        img = productModel.ThumImg.FirstOrDefault();
+                    }
+                    else
+                    {
+                        img = colorImgList.FirstOrDefault(m => m.Contains(skuColor.values[i].id)).Split(':')[2].Replace("\"", "");
+                    }
+                    if (!img.StartsWith("http"))
+                    {
+                        img = "http:" + img;
+                    }
+                    skuColor.values[i].image = img;
+                }
+            }
+
+            productModel.ProductName = titleRegex.Match(str.ToString()).Value;
+            productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
+            productModel.ProductPrice = priceRegex.Match(str.ToString()).Value;
+            productModel.Location = LocationRegex.Match(str.ToString()).Value;
+            productModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
+            productModel.RateTotals = RateTotalsRegex.Match(str.ToString()).Value;
+
+            productModel.Source = "淘宝";
+            productModel.SourceUrl = url;
+            return productModel;
         }
         #endregion
 
@@ -259,16 +403,15 @@ namespace TxoooProductUpload.Service
         /// <summary>
         /// 根据阿里巴巴商品地址获取商品信息
         /// </summary>
-        /// <param name="AliUrl"></param>
+        /// <param name="url"></param>
         /// <returns></returns>
-        public async Task<ProductResult>  GetInfoByAli(string AliUrl)
+        private async Task<ProductResult> GetInfoByAli(string url)
         {
-            ProductResult taoModel = new ProductResult(ServiceContext);
+            ProductResult productModel = new ProductResult(ServiceContext);
             StringBuilder str = new StringBuilder();
-            string Imgstr = "";
 
             #region 发送请求 获取页面HTML
-            var getAliHtml = NetClient.Create<string>(HttpMethod.Get, AliUrl);
+            var getAliHtml = NetClient.Create<string>(HttpMethod.Get, url);
             await getAliHtml.SendAsync();
             if (!getAliHtml.IsValid())
             {
@@ -282,16 +425,16 @@ namespace TxoooProductUpload.Service
             //Regex imgaeRegex = new Regex("https://\\S+?.alicdn.com/.+?.310.jpg|http://\\S?+.alicdn.com/.+?.310.jpg|//\\S+?.alicdn.com/.+?.310.jpg");//商品主图
             Regex detailimgRegex = new Regex("https://\\S+.alicdn.com\\S+jpg|http://\\S+.alicdn.com\\S+jpg|//\\S+.alicdn.com\\S+jpg");//商品详细图片
             //Regex ZkPriceRegex = new Regex("(?<=\"discountPriceRanges\":[{\"price\":\").+(?=\",\"convertPrice\")");//折扣后价格
-            Regex PriceRegex = new Regex("(?<=\"discountPriceRanges\":\\[{\"price\":\").+?(?=\",\"convertPrice\")");//原价
-            //Regex PriceRegex = new Regex("(?<=\"discountPrice\":\").+?(?=\",)");//售价
+            //Regex PriceRegex = new Regex("(?<=\"discountPriceRanges\":\\[{\"price\":\").+?(?=\",\"convertPrice\")");//原价
+            Regex priceRegex = new Regex("(?<=\"price\":\").+?(?=\",)");//售价
             Regex shopNameRegex = new Regex("(?<=\"companyName\":\").+?(?=\",)");//店铺名称
             Regex titleRegex = new Regex("(?<=\"subject\":\").+?(?=\",)");  //标题
             Regex SKURegex = new Regex("(?<=\"skuProps\":).+(?=,\"subject\")");  //SKU
             Regex LocationRegex = new Regex("(?<=\"location\":\").+?(?=\",)");  //发货地
-            Regex SalesCountRegex = new Regex("(?<=\"saleCount\":\").+?(?=\"})");  //销量
-            Regex RateTotalsRegex = new Regex("(?<=\"rateTotals\":\").+?(?=\",)");  //销量
+            Regex SalesCountRegex = new Regex("(?<=\"saledCount\":\").+?(?=\",)");  //销量
+            Regex RateTotalsRegex = new Regex("(?<=\"rateTotals\":\").+?(?=\",)");  //评价
             //主图
-            MatchCollection matchs = imgaeRegex.Matches(str.ToString(), 0); 
+            MatchCollection matchs = imgaeRegex.Matches(str.ToString(), 0);
             foreach (Match mat in matchs)
             {
                 string tempmat = mat.Value;
@@ -300,14 +443,14 @@ namespace TxoooProductUpload.Service
                     tempmat = "http:" + tempmat;
                 }
                 tempmat = tempmat.Replace(".310x310", "");
-                if (!taoModel.ThumImg.Contains(tempmat))
+                if (!productModel.ThumImg.Contains(tempmat))
                 {
-                    taoModel.ThumImg.Add(tempmat);
+                    productModel.ThumImg.Add(tempmat);
                 }
-            }  
+            }
             //详情图片
-            Imgstr = NetClient.Create<string>(HttpMethod.Get, myRegex.Match(str.ToString()).Value).Send().Result;   //GetStrByBorwserUrl(detailImg).ToString();
-            MatchCollection matches1 = detailimgRegex.Matches(Imgstr, 0); 
+            productModel.DetailHtml = NetClient.Create<string>(HttpMethod.Get, myRegex.Match(str.ToString()).Value).SendAsync().Result;   //GetStrByBorwserUrl(detailImg).ToString();
+            MatchCollection matches1 = detailimgRegex.Matches(productModel.DetailHtml, 0);
             foreach (Match mat in matches1)
             {
                 string tempmat = mat.Value;
@@ -315,22 +458,23 @@ namespace TxoooProductUpload.Service
                 {
                     tempmat = "http:" + tempmat;
                 }
-                if (!taoModel.DetailImg.Contains(tempmat))
+                if (!productModel.DetailImg.Contains(tempmat))
                 {
-                    taoModel.DetailImg.Add( tempmat);
+                    productModel.DetailImg.Add(tempmat);
                 }
             }
-            
-            taoModel.SKU = JsonConvert.DeserializeObject<List<Sku1688Info>>(SKURegex.Match(str.ToString()).Value);//SKU
-            taoModel.ProductName = titleRegex.Match(str.ToString()).Value;
-            taoModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
-            taoModel.ProductPrice = PriceRegex.Match(str.ToString()).Value;
-            taoModel.Location = LocationRegex.Match(str.ToString()).Value;
-            taoModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
-            taoModel.Source = "阿里巴巴";
-            taoModel.SourceUrl = AliUrl; 
+
+            productModel.SKU1688 = JsonConvert.DeserializeObject<List<Sku1688Info>>(SKURegex.Match(str.ToString()).Value);//SKU
+            productModel.ProductName = titleRegex.Match(str.ToString()).Value;
+            productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
+            productModel.ProductPrice = priceRegex.Match(str.ToString()).Value;
+            productModel.Location = LocationRegex.Match(str.ToString()).Value;
+            productModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
+            productModel.RateTotals = RateTotalsRegex.Match(str.ToString()).Value;
+            productModel.Source = "阿里巴巴";
+            productModel.SourceUrl = url;
             #endregion
-            return taoModel;
+            return productModel;
         }
         #endregion
 
@@ -338,41 +482,69 @@ namespace TxoooProductUpload.Service
         /// <summary>
         /// 根据京东商品地址获取商品信息
         /// </summary>
-        /// <param name="JdUrl"></param>
+        /// <param name="url"></param>
         /// <returns></returns>
-        public ProductResult GetInfoByJd(string JdUrl)
+        private async Task<ProductResult> GetInfoByJd(string url)
         {
-            ProductResult taoModel = new ProductResult();
-            string Imgstr, str = "";
-            str = GetStrByUrl(JdUrl, "gb2312");
-            Regex titleRegex = new Regex("(?<=title.).+(?=-京东)");//商品名称
-            Regex imgRegex = new Regex("(?<=data-url=')\\S+.jpg|(?<=data-url=')\\S+.png");//获取商品图片
-            Regex detailImgRegex = new Regex("(?<=desc: ')\\S+(?=',)");//商品详细图片地址
-            Regex dImgRegex = new Regex("//\\S+.jpg|//\\S+.png");//所有详细图片
+            ProductResult productModel = new ProductResult(ServiceContext);
+            string str = "";
+            var getJdHtml = NetClient.Create<string>(HttpMethod.Get, url);
+            await getJdHtml.SendAsync();
+            if (!getJdHtml.IsValid())
+            {
+                new Exception("未能提交请求");
+            }
+            str = getJdHtml.Result;
 
-            string imgUrl = "";
+            Regex titleRegex = new Regex("(?<=name=\"goodName\" value=\").+(?=\")");//商品名称
+            Regex imgRegex = new Regex("(?<=imgsrc=\")\\S+?.jpg(?=!q70.jpg)");//获取商品图片
+            Regex detailImgRegex = new Regex("(?<=desc: ')\\S+(?=',)");//商品详细图片地址
+            Regex dImgRegex = new Regex("(?<=src=\")\\S+.jpg|\\S+.png");//所有详细图片
+            Regex PriceRegex = new Regex("(?<=name=\"jdPrice\" value=\").+(?=\")");//售价
+            Regex shopNameRegex = new Regex("(?<=\"name\":\").+?(?=\",)");
+            Regex sKURegex = new Regex("(?<=\"skuColorSizeJson\":\").+(?=\",\"specSet)");
+            Regex salesCountRegex = new Regex("(?<=\"allCnt\":\").+?(?=\",)");
+
+            //https://item.m.jd.com/newComments/newCommentsDetail.json   //评价 POST
+            //https://item.m.jd.com/ware/getDetailCommentList.json?wareId=2962435  //评价
+            //https://item.m.jd.com/ware/detail.json?wareId=2962435  详情
+            //https://item.m.jd.com/ware/getSpecInfo.json?sid=a478e51bbe06746e0484fbf4baf137c8&wareId=11241122359&yanbaoIds= SKU
+            //主图
             MatchCollection mact = imgRegex.Matches(str);
             foreach (Match mt in mact)
             {
-                imgUrl += string.Concat("http://img13.360buyimg.com/n0/", mt.Value, "|");
+                productModel.ThumImg.Add(mt.Value);
             }
-            string title = titleRegex.Match(str).Value;
 
-            string detailImg = detailImgRegex.Match(str).Value;
+            //productid
+            var productId = new Regex("(?<=product/)[0-9]+(?=.html)").Match(url).Value;
+            var detailInfo = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/detail.json?wareId=" + productId).Send().Result;
+            var rateInfo = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/getDetailCommentList.json?wareId=" + productId).Send().Result;
 
-            Imgstr = GetStrByUrl("http:" + detailImg, "gb2312");
-            MatchCollection matches1 = dImgRegex.Matches(Imgstr, 0);
-            string DetailimgUrl = "";
+            productModel.DetailHtml = Regex.Unescape(new Regex("(?<=\"wdis\":\").+?(?=\",)").Match(detailInfo).Value);
+            MatchCollection matches1 = dImgRegex.Matches(productModel.DetailHtml, 0);
             foreach (Match mat in matches1)
             {
-                DetailimgUrl += string.Concat("http:", mat.Value, "|");
+                productModel.DetailImg.Add(mat.Value);
             }
-            taoModel.ProductName = title;
-            taoModel.ProductPrice = "";
-            taoModel.ShopName = "";
-            taoModel.Source = "京东";
-            taoModel.SourceUrl = JdUrl;
-            return taoModel;
+
+            productModel.SKUJD = JsonConvert.DeserializeObject<SkuJdInfo>(Regex.Unescape(sKURegex.Match(detailInfo.ToString()).Value));   //SKU
+            foreach (var item in productModel.SKUJD.colorSize)
+            {
+                var skuImgDetail = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/getSpecInfo.json?wareId=" + productId).Send().Result;
+                item.image = new Regex("(?<=\"wareMainImageUrl\":\").+?(?=\",)").Match(Regex.Unescape(skuImgDetail)).Value.Replace("!q70.jpg", "");
+            }
+
+            productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(detailInfo).Value);
+            productModel.ShopName = productModel.ShopName.IsNullOrEmpty() ? "自营" : productModel.ShopName;
+            productModel.ProductPrice = PriceRegex.Match(str).Value;
+            //productModel.Location = LocationRegex.Match(str.ToString()).Value;
+            productModel.SalesCount = salesCountRegex.Match(rateInfo.ToString()).Value;
+            productModel.RateTotals = productModel.SalesCount;
+            productModel.ProductName = titleRegex.Match(str).Value;
+            productModel.Source = "京东";
+            productModel.SourceUrl = url;
+            return productModel;
         }
         #endregion
 

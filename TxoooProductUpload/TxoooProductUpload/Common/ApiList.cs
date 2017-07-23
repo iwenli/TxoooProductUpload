@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TxoooProductUpload.Service.Entities.Web;
 
 namespace TxoooProductUpload.Common
 {
@@ -14,6 +15,20 @@ namespace TxoooProductUpload.Common
         #region 基础
         private static bool _isTest = false;
         private static bool _isHttps = true;
+        private static LoginAsyncResult _token = new LoginAsyncResult();
+
+        /// <summary>
+        /// App Token
+        /// </summary>
+        public static LoginAsyncResult Token
+        {
+            set
+            {
+                _token = value;
+            }
+            get { return _token; }
+        }
+
         /// <summary>
         /// 是否测试环境
         /// </summary>
@@ -37,15 +52,51 @@ namespace TxoooProductUpload.Common
             get { return _isHttps; }
         }
         /// <summary>
-        /// 当前api的Host
+        /// 当前app-api的Host
         /// </summary>
-        public static string Host
+        public static string HostApp
         {
             get
             {
                 return
                     (_isHttps ? @"https://" : @"http://") +
                     (_isTest ? @"apimchtest.7518.cn/" : @"api.7518.cn/");
+            }
+        }
+
+        /// <summary>
+        /// 当前mch-api的Host
+        /// </summary>
+        public static string HostMch
+        {
+            get
+            {
+                return
+                    (_isHttps ? @"https://" : @"http://") +
+                    (_isTest ? @"testmch.7518.cn/" : @"mch.7518.cn/");
+            }
+        }
+
+        /// <summary>
+        /// 当前web-api的Host
+        /// </summary>
+        public static string HostWeb
+        {
+            get
+            {
+                return
+                    (_isHttps ? @"https://" : @"http://") +
+                    (_isTest ? @"1.t.7518.cn/" : @"1.u.7518.cn/");
+            }
+        }
+        /// <summary>
+        /// app Token字符串
+        /// </summary>
+        public static string AppToken
+        {
+            get
+            {
+                return string.Format(@"?userid={0}&token={1}", _token.userid, _token.token);
             }
         }
         #endregion
@@ -57,10 +108,19 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return Host + @"App/MchInfo.mch/Login";
+                return HostApp + @"App/MchInfo.mch/Login";
             }
         }
-
+        /// <summary>
+        /// 商户Web登陆
+        /// </summary>
+        public static string MchWebLogin
+        {
+            get
+            {
+                return HostMch + @"Txooo/Sales/Mch/Passport/Ajax/MchAjax.ajax/LoginV2";
+            }
+        }
         /// <summary>
         /// 获取商户信息
         /// </summary>
@@ -68,7 +128,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return Host + @"App/Account.mch/GetMchStateInfo";
+                return HostApp + @"App/Account.mch/GetMchStateInfo";
             }
         }
 
@@ -79,7 +139,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return Host + @"App/Product.mch/GetArea";
+                return HostApp + @"App/Product.mch/GetArea";
             }
         }
 
@@ -90,7 +150,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return Host + @"App/Helper.api/UpdateImgFile";
+                return HostApp + @"App/Helper.api/UpdateImgFile";
             }
         }
 
@@ -101,8 +161,18 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                // return Host + @"App/Helper.api/UpdateImgFile";
-                return (_isHttps ? @"https://" : @"http://") + @"1.t.7518.cn/Txooo/SalesV2/Shop/Ajax/ShopOpenAjax.ajax/GetProductClassByParentIdV3";
+                return HostWeb + @"Txooo/SalesV2/Shop/Ajax/ShopOpenAjax.ajax/GetProductClassByParentIdV3";
+            }
+        }
+
+        /// <summary>
+        /// 获取商品全部分类
+        /// </summary>
+        public static string GetAllProductClassV2
+        {
+            get
+            {
+                return HostMch + @"Txooo/Sales/Mch/Product/Ajax/ProductAjax.ajax/GetAllProductClassV2";
             }
         }
 
@@ -113,7 +183,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return @"http://lapi.7518.cn/App/Product.mch/AddProduct4";
+                return HostApp + @"App/Product.mch/AddProduct4" + AppToken;
             }
         }
     }

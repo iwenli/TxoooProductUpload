@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TxoooProductUpload.Common;
 using TxoooProductUpload.Service.Entities;
 
@@ -46,6 +47,31 @@ namespace TxoooProductUpload.Service
 
             //等待任务完成
             return await stCtx.SendAsync();
+        }
+
+        /// <summary>
+        /// 获取所有分类
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ProductClassInfo>> GetAllProductClass()
+        {
+            var stCtx = ServiceContext.Session.NetClient
+                                .Create<List<ProductClassInfo>>(HttpMethod.Get, ApiList.GetAllProductClassV2, ApiList.HostMch);
+            try
+            {
+                //等待任务完成
+                await stCtx.SendAsync();
+                if (!stCtx.IsValid())
+                {
+                    new Exception("ClassDataService未能提交请求GetAllProductClass");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+            return stCtx.Result;
         }
     }
 }
