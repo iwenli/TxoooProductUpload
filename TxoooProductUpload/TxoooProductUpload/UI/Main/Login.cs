@@ -22,8 +22,8 @@ namespace TxoooProductUpload.UI.Main
             InitializeComponent();
             this.txtUserName.SetHintText("请输入注册手机号");
 
-            txtUserName.Text = "18310807769";
-            txtPassword.Text = "000";
+            //txtUserName.Text = "18310807769";
+            //txtPassword.Text = "000";
 
             cbIsTest.CheckedChanged += (s, e) =>
             {

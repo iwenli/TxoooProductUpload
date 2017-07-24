@@ -368,7 +368,7 @@ namespace TxoooProductUpload.UI.Main
                             foreach (var item in _result.DetailImg)
                             {
                                 BeginOperation(string.Format("正在处理第[{0}]张详情图片...", index), 0, true);
-                                detailList.Add(string.Format("<p></p><img src=\"{0}\">", await _context.CommonService.UploadImg(item)));
+                                detailList.Add(string.Format("<p></p><img src=\"{0}\" />", await _context.CommonService.UploadImg(item)));
                                 EndOperation(string.Format("第[{0}]张详情图片护理完成...", index++));
                             }
                             _result.product_details = detailList.Join("");
