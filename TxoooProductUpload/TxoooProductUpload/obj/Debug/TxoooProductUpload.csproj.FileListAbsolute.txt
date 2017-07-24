@@ -64,3 +64,6 @@ F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\
 F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.application
 F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.exe
 F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.pdb
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\bin\Debug\data\txooo.mdb
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.UI.FormBase.resources
+E:\1开发\编码\doNet\0.myself\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Debug\TxoooProductUpload.UI.Main.Comment.resources

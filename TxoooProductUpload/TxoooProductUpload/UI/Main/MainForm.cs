@@ -86,8 +86,9 @@ namespace TxoooProductUpload.UI.Main
         {
             tsExit.Click += (s, e) => Close();
             tsLogin.Enabled = !(tsImgManage.Enabled =
-                tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled =
+                tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled = tsComment.Enabled =
                tsLogout.Enabled = _context.Session.IsLogined);
+            tsComment.Click += (s, e) => { new Comment(_context).ShowDialog(this); };
             tsLogin.Click += Login;
             tsLogout.Click += Logout;
             this.txtOneKeyUrl.SetHintText("请输入天猫、淘宝、京东、阿里巴巴等商品链接");
@@ -103,7 +104,10 @@ namespace TxoooProductUpload.UI.Main
         void Login(object sender, EventArgs e)
         {
             AppendLog("登录中...");
-            new Login(_context).ShowDialog(this);
+            if (new Login(_context).ShowDialog(this) != DialogResult.OK)
+            {
+                AppendLog("登录取消...");
+            }
         }
         /// <summary>
         /// 注销
@@ -113,25 +117,33 @@ namespace TxoooProductUpload.UI.Main
         void Logout(object sender, EventArgs e)
         {
             //清空数据
-            foreach (Control ctl in gbArea.Controls)
-            {
-                if (ctl is ComboBox)
-                {
-                    ctl.Text = string.Empty;
-                    (ctl as ComboBox).DataSource = null;
-                }
-            }
-            foreach (Control ctl in gbClass.Controls)
-            {
-                if (ctl is ComboBox)
-                {
-                    ctl.Text = string.Empty;
-                    (ctl as ComboBox).DataSource = null;
-                }
-            }
-            txtLog.Text = string.Empty;
+            //foreach (Control ctl in gbArea.Controls)
+            //{
+            //    if (ctl is ComboBox)
+            //    {
+            //        var combobox = ctl as ComboBox;
+            //        if (combobox.DataSource != null)
+            //        {
+            //            combobox.DataSource = null;
+            //        }
+            //    }
+            //}
+            //foreach (Control ctl in gbClass.Controls)
+            //{
+            //    if (ctl is ComboBox)
+            //    {
+            //        var combobox = ctl as ComboBox;
+            //        if (combobox.DataSource != null)
+            //        {
+            //            combobox.DataSource = null;
+            //        }
+            //    }
+            //}
+            //txtLog.Text = string.Empty;
             _context.CacheContext.Save();
             _context.Session.Logout();
+
+            AppendLog("退出登录成功！");
         }
 
 
@@ -142,32 +154,29 @@ namespace TxoooProductUpload.UI.Main
         /// <param name="e"></param>
         async Task LoginedChanged()
         {
+            tsLogin.Enabled = !(tsImgManage.Enabled =
+             tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled = tsComment.Enabled =
+            tsLogout.Enabled = _context.Session.IsLogined);
+            tsLogin.Text = _context.Session.IsLogined ? string.Format("已登录为【{0} ({1})】", _context.Session.LoginInfo.DisplayName, _context.Session.LoginInfo.UserName) : "登录(&I)";
+            if (_context.Session.IsLogined)
             {
-                tsLogin.Enabled = !(tsImgManage.Enabled =
-                 tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled =
-                tsLogout.Enabled = _context.Session.IsLogined);
-                tsLogin.Text = _context.Session.IsLogined ? string.Format("已登录为【{0} ({1})】", _context.Session.LoginInfo.DisplayName, _context.Session.LoginInfo.UserName) : "登录(&I)";
-                if (_context.Session.IsLogined)
+                AppendLog("登录成功...");
+                AppendLog(tsLogin.Text);
+                try
                 {
-                    AppendLog("登录成功...");
-                    AppendLog(tsLogin.Text);
-                    try
-                    {
-                        BeginOperation("开始更新缓存数据...");
-                        await _context.CacheContext.Update(_context);
-                        //绑定combobox
-                        tsClass1.DataSource = _context.ClassDataService.RootClassList;
-                        cbArea1.DataSource = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == 1).ToList();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message);
-                    }
-                    finally
-                    {
-                        EndOperation("缓存更新完成...");
-                    }
-
+                    BeginOperation("开始更新缓存数据...");
+                    await _context.CacheContext.Update(_context);
+                    //绑定combobox
+                    tsClass1.DataSource = _context.ClassDataService.RootClassList;
+                    cbArea1.DataSource = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == 1).ToList();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    EndOperation("缓存更新完成...");
                 }
             }
         }
@@ -709,7 +718,6 @@ namespace TxoooProductUpload.UI.Main
                 case "rbPostageTrue":  //包邮
                     _product_ispostage = rbPostageTrue.Checked;
                     AppendLog("是否包邮变更为：" + (_product_ispostage ? "包邮" : "不包邮"));
-
                     if (_product_ispostage)//包邮则清空包邮设置
                     {
                         tbPostage.Value = tbappend.Value = tbLinit.Value = _postage = _append = _limit = 0;
@@ -764,5 +772,6 @@ namespace TxoooProductUpload.UI.Main
             return true;
         }
         #endregion
+
     }
 }
