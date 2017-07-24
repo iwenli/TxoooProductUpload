@@ -69,6 +69,7 @@ namespace TxoooProductUpload.Service
             DataRoot = PathUtility.Combine(root, "data");
             Directory.CreateDirectory(DataRoot);
             Cache = LoadData<Cache>("cacha.dat");
+            Cache.IsLine = !ApiList.IsTest;
         }
 
         /// <summary>
@@ -87,7 +88,8 @@ namespace TxoooProductUpload.Service
         public async Task Update(ServiceContext context)
         {
             if ((Cache.LastUpdateTime != null && Cache.LastUpdateTime.AddDays(1) < DateTime.Now)
-                || Cache.ProductClassList.Count == 0 || Cache.AreaList.Count == 0)
+                || Cache.ProductClassList.Count == 0 || Cache.AreaList.Count == 0
+                || !ApiList.IsTest != Cache.IsLine)
             {
                 Cache.ProductClassList.Clear();
                 Cache.AreaList.Clear();
@@ -106,6 +108,7 @@ namespace TxoooProductUpload.Service
                         Cache.AreaList.AddRange(childList);
                     }
                     Cache.LastUpdateTime = DateTime.Now;
+                    Cache.IsLine = !ApiList.IsTest;
                 }
                 catch (Exception EX)
                 {
@@ -169,6 +172,11 @@ namespace TxoooProductUpload.Service
         /// 最后一次更新缓存时间
         /// </summary>
         public DateTime LastUpdateTime { get; set; }
+
+        /// <summary>
+        /// 是否线上环境
+        /// </summary>
+        public bool IsLine { get; set; }
 
         public Cache()
         {

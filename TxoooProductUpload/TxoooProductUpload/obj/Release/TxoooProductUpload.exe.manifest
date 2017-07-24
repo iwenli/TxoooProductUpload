@@ -16,15 +16,15 @@
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
         <!--
           UAC 清单选项
-          如果要更改 Windows 用户帐户控制级别，请用以下节点之一替换
-          requestedExecutionLevel 节点。
+         若想要更改 Windows 用户帐户控制级别，请
+         将 requestedExecutionLevel 节点替换为下述某项。
 
-        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
-        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
-        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+       <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+       <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+       <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-          如果要利用文件和注册表虚拟化提供
-          向后兼容性，请删除 requestedExecutionLevel 节点。
+        若想要使用文件和注册表虚拟化以实现向后
+        兼容，请删除 requestedExecutionLevel 节点。
     -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
@@ -115,17 +115,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="245224">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="263680">
       <assemblyIdentity name="TxoooProductUpload" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PqbTg96y7C3bFalC0HAXSWlVsKLA3xdrO5gcJUBdn5o=</dsig:DigestValue>
+        <dsig:DigestValue>02s0faJKRj/SQQN9U+8I4ZczySkbDu4E61Qna5w6aJU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="data\txooo.mdb" size="1138688" writeableType="applicationData">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>33372FEWEP2HNaz+HGZJsB5U4Gk3vJUeVQivnf+Nn0c=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="html\1688.html" size="339539">
     <hash>
       <dsig:Transforms>
@@ -142,6 +151,24 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>NKR5IXltAd8VGiw4Kv5PD8vT6OSPnpY1MS028my94ng=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="html\mTaobao.html" size="4403">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>IU+RBU4qBGnnq6mo5ESp927v5vRoyKFaHLwKXj2UVXY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="html\mTmall.html" size="92292">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>gF4jzBTevMiEb0raRfwmYvfmCu+6WxZNYz22aB4AFmw=</dsig:DigestValue>
     </hash>
   </file>
   <file name="html\taobao.html" size="95965">
@@ -171,13 +198,13 @@
       <dsig:DigestValue>+1QQN8yqiioHADX/2o6y0xP0SAHpi3kREfINt7bzUN8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="TxoooProductUpload.exe.config" size="1235">
+  <file name="TxoooProductUpload.exe.config" size="1434">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>Tm6LmBaNi+FOa9jFl8xmYtTY4BYQc00prSNpCJNcjf0=</dsig:DigestValue>
+      <dsig:DigestValue>8uhNqdHLn1cDxI8e5qvS8IjM/5Bl2zXZ21bXZjchudA=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

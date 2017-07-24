@@ -60,7 +60,6 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(202, 21);
             this.txtUserName.TabIndex = 0;
-            this.txtUserName.Text = "18310807769";
             // 
             // txtPassword
             // 
@@ -69,7 +68,6 @@
             this.txtPassword.PasswordChar = '❤';
             this.txtPassword.Size = new System.Drawing.Size(202, 21);
             this.txtPassword.TabIndex = 1;
-            this.txtPassword.Text = "000";
             // 
             // btnOk
             // 

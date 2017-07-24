@@ -255,6 +255,9 @@ namespace TxoooProductUpload.Service.Entities
         public bool DiscernLcation()
         {
             var result = true;
+            if (Location.IsNullOrEmpty()) {
+                return false;
+            }
             var area = ServiceContext.CacheContext.Cache.AreaList.Where(
                 m => m.region_name.Contains(Location.Substring(Location.Length - 2))).FirstOrDefault();
             if (area != null)

@@ -20,6 +20,8 @@ namespace TxoooProductUpload.UI.Main
 
     public partial class MainForm : Form
     {
+        //h5.m.taobao.com/awp/core/detail.htm|item.taobao.com|
+        Regex urlReg = new Regex("detail.tmall.com|detail.m.tmall.com|detail.1688.com|item.jd.com|item.m.jd.com|m.1688.com");//url
         long _classId = 0;
         long _regionCode = 0;
         string _regionName = string.Empty;
@@ -116,7 +118,7 @@ namespace TxoooProductUpload.UI.Main
                 if (ctl is ComboBox)
                 {
                     ctl.Text = string.Empty;
-                    (ctl as ComboBox).Items.Clear();
+                    (ctl as ComboBox).DataSource = null;
                 }
             }
             foreach (Control ctl in gbClass.Controls)
@@ -124,7 +126,7 @@ namespace TxoooProductUpload.UI.Main
                 if (ctl is ComboBox)
                 {
                     ctl.Text = string.Empty;
-                    (ctl as ComboBox).Items.Clear();
+                    (ctl as ComboBox).DataSource = null;
                 }
             }
             txtLog.Text = string.Empty;
@@ -275,7 +277,7 @@ namespace TxoooProductUpload.UI.Main
         async Task ProcessProduct()
         {
             string productUrl = txtOneKeyUrl.Text.Trim();
-            productUrl = productUrl == "" ? "https://detail.tmall.com/item.htm?id=537253492455" : productUrl;
+            //productUrl = productUrl == "" ? "https://detail.tmall.com/item.htm?id=537253492455" : productUrl;
             //"https://detail.1688.com/offer/552578137902.html";
             //http://m.1688.com/offer/552578137902.html
 
@@ -291,7 +293,7 @@ namespace TxoooProductUpload.UI.Main
                 return;
             }
 
-            //if (!CheckClass() || !CheckArea() || !CheckBaseInfo()) { return; }
+            if (!CheckClass() || !CheckArea() || !CheckBaseInfo() || !CheckUrl(productUrl)) { return; }
 
             _result = null;
             int index = 0;
@@ -309,7 +311,6 @@ namespace TxoooProductUpload.UI.Main
             {
                 EndOperation(string.Format("解析商品完成,商品来源：{0}，开始上传主图", _result.Source));
             }
-            return;
 
             #region 上传
             if (_result != null)
@@ -327,8 +328,12 @@ namespace TxoooProductUpload.UI.Main
                         List<string> imgList = new List<string>();
                         index = 1;
                         //排除sku主图
-                        var skuImgs = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.imageUrl.IsNullOrEmpty()).Select(m => m.imageUrl).ToList();
-                        var thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
+                        var thumImg = _result.ThumImg;
+                        if (_result.Source == "阿里巴巴")
+                        {
+                            var skuImgs = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.imageUrl.IsNullOrEmpty()).Select(m => m.imageUrl).ToList();
+                            thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
+                        }
                         foreach (var item in thumImg)
                         {
                             BeginOperation(string.Format("正在上传第[{0}]张主图...", index), 0, true);
@@ -363,7 +368,7 @@ namespace TxoooProductUpload.UI.Main
                             foreach (var item in _result.DetailImg)
                             {
                                 BeginOperation(string.Format("正在处理第[{0}]张详情图片...", index), 0, true);
-                                detailList.Add(string.Format("<p></p><img src=\\\"{0}\\\">", await _context.CommonService.UploadImg(item)));
+                                detailList.Add(string.Format("<p></p><img src=\"{0}\">", await _context.CommonService.UploadImg(item)));
                                 EndOperation(string.Format("第[{0}]张详情图片护理完成...", index++));
                             }
                             _result.product_details = detailList.Join("");
@@ -384,21 +389,73 @@ namespace TxoooProductUpload.UI.Main
                     //0-编号 1-sku名称（颜色+尺码） 2-价格 3-图片 4-是否默认（id=0为默认）
                     string propertyFormat = "&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}=100&property_map_img_{0}={3}&radio_num_{0}=10&is_default_{0}={4}";
                     index = 0;
-                    var colorList = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value;
-                    BeginOperation("开始处理商品SKU...", colorList.Length, true);
-                    foreach (var colorItem in colorList)
+                    switch (_result.Source)
                     {
-                        string colorImg = _result.ThumImg.LastOrDefault();
-                        if (!colorItem.imageUrl.IsNullOrEmpty())
-                        {
-                            colorImg = await _context.CommonService.UploadImg(colorItem.imageUrl);
-                        }
-                        foreach (var sizeItem in _result.SKU1688.Where(m => m.prop == "尺码").FirstOrDefault().value)
-                        {
-                            var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
-                            _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
-                            AppendLog(name + "处理完成...");
-                        }
+                        case "阿里巴巴":
+                            {
+                                var colorList = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value;
+                                BeginOperation("开始处理商品SKU...", colorList.Length, true);
+                                foreach (var colorItem in colorList)
+                                {
+                                    string colorImg = _result.ThumImg.LastOrDefault();
+                                    if (!colorItem.imageUrl.IsNullOrEmpty())
+                                    {
+                                        colorImg = await _context.CommonService.UploadImg(colorItem.imageUrl);
+                                    }
+                                    foreach (var sizeItem in _result.SKU1688.Where(m => m.prop == "尺码").FirstOrDefault().value)
+                                    {
+                                        var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
+                                        _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
+                                        AppendLog(name + "处理完成...");
+                                    }
+                                }
+                            }
+                            break;
+                        case "京东":
+                            {
+                                var colorList = _result.SKUJD.colorSize;
+                                BeginOperation("开始处理商品SKU...", colorList.Count, true);
+                                foreach (var colorItem in colorList)
+                                {
+                                    string colorImg = _result.ThumImg.LastOrDefault();
+                                    if (!colorItem.image.IsNullOrEmpty())
+                                    {
+                                        colorImg = await _context.CommonService.UploadImg(colorItem.image);
+                                    }
+                                    var name = string.Format("{0}:{1} | {2}:{3}", _result.SKUJD.colorSizeTitle.colorName
+                                        , colorItem.color, _result.SKUJD.colorSizeTitle.sizeName, colorItem.size);
+                                    _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
+                                    AppendLog(name + "处理完成...");
+                                }
+                            }
+                            break;
+                        case "天猫":
+                            {
+                                var colorList = _result.SKUTmall;
+                                BeginOperation("开始处理商品SKU...", colorList.Count, true);
+                                if (colorList.Count != 2)
+                                {
+                                    new Exception("商品sku解析错误");
+                                    EndOperation("商品sku解析错误");
+                                    return;
+                                }
+                                foreach (var colorItem in colorList[1].values)
+                                {
+                                    foreach (var sizeitem in colorList[0].values)
+                                    {
+                                        string colorImg = _result.ThumImg.LastOrDefault();
+                                        if (!colorItem.image.IsNullOrEmpty())
+                                        {
+                                            colorImg = await _context.CommonService.UploadImg(colorItem.image);
+                                        }
+                                        var name = string.Format("{0}:{1} | {2}:{3}", colorList[1].text
+                                            , colorItem.text, colorList[0].text, sizeitem.text);
+                                        _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
+                                        AppendLog(name + "处理完成...");
+                                    }
+                                }
+                            }
+                            break;
                     }
                     EndOperation("SKU处理完成...");
                 }
@@ -456,7 +513,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 #endregion
                 EndOperation();
-            } 
+            }
             #endregion
         }
 
@@ -468,7 +525,7 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void ClipboardToTextBox()
         {
-            Regex urlReg = new Regex("h5.m.taobao.com/awp/core/detail.htm|item.taobao.com|detail.tmall.com|detail.m.tmall.com|detail.1688.com|item.jd.com|item.m.jd.com|m.1688.com");//url
+
             if (string.IsNullOrEmpty(txtOneKeyUrl.Text))
             {
                 string getTxt = Clipboard.GetText();
@@ -481,6 +538,21 @@ namespace TxoooProductUpload.UI.Main
             {
                 txtOneKeyUrl.SelectAll();
             }
+        }
+
+        /// <summary>
+        /// 验证url
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        bool CheckUrl(string url)
+        {
+            var result = urlReg.IsMatch(url);
+            if (!result)
+            {
+                MessageBox.Show("暂时只支持天猫，阿里巴巴，和京东！\n如有其他需求，请联系作者!");
+            }
+            return result;
         }
         #endregion
 

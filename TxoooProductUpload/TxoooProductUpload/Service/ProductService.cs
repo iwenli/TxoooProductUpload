@@ -51,7 +51,7 @@ namespace TxoooProductUpload.Service
             try
             {
                 DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertProduct, product.ProductName, product.Source, product.SourceUrl, product.ShopName,
-                 product.DetailHtml.Replace("'", "\'"), product.ProductPrice, product.product_property, product.Location, product.SalesCount == null ? "0" : product.SalesCount, product.RateTotals == null ? "0" : product.RateTotals, product.product_id,
+                 product.DetailHtml.Replace("'", "\""), product.ProductPrice, product.product_property, product.Location, product.SalesCount == null ? "0" : product.SalesCount, product.RateTotals == null ? "0" : product.RateTotals, product.product_id,
                  product.product_imgs, product.product_details, product.product_brand, ServiceContext.Session.Token.userid));
             }
             catch (Exception ex)

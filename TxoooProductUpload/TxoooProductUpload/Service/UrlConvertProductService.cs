@@ -199,8 +199,8 @@ namespace TxoooProductUpload.Service
             Regex detailimgRegex = new Regex("(?<=data-ks-lazyload=\").+?(?=\")");//商品详细图片
             Regex priceRegex = new Regex("(?<=\"price\":\")\\d+\\.\\d{1,2}");    //售价
             Regex shopNameRegex = new Regex("(?<=\"shop-t\">).+?(?=</div>)");//店铺名称
-            Regex titleRegex = new Regex("(?<=\"title\":\").+?(?=\",)");  //标题
-            Regex SKURegex = new Regex("(?<=skuName\":).+(?<=}]}])");  //SKU
+            Regex titleRegex = new Regex("(?<=<title>).+?(?= - 天猫Tmall.com)");  //标题
+            Regex SKURegex = new Regex("(?<=skuName\":).+?(?<=}]}])");  //SKU
             Regex LocationRegex = new Regex("(?<=\"deliveryAddress\":\").+?(?=\",)");  //发货地
             Regex SalesCountRegex = new Regex("(?<=\"sellCount\":).+?(?=,)");  //销量
             Regex RateTotalsRegex = new Regex("(?<=\"rateCounts\":).+?(?=,)");  //评价
@@ -499,7 +499,7 @@ namespace TxoooProductUpload.Service
             Regex titleRegex = new Regex("(?<=name=\"goodName\" value=\").+(?=\")");//商品名称
             Regex imgRegex = new Regex("(?<=imgsrc=\")\\S+?.jpg(?=!q70.jpg)");//获取商品图片
             Regex detailImgRegex = new Regex("(?<=desc: ')\\S+(?=',)");//商品详细图片地址
-            Regex dImgRegex = new Regex("(?<=src=\")\\S+.jpg|\\S+.png");//所有详细图片
+            Regex dImgRegex = new Regex("(?<=src=\")\\S+.jpg|(?<=src=\")\\S+.png");//所有详细图片
             Regex PriceRegex = new Regex("(?<=name=\"jdPrice\" value=\").+(?=\")");//售价
             Regex shopNameRegex = new Regex("(?<=\"name\":\").+?(?=\",)");
             Regex sKURegex = new Regex("(?<=\"skuColorSizeJson\":\").+(?=\",\"specSet)");
