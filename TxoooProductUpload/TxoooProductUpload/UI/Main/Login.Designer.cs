@@ -59,7 +59,7 @@
             this.txtUserName.Location = new System.Drawing.Point(69, 18);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(202, 21);
-            this.txtUserName.TabIndex = 0;
+            this.txtUserName.TabIndex = 1;
             // 
             // txtPassword
             // 
@@ -67,14 +67,14 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '❤';
             this.txtPassword.Size = new System.Drawing.Size(202, 21);
-            this.txtPassword.TabIndex = 1;
+            this.txtPassword.TabIndex = 2;
             // 
             // btnOk
             // 
             this.btnOk.Location = new System.Drawing.Point(169, 90);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(102, 33);
-            this.btnOk.TabIndex = 2;
+            this.btnOk.TabIndex = 0;
             this.btnOk.Text = "登录(&O)";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);

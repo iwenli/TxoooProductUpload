@@ -4,7 +4,7 @@
   <description asmv2:iconFile="pdf2word.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="TxoooProductUpload" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="TxoooProductUpload" version="1.0.1.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="TxoooProductUpload.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -115,14 +115,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="263680">
-      <assemblyIdentity name="TxoooProductUpload" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="321024">
+      <assemblyIdentity name="TxoooProductUpload" version="1.0.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8cQPBIQpB4oQLwqnDoirheRSp4WJzl65NfZXEAHsk4A=</dsig:DigestValue>
+        <dsig:DigestValue>hQBkuyDieeuamEsrl5gjpt0NGbl2MIjn1Uzb1obIpes=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -132,61 +132,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>33372FEWEP2HNaz+HGZJsB5U4Gk3vJUeVQivnf+Nn0c=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="html\1688.html" size="339539">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>zKHmhhM/4EFeT3/2JJZW1giPVGTOShpaZW1ekWjgAfI=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="html\m.1688.html" size="48637">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>NKR5IXltAd8VGiw4Kv5PD8vT6OSPnpY1MS028my94ng=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="html\mTaobao.html" size="4403">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>IU+RBU4qBGnnq6mo5ESp927v5vRoyKFaHLwKXj2UVXY=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="html\mTmall.html" size="92292">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>gF4jzBTevMiEb0raRfwmYvfmCu+6WxZNYz22aB4AFmw=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="html\taobao.html" size="95965">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>44ZoaN4CbtehCPYSHmPiKSyqlhl8EE4NLhUPPxm+jJo=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="html\tmall.html" size="77191">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>NrJ9eGoQQ1KgdVLTzqt7vAENOB4HHRcJRYK5CwRYQuw=</dsig:DigestValue>
+      <dsig:DigestValue>wDpF5iMbnTP/xf7/7pfY1IY/U225vQS8kMzlV/os90M=</dsig:DigestValue>
     </hash>
   </file>
   <file name="pdf2word.ico" size="112791">
@@ -205,6 +151,69 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>8uhNqdHLn1cDxI8e5qvS8IjM/5Bl2zXZ21bXZjchudA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Web\Html\1688.html" size="339539">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zKHmhhM/4EFeT3/2JJZW1giPVGTOShpaZW1ekWjgAfI=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Web\Html\m.1688.html" size="48637">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>NKR5IXltAd8VGiw4Kv5PD8vT6OSPnpY1MS028my94ng=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Web\Html\mTaobao.html" size="4403">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>IU+RBU4qBGnnq6mo5ESp927v5vRoyKFaHLwKXj2UVXY=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Web\Html\mTmall.html" size="92292">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>gF4jzBTevMiEb0raRfwmYvfmCu+6WxZNYz22aB4AFmw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Web\Html\taobao.html" size="95965">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>44ZoaN4CbtehCPYSHmPiKSyqlhl8EE4NLhUPPxm+jJo=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Web\Html\tmall.html" size="77191">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>NrJ9eGoQQ1KgdVLTzqt7vAENOB4HHRcJRYK5CwRYQuw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Web\Js\tmall_review.js" size="1666">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>EWl3G+0yIWa9JGh5NFwpKa0t4WbTrNuPZvzDr2FUKVs=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

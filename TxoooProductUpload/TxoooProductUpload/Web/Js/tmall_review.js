@@ -5,7 +5,7 @@ if (typeof getTmallReview != 'function') {
         var reviewContionar = document.getElementById('s-review');
         var reviewItem = reviewContionar.childNodes[0].childNodes[1].childNodes;
         for (var i = 0; i < reviewItem.length; i++) {
-            var reviewModel = {};
+            var reviewModel = { NickName: '', AddTime: Date(), ReviewContent: '', MchReplyContent: '', ReviewImgs: '' };
             reviewModel.NickName = reviewItem[i].querySelector('.nike').innerText; //昵称
             reviewModel.AddTime = reviewItem[i].querySelector('time').innerText; //评价时间
             reviewModel.ReviewContent = reviewItem[i].querySelector('blockquote').innerText; //评价内容
@@ -26,4 +26,9 @@ if (typeof getTmallReview != 'function') {
         return reviewModelList;
     }
 }
-console.log(JSON.stringify(getTmallReview()));
+if (typeof Reviews == 'undefined') {
+    var Reviews = {};
+}
+Reviews = getTmallReview();
+alert('抓取成功' + Reviews.length + '条评价')
+console.log(JSON.stringify(Reviews));

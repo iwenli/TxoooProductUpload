@@ -186,5 +186,28 @@ namespace TxoooProductUpload.Common
                 return HostApp + @"App/Product.mch/AddProduct4" + AppToken;
             }
         }
+
+        /// <summary>
+        /// 获取商品信息
+        /// </summary>
+        public static string GetProductInfo
+        {
+            get
+            {
+                return HostApp + @"App/ShopV2.api/getproductshop" + AppToken;
+            }
+        }
+
+        /// <summary>
+        /// 添加评价
+        /// </summary>
+        public static string AddProductCommnet
+        {
+            get
+            {
+                return HostApp + @"App/ShopV3.api/AddProductCommnet" + AppToken;
+            }
+        }
+
     }
 }

@@ -105,6 +105,7 @@
   <ItemGroup>
     <Compile Include="Common\ApiList.cs" />
     <Compile Include="Common\AppConfig.cs" />
+    <Compile Include="Common\ConstParams.cs" />
     <Compile Include="Common\DbHelperOleDb.cs" />
     <Compile Include="Common\Parameters.cs" />
     <Compile Include="Common\ControlExpression.cs" />
@@ -116,6 +117,9 @@
     <Compile Include="Service\AreaDataService.cs" />
     <Compile Include="Service\ClassDataService.cs" />
     <Compile Include="Service\CacheContext.cs" />
+    <Compile Include="Service\Entities\Commnet\ProductInfo.cs" />
+    <Compile Include="Service\Entities\Commnet\PropertyInfo.cs" />
+    <Compile Include="Service\Entities\Commnet\ReviewInfo.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\Entities\SkuInfo.cs" />
@@ -151,6 +155,7 @@
     <Compile Include="UI\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <None Include="updateList.md" />
     <None Include="Resources\msg.png" />
     <None Include="Resources\counseling_style_51.png" />
     <None Include="Resources\group.png" />
@@ -177,7 +182,6 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
-    <Content Include="html\mTaobao.html" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -218,12 +222,14 @@
     <Content Include="data\txooo.mdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="html\1688.html" />
-    <Content Include="html\m.1688.html" />
-    <Content Include="html\mTmall.html" />
-    <Content Include="html\taobao.html" />
-    <Content Include="html\tmall.html" />
     <Content Include="pdf2word.ico" />
+    <Content Include="Web\Html\1688.html" />
+    <Content Include="Web\Html\m.1688.html" />
+    <Content Include="Web\Html\mTaobao.html" />
+    <Content Include="Web\Html\mTmall.html" />
+    <Content Include="Web\Html\taobao.html" />
+    <Content Include="Web\Html\tmall.html" />
+    <Content Include="Web\Js\tmall_review.js" />
     <None Include="Resources\uploaded.ico" />
     <None Include="Resources\update.ico" />
     <None Include="Resources\processon.ico" />

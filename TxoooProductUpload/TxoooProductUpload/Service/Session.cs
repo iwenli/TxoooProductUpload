@@ -107,16 +107,22 @@ namespace TxoooProductUpload.Service
                 UserName = username,
                 Password = password
             };
-            var loginData = new
+            var webLoginData = new
+            {
+                userName = LoginInfo.UserName,
+                passWord = LoginInfo.Password
+            };
+            var apploginData = new
             {
                 username = LoginInfo.UserName,
                 password = LoginInfo.Password.MD5().ToLower()
             };
             //网页登录
-            var webResult = await NetClient.Create<LoginAsyncResult>(HttpMethod.Post, ApiList.MchWebLogin, ApiList.HostMch, data: LoginInfo).SendAsync();
+            var webResult = NetClient.Create<string>(HttpMethod.Post, ApiList.MchWebLogin, data: webLoginData);
+            webResult.Send();
 
             //app登陆
-            var loginCheck = NetClient.Create<LoginAsyncResult>(HttpMethod.Post, ApiList.Login, data: loginData);
+            var loginCheck = NetClient.Create<LoginAsyncResult>(HttpMethod.Post, ApiList.Login, data: apploginData);
             await loginCheck.SendAsync();
             if (!loginCheck.IsValid())
             {

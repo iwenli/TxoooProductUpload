@@ -37,6 +37,7 @@
             this.txtUrl = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.btnTmall = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.gbAction.SuspendLayout();
@@ -77,6 +78,7 @@
             // gbAction
             // 
             this.gbAction.Controls.Add(this.btnAddComments);
+            this.gbAction.Controls.Add(this.btnTmall);
             this.gbAction.Controls.Add(this.btnGetProductInfo);
             this.gbAction.Controls.Add(this.txtUrl);
             this.gbAction.Dock = System.Windows.Forms.DockStyle.Top;
@@ -128,11 +130,21 @@
             // 
             this.txtLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.ForeColor = System.Drawing.Color.Gray;
             this.txtLog.Location = new System.Drawing.Point(3, 19);
             this.txtLog.Name = "txtLog";
             this.txtLog.Size = new System.Drawing.Size(674, 188);
             this.txtLog.TabIndex = 0;
             this.txtLog.Text = "";
+            // 
+            // btnTmall
+            // 
+            this.btnTmall.Location = new System.Drawing.Point(249, 60);
+            this.btnTmall.Name = "btnTmall";
+            this.btnTmall.Size = new System.Drawing.Size(138, 39);
+            this.btnTmall.TabIndex = 2;
+            this.btnTmall.Text = "复制天猫抓取脚本(&T)";
+            this.btnTmall.UseVisualStyleBackColor = true;
             // 
             // Comment
             // 
@@ -142,6 +154,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -170,5 +183,6 @@
         private System.Windows.Forms.TextBox txtUrl;
         private System.Windows.Forms.Button btnAddComments;
         private System.Windows.Forms.Button btnGetProductInfo;
+        private System.Windows.Forms.Button btnTmall;
     }
 }

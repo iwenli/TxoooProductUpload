@@ -27,9 +27,9 @@ namespace TxoooProductUpload.UI.Main
         string _regionName = string.Empty;
         int _new_old = 1;
         bool _is_virtual = false;
-        bool _product_ispostage = false;
+        bool _product_ispostage = true;
         int _refund = 1;
-        int _postage = 1;
+        int _postage = 0;
         int _append = 0;
         int _limit = 0;
         int _typeService = 1;
@@ -321,6 +321,7 @@ namespace TxoooProductUpload.UI.Main
                 EndOperation(string.Format("解析商品完成,商品来源：{0}，开始上传主图", _result.Source));
             }
 
+
             #region 上传
             if (_result != null)
             {
@@ -346,7 +347,7 @@ namespace TxoooProductUpload.UI.Main
                         foreach (var item in thumImg)
                         {
                             BeginOperation(string.Format("正在上传第[{0}]张主图...", index), 0, true);
-                            var txImgUrl = await _context.CommonService.UploadImg(item);
+                            var txImgUrl = await _context.CommonService.UploadImg(item, 1);
                             imgList.Add(txImgUrl);
                             EndOperation(string.Format("第[{0}]张主图上传完成，返回结果{1}...", index++, txImgUrl));
                         }
@@ -377,7 +378,8 @@ namespace TxoooProductUpload.UI.Main
                             foreach (var item in _result.DetailImg)
                             {
                                 BeginOperation(string.Format("正在处理第[{0}]张详情图片...", index), 0, true);
-                                detailList.Add(string.Format("<p></p><img src=\"{0}\" />", await _context.CommonService.UploadImg(item)));
+                                detailList.Add(string.Format("<p></p><img src=\"{0}\" />",
+                                    await _context.CommonService.UploadImg(item, 2)));
                                 EndOperation(string.Format("第[{0}]张详情图片护理完成...", index++));
                             }
                             _result.product_details = detailList.Join("");
@@ -409,7 +411,7 @@ namespace TxoooProductUpload.UI.Main
                                     string colorImg = _result.ThumImg.LastOrDefault();
                                     if (!colorItem.imageUrl.IsNullOrEmpty())
                                     {
-                                        colorImg = await _context.CommonService.UploadImg(colorItem.imageUrl);
+                                        colorImg = await _context.CommonService.UploadImg(colorItem.imageUrl, 3);
                                     }
                                     foreach (var sizeItem in _result.SKU1688.Where(m => m.prop == "尺码").FirstOrDefault().value)
                                     {
@@ -429,7 +431,7 @@ namespace TxoooProductUpload.UI.Main
                                     string colorImg = _result.ThumImg.LastOrDefault();
                                     if (!colorItem.image.IsNullOrEmpty())
                                     {
-                                        colorImg = await _context.CommonService.UploadImg(colorItem.image);
+                                        colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
                                     }
                                     var name = string.Format("{0}:{1} | {2}:{3}", _result.SKUJD.colorSizeTitle.colorName
                                         , colorItem.color, _result.SKUJD.colorSizeTitle.sizeName, colorItem.size);
@@ -455,7 +457,7 @@ namespace TxoooProductUpload.UI.Main
                                         string colorImg = _result.ThumImg.LastOrDefault();
                                         if (!colorItem.image.IsNullOrEmpty())
                                         {
-                                            colorImg = await _context.CommonService.UploadImg(colorItem.image);
+                                            colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
                                         }
                                         var name = string.Format("{0}:{1} | {2}:{3}", colorList[1].text
                                             , colorItem.text, colorList[0].text, sizeitem.text);
@@ -534,7 +536,6 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void ClipboardToTextBox()
         {
-
             if (string.IsNullOrEmpty(txtOneKeyUrl.Text))
             {
                 string getTxt = Clipboard.GetText();

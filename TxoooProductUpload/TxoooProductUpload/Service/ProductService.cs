@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TxoooProductUpload.Common;
 using TxoooProductUpload.Service.Entities;
+using TxoooProductUpload.Service.Entities.Commnet;
 using TxoooProductUpload.Service.Entities.Web;
 
 namespace TxoooProductUpload.Service
@@ -26,7 +27,60 @@ namespace TxoooProductUpload.Service
         {
         }
 
+        #region 评价使用
+        /// <summary>
+        /// 获取商品信息，添加评价使用
+        /// </summary>
+        /// <param name="product_id"></param>
+        /// <returns></returns>
+        public async Task<ProductInfo> GetProductInfo(long product_id)
+        {
+            var stCtx = ServiceContext.Session.NetClient
+               .Create<WebResponseResult<ProductInfo>>(HttpMethod.Get, ApiList.GetProductInfo,
+               data: new { product_id = product_id });
 
+            await stCtx.SendAsync();
+            if (!stCtx.IsValid())
+            {
+                new Exception("ProductService.GetProductInfo未能提交请求");
+            }
+            if (stCtx.Result.success && stCtx.Result.Data.Length == 1)
+            {
+                return stCtx.Result.Data[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// 批量添加评价
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public async Task<bool> AddProductCommnet(string json)
+        {
+            var stCtx = ServiceContext.Session.NetClient
+               .Create<WebResponseResult>(HttpMethod.Post, ApiList.AddProductCommnet,
+               data: new { data = json });
+            //
+            await stCtx.SendAsync();
+
+            if (!stCtx.IsValid())
+            {
+                new Exception("ProductService.AddProductCommnet未能提交请求");
+            }
+
+            if (!stCtx.Result.success)
+            {
+                new Exception("提交失败，原因:" + stCtx.Result.msg);
+
+            }
+            return stCtx.Result.success;
+        }
+        #endregion
+
+        #region 上传商品
         /// <summary>
         /// 上传商品
         /// </summary>
@@ -58,8 +112,9 @@ namespace TxoooProductUpload.Service
             {
                 new Exception("ProductService.UploadProduct.DbHelperOleDb异常" + ex.Message);
             }
-           
+
             return stCtx.Result;
         }
+        #endregion
     }
 }
