@@ -46,6 +46,7 @@ namespace TxoooProductUpload.UI.Main
             var result = await _context.Session.LoginAsync(username, password);
             if (result == null)
             {
+                this.DialogResult = DialogResult.OK;
                 Close();
                 return;
             }

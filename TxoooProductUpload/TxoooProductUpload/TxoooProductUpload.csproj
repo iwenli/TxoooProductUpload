@@ -133,6 +133,12 @@
     <Compile Include="UI\FormBase.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UI\Main\Comment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\Comment.Designer.cs">
+      <DependentUpon>Comment.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Main\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,6 +151,7 @@
     <Compile Include="UI\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <None Include="Resources\msg.png" />
     <None Include="Resources\counseling_style_51.png" />
     <None Include="Resources\group.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -157,6 +164,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UI\FormBase.resx">
+      <DependentUpon>FormBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Main\Comment.resx">
+      <DependentUpon>Comment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Main\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
