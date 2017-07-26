@@ -4,7 +4,7 @@
   <description asmv2:iconFile="pdf2word.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="TxoooProductUpload" version="1.0.1.0" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="TxoooProductUpload" version="1.1.1.0" language="neutral" processorArchitecture="x86" />
     <commandLine file="TxoooProductUpload.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -16,15 +16,15 @@
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
         <!--
           UAC 清单选项
-         若想要更改 Windows 用户帐户控制级别，请
-         将 requestedExecutionLevel 节点替换为下述某项。
+          如果要更改 Windows 用户帐户控制级别，请用以下节点之一替换
+          requestedExecutionLevel 节点。
 
-       <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
-       <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
-       <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-        若想要使用文件和注册表虚拟化以实现向后
-        兼容，请删除 requestedExecutionLevel 节点。
+          如果要利用文件和注册表虚拟化提供
+          向后兼容性，请删除 requestedExecutionLevel 节点。
     -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
@@ -115,14 +115,23 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="328192">
-      <assemblyIdentity name="TxoooProductUpload" version="1.0.1.0" language="neutral" processorArchitecture="x86" />
+<<<<<<< .mine
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="357888">
+      <assemblyIdentity name="TxoooProductUpload" version="1.1.1.0" language="neutral" processorArchitecture="x86" />
+=======
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="334848">
+      <assemblyIdentity name="TxoooProductUpload" version="1.1.1.0" language="neutral" processorArchitecture="x86" />
+>>>>>>> .theirs
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hMfFxNFPJMr7WnOR//QnuV9Q6mdLqKc9tFk6KjIFOng=</dsig:DigestValue>
+<<<<<<< .mine
+        <dsig:DigestValue>n5fIFoFl0+W8FqKx0EAv5c0DcxLW9qCPn4Jk1g0Y/BU=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>+vKT3zfeJvwqIweVYgNxHNsVkY/+f+gxFdM0x0O1YOA=</dsig:DigestValue>
+>>>>>>> .theirs
       </hash>
     </dependentAssembly>
   </dependency>
@@ -132,7 +141,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>wDpF5iMbnTP/xf7/7pfY1IY/U225vQS8kMzlV/os90M=</dsig:DigestValue>
+      <dsig:DigestValue>jwzllsIO8op6cSo3j7jknMJ3skX9W3kT2GKFScrp0TI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="pdf2word.ico" size="112791">
@@ -207,13 +216,13 @@
       <dsig:DigestValue>NrJ9eGoQQ1KgdVLTzqt7vAENOB4HHRcJRYK5CwRYQuw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Web\Js\tmall_review.js" size="1666">
+  <file name="Web\Js\tmall_review.js" size="1954">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EWl3G+0yIWa9JGh5NFwpKa0t4WbTrNuPZvzDr2FUKVs=</dsig:DigestValue>
+      <dsig:DigestValue>PsIAJKGu08uqfuhBdHBLR3YmLdNlSM8i0lduRWVOvlU=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

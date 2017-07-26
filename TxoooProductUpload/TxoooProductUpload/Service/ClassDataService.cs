@@ -22,7 +22,7 @@ namespace TxoooProductUpload.Service
 
 
         /// <summary>
-        /// 所有的车站列表
+        /// 根数据
         /// </summary>
         public List<ProductClassInfo> RootClassList
         {
@@ -63,12 +63,12 @@ namespace TxoooProductUpload.Service
                 await stCtx.SendAsync();
                 if (!stCtx.IsValid())
                 {
-                    new Exception("ClassDataService未能提交请求GetAllProductClass");
+                    throw new Exception("ClassDataService未能提交请求GetAllProductClass");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                throw ex;
             }
             
             return stCtx.Result;

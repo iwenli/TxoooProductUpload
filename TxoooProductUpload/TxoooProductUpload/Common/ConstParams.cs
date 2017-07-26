@@ -12,9 +12,15 @@ namespace TxoooProductUpload.Common
     class ConstParams
     {
         /// <summary>
+        /// 默认头像
+        /// </summary>
+        public const string DEFAULT_HEAD_PIC = @"https://img.txooo.com/2016/04/18/43dddcd3fff51e5418c33dbeef55c001.png";
+
+        /// <summary>
         /// 天猫评价抓取脚本
         /// </summary>
-        public const string PRODUCT_COMMENT_TMALL = @"if (typeof getTmallReview != 'function') {
+        public const string PRODUCT_COMMENT_TMALL = @"
+if (typeof getTmallReview != 'function') {
     getTmallReview = function () {
         var reviewModelList = [];
         var reviewContionar = document.getElementById('s-review');
@@ -31,9 +37,10 @@ namespace TxoooProductUpload.Common
             var reviewImgs = reviewItem[i].querySelector('.pics');
             if (reviewImgs) {
                 var imgUrls = [];
-                reviewImgs.querySelectorAll('img').forEach(function (i) {
-                    imgUrls.push(i.src.replace('_100x100q75.jpg', ''));
-                });
+                var rawImgs = reviewImgs.querySelectorAll('img');
+                for (j = 0; j < rawImgs.length; j++) {
+                    imgUrls.push(rawImgs[j].src.replace('_100x100q75.jpg', ''));
+                }
                 reviewModel.ReviewImgs = imgUrls.join(); //评价图片
             }
             reviewModelList.push(reviewModel);
@@ -45,7 +52,7 @@ if (typeof Reviews == 'undefined') {
     var Reviews = {};
 }
 Reviews = getTmallReview();
-alert('抓取成功' + Reviews.length + '条评价')
-console.log(JSON.stringify(Reviews));";
+alert('抓取成功' + Reviews.length + '条评价');
+document.write(JSON.stringify(Reviews));";
     }
 }

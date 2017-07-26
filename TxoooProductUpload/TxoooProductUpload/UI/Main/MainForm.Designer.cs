@@ -65,6 +65,8 @@ namespace TxoooProductUpload.UI.Main
             this.gbVirtual = new System.Windows.Forms.GroupBox();
             this.rbVirtualFalse = new System.Windows.Forms.RadioButton();
             this.rbVirtualTrue = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPrice = new System.Windows.Forms.NumericUpDown();
             this.gbShare = new System.Windows.Forms.GroupBox();
             this.tbShare = new System.Windows.Forms.TextBox();
             this.gbBrand = new System.Windows.Forms.GroupBox();
@@ -80,7 +82,7 @@ namespace TxoooProductUpload.UI.Main
             this.cbArea2 = new System.Windows.Forms.ComboBox();
             this.cbArea1 = new System.Windows.Forms.ComboBox();
             this.gbClass = new System.Windows.Forms.GroupBox();
-            this.tsClass4 = new System.Windows.Forms.Label();
+            this.tsClass5 = new System.Windows.Forms.Label();
             this.tsClass3 = new System.Windows.Forms.ComboBox();
             this.tsClass2 = new System.Windows.Forms.ComboBox();
             this.tsClass1 = new System.Windows.Forms.ComboBox();
@@ -89,6 +91,7 @@ namespace TxoooProductUpload.UI.Main
             this.btnOneKeyOk = new System.Windows.Forms.Button();
             this.txtOneKeyUrl = new System.Windows.Forms.TextBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.tsClass4 = new System.Windows.Forms.ComboBox();
             this.ts.SuspendLayout();
             this.st.SuspendLayout();
             this.gbSetting.SuspendLayout();
@@ -99,6 +102,8 @@ namespace TxoooProductUpload.UI.Main
             ((System.ComponentModel.ISupportInitialize)(this.tbPostage)).BeginInit();
             this.gbIspostage.SuspendLayout();
             this.gbVirtual.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrice)).BeginInit();
             this.gbShare.SuspendLayout();
             this.gbBrand.SuspendLayout();
             this.gbRefund.SuspendLayout();
@@ -197,8 +202,8 @@ namespace TxoooProductUpload.UI.Main
             this.tsComment.Image = global::TxoooProductUpload.Properties.Resources.msg;
             this.tsComment.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsComment.Name = "tsComment";
-            this.tsComment.Size = new System.Drawing.Size(100, 28);
-            this.tsComment.Text = "添加评论(&A)";
+            this.tsComment.Size = new System.Drawing.Size(124, 28);
+            this.tsComment.Text = "批量添加评论(&A)";
             // 
             // st
             // 
@@ -211,7 +216,7 @@ namespace TxoooProductUpload.UI.Main
             this.toolStripStatusLabel4,
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel5});
-            this.st.Location = new System.Drawing.Point(0, 621);
+            this.st.Location = new System.Drawing.Point(0, 664);
             this.st.Name = "st";
             this.st.Size = new System.Drawing.Size(1186, 30);
             this.st.TabIndex = 2;
@@ -287,7 +292,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbSetting.Margin = new System.Windows.Forms.Padding(2);
             this.gbSetting.Name = "gbSetting";
             this.gbSetting.Padding = new System.Windows.Forms.Padding(2);
-            this.gbSetting.Size = new System.Drawing.Size(1186, 164);
+            this.gbSetting.Size = new System.Drawing.Size(1186, 177);
             this.gbSetting.TabIndex = 3;
             this.gbSetting.TabStop = false;
             this.gbSetting.Text = "商品上传通用设置";
@@ -297,6 +302,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbBase.Controls.Add(this.gbPostage);
             this.gbBase.Controls.Add(this.gbIspostage);
             this.gbBase.Controls.Add(this.gbVirtual);
+            this.gbBase.Controls.Add(this.groupBox1);
             this.gbBase.Controls.Add(this.gbShare);
             this.gbBase.Controls.Add(this.gbBrand);
             this.gbBase.Controls.Add(this.gbRefund);
@@ -305,7 +311,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbBase.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.gbBase.Location = new System.Drawing.Point(432, 18);
             this.gbBase.Name = "gbBase";
-            this.gbBase.Size = new System.Drawing.Size(752, 144);
+            this.gbBase.Size = new System.Drawing.Size(752, 157);
             this.gbBase.TabIndex = 3;
             this.gbBase.TabStop = false;
             // 
@@ -450,6 +456,39 @@ namespace TxoooProductUpload.UI.Main
             this.rbVirtualTrue.Text = "是";
             this.rbVirtualTrue.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.txtPrice);
+            this.groupBox1.Location = new System.Drawing.Point(136, 77);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(113, 67);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Tag = "";
+            this.groupBox1.Text = "设置售价";
+            this.toolTip.SetToolTip(this.groupBox1, "批量设置价格\r\n如果不写则自动取抓取的价格");
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPrice.DecimalPlaces = 2;
+            this.txtPrice.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.txtPrice.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.txtPrice.Location = new System.Drawing.Point(10, 30);
+            this.txtPrice.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(91, 23);
+            this.txtPrice.TabIndex = 3;
+            this.toolTip.SetToolTip(this.txtPrice, "单位：元");
+            // 
             // gbShare
             // 
             this.gbShare.Controls.Add(this.tbShare);
@@ -476,9 +515,9 @@ namespace TxoooProductUpload.UI.Main
             // gbBrand
             // 
             this.gbBrand.Controls.Add(this.tbBrand);
-            this.gbBrand.Location = new System.Drawing.Point(136, 77);
+            this.gbBrand.Location = new System.Drawing.Point(255, 77);
             this.gbBrand.Name = "gbBrand";
-            this.gbBrand.Size = new System.Drawing.Size(232, 67);
+            this.gbBrand.Size = new System.Drawing.Size(113, 67);
             this.gbBrand.TabIndex = 3;
             this.gbBrand.TabStop = false;
             this.gbBrand.Tag = "品牌";
@@ -492,7 +531,7 @@ namespace TxoooProductUpload.UI.Main
             this.tbBrand.Location = new System.Drawing.Point(3, 19);
             this.tbBrand.Multiline = true;
             this.tbBrand.Name = "tbBrand";
-            this.tbBrand.Size = new System.Drawing.Size(226, 45);
+            this.tbBrand.Size = new System.Drawing.Size(107, 45);
             this.tbBrand.TabIndex = 0;
             this.toolTip.SetToolTip(this.tbBrand, "设置商品品牌");
             // 
@@ -578,7 +617,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbArea.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.gbArea.Location = new System.Drawing.Point(217, 18);
             this.gbArea.Name = "gbArea";
-            this.gbArea.Size = new System.Drawing.Size(215, 144);
+            this.gbArea.Size = new System.Drawing.Size(215, 157);
             this.gbArea.TabIndex = 3;
             this.gbArea.TabStop = false;
             this.gbArea.Text = "发货地";
@@ -589,7 +628,7 @@ namespace TxoooProductUpload.UI.Main
             this.lbArea.AutoSize = true;
             this.lbArea.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lbArea.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.lbArea.Location = new System.Drawing.Point(3, 124);
+            this.lbArea.Location = new System.Drawing.Point(3, 137);
             this.lbArea.Name = "lbArea";
             this.lbArea.Size = new System.Drawing.Size(44, 17);
             this.lbArea.TabIndex = 1;
@@ -598,7 +637,7 @@ namespace TxoooProductUpload.UI.Main
             // cbArea2
             // 
             this.cbArea2.FormattingEnabled = true;
-            this.cbArea2.Location = new System.Drawing.Point(6, 90);
+            this.cbArea2.Location = new System.Drawing.Point(12, 53);
             this.cbArea2.Name = "cbArea2";
             this.cbArea2.Size = new System.Drawing.Size(195, 25);
             this.cbArea2.TabIndex = 0;
@@ -606,13 +645,14 @@ namespace TxoooProductUpload.UI.Main
             // cbArea1
             // 
             this.cbArea1.FormattingEnabled = true;
-            this.cbArea1.Location = new System.Drawing.Point(6, 22);
+            this.cbArea1.Location = new System.Drawing.Point(12, 22);
             this.cbArea1.Name = "cbArea1";
             this.cbArea1.Size = new System.Drawing.Size(195, 25);
             this.cbArea1.TabIndex = 0;
             // 
             // gbClass
             // 
+            this.gbClass.Controls.Add(this.tsClass5);
             this.gbClass.Controls.Add(this.tsClass4);
             this.gbClass.Controls.Add(this.tsClass3);
             this.gbClass.Controls.Add(this.tsClass2);
@@ -621,27 +661,27 @@ namespace TxoooProductUpload.UI.Main
             this.gbClass.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.gbClass.Location = new System.Drawing.Point(2, 18);
             this.gbClass.Name = "gbClass";
-            this.gbClass.Size = new System.Drawing.Size(215, 144);
+            this.gbClass.Size = new System.Drawing.Size(215, 157);
             this.gbClass.TabIndex = 3;
             this.gbClass.TabStop = false;
             this.gbClass.Text = "分类";
             this.toolTip.SetToolTip(this.gbClass, "设置商品分类");
             // 
-            // tsClass4
+            // tsClass5
             // 
-            this.tsClass4.AutoSize = true;
-            this.tsClass4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tsClass4.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tsClass4.Location = new System.Drawing.Point(3, 124);
-            this.tsClass4.Name = "tsClass4";
-            this.tsClass4.Size = new System.Drawing.Size(44, 17);
-            this.tsClass4.TabIndex = 1;
-            this.tsClass4.Text = "未选择";
+            this.tsClass5.AutoSize = true;
+            this.tsClass5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tsClass5.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.tsClass5.Location = new System.Drawing.Point(3, 137);
+            this.tsClass5.Name = "tsClass5";
+            this.tsClass5.Size = new System.Drawing.Size(44, 17);
+            this.tsClass5.TabIndex = 1;
+            this.tsClass5.Text = "未选择";
             // 
             // tsClass3
             // 
             this.tsClass3.FormattingEnabled = true;
-            this.tsClass3.Location = new System.Drawing.Point(6, 90);
+            this.tsClass3.Location = new System.Drawing.Point(11, 78);
             this.tsClass3.Name = "tsClass3";
             this.tsClass3.Size = new System.Drawing.Size(195, 25);
             this.tsClass3.TabIndex = 0;
@@ -649,7 +689,7 @@ namespace TxoooProductUpload.UI.Main
             // tsClass2
             // 
             this.tsClass2.FormattingEnabled = true;
-            this.tsClass2.Location = new System.Drawing.Point(6, 56);
+            this.tsClass2.Location = new System.Drawing.Point(11, 50);
             this.tsClass2.Name = "tsClass2";
             this.tsClass2.Size = new System.Drawing.Size(195, 25);
             this.tsClass2.TabIndex = 0;
@@ -657,7 +697,7 @@ namespace TxoooProductUpload.UI.Main
             // tsClass1
             // 
             this.tsClass1.FormattingEnabled = true;
-            this.tsClass1.Location = new System.Drawing.Point(6, 22);
+            this.tsClass1.Location = new System.Drawing.Point(11, 22);
             this.tsClass1.Name = "tsClass1";
             this.tsClass1.Size = new System.Drawing.Size(195, 25);
             this.tsClass1.TabIndex = 0;
@@ -668,10 +708,10 @@ namespace TxoooProductUpload.UI.Main
             this.txtLog.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.txtLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.txtLog.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.txtLog.Location = new System.Drawing.Point(0, 256);
+            this.txtLog.Location = new System.Drawing.Point(0, 273);
             this.txtLog.Margin = new System.Windows.Forms.Padding(2);
             this.txtLog.Name = "txtLog";
-            this.txtLog.Size = new System.Drawing.Size(1186, 365);
+            this.txtLog.Size = new System.Drawing.Size(1186, 391);
             this.txtLog.TabIndex = 6;
             this.txtLog.Text = "";
             // 
@@ -682,7 +722,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbSearch.Enabled = false;
             this.gbSearch.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            this.gbSearch.Location = new System.Drawing.Point(0, 195);
+            this.gbSearch.Location = new System.Drawing.Point(0, 208);
             this.gbSearch.Name = "gbSearch";
             this.gbSearch.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.gbSearch.Size = new System.Drawing.Size(1186, 60);
@@ -720,11 +760,20 @@ namespace TxoooProductUpload.UI.Main
             this.txtOneKeyUrl.TabIndex = 4;
             this.txtOneKeyUrl.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // tsClass4
+            // 
+            this.tsClass4.FormattingEnabled = true;
+            this.tsClass4.Location = new System.Drawing.Point(11, 106);
+            this.tsClass4.Name = "tsClass4";
+            this.tsClass4.Size = new System.Drawing.Size(195, 25);
+            this.tsClass4.TabIndex = 0;
+            this.toolTip.SetToolTip(this.tsClass4, "结算比例");
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1186, 651);
+            this.ClientSize = new System.Drawing.Size(1186, 694);
             this.Controls.Add(this.gbSearch);
             this.Controls.Add(this.txtLog);
             this.Controls.Add(this.gbSetting);
@@ -751,6 +800,8 @@ namespace TxoooProductUpload.UI.Main
             this.gbIspostage.PerformLayout();
             this.gbVirtual.ResumeLayout(false);
             this.gbVirtual.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtPrice)).EndInit();
             this.gbShare.ResumeLayout(false);
             this.gbShare.PerformLayout();
             this.gbBrand.ResumeLayout(false);
@@ -792,7 +843,7 @@ namespace TxoooProductUpload.UI.Main
         private System.Windows.Forms.ComboBox tsClass3;
         private System.Windows.Forms.ComboBox tsClass2;
         private System.Windows.Forms.ComboBox tsClass1;
-        private System.Windows.Forms.Label tsClass4;
+        private System.Windows.Forms.Label tsClass5;
         private System.Windows.Forms.GroupBox gbArea;
         private System.Windows.Forms.Label lbArea;
         private System.Windows.Forms.ComboBox cbArea2;
@@ -829,5 +880,8 @@ namespace TxoooProductUpload.UI.Main
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tsComment;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.NumericUpDown txtPrice;
+        private System.Windows.Forms.ComboBox tsClass4;
     }
 }

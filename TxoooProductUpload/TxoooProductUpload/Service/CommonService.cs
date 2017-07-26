@@ -20,7 +20,22 @@ namespace TxoooProductUpload.Service
         {
         }
 
+        /// <summary>
+        /// 通过url获取图片字节流
+        /// </summary>
+        /// <param name="url">图片url</param>
+        /// <returns></returns>
+        public async Task<byte[]> GetImageStreamByImgUrl(string url) {
+            var stCtx = ServiceContext.Session.NetClient
+              .Create<byte[]>(HttpMethod.Get, url);
 
+            await stCtx.SendAsync();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("CommonService.DowloadImage未能提交请求");
+            }
+            return stCtx.Result;
+        }
         /// <summary>
         /// 上传图片,成功返回url,失败返回空字符串
         /// </summary>
@@ -29,15 +44,7 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<string> UploadImg(string url, int uploadType)
         {
-            var stCtx = ServiceContext.Session.NetClient
-               .Create<byte[]>(HttpMethod.Get, url);
-
-            await stCtx.SendAsync();
-            if (!stCtx.IsValid())
-            {
-                new Exception("CommonService.DowloadImage未能提交请求");
-            }
-            var imgUrl = await UploadImg(stCtx.Result);
+            var imgUrl = await UploadImg(await GetImageStreamByImgUrl(url));
             #region DB记录
             try
             {
@@ -64,8 +71,8 @@ namespace TxoooProductUpload.Service
             }
             catch (Exception ex)
             {
-                new Exception("CommonService.DowloadImage.DbHelperOleDb异常" + ex.Message);
-            } 
+                throw new Exception("CommonService.DowloadImage.DbHelperOleDb异常" + ex.Message);
+            }
             #endregion
             return imgUrl;
         }
@@ -85,13 +92,13 @@ namespace TxoooProductUpload.Service
         /// <summary>
         /// 上传图片,成功返回url,失败返回空字符串
         /// </summary>
-        /// <param name="imageData">Image的字节流</param>
+        /// <param name="imageStream">Image的字节流</param>
         /// <returns></returns>
-        public async Task<string> UploadImg(byte[] imageData)
+        public async Task<string> UploadImg(byte[] imageStream)
         {
             var data = new
             {
-                file = new HttpVirtualBytePostFile(Guid.NewGuid().ToString("N") + ".jpg", imageData)
+                file = new HttpVirtualBytePostFile(Guid.NewGuid().ToString("N") + ".jpg", imageStream)
             };
 
             var stCtx = ServiceContext.Session.NetClient
@@ -100,7 +107,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                new Exception("CommonService.UploadImg未能提交请求");
+                throw new Exception("CommonService.UploadImg未能提交请求");
             }
 
             if (stCtx.Result.success)

@@ -14,12 +14,18 @@ namespace TxoooProductUpload.Common
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SendMessage(IntPtr hWnd, int msg,
-       int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
+        int wParam, [MarshalAs(UnmanagedType.LPWStr)] string lParam);
 
+        /// <summary>
+        /// 设置水印
+        /// </summary>
+        /// <param name="control"></param>
+        /// <param name="text"></param>
         public static void SetHintText(this Control control, string text)
         {
             SendMessage(control.Handle, 0X1501, 0, text);
         }
+
         #endregion
     }
 }

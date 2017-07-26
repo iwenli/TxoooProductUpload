@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -17,25 +19,32 @@ namespace TxoooProductUpload.UI.Main
 {
     partial class Comment : FormBase
     {
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+        private int LVM_SETICONSPACING = 0x1035;
         Regex _urlReg = new Regex(@"7518.cn/shop.html\?id=(\d{5})");
         ProductInfo _productInfo = null;
+        string _userHeadPic = ConstParams.DEFAULT_HEAD_PIC;
+        int _maxRrviewImgCount = 6;//评价图片最多6个
+        List<string> _reviewImgPathList = new List<string>();
+        ReviewInfo _reviewInfo = null;
 
         public Comment(ServiceContext context) : base(context)
         {
             InitializeComponent();
             AppendLog(txtLog, "评价页面初始化[开始]...");
-            Init();
+            InitPage1();
+            InitPage2();
             AppendLog(txtLog, "评价页面初始化[完毕]...");
         }
 
         /// <summary>
-        /// 初始化
+        /// 初始化tagPage1
         /// </summary>
-        private void Init()
+        void InitPage1()
         {
             this.txtUrl.SetHintText("在这里输入要添加评价的创业赚钱商品链接");
-            this.txtJson.Focus();
-            this.btnAddComments.Enabled = false;
+            this.txtLog.Focus();
             //复制天猫脚本
             this.btnTmall.Click += (s, e) =>
             {
@@ -81,7 +90,8 @@ namespace TxoooProductUpload.UI.Main
                         {
                             AppendLog(txtLog, "第{0}个SKU={1}", i + 1, _productInfo.property[i].json_info);
                         }
-                        this.btnAddComments.Enabled = true;
+                        //绑定到page2属性combobox上
+                        cbProperty.DataSource = _productInfo.property;
                     }
                 }
                 catch (Exception ex)
@@ -101,7 +111,7 @@ namespace TxoooProductUpload.UI.Main
                     return;
                 }
                 #endregion
-                this.btnAddComments.Enabled = false;
+                #region 提交评价 批量
                 try
                 {
                     var reviewList = JsonConvert.DeserializeObject<List<ReviewInfo>>(json);
@@ -147,6 +157,7 @@ namespace TxoooProductUpload.UI.Main
                 {
                     AppendLogError(txtLog, "[异常]" + ex.Message);
                 }
+                #endregion
             };
             //url输入框点击事件  主要用来自动粘贴
             this.txtUrl.Click += (s, e) =>
@@ -164,6 +175,198 @@ namespace TxoooProductUpload.UI.Main
                     (s as TextBox).SelectAll();
                 }
             };
+        }
+
+        void InitPage2()
+        {
+            SendMessage(this.lvReviewImage.Handle, LVM_SETICONSPACING, 0, 0x10000 * 40 + 52);//70是行距，60是列距，
+            ResetPage2();
+            BingPage2Event();
+        }
+
+        /// <summary>
+        /// 绑定事件
+        /// </summary>
+        void BingPage2Event()
+        {
+            //上传头像
+            pbHead.Click += async (s, e) =>
+            {
+                OpenFileDialog ofdImgHead = new OpenFileDialog();   //显示选择文件对话框 
+                ofdImgHead.Title = "创业赚钱-商家工具";
+                ofdImgHead.Filter = "图片文件(*.jpg,*.png,*.gif,*.bmp,*.jpeg)|*.jpg;*.png;*.gif;*.bmp;*jpeg";
+                ofdImgHead.FilterIndex = 2;
+                ofdImgHead.RestoreDirectory = true;
+                if (ofdImgHead.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Image headPic = Image.FromFile(ofdImgHead.FileName);
+                        _userHeadPic = await _context.CommonService.UploadImg(headPic);
+                        pbHead.Image = headPic;
+                        AppendLogWarning(txtLog, "头像更换[成功]...");
+                    }
+                    catch (Exception ex)
+                    {
+                        AppendLogWarning(txtLog, "头像更换[失败]...");
+                        Image headPic = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+                        AppendLogWarning(txtLog, "[异常发生在]:", ex);
+                    }
+                }
+            };
+            //url更换头像
+            btnUpdateHeadPic.Click += async (s, e) =>
+            {
+                string url = txtUpdateHeadPicUrl.Text.Trim();
+                if (!url.IsUrl())
+                {
+                    SM("图片地址没有啊亲...");
+                    return;
+                }
+                try
+                {
+                    var imageB = await _context.CommonService.GetImageStreamByImgUrl(url);
+                    _userHeadPic = await _context.CommonService.UploadImg(imageB);
+                    pbHead.Image = Image.FromStream(new MemoryStream(imageB));
+                    AppendLogWarning(txtLog, "头像更换[成功]...");
+                    txtUpdateHeadPicUrl.Text = string.Empty;
+                }
+                catch (Exception ex)
+                {
+                    AppendLogWarning(txtLog, "头像更换[失败]...");
+                    Image headPic = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+                    AppendLogWarning(txtLog, "[异常发生在]:", ex);
+                }
+            };
+
+            //添加评价图片
+            pbAddReviewImage.Click += (s, e) =>
+            {
+                OpenFileDialog ofdReviewImage = new OpenFileDialog();   //显示选择文件对话框
+                ofdReviewImage.Multiselect = true;
+                ofdReviewImage.Title = "创业赚钱-商家工具";
+                ofdReviewImage.Filter = "图片文件(*.jpg,*.png,*.gif,*.bmp,*.jpeg)|*.jpg;*.png;*.gif;*.bmp;*jpeg";
+                ofdReviewImage.FilterIndex = 1;
+                ofdReviewImage.RestoreDirectory = true;
+                if (ofdReviewImage.ShowDialog() == DialogResult.OK)
+                {
+                    //先判断
+                    if (ofdReviewImage.FileNames.Where(m => _reviewImgPathList.Contains(m)).Count() > 0)
+                    {
+                        SM("不要拿重复的图片来搪塞好不啦~~~");
+                        return;
+                    }
+                    if (ofdReviewImage.FileNames.Length + _reviewImgPathList.Count > _maxRrviewImgCount)
+                    {
+                        SM(string.Format("最多上可以上传{0}张图片！", _maxRrviewImgCount - _reviewImgPathList.Count));
+                        return;
+                    }
+                    ilReviewImage.Images.Clear();
+                    lvReviewImage.Items.Clear();
+
+                    _reviewImgPathList.AddRange(ofdReviewImage.FileNames);
+                    //刷新Listview
+                    for (int i = 0; i < _reviewImgPathList.Count; i++)
+                    {
+                        ilReviewImage.Images.Add(_reviewImgPathList[i], Image.FromFile(_reviewImgPathList[i]));
+                        lvReviewImage.Items.Add(_reviewImgPathList[i], "", i);
+                    }
+                    if (_reviewImgPathList.Count == _maxRrviewImgCount)
+                    {
+                        pbAddReviewImage.Enabled = false;
+                    }
+                }
+            };
+
+            //删除评价图片菜单
+            lvReviewImage.MouseClick += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Right && this.lvReviewImage.SelectedItems.Count == 1)
+                {
+                    ListViewItem xy = lvReviewImage.GetItemAt(e.X, e.Y);
+                    if (xy != null)
+                    {
+                        Point point = this.PointToClient(lvReviewImage.PointToScreen(new Point(e.X, e.Y)));
+                        this.cmsReviewImage.Show(this, point);
+                    }
+                }
+            };
+            //删除图片事件
+            tsmDelReviewImage.Click += (s, e) =>
+            {
+                //AppendLog(txtLog, "删除的图片是：{0}", );
+                _reviewImgPathList.Remove(lvReviewImage.SelectedItems[0].Name);
+                lvReviewImage.RemoveSelectedItems();
+
+                if (!pbAddReviewImage.Enabled)
+                {
+                    pbAddReviewImage.Enabled = true;
+                }
+            };
+            //评价内容
+            txtReviewContent.TextChanged += (s, e) =>
+            {
+                if (txtReviewContent.Text.Trim().Length == 0)
+                {
+                    btnAddReviewOne.Enabled = false;
+                    return;
+                }
+                if (!btnAddReviewOne.Enabled)
+                {
+                    btnAddReviewOne.Enabled = true;
+                }
+            };
+
+            btnAddReviewOne.Click += async (s, e) =>
+             {
+                 try
+                 {
+                     if (await SubmintReview(_reviewInfo))
+                     {
+                         ResetPage2();
+                         AppendLogWarning(txtLog, "评价成功...");
+                         return;
+                     }
+                 }
+                 catch (Exception ex)
+                 {
+                     AppendLogError(txtLog, "[异常]：", ex.Message);
+                     return;
+                 }
+                 btnAddReviewOne.Enabled = true;
+             };
+        }
+
+        async Task<bool> SubmintReview(ReviewInfo review)
+        {
+            await Task.Delay(10);
+            if (review == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 重置页面状态
+        /// </summary>
+        async void ResetPage2()
+        {
+            txtNickName.SetHintText("评价显示的名称");
+            txtMchReplyContent.SetHintText("请输入商家回复，可为空");
+            txtUpdateHeadPicUrl.SetHintText("请输入图像的URL");
+            _reviewImgPathList.Clear();
+            _reviewInfo = null;
+            txtNickName.Text = txtMchReplyContent.Text = txtReviewContent.Text = txtUpdateHeadPicUrl.Text = string.Empty;
+            nudLikeCount.Value = 0;
+            nudProductScore.Value = nudExpressScore.Value = 5;
+            ilReviewImage.Images.Clear();
+            lvReviewImage.Items.Clear();
+            _userHeadPic = ConstParams.DEFAULT_HEAD_PIC;
+            pbHead.Image = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+            dtpAddTime.MaxDate = DateTime.Now.AddSeconds(1);
+            dtpAddTime.Value = DateTime.Now;
+            btnAddReviewOne.Enabled = !(pbAddReviewImage.Enabled = true);
         }
     }
 }

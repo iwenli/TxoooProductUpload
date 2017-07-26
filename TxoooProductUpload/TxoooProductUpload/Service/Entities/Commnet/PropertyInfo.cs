@@ -27,5 +27,9 @@ namespace TxoooProductUpload.Service.Entities.Commnet
         public string is_del { set; get; }
         public string rebate_point { set; get; }
         public string radio_num { set; get; }
+
+        public override string ToString() {
+            return json_info;
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace TxoooProductUpload.Service.Entities
         /// <summary>
         /// 属性图像URL
         /// </summary>
-        public string imageUrl { set; get; }
+        public string image { set; get; }
         /// <summary>
         /// 属性值
         /// </summary>

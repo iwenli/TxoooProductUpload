@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TxoooProductUpload.Common;
 
 namespace TxoooProductUpload.Service.Entities.Commnet
 {
@@ -36,7 +37,7 @@ namespace TxoooProductUpload.Service.Entities.Commnet
         /// 评价图片,多个图片之间逗号分隔
         /// </summary>
         public string ReviewImgs { set; get; }
-        string _headPic = "https://img.txooo.com/2016/04/18/43dddcd3fff51e5418c33dbeef55c001.png";
+        string _headPic = ConstParams.DEFAULT_HEAD_PIC;
         /// <summary>
         /// 评论头像
         /// </summary>

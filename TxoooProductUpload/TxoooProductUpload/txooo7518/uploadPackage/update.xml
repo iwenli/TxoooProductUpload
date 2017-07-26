@@ -7,52 +7,50 @@
   <TreatErrorAsNotUpdated>false</TreatErrorAsNotUpdated>
   <PromptUserBeforeAutomaticUpgrade>true</PromptUserBeforeAutomaticUpgrade>
   <AutoCloseSucceedWindow>true</AutoCloseSucceedWindow>
-  <Desc>修复问题#2 命令行打开的项目可能无法保存
-修复问题#5 命令行模式无法继续更新
-修复问题#6 特定情况下如果需要回滚，则只有显式被删除的文件被还原
-修复问题#7 多服务器模式下，如果不传递AppDirectory以及AppVersion参数将会导致抛出异常
-修复问题#8 多服务器模式下，如果服务器地址无法连接，则无法继续切换服务器
-增强功能#9 在VS中调试时，如果启用了VS宿主进程，则版本号会识别错误</Desc>
-  <Package>0f9298848e7a4695a8087f207ba444f3.zip</Package>
-  <MD5>8ACD2FC337FCDDB10784531047388197</MD5>
+  <Desc>1. 修复工具里设置包邮后app里显示邮费1块
+2. SUK出错后注销再登录发货地显示出错：选择的地址与显示不符
+3. 注销后再传商品发货地没了
+4. 新增评论功能</Desc>
+  <Package>a5d627a3ee514ba498f42846c0d9938f.zip</Package>
+  <MD5>D6B607CC5AEFBF5B7CA79A5D3F041B05</MD5>
   <DeleteMethod>None</DeleteMethod>
-  <PackageSize>770417</PackageSize>
+  <PackageSize>848458</PackageSize>
   <ForceUpdate>false</ForceUpdate>
   <Packages>
     <PackageInfo>
-      <FilePath>TxoooProductUpload.exe</FilePath>
-      <FileSize>253440</FileSize>
-      <Version>1.0.0.0</Version>
-      <PackageHash>8DFAA0B2FD9B80F613B208621940F239</PackageHash>
-      <PackageName>f6b6066d40f547d9937db442d2673394.zip</PackageName>
-      <PackageSize>70912</PackageSize>
+      <FilePath>商家工具1.1.exe</FilePath>
+      <FileSize>322560</FileSize>
+      <Version>1.1.1.0</Version>
+      <PackageHash>3BD4AD8BFE16B10C2D9178F7081877FD</PackageHash>
+      <PackageName>961b2cdd5ed6424a91cdffd6121b21e2.zip</PackageName>
+      <PackageSize>118639</PackageSize>
       <Method>VersionCompare</Method>
-      <VerificationLevel>Version</VerificationLevel>
-      <FileHash>896C1DA2395D9CD95C38D372A4A7A9A1</FileHash>
+      <VerificationLevel>Size Hash</VerificationLevel>
+      <FileHash>E6D1B51F69A2088A46EA384DE1C7533A</FileHash>
       <Files>
-        <string>TxoooProductUpload.exe</string>
+        <string>商家工具1.1.exe</string>
       </Files>
     </PackageInfo>
     <PackageInfo>
-      <FilePath>TxoooProductUpload.exe.config</FilePath>
-      <FileSize>1310</FileSize>
+      <FilePath>商家工具1.1.exe.config</FilePath>
+      <FileSize>1434</FileSize>
       <Version>0.0.0.0</Version>
-      <PackageHash>9769963448C3A4DCDEF44812EA831423</PackageHash>
-      <PackageName>165d691d91374262b221869a5571b866.zip</PackageName>
-      <PackageSize>637</PackageSize>
+      <PackageHash>EDC615F98E1084FCE0E0712354B1CCC3</PackageHash>
+      <PackageName>88c166e1185a4835a80fdcefd65cdd73.zip</PackageName>
+      <PackageSize>700</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>Size Hash</VerificationLevel>
-      <FileHash>C5E6FCA34EE40E9D022F89FBD3419024</FileHash>
+      <FileHash>930A333197A5227CF703004160A3C5FD</FileHash>
       <Files>
-        <string>TxoooProductUpload.exe.config</string>
+        <string>商家工具1.1.exe.config</string>
       </Files>
     </PackageInfo>
     <PackageInfo>
       <FilePath>bin\FSLib.Extension.dll</FilePath>
       <FileSize>134144</FileSize>
       <Version>1.4.3.0</Version>
-      <PackageHash>C0D9FB95D410FC9C354319CC1864E2B9</PackageHash>
-      <PackageName>8fcf471159864afc991488de2b65eb1b.zip</PackageName>
+      <PackageHash>88FE0512B7F4222ECFACBBCDCCC40381</PackageHash>
+      <PackageName>0bfad6482ebb4290886aa3f98b1334e4.zip</PackageName>
       <PackageSize>59547</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>None</VerificationLevel>
@@ -65,8 +63,8 @@
       <FilePath>bin\FSLib.Network.dll</FilePath>
       <FileSize>189440</FileSize>
       <Version>2.2.2.0</Version>
-      <PackageHash>4D4B3E9AA8DB89F2671CD424A23C16B6</PackageHash>
-      <PackageName>4adf13cf27874b09ac0cbb5edf599b92.zip</PackageName>
+      <PackageHash>848A55DFE9741449037A348A4B108356</PackageHash>
+      <PackageName>a6540490bb5d4be99fd8bbbdf04cf98c.zip</PackageName>
       <PackageSize>77948</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>None</VerificationLevel>
@@ -79,8 +77,8 @@
       <FilePath>bin\log4net.dll</FilePath>
       <FileSize>276480</FileSize>
       <Version>2.0.8.0</Version>
-      <PackageHash>5692547B62A2341BE9C87808892D4059</PackageHash>
-      <PackageName>6c54f8fe0bf745d0812306a727564eec.zip</PackageName>
+      <PackageHash>4B8A9E4404D2611CD238CA462AC095B4</PackageHash>
+      <PackageName>629aee9b03f74c05b7fcea5c0aef7d1b.zip</PackageName>
       <PackageSize>108808</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>None</VerificationLevel>
@@ -93,8 +91,8 @@
       <FilePath>bin\Newtonsoft.Json.dll</FilePath>
       <FileSize>653824</FileSize>
       <Version>10.0.3.21018</Version>
-      <PackageHash>16E740A04063C922BB54CE178215EB0F</PackageHash>
-      <PackageName>1457bbe5ffa548e681a7d3be44eae6bc.zip</PackageName>
+      <PackageHash>748AF154318EA5A7CE1F759989519ABB</PackageHash>
+      <PackageName>93a44508f0a64f6e8b3bd9bda0b8f54a.zip</PackageName>
       <PackageSize>243004</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>None</VerificationLevel>
@@ -107,8 +105,8 @@
       <FilePath>bin\SimpleUpdater.dll</FilePath>
       <FileSize>387072</FileSize>
       <Version>4.3.0.0</Version>
-      <PackageHash>4676B0BC3BA0C9EE06735264E52DE38D</PackageHash>
-      <PackageName>b1d2a5e80ad440828e6a094ef743bc6b.zip</PackageName>
+      <PackageHash>FE55FA2158371C6193FEC35E0FA06EBD</PackageHash>
+      <PackageName>c34f6d6d6b084996a004b7afc805545d.zip</PackageName>
       <PackageSize>149188</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>Size Hash</VerificationLevel>
@@ -121,8 +119,8 @@
       <FilePath>data\cacha.dat</FilePath>
       <FileSize>204820</FileSize>
       <Version>0.0.0.0</Version>
-      <PackageHash>8A8765720EFF066F2A5B80CB287407F2</PackageHash>
-      <PackageName>a598ecc3264e45cf8aa71e55ef5599f4.zip</PackageName>
+      <PackageHash>C80E967FDF00E3CC0663424C39900B77</PackageHash>
+      <PackageName>98d27db2c7464336b71c7cd15ca4cf93.zip</PackageName>
       <PackageSize>36980</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>Size Hash</VerificationLevel>
@@ -132,11 +130,25 @@
       </Files>
     </PackageInfo>
     <PackageInfo>
+      <FilePath>data\txooo.mdb</FilePath>
+      <FileSize>1138688</FileSize>
+      <Version>0.0.0.0</Version>
+      <PackageHash>7C45298D814FE599995383E6C81FFDCA</PackageHash>
+      <PackageName>e58eefb9f5714bd99631e9c72fa18efa.zip</PackageName>
+      <PackageSize>30359</PackageSize>
+      <Method>VersionCompare</Method>
+      <VerificationLevel>Size Hash</VerificationLevel>
+      <FileHash>A462BC4C8593AB216A39B8655879198E</FileHash>
+      <Files>
+        <string>data\txooo.mdb</string>
+      </Files>
+    </PackageInfo>
+    <PackageInfo>
       <FilePath>en\SimpleUpdater.resources.dll</FilePath>
       <FileSize>70656</FileSize>
       <Version>4.3.0.0</Version>
-      <PackageHash>7D8E717C6C706C82EC43DAE158A8B762</PackageHash>
-      <PackageName>8701babf2595437c955a0f69fd69f3ea.zip</PackageName>
+      <PackageHash>E47A21BA50D9F9518D3547005E334D58</PackageHash>
+      <PackageName>32dbadbeb6314f089960175f46211916.zip</PackageName>
       <PackageSize>23905</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>Size Hash</VerificationLevel>

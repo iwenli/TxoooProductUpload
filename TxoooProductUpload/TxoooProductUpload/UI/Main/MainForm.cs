@@ -33,6 +33,8 @@ namespace TxoooProductUpload.UI.Main
         int _append = 0;
         int _limit = 0;
         int _typeService = 1;
+        float _price = 0;
+        int _radio_num = 0;
 
         public MainForm()
         {
@@ -62,6 +64,7 @@ namespace TxoooProductUpload.UI.Main
             tsClass1.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
             tsClass2.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
             tsClass3.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
+            tsClass4.SelectedIndexChanged += (s, e) => cbClass_SelectedIndexChanged(s, e);
 
             //发货地CombBox级联事件
             cbArea1.SelectedIndexChanged += (s, e) => cbArea_SelectedIndexChanged(s, e);
@@ -295,6 +298,8 @@ namespace TxoooProductUpload.UI.Main
 
             //"https://detail.tmall.com/item.htm?id=528221266420";
             // https://detail.m.tmall.com/item.htm?id=528221266420
+
+
             if (string.IsNullOrEmpty(productUrl))
             {
                 MessageBox.Show(this, "哎呀，没有商品链接，逗我呢 o(╯□╰)o", "哎呀", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -321,7 +326,6 @@ namespace TxoooProductUpload.UI.Main
                 EndOperation(string.Format("解析商品完成,商品来源：{0}，开始上传主图", _result.Source));
             }
 
-
             #region 上传
             if (_result != null)
             {
@@ -339,10 +343,14 @@ namespace TxoooProductUpload.UI.Main
                         index = 1;
                         //排除sku主图
                         var thumImg = _result.ThumImg;
-                        if (_result.Source == "阿里巴巴")
+                        if (_result.Source == "阿里巴巴" && _result.SKU1688 != null)
                         {
-                            var skuImgs = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.imageUrl.IsNullOrEmpty()).Select(m => m.imageUrl).ToList();
+                            var skuImgs = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.image.IsNullOrEmpty()).Select(m => m.image).ToList();
                             thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
+                        }
+                        if (thumImg.Count > 5)
+                        {
+                            thumImg = thumImg.Take(5).ToList();
                         }
                         foreach (var item in thumImg)
                         {
@@ -356,7 +364,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    AppendLog("上传主图出错，错误信息：{0}", ex.Message);
+                    EndOperation(string.Format("上传主图出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion
@@ -388,7 +396,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    AppendLog("处理详情出错，错误信息：{0}", ex.Message);
+                    EndOperation(string.Format("处理详情出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion
@@ -396,29 +404,58 @@ namespace TxoooProductUpload.UI.Main
                 #region 生成SKU
                 try
                 {
+                    //处理本地价格
+                    if (txtPrice.Value > 0)
+                    {
+                        _result.ProductPrice = txtPrice.Value.ToString();
+                    }
                     await Task.Delay(500);
                     //0-编号 1-sku名称（颜色+尺码） 2-价格 3-图片 4-是否默认（id=0为默认）
-                    string propertyFormat = "&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}=100&property_map_img_{0}={3}&radio_num_{0}=10&is_default_{0}={4}";
+                    string propertyFormat = "&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}=100&property_map_img_{0}={3}&radio_num_{0}={4}&is_default_{0}={5}";
                     index = 0;
                     switch (_result.Source)
                     {
                         case "阿里巴巴":
                             {
-                                var colorList = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value;
-                                BeginOperation("开始处理商品SKU...", colorList.Length, true);
-                                foreach (var colorItem in colorList)
+                                if (_result.SKU1688 != null && _result.SKU1688.Count > 0)
                                 {
-                                    string colorImg = _result.ThumImg.LastOrDefault();
-                                    if (!colorItem.imageUrl.IsNullOrEmpty())
+                                    var colorList = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault();
+                                    BeginOperation("开始处理商品SKU...", colorList.value.Length, true);
+                                    foreach (var colorItem in colorList.value)
                                     {
-                                        colorImg = await _context.CommonService.UploadImg(colorItem.imageUrl, 3);
+                                        string colorImg = string.Empty;
+                                        if (colorItem.image.IsNullOrEmpty())
+                                        {
+                                            colorImg = await _context.CommonService.UploadImg(_result.ThumImg.LastOrDefault(), 3);
+                                        }
+                                        else
+                                        {
+                                            colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
+                                        }
+                                        var sizeList = _result.SKU1688.Where(m => m.prop == "尺码").FirstOrDefault();
+                                        if (sizeList != null)
+                                        {
+                                            foreach (var sizeItem in sizeList.value)
+                                            {
+                                                var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
+                                                _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
+                                                AppendLog(name + "[处理完成]...");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            _result.product_property += string.Format(propertyFormat, index++, colorItem.name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
+                                            AppendLog(colorItem.name + "[处理完成]...");
+                                        }
                                     }
-                                    foreach (var sizeItem in _result.SKU1688.Where(m => m.prop == "尺码").FirstOrDefault().value)
-                                    {
-                                        var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
-                                        _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
-                                        AppendLog(name + "处理完成...");
-                                    }
+                                }
+                                else
+                                {
+                                    BeginOperation("开始处理商品SKU...", 0, true);
+                                    var name = "常规";
+                                    var colorImg = await _context.CommonService.UploadImg(_result.ThumImg.LastOrDefault(), 3);
+                                    _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, "true");
+                                    AppendLog(name + "[处理完成]...");
                                 }
                             }
                             break;
@@ -428,14 +465,18 @@ namespace TxoooProductUpload.UI.Main
                                 BeginOperation("开始处理商品SKU...", colorList.Count, true);
                                 foreach (var colorItem in colorList)
                                 {
-                                    string colorImg = _result.ThumImg.LastOrDefault();
-                                    if (!colorItem.image.IsNullOrEmpty())
+                                    string colorImg = string.Empty;
+                                    if (colorItem.image.IsNullOrEmpty())
+                                    {
+                                        colorImg = await _context.CommonService.UploadImg(_result.ThumImg.LastOrDefault(), 3);
+                                    }
+                                    else
                                     {
                                         colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
                                     }
                                     var name = string.Format("{0}:{1} | {2}:{3}", _result.SKUJD.colorSizeTitle.colorName
                                         , colorItem.color, _result.SKUJD.colorSizeTitle.sizeName, colorItem.size);
-                                    _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
+                                    _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
                                     AppendLog(name + "处理完成...");
                                 }
                             }
@@ -446,23 +487,26 @@ namespace TxoooProductUpload.UI.Main
                                 BeginOperation("开始处理商品SKU...", colorList.Count, true);
                                 if (colorList.Count != 2)
                                 {
-                                    new Exception("商品sku解析错误");
                                     EndOperation("商品sku解析错误");
                                     return;
                                 }
                                 foreach (var colorItem in colorList[1].values)
                                 {
+                                    string colorImg = _result.ThumImg.LastOrDefault();
+                                    if (colorItem.image.IsNullOrEmpty())
+                                    {
+                                        colorImg = await _context.CommonService.UploadImg(_result.ThumImg.LastOrDefault(), 3);
+                                    }
+                                    else
+                                    {
+                                        colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
+                                    }
                                     foreach (var sizeitem in colorList[0].values)
                                     {
-                                        string colorImg = _result.ThumImg.LastOrDefault();
-                                        if (!colorItem.image.IsNullOrEmpty())
-                                        {
-                                            colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
-                                        }
                                         var name = string.Format("{0}:{1} | {2}:{3}", colorList[1].text
-                                            , colorItem.text, colorList[0].text, sizeitem.text);
-                                        _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
-                                        AppendLog(name + "处理完成...");
+                                            , colorItem.text, colorList[0].text, sizeitem.text); _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
+                                        _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
+                                        AppendLog("第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
                                     }
                                 }
                             }
@@ -472,7 +516,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    AppendLog("生成SKU出错，错误信息：{0}", ex.Message);
+                    EndOperation(string.Format("生成SKU出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion
@@ -484,12 +528,12 @@ namespace TxoooProductUpload.UI.Main
                 if (!_result.DiscernLcation())
                 {
                     AppendLog("识别失败，使用系统设置...");
+                    _result.region_code = _regionCode;
+                    _result.region_name = _regionName;
                 }
                 else
                 {
                     AppendLog("识别成功，当前产品发货地已更改为：{0}", _result.region_name);
-                    _result.region_code = _regionCode;
-                    _result.region_name = _regionName;
                 }
                 _result.new_old = _new_old;
                 _result.is_virtual = Convert.ToInt32(_is_virtual);
@@ -576,36 +620,27 @@ namespace TxoooProductUpload.UI.Main
         void cbClass_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox currentTsCombbox = sender as ComboBox;
-            ComboBox updateCombbox;
             var selectDate = currentTsCombbox.SelectedItem as ProductClassInfo;
 
             if (currentTsCombbox.Name == "tsClass1")
             {
                 _typeService = selectDate.ClassId == 1 ? 1 : 2;
-                updateCombbox = tsClass2;
-                tsClass2.Text = tsClass3.Text = string.Empty;
-                tsClass2.Items.Clear();
-                tsClass3.Items.Clear();
+                tsClass2.DataSource = _context.CacheContext.Cache.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
             }
             else if (currentTsCombbox.Name == "tsClass2")
             {
-                updateCombbox = tsClass3;
-                tsClass3.Text = string.Empty;
-                tsClass3.Items.Clear();
+                tsClass3.DataSource = _context.CacheContext.Cache.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
             }
-            else
+            else if (currentTsCombbox.Name == "tsClass3")
             {
-                if (currentTsCombbox.Name == "tsClass3")
-                {
-                    stStatus.Text = tsClass4.Text = "当前选择分类：" + selectDate.ClassName;
-                    _classId = selectDate.ClassId;
-                }
+                tsClass4.DataSource = selectDate.RadioNums;
+                _classId = selectDate.ClassId;
                 return;
             }
-            var classList = _context.CacheContext.Cache.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
-            foreach (var item in classList)
+            else if (currentTsCombbox.Name == "tsClass4")
             {
-                updateCombbox.Items.Add(item);
+                stStatus.Text = tsClass5.Text = string.Format("分类：{0} | 比例：{1}", (tsClass3.SelectedItem as ProductClassInfo).ClassName
+                    , currentTsCombbox.SelectedItem.ToString());
             }
         }
 
@@ -635,40 +670,28 @@ namespace TxoooProductUpload.UI.Main
         void cbArea_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox currentTsCombbox = sender as ComboBox;
-            ComboBox updateCombbox;
             var selectDate = currentTsCombbox.SelectedItem as AreaInfo;
 
             if (currentTsCombbox.Name == "cbArea1")
             {
-                updateCombbox = cbArea2;
-                cbArea2.Text = string.Empty;
-                cbArea2.Items.Clear();
                 //过滤直辖市
                 if (new int[] { 110000, 120000, 310000, 500000 }.Contains(selectDate.region_code))
                 {
-                    _regionName = selectDate.region_name;
                     stStatus.Text = lbArea.Text = "当前选择发货地：" + selectDate.region_name;
+                    _regionName = selectDate.region_name;
                     _regionCode = selectDate.region_code;
+                    cbArea2.Text = "";
                     cbArea2.Enabled = false;
                     return;
                 }
+                cbArea2.DataSource = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == selectDate.region_id).ToList();
                 cbArea2.Enabled = true;
             }
-            else
+            else if (currentTsCombbox.Name == "cbArea2")
             {
-                if (currentTsCombbox.Name == "cbArea2")
-                {
-                    _regionName = selectDate.region_name;
-                    stStatus.Text = lbArea.Text = "当前选择发货地：" + selectDate.region_name;
-                    _regionCode = selectDate.region_code;
-                }
-                return;
-            }
-            var list = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == selectDate.region_id).ToList();
-            //await _context.AreaDataService.LoadAreaDatasAsync(selectDate.region_id);
-            foreach (var item in list)
-            {
-                updateCombbox.Items.Add(item);
+                stStatus.Text = lbArea.Text = "当前选择发货地：" + selectDate.region_name;
+                _regionName = selectDate.region_name;
+                _regionCode = selectDate.region_code;
             }
         }
 

@@ -42,7 +42,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                new Exception("ProductService.GetProductInfo未能提交请求");
+                throw new Exception("ProductService.GetProductInfo未能提交请求");
             }
             if (stCtx.Result.success && stCtx.Result.Data.Length == 1)
             {
@@ -68,12 +68,12 @@ namespace TxoooProductUpload.Service
 
             if (!stCtx.IsValid())
             {
-                new Exception("ProductService.AddProductCommnet未能提交请求");
+                throw new Exception("ProductService.AddProductCommnet未能提交请求");
             }
 
             if (!stCtx.Result.success)
             {
-                new Exception("提交失败，原因:" + stCtx.Result.msg);
+                throw new Exception("提交失败，原因:" + stCtx.Result.msg);
 
             }
             return stCtx.Result.success;
@@ -94,7 +94,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                new Exception("ProductService.UploadProduct未能提交请求");
+                throw new Exception("ProductService.UploadProduct未能提交请求");
             }
 
             //入库记录
@@ -110,7 +110,7 @@ namespace TxoooProductUpload.Service
             }
             catch (Exception ex)
             {
-                new Exception("ProductService.UploadProduct.DbHelperOleDb异常" + ex.Message);
+                throw new Exception("ProductService.UploadProduct.DbHelperOleDb异常" + ex.Message);
             }
 
             return stCtx.Result;
