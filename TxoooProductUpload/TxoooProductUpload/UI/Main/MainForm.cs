@@ -356,7 +356,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    AppendLog("上传主图出错，错误信息：{0}", ex.Message);
+                    EndOperation(string.Format("上传主图出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion
@@ -388,7 +388,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    AppendLog("处理详情出错，错误信息：{0}", ex.Message);
+                    EndOperation(string.Format("处理详情出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion
@@ -417,7 +417,7 @@ namespace TxoooProductUpload.UI.Main
                                     {
                                         var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
                                         _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
-                                        AppendLog(name + "处理完成...");
+                                        AppendLog("第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
                                     }
                                 }
                             }
@@ -446,23 +446,23 @@ namespace TxoooProductUpload.UI.Main
                                 BeginOperation("开始处理商品SKU...", colorList.Count, true);
                                 if (colorList.Count != 2)
                                 {
-                                    new Exception("商品sku解析错误");
                                     EndOperation("商品sku解析错误");
                                     return;
                                 }
                                 foreach (var colorItem in colorList[1].values)
                                 {
+                                    string colorImg = _result.ThumImg.LastOrDefault();
+                                    if (!colorItem.image.IsNullOrEmpty())
+                                    {
+                                        await Task.Delay(100);
+                                        colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
+                                    }
                                     foreach (var sizeitem in colorList[0].values)
                                     {
-                                        string colorImg = _result.ThumImg.LastOrDefault();
-                                        if (!colorItem.image.IsNullOrEmpty())
-                                        {
-                                            colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
-                                        }
                                         var name = string.Format("{0}:{1} | {2}:{3}", colorList[1].text
                                             , colorItem.text, colorList[0].text, sizeitem.text);
                                         _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
-                                        AppendLog(name + "处理完成...");
+                                        AppendLog("第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
                                     }
                                 }
                             }
@@ -472,7 +472,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    AppendLog("生成SKU出错，错误信息：{0}", ex.Message);
+                    EndOperation(string.Format("生成SKU出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -19,23 +20,24 @@ namespace TxoooProductUpload.UI.Main
     {
         Regex _urlReg = new Regex(@"7518.cn/shop.html\?id=(\d{5})");
         ProductInfo _productInfo = null;
+        string _userHeadPic = ConstParams.DEFAULT_HEAD_PIC;
 
         public Comment(ServiceContext context) : base(context)
         {
             InitializeComponent();
             AppendLog(txtLog, "评价页面初始化[开始]...");
-            Init();
+            InitPage1();
+            InitPage2();
             AppendLog(txtLog, "评价页面初始化[完毕]...");
         }
 
         /// <summary>
-        /// 初始化
+        /// 初始化tagPage1
         /// </summary>
-        private void Init()
+        void InitPage1()
         {
             this.txtUrl.SetHintText("在这里输入要添加评价的创业赚钱商品链接");
-            this.txtJson.Focus();
-            this.btnAddComments.Enabled = false;
+            this.txtLog.Focus();
             //复制天猫脚本
             this.btnTmall.Click += (s, e) =>
             {
@@ -81,7 +83,8 @@ namespace TxoooProductUpload.UI.Main
                         {
                             AppendLog(txtLog, "第{0}个SKU={1}", i + 1, _productInfo.property[i].json_info);
                         }
-                        this.btnAddComments.Enabled = true;
+                        //绑定到page2属性combobox上
+                        cbProperty.DataSource = _productInfo.property;
                     }
                 }
                 catch (Exception ex)
@@ -101,7 +104,7 @@ namespace TxoooProductUpload.UI.Main
                     return;
                 }
                 #endregion
-                this.btnAddComments.Enabled = false;
+                #region 提交评价 批量
                 try
                 {
                     var reviewList = JsonConvert.DeserializeObject<List<ReviewInfo>>(json);
@@ -147,6 +150,7 @@ namespace TxoooProductUpload.UI.Main
                 {
                     AppendLogError(txtLog, "[异常]" + ex.Message);
                 }
+                #endregion
             };
             //url输入框点击事件  主要用来自动粘贴
             this.txtUrl.Click += (s, e) =>
@@ -162,6 +166,61 @@ namespace TxoooProductUpload.UI.Main
                 else
                 {
                     (s as TextBox).SelectAll();
+                }
+            };
+        }
+
+        async void InitPage2()
+        {
+            //头像
+            pbHead.Image = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+            //上传头像
+            pbHead.Click += async (s, e) =>
+            {
+                OpenFileDialog ofdImgHead = new OpenFileDialog();   //显示选择文件对话框 
+                ofdImgHead.Title = "创业赚钱-商家工具";
+                ofdImgHead.Filter = "图片文件(*.jpg,*.png,*.gif,*.bmp,*.jpeg)|*.jpg;*.png;*.gif;*.bmp;*jpeg";
+                ofdImgHead.FilterIndex = 2;
+                ofdImgHead.RestoreDirectory = true;
+                if (ofdImgHead.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        Image headPic = Image.FromFile(ofdImgHead.FileName);
+                        _userHeadPic = await _context.CommonService.UploadImg(headPic);
+                        pbHead.Image = headPic;
+                        AppendLogWarning(txtLog, "头像更换[成功]...");
+                    }
+                    catch (Exception ex)
+                    {
+                        AppendLogWarning(txtLog, "头像更换[失败]...");
+                        Image headPic = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+                        AppendLogWarning(txtLog, "[异常发生在]:", ex);
+                    }
+                }
+            };
+            //url更换头像
+            btnUpdateHeadPic.Click += async (s, e) =>
+            {
+                string url = txtUpdateHeadPicUrl.Text.Trim();
+                if (!url.IsUrl())
+                {
+                    SM("图片地址没有啊亲...");
+                    return;
+                }
+                try
+                {
+                    var imageB = await _context.CommonService.GetImageStreamByImgUrl(url);
+                    _userHeadPic = await _context.CommonService.UploadImg(imageB);
+                    pbHead.Image = Image.FromStream(new MemoryStream(imageB));
+                    AppendLogWarning(txtLog, "头像更换[成功]...");
+                    txtUpdateHeadPicUrl.Text = string.Empty;
+                }
+                catch (Exception ex)
+                {
+                    AppendLogWarning(txtLog, "头像更换[失败]...");
+                    Image headPic = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+                    AppendLogWarning(txtLog, "[异常发生在]:", ex);
                 }
             };
         }

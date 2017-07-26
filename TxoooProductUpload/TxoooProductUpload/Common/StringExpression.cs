@@ -44,5 +44,27 @@ namespace TxoooProductUpload.Common
                 return str;
             }
         }
+
+        /// <summary>
+        /// 是否为网址
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static bool IsUrl(this string obj)
+        {
+            // "^http[s]?:\\/\\/([\\w-]+\\.)+[\\w-]+([\\w-./?%&=]*)?$"
+            return Check(obj, @"^(((file|gopher|news|nntp|telnet|http|ftp|https|ftps|sftp)://)|(www\.))+(([a-zA-Z0-9\._-]+\.[a-zA-Z]{2,6})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(/[a-zA-Z0-9\&%_\./-~-]*)?$");
+        }
+        /// <summary>
+        /// 检查数据是否匹配
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="reg"></param>
+        /// <returns></returns>
+        static bool Check(string obj, string reg)
+        {
+            return Regex.IsMatch(obj,
+                reg, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+        }
     }
 }

@@ -16,9 +16,10 @@ if (typeof getTmallReview != 'function') {
             var reviewImgs = reviewItem[i].querySelector('.pics');
             if (reviewImgs) {
                 var imgUrls = [];
-                reviewImgs.querySelectorAll('img').forEach(function (i) {
-                    imgUrls.push(i.src.replace('_100x100q75.jpg', ''));
-                });
+                var rawImgs = reviewImgs.querySelectorAll('img');
+                for (j = 0; j < rawImgs.length; j++) {
+                    imgUrls.push(rawImgs[j].src.replace('_100x100q75.jpg', ''));
+                }
                 reviewModel.ReviewImgs = imgUrls.join(); //评价图片
             }
             reviewModelList.push(reviewModel);
@@ -26,9 +27,18 @@ if (typeof getTmallReview != 'function') {
         return reviewModelList;
     }
 }
+if (typeof getReview == 'undefined') {
+    getReview = function () {
+        var host = location.host;
+        if (host == 'detail.m.tmall.com') {
+            return getTmallReview();
+        }
+    }
+}
 if (typeof Reviews == 'undefined') {
     var Reviews = {};
 }
-Reviews = getTmallReview();
-alert('抓取成功' + Reviews.length + '条评价')
-console.log(JSON.stringify(Reviews));
+Reviews = getReview();
+console.clear();
+console.log('抓取成功' + Reviews.length + '条评价');
+document.write(JSON.stringify(Reviews));

@@ -50,3 +50,4 @@ F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\
 F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Release\TxoooProductUpload.pdb
 F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Release\TxoooProductUpload.UI.FormBase.resources
 F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Release\TxoooProductUpload.UI.Main.Comment.resources
+F:\0.Project\Donet\TxoooProductUpload\TxoooProductUpload\TxoooProductUpload\obj\Release\TxoooProductUpload.csprojResolveAssemblyReference.cache

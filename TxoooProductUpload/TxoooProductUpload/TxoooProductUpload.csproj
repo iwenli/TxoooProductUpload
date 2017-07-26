@@ -47,7 +47,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>pdf2word.ico</ApplicationIcon>
@@ -124,7 +124,6 @@
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\Entities\SkuInfo.cs" />
     <Compile Include="Service\Entities\AreaInfo.cs" />
-    <Compile Include="Service\Entities\ComboboxItem.cs" />
     <Compile Include="Service\Entities\ProductClassInfo.cs" />
     <Compile Include="Service\UrlConvertProductService.cs" />
     <Compile Include="Service\Entities\LoginInfo.cs" />
@@ -134,6 +133,12 @@
     <Compile Include="Service\ServiceBase.cs" />
     <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="Service\Session.cs" />
+    <Compile Include="UI\WatermakRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\WatermakRichTextBox.Designer.cs">
+      <DependentUpon>WatermakRichTextBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\FormBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -220,9 +225,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\txooo.mdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="pdf2word.ico" />
+    <None Include="Resources\add.jpg" />
+    <None Include="Resources\add1.png" />
     <Content Include="Web\Html\1688.html" />
     <Content Include="Web\Html\m.1688.html" />
     <Content Include="Web\Html\mTaobao.html" />

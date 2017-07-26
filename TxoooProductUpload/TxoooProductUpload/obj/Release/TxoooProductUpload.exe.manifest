@@ -4,7 +4,7 @@
   <description asmv2:iconFile="pdf2word.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="TxoooProductUpload" version="1.0.1.0" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="TxoooProductUpload" version="1.1.1.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="TxoooProductUpload.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -115,14 +115,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="321024">
-      <assemblyIdentity name="TxoooProductUpload" version="1.0.1.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="TxoooProductUpload.exe" size="343040">
+      <assemblyIdentity name="TxoooProductUpload" version="1.1.1.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>hQBkuyDieeuamEsrl5gjpt0NGbl2MIjn1Uzb1obIpes=</dsig:DigestValue>
+        <dsig:DigestValue>1ccCvc/Cm44Zp9m7lBuK6WIluo9DKlhCFzPQfpsjdrU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -132,7 +132,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>wDpF5iMbnTP/xf7/7pfY1IY/U225vQS8kMzlV/os90M=</dsig:DigestValue>
+      <dsig:DigestValue>jwzllsIO8op6cSo3j7jknMJ3skX9W3kT2GKFScrp0TI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="pdf2word.ico" size="112791">
@@ -207,13 +207,13 @@
       <dsig:DigestValue>NrJ9eGoQQ1KgdVLTzqt7vAENOB4HHRcJRYK5CwRYQuw=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Web\Js\tmall_review.js" size="1666">
+  <file name="Web\Js\tmall_review.js" size="1954">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>EWl3G+0yIWa9JGh5NFwpKa0t4WbTrNuPZvzDr2FUKVs=</dsig:DigestValue>
+      <dsig:DigestValue>PsIAJKGu08uqfuhBdHBLR3YmLdNlSM8i0lduRWVOvlU=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
