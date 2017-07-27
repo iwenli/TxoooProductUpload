@@ -42,7 +42,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -50,7 +50,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>pdf2word.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>TxoooProductUpload.App</StartupObject>
@@ -93,6 +93,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -107,9 +108,10 @@
     <Compile Include="Common\AppConfig.cs" />
     <Compile Include="Common\ConstParams.cs" />
     <Compile Include="Common\DbHelperOleDb.cs" />
+    <Compile Include="Common\Extended\ImageExtended.cs" />
     <Compile Include="Common\Parameters.cs" />
-    <Compile Include="Common\ControlExpression.cs" />
-    <Compile Include="Common\StringExpression.cs" />
+    <Compile Include="Common\Extended\ControlExtended.cs" />
+    <Compile Include="Common\Extended\StringExtended.cs" />
     <Compile Include="Common\Update.cs" />
     <Compile Include="Network\NetClient.cs" />
     <Compile Include="App.cs" />
@@ -133,14 +135,20 @@
     <Compile Include="Service\ServiceBase.cs" />
     <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="Service\Session.cs" />
+    <Compile Include="UI\FormBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ImageDownload\Crawler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ImageDownload\Crawler.Designer.cs">
+      <DependentUpon>Crawler.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\WatermakRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\WatermakRichTextBox.Designer.cs">
       <DependentUpon>WatermakRichTextBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\FormBase.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\Main\Comment.cs">
       <SubType>Form</SubType>
@@ -177,6 +185,9 @@
     <EmbeddedResource Include="UI\FormBase.resx">
       <DependentUpon>FormBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\ImageDownload\Crawler.resx">
+      <DependentUpon>Crawler.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Main\Comment.resx">
       <DependentUpon>Comment.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,10 +209,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="txooo7518\" />
-    <Folder Include="UI\ImageUpload\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\block_16.png" />
   </ItemGroup>
@@ -227,7 +235,7 @@
     <Content Include="data\txooo.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="pdf2word.ico" />
+    <Content Include="icon.ico" />
     <None Include="Resources\add.jpg" />
     <None Include="Resources\add1.png" />
     <Content Include="Web\Html\1688.html" />

@@ -17,8 +17,9 @@ namespace TxoooProductUpload.UI.Main
     using TxoooProductUpload.Service.Entities;
     using TxoooProductUpload.Common;
     using Newtonsoft.Json;
+    using TxoooProductUpload.UI.ImageDownload;
 
-    public partial class MainForm : Form
+    partial class MainForm : FormBase
     {
         //h5.m.taobao.com/awp/core/detail.htm|item.taobao.com|
         Regex urlReg = new Regex("detail.tmall.com|detail.m.tmall.com|detail.1688.com|item.jd.com|item.m.jd.com|m.1688.com");//url
@@ -33,7 +34,6 @@ namespace TxoooProductUpload.UI.Main
         int _append = 0;
         int _limit = 0;
         int _typeService = 1;
-        float _price = 0;
         int _radio_num = 0;
 
         public MainForm()
@@ -45,6 +45,9 @@ namespace TxoooProductUpload.UI.Main
         private async void MainForm_Load(object sender, EventArgs e)
         {
             await InitServiceContext();
+            this.Text = ConstParams.APP_NAME + string.Format(" V{0}    PowerBy:{1}"
+                , ConstParams.Version.Substring(0, ConstParams.Version.LastIndexOf('.'))
+                , ConstParams.APP_AUTHOR);
             InitToolbar();
             InitStatusBar();
             InitFormControl();
@@ -92,6 +95,7 @@ namespace TxoooProductUpload.UI.Main
                 tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled = tsComment.Enabled =
                tsLogout.Enabled = _context.Session.IsLogined);
             tsComment.Click += (s, e) => { new Comment(_context).ShowDialog(this); };
+            tsImgManage.Click += (s, e) => { new Crawler(_context).ShowDialog(this); };
             tsLogin.Click += Login;
             tsLogout.Click += Logout;
             this.txtOneKeyUrl.SetHintText("请输入天猫、淘宝、京东、阿里巴巴等商品链接");
@@ -106,10 +110,10 @@ namespace TxoooProductUpload.UI.Main
         /// <param name="e"></param>
         void Login(object sender, EventArgs e)
         {
-            AppendLog("登录中...");
+            AppendLog(txtLog, "登录中...");
             if (new Login(_context).ShowDialog(this) != DialogResult.OK)
             {
-                AppendLog("登录取消...");
+                AppendLog(txtLog, "登录取消...");
             }
         }
         /// <summary>
@@ -145,8 +149,7 @@ namespace TxoooProductUpload.UI.Main
             //txtLog.Text = string.Empty;
             _context.CacheContext.Save();
             _context.Session.Logout();
-
-            AppendLog("退出登录成功！");
+            AppendLogWarning(txtLog, "退出登录成功！");
         }
 
 
@@ -163,8 +166,8 @@ namespace TxoooProductUpload.UI.Main
             tsLogin.Text = _context.Session.IsLogined ? string.Format("已登录为【{0} ({1})】", _context.Session.LoginInfo.DisplayName, _context.Session.LoginInfo.UserName) : "登录(&I)";
             if (_context.Session.IsLogined)
             {
-                AppendLog("登录成功...");
-                AppendLog(tsLogin.Text);
+                AppendLog(txtLog, "登录成功...");
+                AppendLog(txtLog, tsLogin.Text);
                 try
                 {
                     BeginOperation("开始更新缓存数据...");
@@ -214,7 +217,7 @@ namespace TxoooProductUpload.UI.Main
         void BeginOperation(string opName, int maxItemsCount = 100, bool disableForm = false)
         {
             stStatus.Text = opName.DefaultForEmpty("正在操作，请稍等...");
-            AppendLog(stStatus.Text);
+            AppendLog(txtLog, stStatus.Text);
             stProgress.Visible = true;
             stProgress.Maximum = maxItemsCount > 0 ? maxItemsCount : 100;
             stProgress.Style = maxItemsCount > 0 ? ProgressBarStyle.Blocks : ProgressBarStyle.Marquee;
@@ -229,47 +232,14 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void EndOperation(string opName = "就绪.")
         {
-            AppendLog(opName);
+            AppendLog(txtLog, opName);
             stStatus.Text = opName;
             stProgress.Visible = false;
             btnOneKeyOk.Enabled = true;
         }
-
-        /// <summary>
-        /// 添加日志
-        /// </summary>
-        /// <param name="message"></param>
-        /// <param name="args"></param>
-        void AppendLog(string message, params object[] args)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() =>
-                {
-                    AppendLog(message, args);
-                }));
-                return;
-            }
-            string timeL = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            txtLog.AppendText(timeL + " => ");
-            //txtLog.AppendText(Environment.NewLine);  //换行显示
-
-            if (args == null || args.Length == 0)
-            {
-                txtLog.AppendText(message);
-            }
-            else
-            {
-                txtLog.AppendText(string.Format(message, args));
-            }
-            txtLog.AppendText(Environment.NewLine);
-            txtLog.ScrollToCaret();
-        }
         #endregion
 
         #region 服务接入
-
-        ServiceContext _context;
 
         /// <summary>
         /// 初始化服务状态
@@ -289,20 +259,10 @@ namespace TxoooProductUpload.UI.Main
         async Task ProcessProduct()
         {
             string productUrl = txtOneKeyUrl.Text.Trim();
-            //productUrl = productUrl == "" ? "https://detail.tmall.com/item.htm?id=537253492455" : productUrl;
-            //"https://detail.1688.com/offer/552578137902.html";
-            //http://m.1688.com/offer/552578137902.html
-
-            //"https://item.taobao.com/item.htm?id=547040661236";
-            // http://h5.m.taobao.com/awp/core/detail.htm?id=547040661236
-
-            //"https://detail.tmall.com/item.htm?id=528221266420";
-            // https://detail.m.tmall.com/item.htm?id=528221266420
-
 
             if (string.IsNullOrEmpty(productUrl))
             {
-                MessageBox.Show(this, "哎呀，没有商品链接，逗我呢 o(╯□╰)o", "哎呀", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                IS("哎呀，没有商品链接，逗我呢 o(╯□╰)o");
                 txtOneKeyUrl.Focus();
                 return;
             }
@@ -318,7 +278,7 @@ namespace TxoooProductUpload.UI.Main
             }
             catch (Exception ex)
             {
-                AppendLog("解析商品出错，错误信息：{0}", ex.Message);
+                AppendLogError(txtLog, "解析商品出错，错误信息：{0}", ex.Message);
                 return;
             }
             finally
@@ -343,11 +303,11 @@ namespace TxoooProductUpload.UI.Main
                         index = 1;
                         //排除sku主图
                         var thumImg = _result.ThumImg;
-                        if (_result.Source == "阿里巴巴" && _result.SKU1688 != null)
-                        {
-                            var skuImgs = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.image.IsNullOrEmpty()).Select(m => m.image).ToList();
-                            thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
-                        }
+                        //if (_result.Source == "阿里巴巴" && _result.SKU1688 != null)
+                        //{
+                        //    var skuImgs = _result.SKU1688.Where(m => m.prop == "颜色").FirstOrDefault().value.Where(m => !m.image.IsNullOrEmpty()).Select(m => m.image).ToList();
+                        //    thumImg = _result.ThumImg.Where(m => !skuImgs.Contains(m)).ToList();
+                        //}
                         if (thumImg.Count > 5)
                         {
                             thumImg = thumImg.Take(5).ToList();
@@ -439,13 +399,13 @@ namespace TxoooProductUpload.UI.Main
                                             {
                                                 var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
                                                 _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
-                                                AppendLog(name + "[处理完成]...");
+                                                AppendLog(txtLog, name + "[处理完成]...");
                                             }
                                         }
                                         else
                                         {
                                             _result.product_property += string.Format(propertyFormat, index++, colorItem.name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
-                                            AppendLog(colorItem.name + "[处理完成]...");
+                                            AppendLog(txtLog, colorItem.name + "[处理完成]...");
                                         }
                                     }
                                 }
@@ -455,7 +415,7 @@ namespace TxoooProductUpload.UI.Main
                                     var name = "常规";
                                     var colorImg = await _context.CommonService.UploadImg(_result.ThumImg.LastOrDefault(), 3);
                                     _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, "true");
-                                    AppendLog(name + "[处理完成]...");
+                                    AppendLog(txtLog, name + "[处理完成]...");
                                 }
                             }
                             break;
@@ -477,7 +437,7 @@ namespace TxoooProductUpload.UI.Main
                                     var name = string.Format("{0}:{1} | {2}:{3}", _result.SKUJD.colorSizeTitle.colorName
                                         , colorItem.color, _result.SKUJD.colorSizeTitle.sizeName, colorItem.size);
                                     _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
-                                    AppendLog(name + "处理完成...");
+                                    AppendLog(txtLog, name + "处理完成...");
                                 }
                             }
                             break;
@@ -506,7 +466,7 @@ namespace TxoooProductUpload.UI.Main
                                         var name = string.Format("{0}:{1} | {2}:{3}", colorList[1].text
                                             , colorItem.text, colorList[0].text, sizeitem.text); _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
                                         _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
-                                        AppendLog("第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
+                                        AppendLog(txtLog, "第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
                                     }
                                 }
                             }
@@ -522,18 +482,18 @@ namespace TxoooProductUpload.UI.Main
                 #endregion
 
                 #region 处理本地参数
-                AppendLog("开始附加本地设置...");
+                AppendLogWarning(txtLog, "开始附加本地设置...");
                 _result.product_type = _classId;
-                AppendLog("尝试自动识别发货地...");
+                AppendLogWarning(txtLog, "尝试自动识别发货地...");
                 if (!_result.DiscernLcation())
                 {
-                    AppendLog("识别失败，使用系统设置...");
+                    AppendLog(txtLog, "识别失败，使用系统设置...");
                     _result.region_code = _regionCode;
                     _result.region_name = _regionName;
                 }
                 else
                 {
-                    AppendLog("识别成功，当前产品发货地已更改为：{0}", _result.region_name);
+                    AppendLog(txtLog, "识别成功，当前产品发货地已更改为：{0}", _result.region_name);
                 }
                 _result.new_old = _new_old;
                 _result.is_virtual = Convert.ToInt32(_is_virtual);
@@ -555,16 +515,16 @@ namespace TxoooProductUpload.UI.Main
 
                     if (productUploadResult.success)
                     {
-                        AppendLog("上传成功，商品id={0}...", productUploadResult.msg);
+                        AppendLogWarning(txtLog, "上传成功，商品id={0}...", productUploadResult.msg);
                     }
                     else
                     {
-                        AppendLog("上传失败，原因：{0}...", productUploadResult.msg);
+                        AppendLogError(txtLog, "上传失败，原因：{0}...", productUploadResult.msg);
                     }
                 }
                 catch (Exception ex)
                 {
-                    AppendLog("生成SKU出错，错误信息：{0}", ex.Message);
+                    AppendLogError(txtLog, "生成SKU出错，错误信息：{0}", ex.Message);
                 }
                 #endregion
                 EndOperation();
@@ -604,7 +564,7 @@ namespace TxoooProductUpload.UI.Main
             var result = urlReg.IsMatch(url);
             if (!result)
             {
-                MessageBox.Show("暂时只支持天猫，阿里巴巴，和京东！\n如有其他需求，请联系作者!");
+                IS("暂时只支持天猫，阿里巴巴，和京东！\n如有其他需求，请联系作者!");
             }
             return result;
         }
@@ -703,7 +663,7 @@ namespace TxoooProductUpload.UI.Main
         {
             if (_regionCode == 0)
             {
-                MessageBox.Show("还没有选择发货地哟^_^", "创业赚钱");
+                SM("还没有选择发货地哟^_^");
                 cbArea1.Focus();
                 return false;
             }
@@ -724,11 +684,11 @@ namespace TxoooProductUpload.UI.Main
             {
                 case "rbTypeNew":  //发布类型为新品
                     _new_old = Convert.ToInt32(rbTypeNew.Checked);
-                    AppendLog("发布类型变更为：" + (_new_old == 1 ? "新品" : "二手"));
+                    AppendLog(txtLog, "发布类型变更为：" + (_new_old == 1 ? "新品" : "二手"));
                     break;
                 case "rbVirtualTrue":  //是虚拟商品
                     _is_virtual = rbVirtualTrue.Checked;
-                    AppendLog("是否虚拟商品变更为：" + (_is_virtual ? "是" : "不是"));
+                    AppendLog(txtLog, "是否虚拟商品变更为：" + (_is_virtual ? "是" : "不是"));
 
                     if (_is_virtual)//如果是虚拟商品  包邮 和 退货 不可设置
                     {
@@ -741,7 +701,7 @@ namespace TxoooProductUpload.UI.Main
                     break;
                 case "rbPostageTrue":  //包邮
                     _product_ispostage = rbPostageTrue.Checked;
-                    AppendLog("是否包邮变更为：" + (_product_ispostage ? "包邮" : "不包邮"));
+                    AppendLog(txtLog, "是否包邮变更为：" + (_product_ispostage ? "包邮" : "不包邮"));
                     if (_product_ispostage)//包邮则清空包邮设置
                     {
                         tbPostage.Value = tbappend.Value = tbLinit.Value = _postage = _append = _limit = 0;
@@ -750,7 +710,7 @@ namespace TxoooProductUpload.UI.Main
                     break;
                 case "rbRefundTrue":  //支持7天无理由退货
                     _refund = Convert.ToInt32(rbRefundTrue.Checked);
-                    AppendLog("是否支持7天无理由退货变更为：" + (_refund == 1 ? "支持" : "不支持"));
+                    AppendLog(txtLog, "是否支持7天无理由退货变更为：" + (_refund == 1 ? "支持" : "不支持"));
                     break;
             }
 
@@ -789,7 +749,7 @@ namespace TxoooProductUpload.UI.Main
         {
             if (!_product_ispostage && _postage == 0)
             {
-                MessageBox.Show("还没有设置邮费哟^_^", "创业赚钱");
+                SM("还没有设置邮费哟^_^");
                 tbPostage.Focus();
                 return false;
             }

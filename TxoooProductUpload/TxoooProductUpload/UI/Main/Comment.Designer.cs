@@ -37,6 +37,7 @@
             this.gbPage1 = new System.Windows.Forms.GroupBox();
             this.txtJson = new System.Windows.Forms.RichTextBox();
             this.gbAction = new System.Windows.Forms.GroupBox();
+            this.cbIsUploadReviewImg = new System.Windows.Forms.CheckBox();
             this.btnAddComments = new System.Windows.Forms.Button();
             this.btnTmall = new System.Windows.Forms.Button();
             this.tcReviews = new System.Windows.Forms.TabControl();
@@ -166,6 +167,7 @@
             // 
             // gbAction
             // 
+            this.gbAction.Controls.Add(this.cbIsUploadReviewImg);
             this.gbAction.Controls.Add(this.btnAddComments);
             this.gbAction.Controls.Add(this.btnTmall);
             this.gbAction.Dock = System.Windows.Forms.DockStyle.Top;
@@ -175,6 +177,18 @@
             this.gbAction.TabIndex = 4;
             this.gbAction.TabStop = false;
             this.gbAction.Text = "操作";
+            // 
+            // cbIsUploadReviewImg
+            // 
+            this.cbIsUploadReviewImg.AutoSize = true;
+            this.cbIsUploadReviewImg.Checked = true;
+            this.cbIsUploadReviewImg.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbIsUploadReviewImg.Location = new System.Drawing.Point(522, 26);
+            this.cbIsUploadReviewImg.Name = "cbIsUploadReviewImg";
+            this.cbIsUploadReviewImg.Size = new System.Drawing.Size(99, 21);
+            this.cbIsUploadReviewImg.TabIndex = 4;
+            this.cbIsUploadReviewImg.Text = "是否抓取图片";
+            this.cbIsUploadReviewImg.UseVisualStyleBackColor = true;
             // 
             // btnAddComments
             // 
@@ -201,6 +215,7 @@
             this.tcReviews.Controls.Add(this.oneBatch);
             this.tcReviews.Controls.Add(this.batchPage);
             this.tcReviews.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tcReviews.Enabled = false;
             this.tcReviews.Location = new System.Drawing.Point(0, 0);
             this.tcReviews.Name = "tcReviews";
             this.tcReviews.SelectedIndex = 0;
@@ -572,6 +587,7 @@
             this.batchPage.ResumeLayout(false);
             this.gbPage1.ResumeLayout(false);
             this.gbAction.ResumeLayout(false);
+            this.gbAction.PerformLayout();
             this.tcReviews.ResumeLayout(false);
             this.oneBatch.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
@@ -632,5 +648,6 @@
         private System.Windows.Forms.ContextMenuStrip cmsReviewImage;
         private System.Windows.Forms.ToolStripMenuItem tsmDelReviewImage;
         private System.Windows.Forms.Button btnAddReviewOne;
+        private System.Windows.Forms.CheckBox cbIsUploadReviewImg;
     }
 }

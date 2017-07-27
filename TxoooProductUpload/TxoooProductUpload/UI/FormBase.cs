@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 
 namespace TxoooProductUpload.UI
 {
     using Service;
-    using System.Runtime.InteropServices;
     using System.Windows.Forms;
+    using TxoooProductUpload.Common;
 
     /// <summary>
     /// 抽象窗口基类
@@ -29,9 +23,9 @@ namespace TxoooProductUpload.UI
         }
 
         /// <summary>
-        /// 无效构造函数
+        /// 构造函数
         /// </summary>
-        private FormBase()
+        public FormBase()
         {
 
         }
@@ -125,7 +119,7 @@ namespace TxoooProductUpload.UI
         /// <param name="msg">提示内容</param>
         protected void SM(string msg)
         {
-            MessageBox.Show(msg, "创业赚钱商家工具");
+            MessageBox.Show(msg, ConstParams.APP_NAME);
         }
         /// <summary>
         /// 显示错误内容
@@ -133,7 +127,15 @@ namespace TxoooProductUpload.UI
         /// <param name="msg">错误内容</param>
         protected void EM(string msg)
         {
-            MessageBox.Show(msg, "创业赚钱商家工具", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(msg, ConstParams.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        /// <summary>
+        /// 显示信息提示
+        /// </summary>
+        /// <param name="msg">错误内容</param>
+        protected void IS(string msg)
+        {
+            MessageBox.Show(msg, ConstParams.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         /// <summary>
         /// 显示提示，带ye和no提示的
@@ -141,7 +143,7 @@ namespace TxoooProductUpload.UI
         /// <param name="msg">错误内容</param>
         protected DialogResult SMYN(string msg)
         {
-            return MessageBox.Show(msg, "创业赚钱商家工具", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            return MessageBox.Show(msg, ConstParams.APP_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
         }
 
         #endregion

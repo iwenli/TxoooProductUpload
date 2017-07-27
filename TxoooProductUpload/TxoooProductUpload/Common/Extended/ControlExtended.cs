@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace TxoooProductUpload.Common
 {
-    public static class ControlExpression
+    public static class ControlExtended
     {
         #region HintText
 

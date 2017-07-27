@@ -87,6 +87,13 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task Update(ServiceContext context)
         {
+            if (AppConfig.IsRemember)
+            {
+                Cache.LoginInfo = context.Session.LoginInfo;
+            }
+            else {
+                Cache.LoginInfo = null;
+            }
             if ((Cache.LastUpdateTime != null && Cache.LastUpdateTime.AddDays(1) < DateTime.Now)
                 || Cache.ProductClassList.Count == 0 || Cache.AreaList.Count == 0
                 || !ApiList.IsTest != Cache.IsLine)
@@ -150,8 +157,9 @@ namespace TxoooProductUpload.Service
                 File.Delete(file);
             }
             else
+            { 
                 File.WriteAllText(file, JsonConvert.SerializeObject(data));
-
+            }
         }
     }
 
@@ -172,7 +180,10 @@ namespace TxoooProductUpload.Service
         /// 最后一次更新缓存时间
         /// </summary>
         public DateTime LastUpdateTime { get; set; }
-
+        /// <summary>
+        /// 登陆信息
+        /// </summary>
+        public LoginInfo LoginInfo { get; set; }
         /// <summary>
         /// 是否线上环境
         /// </summary>

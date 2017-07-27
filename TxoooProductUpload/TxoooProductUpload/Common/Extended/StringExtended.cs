@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TxoooProductUpload.Common
 {
-    public static class StringExpression
+    public static class StringExtended
     {
         /// <summary>
         /// 将Unicode字符串转为对于的string

@@ -2,18 +2,29 @@
 <AuProject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UpdateInfo>
     <AppName>创业赚钱商家工具  - by iwenli</AppName>
-    <AppVersion>2.0.0.0</AppVersion>
+    <AppVersion>1.2.0.0</AppVersion>
     <PublishUrl>http://iwenli.org</PublishUrl>
     <ExecuteTimeout>0</ExecuteTimeout>
     <TreatErrorAsNotUpdated>false</TreatErrorAsNotUpdated>
     <PromptUserBeforeAutomaticUpgrade>true</PromptUserBeforeAutomaticUpgrade>
     <AutoCloseSucceedWindow>true</AutoCloseSucceedWindow>
-    <Desc>修复问题#2 命令行打开的项目可能无法保存
-修复问题#5 命令行模式无法继续更新
-修复问题#6 特定情况下如果需要回滚，则只有显式被删除的文件被还原
-修复问题#7 多服务器模式下，如果不传递AppDirectory以及AppVersion参数将会导致抛出异常
-修复问题#8 多服务器模式下，如果服务器地址无法连接，则无法继续切换服务器
-增强功能#9 在VS中调试时，如果启用了VS宿主进程，则版本号会识别错误</Desc>
+    <Desc># 升级说明
+### v1.2.1 
++ 时间：2017年7月25日10:23:49 
++ 升级内容：
+1. 修复工具里设置包邮后app里显示邮费1块
+2. SUK出错后注销再登录发货地显示出错：选择的地址与显示不符
+3. 注销后再传商品发货地没了
+4. 新增批量评论功能[支持天猫数据]
+5. 增加SKU价格批量设置，增加返现比例
+6. 修复发货地自动匹配
+7. 单条评价上传功能[全覆盖]
+### v1.3.0
++ 时间：2017年7月27日15:27:47 
++ 升级内容：
+1. 修复评价头像URL无法上传问题
+2. 修复京东图片抓取不全的问题
+3. 修复单个上传不成功的问题</Desc>
     <DeleteMethod>None</DeleteMethod>
     <PackageSize>0</PackageSize>
     <ForceUpdate>false</ForceUpdate>
@@ -60,9 +71,9 @@
   <CreateCompatiblePackage>true</CreateCompatiblePackage>
   <CompressPackage>true</CompressPackage>
   <EnableIncreaseUpdate>true</EnableIncreaseUpdate>
-  <VersionUpdateSrc>C:\Users\jsonZhang\Desktop\txooo7518\uploadFile\TxoooProductUpload.exe</VersionUpdateSrc>
+  <VersionUpdateSrc>uploadFile\商家工具.exe</VersionUpdateSrc>
   <PackageExtension>zip</PackageExtension>
-  <UseRandomPackageNaming>true</UseRandomPackageNaming>
+  <UseRandomPackageNaming>false</UseRandomPackageNaming>
   <CleanBeforeBuild>true</CleanBeforeBuild>
   <ComponentFlags />
 </AuProject>

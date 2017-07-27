@@ -34,6 +34,7 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.cbIsTest = new System.Windows.Forms.CheckBox();
+            this.cbIsRemember = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -71,9 +72,9 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(169, 90);
+            this.btnOk.Location = new System.Drawing.Point(169, 81);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(102, 33);
+            this.btnOk.Size = new System.Drawing.Size(102, 48);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "登录(&O)";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -85,19 +86,33 @@
             this.cbIsTest.Checked = true;
             this.cbIsTest.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbIsTest.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cbIsTest.Location = new System.Drawing.Point(64, 96);
+            this.cbIsTest.Location = new System.Drawing.Point(69, 112);
             this.cbIsTest.Name = "cbIsTest";
-            this.cbIsTest.Size = new System.Drawing.Size(99, 21);
+            this.cbIsTest.Size = new System.Drawing.Size(75, 21);
             this.cbIsTest.TabIndex = 3;
-            this.cbIsTest.Text = "是否测试环境";
+            this.cbIsTest.Text = "测试环境";
             this.cbIsTest.UseVisualStyleBackColor = true;
+            // 
+            // cbIsRemember
+            // 
+            this.cbIsRemember.AutoSize = true;
+            this.cbIsRemember.Checked = true;
+            this.cbIsRemember.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbIsRemember.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cbIsRemember.Location = new System.Drawing.Point(69, 81);
+            this.cbIsRemember.Name = "cbIsRemember";
+            this.cbIsRemember.Size = new System.Drawing.Size(75, 21);
+            this.cbIsRemember.TabIndex = 3;
+            this.cbIsRemember.Text = "记住密码";
+            this.cbIsRemember.UseVisualStyleBackColor = true;
             // 
             // Login
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(298, 145);
+            this.ClientSize = new System.Drawing.Size(298, 148);
+            this.Controls.Add(this.cbIsRemember);
             this.Controls.Add(this.cbIsTest);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtPassword);
@@ -109,7 +124,6 @@
             this.MinimizeBox = false;
             this.Name = "Login";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "登录到创业赚钱";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,5 +137,6 @@
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.CheckBox cbIsTest;
+        private System.Windows.Forms.CheckBox cbIsRemember;
     }
 }

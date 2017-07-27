@@ -6,12 +6,14 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TxoooProductUpload.Common;
+using TxoooProductUpload.Common.Extended;
 using TxoooProductUpload.Service;
 using TxoooProductUpload.Service.Entities.Commnet;
 
@@ -23,11 +25,12 @@ namespace TxoooProductUpload.UI.Main
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
         private int LVM_SETICONSPACING = 0x1035;
         Regex _urlReg = new Regex(@"7518.cn/shop.html\?id=(\d{5})");
-        ProductInfo _productInfo = null;
         string _userHeadPic = ConstParams.DEFAULT_HEAD_PIC;
         int _maxRrviewImgCount = 6;//评价图片最多6个
+        bool _isUploadReviewImg = true;
         List<string> _reviewImgPathList = new List<string>();
         ReviewInfo _reviewInfo = null;
+        ProductInfo _productInfo = null;
 
         public Comment(ServiceContext context) : base(context)
         {
@@ -92,6 +95,8 @@ namespace TxoooProductUpload.UI.Main
                         }
                         //绑定到page2属性combobox上
                         cbProperty.DataSource = _productInfo.property;
+                        //启用
+                        tcReviews.Enabled = true;
                     }
                 }
                 catch (Exception ex)
@@ -125,10 +130,10 @@ namespace TxoooProductUpload.UI.Main
                             {
                                 reviewList[i].ProductId = _productInfo.product[0].product_id;
                                 reviewList[i].AddUserId = _context.Session.Token.userid;
-                                reviewList[i].PropertyName = _productInfo.property[random.Next(0, _productInfo.property.Count - 1)]
+                                reviewList[i].PropertyName = _productInfo.property[random.Next(0, _productInfo.property.Count)]
                                 .json_info;
                                 //循环处理评价图片
-                                if (!string.IsNullOrEmpty(reviewList[i].ReviewImgs))
+                                if (_isUploadReviewImg && !string.IsNullOrEmpty(reviewList[i].ReviewImgs))
                                 {
                                     var imgList = reviewList[i].ReviewImgs.Split(',');
                                     var updateImglist = new List<string>();
@@ -140,16 +145,12 @@ namespace TxoooProductUpload.UI.Main
                                     }
                                     reviewList[i].ReviewImgs = string.Join(",", updateImglist);
                                 }
+                                else
+                                {
+                                    reviewList[i].ReviewImgs = "";
+                                }
                             }
-                            AppendLogWarning(txtLog, "开始上传评价...");
-                            if (await _context.ProductService.AddProductCommnet(JsonConvert.SerializeObject(reviewList)))
-                            {
-                                AppendLogWarning(txtLog, "上传成功...");
-                            }
-                            else
-                            {
-                                AppendLogWarning(txtLog, "上传失败...");
-                            }
+                            await SubmintReview(reviewList);
                         }
                     }
                 }
@@ -175,8 +176,16 @@ namespace TxoooProductUpload.UI.Main
                     (s as TextBox).SelectAll();
                 }
             };
-        }
 
+            //是否上传图片
+            this.cbIsUploadReviewImg.Click += (s, e) =>
+            {
+                _isUploadReviewImg = cbIsUploadReviewImg.Checked;
+            };
+        }
+        /// <summary>
+        /// 初始化tagPage2
+        /// </summary>
         void InitPage2()
         {
             SendMessage(this.lvReviewImage.Handle, LVM_SETICONSPACING, 0, 0x10000 * 40 + 52);//70是行距，60是列距，
@@ -201,7 +210,7 @@ namespace TxoooProductUpload.UI.Main
                 {
                     try
                     {
-                        Image headPic = Image.FromFile(ofdImgHead.FileName);
+                        Image headPic = Image.FromFile(ofdImgHead.FileName).Thumbnail();
                         _userHeadPic = await _context.CommonService.UploadImg(headPic);
                         pbHead.Image = headPic;
                         AppendLogWarning(txtLog, "头像更换[成功]...");
@@ -218,16 +227,19 @@ namespace TxoooProductUpload.UI.Main
             btnUpdateHeadPic.Click += async (s, e) =>
             {
                 string url = txtUpdateHeadPicUrl.Text.Trim();
-                if (!url.IsUrl())
-                {
-                    SM("图片地址没有啊亲...");
-                    return;
-                }
+                //if (!url.IsUrl())
+                //{
+                //    SM("图片地址没有啊亲...");
+                //    return;
+                //}
                 try
                 {
-                    var imageB = await _context.CommonService.GetImageStreamByImgUrl(url);
-                    _userHeadPic = await _context.CommonService.UploadImg(imageB);
-                    pbHead.Image = Image.FromStream(new MemoryStream(imageB));
+                    var wc = new WebClient();
+                    var imageB = wc.DownloadData(url);
+                    //var imageB = await _context.CommonService.GetImageStreamByImgUrl(url);
+                    var headPic = Image.FromStream(new MemoryStream(imageB)).Thumbnail();
+                    _userHeadPic = await _context.CommonService.UploadImg(headPic);
+                    pbHead.Image = headPic;
                     AppendLogWarning(txtLog, "头像更换[成功]...");
                     txtUpdateHeadPicUrl.Text = string.Empty;
                 }
@@ -316,15 +328,45 @@ namespace TxoooProductUpload.UI.Main
                     btnAddReviewOne.Enabled = true;
                 }
             };
-
+            //提交评价按钮事件
             btnAddReviewOne.Click += async (s, e) =>
              {
                  try
                  {
-                     if (await SubmintReview(_reviewInfo))
+                     if (txtNickName.Text.Trim().IsNullOrEmpty())
+                     {
+                         SM("昵称不能为空哦");
+                         return;
+                     }
+                     btnAddReviewOne.Enabled = false;
+                     //拉取信息
+                     _reviewInfo = new ReviewInfo()
+                     {
+                         ProductId = _productInfo.product[0].product_id,
+                         PropertyName = cbProperty.Text,
+                         NickName = txtNickName.Text.Substring(0, 1) + "***" + txtNickName.Text.Substring(txtNickName.Text.Length - 1, 1),
+                         LikeCount = (int)nudLikeCount.Value,
+                         ProductReview = (int)nudProductScore.Value,
+                         ExpressReview = (int)nudExpressScore.Value,
+                         AddTime = dtpAddTime.Value.ToString("yyyy-MM-dd"),
+                         MchReplyContent = txtMchReplyContent.Text.Trim(),
+                         ReviewContent = txtReviewContent.Text.Trim(),
+                         HeadPic = _userHeadPic,
+                         AddUserId = _context.Session.Token.userid
+                     };
+                     var reviewImageUrls = new List<string>();
+                     //上传评价图片
+                     for (int i = 0; i < _reviewImgPathList.Count; i++)
+                     {
+                         reviewImageUrls.Add(await _context.CommonService.UploadImg(Image.FromFile(_reviewImgPathList[i])));
+                     }
+                     _reviewInfo.ReviewImgs = string.Join(",", reviewImageUrls);
+
+                     var reviewParam = new List<ReviewInfo>();
+                     reviewParam.Add(_reviewInfo);
+                     if (await SubmintReview(reviewParam))
                      {
                          ResetPage2();
-                         AppendLogWarning(txtLog, "评价成功...");
                          return;
                      }
                  }
@@ -337,14 +379,34 @@ namespace TxoooProductUpload.UI.Main
              };
         }
 
-        async Task<bool> SubmintReview(ReviewInfo review)
+        /// <summary>
+        /// 提交评价
+        /// </summary>
+        /// <param name="reviews"></param>
+        /// <returns></returns>
+        async Task<bool> SubmintReview(List<ReviewInfo> reviews)
         {
-            await Task.Delay(10);
-            if (review == null)
+            if (reviews == null)
             {
+                SM("评价内容咋是空的尼？");
                 return false;
             }
-            return true;
+            AppendLogWarning(txtLog, "开始上传评价...");
+            try
+            {
+                var isSuccess = await _context.ProductService.AddProductCommnet(JsonConvert.SerializeObject(reviews));
+                if (isSuccess)
+                {
+                    AppendLogWarning(txtLog, "上传成功...");
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("上传评价异常：" + ex.Message);
+            }
+            AppendLogWarning(txtLog, "上传失败...");
+            return false;
         }
 
         /// <summary>

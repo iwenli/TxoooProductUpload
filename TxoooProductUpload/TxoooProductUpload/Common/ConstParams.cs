@@ -11,6 +11,16 @@ namespace TxoooProductUpload.Common
     /// </summary>
     class ConstParams
     {
+        #region Const
+        /// <summary>
+        /// 软件名称
+        /// </summary>
+        public const string APP_NAME = @"创业赚钱-商家工具";
+        /// <summary>
+        /// 作者
+        /// </summary>
+        public const string APP_AUTHOR = @"iwenli";
+
         /// <summary>
         /// 默认头像
         /// </summary>
@@ -54,5 +64,14 @@ if (typeof Reviews == 'undefined') {
 Reviews = getTmallReview();
 alert('抓取成功' + Reviews.length + '条评价');
 document.write(JSON.stringify(Reviews));";
+        #endregion
+
+        #region 属性
+
+        /// <summary>
+        /// 版本号
+        /// </summary>
+        public static string Version { get { return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(); } }
+        #endregion
     }
 }

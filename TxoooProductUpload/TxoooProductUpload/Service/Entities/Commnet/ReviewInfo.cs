@@ -33,10 +33,11 @@ namespace TxoooProductUpload.Service.Entities.Commnet
         /// 商家回复内容
         /// </summary>
         public string MchReplyContent { set; get; }
+        string _reviewImgs = "";
         /// <summary>
         /// 评价图片,多个图片之间逗号分隔
         /// </summary>
-        public string ReviewImgs { set; get; }
+        public string ReviewImgs { set { _reviewImgs = value; } get { return _reviewImgs; } }
         string _headPic = ConstParams.DEFAULT_HEAD_PIC;
         /// <summary>
         /// 评论头像
@@ -57,8 +58,12 @@ namespace TxoooProductUpload.Service.Entities.Commnet
         /// <summary>
         /// 快递打分
         /// </summary>
-        public int ExpressReview { set { _productReview = value; } get { return _expressReview; } }
-
+        public int ExpressReview { set { _expressReview = value; } get { return _expressReview; } }
+        int _likeCount = 0;
+        /// <summary>
+        /// 点赞数
+        /// </summary>
+        public int LikeCount { set { _likeCount = value; } get { return _likeCount; } }
         /// <summary>
         /// 添加的用户ID，只能是商户添加，而且必须是登陆的商户
         /// </summary>

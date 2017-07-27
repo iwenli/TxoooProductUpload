@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TxoooProductUpload.Common;
 using TxoooProductUpload.Service.Entities.Web;
@@ -14,6 +15,7 @@ namespace TxoooProductUpload.Service
 {
     class CommonService : ServiceBase
     {
+        Regex _txoooImgReg = new Regex("img.txooo.com");
         const string _sqlFormatInsertIMg = @"INSERT INTO iwenli_image(SourceUrl,ToooUrl,UserId,UploadType,Remard) values('{0}','{1}',{2},'{3}','{4}')";
 
         public CommonService(ServiceContext context) : base(context)
@@ -25,7 +27,8 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="url">图片url</param>
         /// <returns></returns>
-        public async Task<byte[]> GetImageStreamByImgUrl(string url) {
+        public async Task<byte[]> GetImageStreamByImgUrl(string url)
+        {
             var stCtx = ServiceContext.Session.NetClient
               .Create<byte[]>(HttpMethod.Get, url);
 
@@ -44,7 +47,16 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<string> UploadImg(string url, int uploadType)
         {
+            //如果已经是txooo的连接  不转换
+            if (_txoooImgReg.IsMatch(url))
+            {
+                return url;
+            }
             var imgUrl = await UploadImg(await GetImageStreamByImgUrl(url));
+            if (imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
+            {
+                throw new Exception("图片上传失败,返回连接为空!");
+            }
             #region DB记录
             try
             {
@@ -84,9 +96,15 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<string> UploadImg(Image image)
         {
-            MemoryStream ms1 = new MemoryStream();
-            image.Save(ms1, System.Drawing.Imaging.ImageFormat.Bmp);
-            return await UploadImg(ms1.GetBuffer());
+            //MemoryStream ms1 = new MemoryStream();
+            //image.Save(ms1, System.Drawing.Imaging.ImageFormat.Bmp);
+            //return await UploadImg(ms1.GetBuffer());
+            var imgUrl = await UploadImg(image.ToBytes());
+            if (imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
+            {
+                throw new Exception("图片上传失败,返回连接为空!");
+            }
+            return imgUrl;
         }
 
         /// <summary>
@@ -94,7 +112,7 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="imageStream">Image的字节流</param>
         /// <returns></returns>
-        public async Task<string> UploadImg(byte[] imageStream)
+        async Task<string> UploadImg(byte[] imageStream)
         {
             var data = new
             {
@@ -109,12 +127,7 @@ namespace TxoooProductUpload.Service
             {
                 throw new Exception("CommonService.UploadImg未能提交请求");
             }
-
-            if (stCtx.Result.success)
-            {
-                return stCtx.Result.msg;
-            }
-            return string.Empty;
+            return stCtx.Result.msg;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace TxoooProductUpload.Common
 {
@@ -8,12 +9,25 @@ namespace TxoooProductUpload.Common
     static class AppConfig
     {
         /// <summary>
+        /// 是否记住密码
+        /// </summary>
+        public static bool IsRemember
+        {
+            set
+            {
+                AppConfig.ModifyItem("remember", value.ToString()); ;
+            }
+            get { return Convert.ToBoolean(AppConfig.GetItem("remember")); }
+        }
+
+        #region 方法
+        /// <summary>
         /// 添加配置文件的项，键为keyName，值为keyValue  
         /// </summary>
         /// <param name="keyName"></param>
         /// <param name="keyValue"></param>
         public static void AddItem(string keyName, string keyValue)
-        { 
+        {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             config.AppSettings.Settings.Add(keyName, keyValue);
             config.Save(ConfigurationSaveMode.Modified);
@@ -24,7 +38,7 @@ namespace TxoooProductUpload.Common
         /// </summary>
         /// <param name="keyName"></param>
         /// <returns></returns>
-        public static bool  ExistItem(string keyName)
+        public static bool ExistItem(string keyName)
         {
             foreach (string key in ConfigurationManager.AppSettings)
             {
@@ -43,7 +57,7 @@ namespace TxoooProductUpload.Common
         /// <param name="keyName"></param>
         /// <returns></returns>
         public static string GetItem(string keyName)
-        { 
+        {
             return ConfigurationManager.AppSettings[keyName];
         }
         /// <summary>
@@ -70,6 +84,7 @@ namespace TxoooProductUpload.Common
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
+        #endregion
 
     }
 }
