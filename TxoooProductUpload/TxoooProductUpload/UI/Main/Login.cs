@@ -31,10 +31,10 @@ namespace TxoooProductUpload.UI.Main
             this.txtUserName.SetHintText("请输入注册手机号");
             this.cbIsRemember.Checked = AppConfig.IsRemember;
 
-            if (AppConfig.IsRemember && _context.CacheContext.Cache.LoginInfo != null)
+            if (AppConfig.IsRemember && _context.CacheContext.Data.LoginInfo != null)
             {
-                this.txtUserName.Text = _context.CacheContext.Cache.LoginInfo.UserName;
-                this.txtPassword.Text = _context.CacheContext.Cache.LoginInfo.Password;
+                this.txtUserName.Text = _context.CacheContext.Data.LoginInfo.UserName;
+                this.txtPassword.Text = _context.CacheContext.Data.LoginInfo.Password;
             }
             cbIsTest.CheckedChanged += (s, e) =>
             {

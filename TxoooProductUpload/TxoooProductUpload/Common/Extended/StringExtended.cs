@@ -1,14 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace TxoooProductUpload.Common
 {
+    /// <summary>
+    /// 字符串操作 扩展函数
+    /// </summary>
     public static class StringExtended
     {
+        private static Regex _removeInvalidCharReg = new Regex("[" + Path.GetInvalidFileNameChars().JoinAsString("").Replace(@"\", @"\\") + "]");
+
+        /// <summary>
+        /// 移除路径中无效的字符
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static string RemoveInvalidCharacters(this string name)
+        {
+            if (String.IsNullOrEmpty(name))
+                return name;
+
+            name = HttpUtility.HtmlDecode(name);
+            name = Regex.Replace(name, @"(^\s+|[\r\n]|\s+$)", "");
+            return _removeInvalidCharReg.Replace(name, "_");
+        }
+
         /// <summary>
         /// 将Unicode字符串转为对于的string
         /// </summary>

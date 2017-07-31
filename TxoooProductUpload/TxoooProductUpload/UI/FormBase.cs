@@ -57,6 +57,14 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         protected void AppendLogWarning(RichTextBox txtLog, string message, params object[] args)
         {
+            if (txtLog.InvokeRequired)
+            {
+                txtLog.Invoke(new Action(() =>
+                {
+                    AppendLog(txtLog, Color.Violet, message, args);
+                }));
+                return;
+            }
             AppendLog(txtLog, Color.Violet, message, args);
         }
         /// <summary>
@@ -67,6 +75,14 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         protected void AppendLogError(RichTextBox txtLog, string message, params object[] args)
         {
+            if (txtLog.InvokeRequired)
+            {
+                txtLog.Invoke(new Action(() =>
+                {
+                    AppendLog(txtLog, Color.Red, message, args);
+                }));
+                return;
+            }
             AppendLog(txtLog, Color.Red, message, args);
         }
         /// <summary>
@@ -78,10 +94,16 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         void AppendLog(RichTextBox txtLog, Color fontColor, string message, params object[] args)
         {
-            Color beforColor = txtLog.SelectionColor;
+            if (txtLog.InvokeRequired)
+            {
+                txtLog.Invoke(new Action(() =>
+                {
+                    AppendLog(txtLog, fontColor, message, args);
+                }));
+                return;
+            }
             txtLog.SelectionColor = fontColor;
             AppendLog(txtLog, message, args);
-            txtLog.SelectionColor = beforColor;
         }
         /// <summary>
         /// 添加日志
@@ -90,9 +112,9 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         protected void AppendLog(RichTextBox txtLog, string message, params object[] args)
         {
-            if (InvokeRequired)
+            if (txtLog.InvokeRequired)
             {
-                Invoke(new Action(() =>
+                txtLog.Invoke(new Action(() =>
                 {
                     AppendLog(txtLog, message, args);
                 }));
@@ -100,7 +122,6 @@ namespace TxoooProductUpload.UI
             }
             string timeL = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             txtLog.AppendText(timeL + " => ");
-            //txtLog.AppendText(Environment.NewLine);  //换行显示
             if (args == null || args.Length == 0)
             {
                 txtLog.AppendText(message);

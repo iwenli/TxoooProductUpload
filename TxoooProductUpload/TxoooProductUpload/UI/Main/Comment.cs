@@ -31,6 +31,17 @@ namespace TxoooProductUpload.UI.Main
         List<string> _reviewImgPathList = new List<string>();
         ReviewInfo _reviewInfo = null;
         ProductInfo _productInfo = null;
+        List<string> _allHeadPicList = new List<string>();  //头像文件集合
+        string _headPicDirectory = PathUtility.Combine(Environment.CurrentDirectory, "头像");  //头像文件根目录
+        Random _random = new Random();//全局随机函数
+        string[] _headPicsFilter = new string[] {
+            @"http://img.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png",
+            @"http://misc.360buyimg.com/lib/img/u/b56.gif",
+            @"http://misc.360buyimg.com/lib/img/u/b61.gif",
+            @"http://misc.360buyimg.com/lib/img/u/b62.gif",
+            @"http://misc.360buyimg.com/lib/img/u/b105.gif",
+            @"https://img.txooo.com/2016/04/18/43dddcd3fff51e5418c33dbeef55c001.png"
+        };  //过滤的头像
 
         public Comment(ServiceContext context) : base(context)
         {
@@ -39,8 +50,10 @@ namespace TxoooProductUpload.UI.Main
             InitPage1();
             InitPage2();
             AppendLog(txtLog, "评价页面初始化[完毕]...");
+            InitHeadPic();
         }
 
+        #region 初始化 以及事件
         /// <summary>
         /// 初始化tagPage1
         /// </summary>
@@ -48,12 +61,13 @@ namespace TxoooProductUpload.UI.Main
         {
             this.txtUrl.SetHintText("在这里输入要添加评价的创业赚钱商品链接");
             this.txtLog.Focus();
+            this.txtJson.TextChanged += (s, e) => { btnAddComments.Enabled = cbIsUploadReviewImg.Enabled = txtJson.Text.Trim().Length > 0; };
             //复制天猫脚本
             this.btnTmall.Click += (s, e) =>
             {
                 try
                 {
-                    Clipboard.SetText(ConstParams.PRODUCT_COMMENT_TMALL);
+                    Clipboard.SetText(ConstParams.PRODUCT_COMMENT);
                     SM("复制脚本成功");
                 }
                 catch (Exception ex)
@@ -132,6 +146,10 @@ namespace TxoooProductUpload.UI.Main
                                 reviewList[i].AddUserId = _context.Session.Token.userid;
                                 reviewList[i].PropertyName = _productInfo.property[random.Next(0, _productInfo.property.Count)]
                                 .json_info;
+                                //处理头像
+                                AppendLog(txtLog, "开始处理第[{0}]个评价的头像...", i + 1);
+                                reviewList[i].HeadPic = await GetHeadPic(reviewList[i].HeadPic);
+                                AppendLog(txtLog, "第[{0}]个评价的头像处理完成...", i + 1);
                                 //循环处理评价图片
                                 if (_isUploadReviewImg && !string.IsNullOrEmpty(reviewList[i].ReviewImgs))
                                 {
@@ -191,6 +209,24 @@ namespace TxoooProductUpload.UI.Main
             SendMessage(this.lvReviewImage.Handle, LVM_SETICONSPACING, 0, 0x10000 * 40 + 52);//70是行距，60是列距，
             ResetPage2();
             BingPage2Event();
+        }
+
+        /// <summary>
+        /// 初始化头像库
+        /// </summary>
+        void InitHeadPic()
+        {
+            try
+            {
+                AppendLog(txtLog, "获取头像数据[开始]...");
+                _allHeadPicList.AddRange(Directory.GetFiles(_headPicDirectory, "*.*", SearchOption.AllDirectories));//获取所有头像
+                AppendLog(txtLog, "获取头像数据[完成]...");
+            }
+            catch (Exception ex)
+            {
+                AppendLog(txtLog, "获取头像数据[异常]，异常信息：{0}", ex.Message);
+                //EM(ex.Message);
+            }
         }
 
         /// <summary>
@@ -378,6 +414,32 @@ namespace TxoooProductUpload.UI.Main
                  btnAddReviewOne.Enabled = true;
              };
         }
+
+
+
+        /// <summary>
+        /// 检查并随机返回一个头像（压缩头像为100*100）
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        async Task<string> GetHeadPic(string url)
+        {
+            Image image;
+            if (url.IsNullOrEmpty() || _headPicsFilter.Contains(url))
+            {
+                var index = _random.Next(_allHeadPicList.Count); //获取所有头像
+                url = _allHeadPicList[index];
+                _allHeadPicList.Remove(url);
+                //开始上传
+                image = Image.FromFile(url);
+            }
+            else
+            {
+                image = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(url)));
+            }
+            return await _context.CommonService.UploadImg(image.Thumbnail());
+        }
+        #endregion
 
         /// <summary>
         /// 提交评价
