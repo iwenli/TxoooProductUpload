@@ -35,8 +35,7 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<ProductInfo> GetProductInfo(long product_id)
         {
-            var stCtx = ServiceContext.Session.NetClient
-               .Create<WebResponseResult<ProductInfo>>(HttpMethod.Get, ApiList.GetProductInfo,
+            var stCtx = NetClient.Create<WebResponseResult<ProductInfo>>(HttpMethod.Get, ApiList.GetProductInfo,
                data: new { product_id = product_id });
 
             await stCtx.SendAsync();
@@ -60,8 +59,7 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<bool> AddProductCommnet(string json)
         {
-            var stCtx = ServiceContext.Session.NetClient
-               .Create<WebResponseResult>(HttpMethod.Post, ApiList.AddProductCommnet,
+            var stCtx = NetClient.Create<WebResponseResult>(HttpMethod.Post, ApiList.AddProductCommnet,
                data: new { data = json });
             //
             await stCtx.SendAsync();

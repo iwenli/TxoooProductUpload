@@ -86,7 +86,7 @@ namespace TxoooProductUpload.Common
             {
                 return
                     (_isHttps ? @"https://" : @"http://") +
-                    (_isTest ? @"1.t.7518.cn/" : @"1.u.7518.cn/");
+                    (_isTest ? @"11.t.7518.cn/" : @"11.u.7518.cn/");
             }
         }
         /// <summary>

@@ -258,7 +258,7 @@ namespace TxoooProductUpload.Service.Entities
             if (Location.IsNullOrEmpty()) {
                 return false;
             }
-            var area = ServiceContext.CacheContext.Cache.AreaList.Where(
+            var area = ServiceContext.CacheContext.Data.AreaList.Where(
                 m => m.region_name.Contains(Location.Substring(Location.Length - 2))).FirstOrDefault();
             if (area != null)
             {

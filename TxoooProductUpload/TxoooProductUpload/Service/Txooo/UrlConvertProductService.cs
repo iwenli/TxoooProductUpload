@@ -41,7 +41,7 @@ namespace TxoooProductUpload.Service
             if (taobaoReg.Match(productUrl).Success)
             {
                 var id = new Regex("id=(\\d+)&").Match(productUrl).Groups[1].Value;
-                return await GetInfoByTaobaoUrl("https://h5.m.taobao.com/awp/core/detail.htm?id="+ id);
+                return await GetInfoByTaobaoUrl("https://h5.m.taobao.com/awp/core/detail.htm?id=" + id);
             }
             else if (mTaobaoReg.Match(productUrl).Success)
             {
@@ -242,10 +242,12 @@ namespace TxoooProductUpload.Service
             if (skuColor != null)
             {
                 string[] colorImgList;
-                if (colorImg.IsNullOrEmpty()) {
+                if (colorImg.IsNullOrEmpty())
+                {
                     colorImgList = new string[] { };
                 }
-                else {
+                else
+                {
                     colorImgList = colorImg.Split(',');
                 }
                 //如果没有SKU图片  从主图拿
@@ -504,6 +506,7 @@ namespace TxoooProductUpload.Service
             Regex shopNameRegex = new Regex("(?<=\"name\":\").+?(?=\",)");
             Regex sKURegex = new Regex("(?<=\"skuColorSizeJson\":\").+(?=\",\"specSet)");
             Regex salesCountRegex = new Regex("(?<=\"allCnt\":\").+?(?=\",)");
+            Regex locationRegex = new Regex("(?<=class=\"service-item-text\">由[\\s\\S]+从).+?(?=发货并提供售后服务</span>)");
 
             //https://item.m.jd.com/newComments/newCommentsDetail.json   //评价 POST
             //https://item.m.jd.com/ware/getDetailCommentList.json?wareId=2962435  //评价
@@ -513,7 +516,15 @@ namespace TxoooProductUpload.Service
             MatchCollection mact = imgRegex.Matches(str);
             foreach (Match mt in mact)
             {
-                productModel.ThumImg.Add(mt.Value);
+                string tempmat = mt.Value;
+                if (!tempmat.StartsWith("http"))
+                {
+                    tempmat = "http:" + tempmat;
+                }
+                if (!productModel.ThumImg.Contains(tempmat))
+                {
+                    productModel.ThumImg.Add(tempmat);
+                }
             }
 
             //productid
@@ -525,7 +536,15 @@ namespace TxoooProductUpload.Service
             MatchCollection matches1 = dImgRegex.Matches(productModel.DetailHtml, 0);
             foreach (Match mat in matches1)
             {
-                productModel.DetailImg.Add(mat.Value);
+                string tempmat = mat.Value;
+                if (!tempmat.StartsWith("http"))
+                {
+                    tempmat = "http:" + tempmat;
+                }
+                if (!productModel.DetailImg.Contains(tempmat))
+                {
+                    productModel.DetailImg.Add(tempmat);
+                }
             }
 
             productModel.SKUJD = JsonConvert.DeserializeObject<SkuJdInfo>(Regex.Unescape(sKURegex.Match(detailInfo.ToString()).Value));   //SKU
@@ -534,11 +553,15 @@ namespace TxoooProductUpload.Service
                 var skuImgDetail = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/getSpecInfo.json?wareId=" + productId).Send().Result;
                 item.image = new Regex("(?<=\"wareMainImageUrl\":\").+?(?=\",)").Match(Regex.Unescape(skuImgDetail)).Value.Replace("!q70.jpg", "");
             }
+            productModel.Location = locationRegex.Match(str.ToString()).Value;
+            if (productModel.Location.Length > 3)
+            {
+                productModel.Location = productModel.Location.Substring(productModel.Location.Length - 3, 2);
+            }
 
             productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(detailInfo).Value);
             productModel.ShopName = productModel.ShopName.IsNullOrEmpty() ? "自营" : productModel.ShopName;
             productModel.ProductPrice = PriceRegex.Match(str).Value;
-            //productModel.Location = LocationRegex.Match(str.ToString()).Value;
             productModel.SalesCount = salesCountRegex.Match(rateInfo.ToString()).Value;
             productModel.RateTotals = productModel.SalesCount;
             productModel.ProductName = titleRegex.Match(str).Value;

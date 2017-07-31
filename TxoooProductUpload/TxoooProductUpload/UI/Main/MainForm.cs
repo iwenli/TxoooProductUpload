@@ -18,6 +18,7 @@ namespace TxoooProductUpload.UI.Main
     using TxoooProductUpload.Common;
     using Newtonsoft.Json;
     using TxoooProductUpload.UI.ImageDownload;
+    using Microsoft.Win32;
 
     partial class MainForm : FormBase
     {
@@ -35,6 +36,7 @@ namespace TxoooProductUpload.UI.Main
         int _limit = 0;
         int _typeService = 1;
         int _radio_num = 0;
+        ProductResult _result;
 
         public MainForm()
         {
@@ -95,7 +97,7 @@ namespace TxoooProductUpload.UI.Main
                 tsDataPack.Enabled = gbSetting.Enabled = gbSearch.Enabled = gbBase.Enabled = tsComment.Enabled =
                tsLogout.Enabled = _context.Session.IsLogined);
             tsComment.Click += (s, e) => { new Comment(_context).ShowDialog(this); };
-            tsImgManage.Click += (s, e) => { new Crawler(_context).ShowDialog(this); };
+            tsImgManage.Click += (s, e) => { new Crawler(_context).Show(this); };
             tsLogin.Click += Login;
             tsLogout.Click += Logout;
             this.txtOneKeyUrl.SetHintText("请输入天猫、淘宝、京东、阿里巴巴等商品链接");
@@ -174,7 +176,7 @@ namespace TxoooProductUpload.UI.Main
                     await _context.CacheContext.Update(_context);
                     //绑定combobox
                     tsClass1.DataSource = _context.ClassDataService.RootClassList;
-                    cbArea1.DataSource = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == 1).ToList();
+                    cbArea1.DataSource = _context.CacheContext.Data.AreaList.Where(m => m.parent_id == 1).ToList();
                 }
                 catch (Exception ex)
                 {
@@ -255,7 +257,6 @@ namespace TxoooProductUpload.UI.Main
         #endregion
 
         #region 一键上传
-        ProductResult _result;
         async Task ProcessProduct()
         {
             string productUrl = txtOneKeyUrl.Text.Trim();
@@ -325,38 +326,6 @@ namespace TxoooProductUpload.UI.Main
                 catch (Exception ex)
                 {
                     EndOperation(string.Format("上传主图出错，错误信息：{0}", ex.Message));
-                    return;
-                }
-                #endregion
-
-                #region 处理详情
-                try
-                {
-                    await Task.Delay(500);
-                    if (_result.product_details.IsNullOrEmpty())
-                    {
-                        if (_result.DetailImg == null || _result.DetailImg.Count == 0)
-                        {
-                            _result.product_details = string.Empty;
-                        }
-                        else
-                        {
-                            List<string> detailList = new List<string>();
-                            index = 1;
-                            foreach (var item in _result.DetailImg)
-                            {
-                                BeginOperation(string.Format("正在处理第[{0}]张详情图片...", index), 0, true);
-                                detailList.Add(string.Format("<p></p><img src=\"{0}\" />",
-                                    await _context.CommonService.UploadImg(item, 2)));
-                                EndOperation(string.Format("第[{0}]张详情图片护理完成...", index++));
-                            }
-                            _result.product_details = detailList.Join("");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    EndOperation(string.Format("处理详情出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion
@@ -434,8 +403,16 @@ namespace TxoooProductUpload.UI.Main
                                     {
                                         colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
                                     }
-                                    var name = string.Format("{0}:{1} | {2}:{3}", _result.SKUJD.colorSizeTitle.colorName
-                                        , colorItem.color, _result.SKUJD.colorSizeTitle.sizeName, colorItem.size);
+                                    var name = "默认规格";
+                                    if (_result.SKUJD.colorSizeTitle.sizeName != null && _result.SKUJD.colorSizeTitle.colorName != null)
+                                    {
+                                        name = string.Format("{0}:{1} | {2}:{3}", _result.SKUJD.colorSizeTitle.colorName
+                                            , colorItem.color, _result.SKUJD.colorSizeTitle.sizeName, colorItem.size);
+                                    }
+                                    else if (_result.SKUJD.colorSizeTitle.sizeName == null && _result.SKUJD.colorSizeTitle.colorName != null)
+                                    {
+                                        name = string.Format("{0}:{1}", _result.SKUJD.colorSizeTitle.colorName, colorItem.color);
+                                    }
                                     _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
                                     AppendLog(txtLog, name + "处理完成...");
                                 }
@@ -477,6 +454,38 @@ namespace TxoooProductUpload.UI.Main
                 catch (Exception ex)
                 {
                     EndOperation(string.Format("生成SKU出错，错误信息：{0}", ex.Message));
+                    return;
+                }
+                #endregion
+
+                #region 处理详情
+                try
+                {
+                    await Task.Delay(500);
+                    if (_result.product_details.IsNullOrEmpty())
+                    {
+                        if (_result.DetailImg == null || _result.DetailImg.Count == 0)
+                        {
+                            _result.product_details = string.Empty;
+                        }
+                        else
+                        {
+                            List<string> detailList = new List<string>();
+                            index = 1;
+                            foreach (var item in _result.DetailImg)
+                            {
+                                BeginOperation(string.Format("正在处理第[{0}]张详情图片...", index), 0, true);
+                                detailList.Add(string.Format("<p></p><img src=\"{0}\" />",
+                                    await _context.CommonService.UploadImg(item, 2)));
+                                EndOperation(string.Format("第[{0}]张详情图片护理完成...", index++));
+                            }
+                            _result.product_details = detailList.Join("");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    EndOperation(string.Format("处理详情出错，错误信息：{0}", ex.Message));
                     return;
                 }
                 #endregion
@@ -585,11 +594,11 @@ namespace TxoooProductUpload.UI.Main
             if (currentTsCombbox.Name == "tsClass1")
             {
                 _typeService = selectDate.ClassId == 1 ? 1 : 2;
-                tsClass2.DataSource = _context.CacheContext.Cache.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
+                tsClass2.DataSource = _context.CacheContext.Data.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
             }
             else if (currentTsCombbox.Name == "tsClass2")
             {
-                tsClass3.DataSource = _context.CacheContext.Cache.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
+                tsClass3.DataSource = _context.CacheContext.Data.ProductClassList.Where(m => m.ParentId == selectDate.ClassId).ToList();
             }
             else if (currentTsCombbox.Name == "tsClass3")
             {
@@ -644,7 +653,7 @@ namespace TxoooProductUpload.UI.Main
                     cbArea2.Enabled = false;
                     return;
                 }
-                cbArea2.DataSource = _context.CacheContext.Cache.AreaList.Where(m => m.parent_id == selectDate.region_id).ToList();
+                cbArea2.DataSource = _context.CacheContext.Data.AreaList.Where(m => m.parent_id == selectDate.region_id).ToList();
                 cbArea2.Enabled = true;
             }
             else if (currentTsCombbox.Name == "cbArea2")
@@ -747,7 +756,7 @@ namespace TxoooProductUpload.UI.Main
         /// <returns></returns>
         bool CheckBaseInfo()
         {
-            if (!_product_ispostage && _postage == 0)
+            if (!_is_virtual && !_product_ispostage && _postage == 0)
             {
                 SM("还没有设置邮费哟^_^");
                 tbPostage.Focus();

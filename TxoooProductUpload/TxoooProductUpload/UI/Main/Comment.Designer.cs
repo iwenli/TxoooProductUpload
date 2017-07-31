@@ -183,9 +183,11 @@
             this.cbIsUploadReviewImg.AutoSize = true;
             this.cbIsUploadReviewImg.Checked = true;
             this.cbIsUploadReviewImg.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbIsUploadReviewImg.Location = new System.Drawing.Point(522, 26);
+            this.cbIsUploadReviewImg.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cbIsUploadReviewImg.Enabled = false;
+            this.cbIsUploadReviewImg.Location = new System.Drawing.Point(676, 19);
             this.cbIsUploadReviewImg.Name = "cbIsUploadReviewImg";
-            this.cbIsUploadReviewImg.Size = new System.Drawing.Size(99, 21);
+            this.cbIsUploadReviewImg.Size = new System.Drawing.Size(99, 35);
             this.cbIsUploadReviewImg.TabIndex = 4;
             this.cbIsUploadReviewImg.Text = "是否抓取图片";
             this.cbIsUploadReviewImg.UseVisualStyleBackColor = true;
@@ -193,7 +195,8 @@
             // btnAddComments
             // 
             this.btnAddComments.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnAddComments.Location = new System.Drawing.Point(637, 19);
+            this.btnAddComments.Enabled = false;
+            this.btnAddComments.Location = new System.Drawing.Point(775, 19);
             this.btnAddComments.Name = "btnAddComments";
             this.btnAddComments.Size = new System.Drawing.Size(123, 35);
             this.btnAddComments.TabIndex = 3;
@@ -202,12 +205,12 @@
             // 
             // btnTmall
             // 
-            this.btnTmall.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnTmall.Location = new System.Drawing.Point(760, 19);
+            this.btnTmall.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnTmall.Location = new System.Drawing.Point(3, 19);
             this.btnTmall.Name = "btnTmall";
             this.btnTmall.Size = new System.Drawing.Size(138, 35);
             this.btnTmall.TabIndex = 2;
-            this.btnTmall.Text = "复制天猫抓取脚本(&T)";
+            this.btnTmall.Text = "复制批量抓取脚本(&T)";
             this.btnTmall.UseVisualStyleBackColor = true;
             // 
             // tcReviews
