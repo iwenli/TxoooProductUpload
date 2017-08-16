@@ -333,6 +333,7 @@ namespace TxoooProductUpload.UI.Main
                 #region 生成SKU
                 try
                 {
+                    string name = "默认规格";
                     //处理本地价格
                     if (txtPrice.Value > 0)
                     {
@@ -366,7 +367,7 @@ namespace TxoooProductUpload.UI.Main
                                         {
                                             foreach (var sizeItem in sizeList.value)
                                             {
-                                                var name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
+                                                name = string.Format("颜色:{0} | 尺码:{1}", colorItem.name, sizeItem.name);
                                                 _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
                                                 AppendLog(txtLog, name + "[处理完成]...");
                                             }
@@ -381,7 +382,6 @@ namespace TxoooProductUpload.UI.Main
                                 else
                                 {
                                     BeginOperation("开始处理商品SKU...", 0, true);
-                                    var name = "常规";
                                     var colorImg = await _context.CommonService.UploadImg(_result.ThumImg.LastOrDefault(), 3);
                                     _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, "true");
                                     AppendLog(txtLog, name + "[处理完成]...");
@@ -403,7 +403,6 @@ namespace TxoooProductUpload.UI.Main
                                     {
                                         colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
                                     }
-                                    var name = "默认规格";
                                     if (_result.SKUJD.colorSizeTitle.sizeName != null && _result.SKUJD.colorSizeTitle.colorName != null)
                                     {
                                         name = string.Format("{0}:{1} | {2}:{3}", _result.SKUJD.colorSizeTitle.colorName
@@ -420,30 +419,53 @@ namespace TxoooProductUpload.UI.Main
                             break;
                         case "天猫":
                             {
-                                var colorList = _result.SKUTmall;
-                                BeginOperation("开始处理商品SKU...", colorList.Count, true);
-                                if (colorList.Count != 2)
+                                var skuList = _result.SKUTmall;
+                                string colorImg = _result.ThumImg.LastOrDefault();
+                                if (skuList == null || skuList.Count == 0)
                                 {
-                                    EndOperation("商品sku解析错误");
-                                    return;
+                                    _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
+                                    AppendLog(txtLog, "没有抓取到SKU，生成默认SKU=[{0}]处理完成...", name);
                                 }
-                                foreach (var colorItem in colorList[1].values)
+                                else
                                 {
-                                    string colorImg = _result.ThumImg.LastOrDefault();
-                                    if (colorItem.image.IsNullOrEmpty())
+                                    BeginOperation("开始处理商品SKU...", skuList.Count, true);
+                                    switch (skuList.Count)
                                     {
-                                        colorImg = await _context.CommonService.UploadImg(_result.ThumImg.LastOrDefault(), 3);
-                                    }
-                                    else
-                                    {
-                                        colorImg = await _context.CommonService.UploadImg(colorItem.image, 3);
-                                    }
-                                    foreach (var sizeitem in colorList[0].values)
-                                    {
-                                        var name = string.Format("{0}:{1} | {2}:{3}", colorList[1].text
-                                            , colorItem.text, colorList[0].text, sizeitem.text); _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, (index == 1).ToString().ToLower());
-                                        _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
-                                        AppendLog(txtLog, "第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
+                                        case 1:
+                                            foreach (var sku in skuList[0].values)
+                                            {
+                                                if (!sku.image.IsNullOrEmpty())
+                                                {
+                                                    colorImg = sku.image;
+                                                }
+                                                colorImg = await _context.CommonService.UploadImg(colorImg, 3);
+                                                name = string.Format("{0}:{1}", skuList[0].text, sku.text);
+                                                _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
+                                                AppendLog(txtLog, "第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
+                                            }
+                                            break;
+                                        case 2:
+                                            foreach (var sku1 in skuList[1].values)
+                                            {
+                                                if (!sku1.image.IsNullOrEmpty())
+                                                {
+                                                    colorImg = sku1.image;
+                                                }
+                                                colorImg = await _context.CommonService.UploadImg(colorImg, 3);
+                                                foreach (var sku0 in skuList[0].values)
+                                                {
+                                                    name = string.Format("{0}:{1} | {2}:{3}",
+                                                        skuList[1].text, sku1.text, skuList[0].text, sku0.text);
+                                                    _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
+                                                    AppendLog(txtLog, "第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
+                                                }
+                                            }
+                                            break;
+                                        case 3:
+                                        case 4:
+                                            _result.product_property += string.Format(propertyFormat, index++, name, _result.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
+                                            AppendLog(txtLog, "第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
+                                            break;
                                     }
                                 }
                             }
@@ -533,7 +555,7 @@ namespace TxoooProductUpload.UI.Main
                 }
                 catch (Exception ex)
                 {
-                    AppendLogError(txtLog, "生成SKU出错，错误信息：{0}", ex.Message);
+                    AppendLogError(txtLog, "上传商品异常，异常信息：{0}", ex.Message);
                 }
                 #endregion
                 EndOperation();

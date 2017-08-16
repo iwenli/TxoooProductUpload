@@ -83,8 +83,6 @@
             // cbIsTest
             // 
             this.cbIsTest.AutoSize = true;
-            this.cbIsTest.Checked = true;
-            this.cbIsTest.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbIsTest.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cbIsTest.Location = new System.Drawing.Point(69, 112);
             this.cbIsTest.Name = "cbIsTest";

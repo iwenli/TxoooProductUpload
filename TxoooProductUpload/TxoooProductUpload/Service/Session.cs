@@ -24,7 +24,6 @@ namespace TxoooProductUpload.Service
         public Session()
         {
             NetClient = new NetClient();
-            ApiList.IsTest = true;
         }
 
         /// <summary>

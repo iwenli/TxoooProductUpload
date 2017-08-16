@@ -1,16 +1,9 @@
-﻿using FSLib.Network.Http;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TxoooProductUpload.Common;
-using TxoooProductUpload.Service.Entities;
-using TxoooProductUpload.Service.Entities.Web;
 
 namespace TxoooProductUpload.Service
 {
@@ -23,7 +16,7 @@ namespace TxoooProductUpload.Service
         /// <summary>
         /// 缓存数据
         /// </summary>
-        public Cache Data { get; private set; }
+        public CacheData Data { get; private set; }
 
         #region 单例模式
 
@@ -66,8 +59,7 @@ namespace TxoooProductUpload.Service
             var root = System.Reflection.Assembly.GetExecutingAssembly().GetLocation();
             DataRoot = PathUtility.Combine(root, DataRoot);
             Directory.CreateDirectory(DataRoot);
-            Data = LoadData<Cache>(CacheName);
-            Data.IsLine = !ApiList.IsTest;
+            Data = LoadData<CacheData>(CacheName);
         }
 
         /// <summary>

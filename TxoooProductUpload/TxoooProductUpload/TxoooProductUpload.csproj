@@ -111,7 +111,12 @@
     <Compile Include="Common\AppConfig.cs" />
     <Compile Include="Common\ConstParams.cs" />
     <Compile Include="Common\DbHelperOleDb.cs" />
-    <Compile Include="Service\Cache\Cache.cs" />
+    <Compile Include="Network\NewWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Service\Cache\CacheData.cs" />
+    <Compile Include="Service\Cache\HeadPicCache\HeadPicCache.cs" />
+    <Compile Include="Service\Cache\HeadPicCache\HeadPicContext.cs" />
     <Compile Include="Service\ContextBase.cs" />
     <Compile Include="Service\ImageDownload\ImageDownloadTask.cs" />
     <Compile Include="Common\Extended\ImageExtended.cs" />
@@ -246,7 +251,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\txooo.mdb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="icon.ico" />
     <Content Include="Web\Js\wx.js" />
