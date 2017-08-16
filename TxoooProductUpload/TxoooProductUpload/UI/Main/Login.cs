@@ -19,7 +19,7 @@ namespace TxoooProductUpload.UI.Main
         {
             _context = context;
             InitializeComponent();
-            this.Text = "登录 " + ConstParams.APP_NAME;
+            Text = "登录 " + ConstParams.APP_NAME;
             Init();
         }
 
@@ -28,13 +28,15 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void Init()
         {
-            this.txtUserName.SetHintText("请输入注册手机号");
-            this.cbIsRemember.Checked = AppConfig.IsRemember;
+            txtUserName.SetHintText("请输入注册手机号");
+            cbIsRemember.Checked = AppConfig.IsRemember;
+            cbIsTest.Checked = ApiList.IsTest;
+
 
             if (AppConfig.IsRemember && _context.CacheContext.Data.LoginInfo != null)
             {
-                this.txtUserName.Text = _context.CacheContext.Data.LoginInfo.UserName;
-                this.txtPassword.Text = _context.CacheContext.Data.LoginInfo.Password;
+                txtUserName.Text = _context.CacheContext.Data.LoginInfo.UserName;
+                txtPassword.Text = _context.CacheContext.Data.LoginInfo.Password;
             }
             cbIsTest.CheckedChanged += (s, e) =>
             {

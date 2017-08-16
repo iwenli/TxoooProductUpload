@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TxoooProductUpload.Common;
 using TxoooProductUpload.Service.Entities;
@@ -41,7 +42,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("ProductService.GetProductInfo未能提交请求");
+                throw new Exception("获取商品信息请求失败！");
             }
             if (stCtx.Result.success && stCtx.Result.Data.Length == 1)
             {
@@ -92,7 +93,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("ProductService.UploadProduct未能提交请求");
+                throw new Exception("商品上传提交失败！");
             }
 
             //入库记录
@@ -102,16 +103,42 @@ namespace TxoooProductUpload.Service
             }
             try
             {
-                DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertProduct, product.ProductName, product.Source, product.SourceUrl, product.ShopName,
+                DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertProduct, product.ProductName.Replace("'", "\""), product.Source, product.SourceUrl, product.ShopName.Replace("'", "\""),
                  product.DetailHtml.Replace("'", "\""), product.ProductPrice, product.product_property, product.Location, product.SalesCount == null ? "0" : product.SalesCount, product.RateTotals == null ? "0" : product.RateTotals, product.product_id,
-                 product.product_imgs, product.product_details, product.product_brand, ServiceContext.Session.Token.userid));
+                 product.product_imgs, product.product_details.Replace("'", "\""), product.product_brand.Replace("'", "\""), ServiceContext.Session.Token.userid));
             }
             catch (Exception ex)
             {
-                throw new Exception("ProductService.UploadProduct.DbHelperOleDb异常" + ex.Message);
+                throw new Exception(string.Format("商品信息入库失败，但是已经上传成功，商品ID是：{0}{1}[异常]{2}",
+                    stCtx.Result.msg, Environment.NewLine, ex.Message));
             }
 
             return stCtx.Result;
+        }
+        #endregion
+
+        #region 抓取商品
+        /*
+         * 1.判断店铺  分页 抓取商品信息 一个线程 
+         * 2.处理商品信息 上传任务 一个线程
+         * 
+         */
+       
+
+        /// <summary>
+        /// 根据传入的地址获取所有商品基本信息
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async Task<List<ProductInfo>> GetAllProductsByUrl(string url)
+        {
+            //https://weishuo.jd.com/view_search-430422-0-5-1-24-1.html
+
+            //https://hongdoufushi.tmall.com/category.htm?orderType=hotsell_desc&pageNo=1
+            Regex tmReg = new Regex(@"https://([\s\S]*).tmall.com");
+
+            //https://infshop.1688.com/page/offerlist.htm?showType=windows&sortType=tradenumdown&pageNum=1
+
         }
         #endregion
     }

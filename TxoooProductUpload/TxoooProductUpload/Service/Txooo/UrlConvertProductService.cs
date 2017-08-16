@@ -205,7 +205,7 @@ namespace TxoooProductUpload.Service
             Regex SalesCountRegex = new Regex("(?<=\"sellCount\":).+?(?=,)");  //销量
             Regex RateTotalsRegex = new Regex("(?<=\"rateCounts\":).+?(?=,)");  //评价
 
-            string detailImg = myRegex.Match(str).Value;//从指定内容中匹配字符串
+            //主图
             MatchCollection matchs = imgaeRegex.Matches(new Regex("(?=s-showcase)[\\s\\S]+?(?<=</div>\\s*</div>)").Match(str).Value, 0);
             foreach (Match mat in matchs)
             {
@@ -219,9 +219,23 @@ namespace TxoooProductUpload.Service
                     productModel.ThumImg.Add(tempmat);
                 }
             }
+
+            //天猫加载商品详情的方式比较复杂
             //详情图片
             productModel.DetailHtml = myRegex.Match(str).Value;
-            MatchCollection matches1 = detailimgRegex.Matches(productModel.DetailHtml, 0);
+            MatchCollection matches1 = null;
+
+            //https://detail.tmall.com/item.htm?id=552998726618
+            if (productModel.DetailHtml.IsNullOrEmpty())
+            {
+                string detailUrl = new Regex("(?<=\"descUrl\":\").+?(?=\",)").Match(str).Value;
+                var detail = NetClient.Create<string>(HttpMethod.Get, detailUrl).Send().Result;
+                matches1 = new Regex("(?<=src=\").+?(?=\")").Matches(detail, 0);
+            }
+            else
+            {
+                matches1 = detailimgRegex.Matches(productModel.DetailHtml, 0);
+            }
             foreach (Match mat in matches1)
             {
                 string tempmat = mat.Value;
@@ -229,7 +243,8 @@ namespace TxoooProductUpload.Service
                 {
                     tempmat = "http:" + tempmat;
                 }
-                if (!productModel.DetailImg.Contains(tempmat))
+                if (tempmat.IndexOf("assets.alicdn.com/kissy/1.0.0/build/imglazyload/spaceball.gif") == -1
+                    && !productModel.DetailImg.Contains(tempmat))
                 {
                     productModel.DetailImg.Add(tempmat);
                 }
@@ -237,39 +252,41 @@ namespace TxoooProductUpload.Service
 
             productModel.SKUTmall = JsonConvert.DeserializeObject<List<SkuTmallInfo>>(SKURegex.Match(str.ToString()).Value);//SKU
             //处理SKU图片
-            var skuColor = productModel.SKUTmall.FirstOrDefault(m => m.text.Contains("颜色"));
-            var colorImg = new Regex("(?<=skuPics\":{).*?(?=})").Match(str).Value;
-            if (skuColor != null)
+            if (productModel.SKUTmall != null)
             {
-                string[] colorImgList;
-                if (colorImg.IsNullOrEmpty())
+                var skuColor = productModel.SKUTmall.FirstOrDefault(m => m.text.Contains("颜色"));
+                var colorImg = new Regex("(?<=skuPics\":{).*?(?=})").Match(str).Value;
+                if (skuColor != null)
                 {
-                    colorImgList = new string[] { };
-                }
-                else
-                {
-                    colorImgList = colorImg.Split(',');
-                }
-                //如果没有SKU图片  从主图拿
-                for (int i = 0; i < skuColor.values.Length; i++)
-                {
-                    var img = string.Empty;
-                    if (colorImgList.Length < skuColor.values.Length)
+                    string[] colorImgList;
+                    if (colorImg.IsNullOrEmpty())
                     {
-                        img = productModel.ThumImg.FirstOrDefault();
+                        colorImgList = new string[] { };
                     }
                     else
                     {
-                        img = colorImgList.FirstOrDefault(m => m.Contains(skuColor.values[i].id)).Split(':')[2].Replace("\"", "");
+                        colorImgList = colorImg.Split(',');
                     }
-                    if (!img.StartsWith("http"))
+                    //如果没有SKU图片  从主图拿
+                    for (int i = 0; i < skuColor.values.Length; i++)
                     {
-                        img = "http:" + img;
+                        var img = string.Empty;
+                        if (colorImgList.Length < skuColor.values.Length)
+                        {
+                            img = productModel.ThumImg.FirstOrDefault();
+                        }
+                        else
+                        {
+                            img = colorImgList.FirstOrDefault(m => m.Contains(skuColor.values[i].id)).Split(':')[2].Replace("\"", "");
+                        }
+                        if (!img.StartsWith("http"))
+                        {
+                            img = "http:" + img;
+                        }
+                        skuColor.values[i].image = img;
                     }
-                    skuColor.values[i].image = img;
                 }
             }
-
             productModel.ProductName = titleRegex.Match(str.ToString()).Value;
             productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
             productModel.ProductPrice = priceRegex.Match(str.ToString()).Value;

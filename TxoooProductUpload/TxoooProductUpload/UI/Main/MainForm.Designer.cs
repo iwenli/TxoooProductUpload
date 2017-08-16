@@ -235,7 +235,7 @@ namespace TxoooProductUpload.UI.Main
             // stProgress
             // 
             this.stProgress.Name = "stProgress";
-            this.stProgress.Size = new System.Drawing.Size(400, 24);
+            this.stProgress.Size = new System.Drawing.Size(400, 36);
             this.stProgress.Visible = false;
             // 
             // toolStripStatusLabel2
@@ -289,9 +289,9 @@ namespace TxoooProductUpload.UI.Main
             this.gbSetting.Enabled = false;
             this.gbSetting.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.gbSetting.Location = new System.Drawing.Point(0, 31);
-            this.gbSetting.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbSetting.Margin = new System.Windows.Forms.Padding(2);
             this.gbSetting.Name = "gbSetting";
-            this.gbSetting.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gbSetting.Padding = new System.Windows.Forms.Padding(2);
             this.gbSetting.Size = new System.Drawing.Size(1186, 172);
             this.gbSetting.TabIndex = 3;
             this.gbSetting.TabStop = false;
@@ -718,7 +718,7 @@ namespace TxoooProductUpload.UI.Main
             this.txtLog.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
             this.txtLog.ForeColor = System.Drawing.SystemColors.WindowFrame;
             this.txtLog.Location = new System.Drawing.Point(0, 273);
-            this.txtLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtLog.Margin = new System.Windows.Forms.Padding(2);
             this.txtLog.Name = "txtLog";
             this.txtLog.ReadOnly = true;
             this.txtLog.Size = new System.Drawing.Size(1186, 301);
@@ -749,7 +749,7 @@ namespace TxoooProductUpload.UI.Main
             this.btnOneKeyOk.Image = global::TxoooProductUpload.Properties.Resources.sync;
             this.btnOneKeyOk.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOneKeyOk.Location = new System.Drawing.Point(1080, 16);
-            this.btnOneKeyOk.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOneKeyOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOneKeyOk.Name = "btnOneKeyOk";
             this.btnOneKeyOk.Size = new System.Drawing.Size(103, 41);
             this.btnOneKeyOk.TabIndex = 5;
@@ -764,7 +764,7 @@ namespace TxoooProductUpload.UI.Main
             this.txtOneKeyUrl.Dock = System.Windows.Forms.DockStyle.Left;
             this.txtOneKeyUrl.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtOneKeyUrl.Location = new System.Drawing.Point(3, 16);
-            this.txtOneKeyUrl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtOneKeyUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txtOneKeyUrl.Name = "txtOneKeyUrl";
             this.txtOneKeyUrl.Size = new System.Drawing.Size(1073, 39);
             this.txtOneKeyUrl.TabIndex = 4;

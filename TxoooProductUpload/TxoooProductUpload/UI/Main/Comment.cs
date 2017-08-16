@@ -15,6 +15,7 @@ using System.Windows.Forms;
 using TxoooProductUpload.Common;
 using TxoooProductUpload.Common.Extended;
 using TxoooProductUpload.Service;
+using TxoooProductUpload.Service.Cache.HeadPicCache;
 using TxoooProductUpload.Service.Entities.Commnet;
 
 namespace TxoooProductUpload.UI.Main
@@ -31,9 +32,6 @@ namespace TxoooProductUpload.UI.Main
         List<string> _reviewImgPathList = new List<string>();
         ReviewInfo _reviewInfo = null;
         ProductInfo _productInfo = null;
-
-        List<string> _allHeadPicList = new List<string>();  //头像文件集合
-        string _headPicDirectory = PathUtility.Combine(Environment.CurrentDirectory, "头像");  //头像文件根目录
         Random _random = new Random();//全局随机函数
 
         string[] _headPicsFilter = new string[] {
@@ -119,6 +117,10 @@ namespace TxoooProductUpload.UI.Main
                         //启用
                         tcReviews.Enabled = true;
                     }
+                    else
+                    {
+                        AppendLogError(txtLog, "暂无此商品,请核对");
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -155,7 +157,7 @@ namespace TxoooProductUpload.UI.Main
                                 .json_info;
                                 //处理头像
                                 AppendLog(txtLog, "开始处理第[{0}]个评价的头像...", i + 1);
-                                reviewList[i].HeadPic = await GetHeadPic(reviewList[i].HeadPic);
+                                reviewList[i].HeadPic = GetHeadPic(reviewList[i].HeadPic);
                                 AppendLog(txtLog, "第[{0}]个评价的头像处理完成...", i + 1);
                                 //循环处理评价图片
                                 if (_isUploadReviewImg && !string.IsNullOrEmpty(reviewList[i].ReviewImgs))
@@ -226,8 +228,14 @@ namespace TxoooProductUpload.UI.Main
             try
             {
                 AppendLog(txtLog, "获取头像数据[开始]...");
-                _allHeadPicList.AddRange(Directory.GetFiles(_headPicDirectory, "*.*", SearchOption.AllDirectories));//获取所有头像
+                HeadPicContext.Instance.Init();
+                if (HeadPicContext.Instance.Data == null || HeadPicContext.Instance.Data.Count == 0)
+                {
+                    HeadPicContext.Instance.Data.AddRange(_context.CommonService.GetAllHeadPic());
+                    HeadPicContext.Instance.Save();
+                }
                 AppendLog(txtLog, "获取头像数据[完成]...");
+                AppendLogWarning(txtLog, "当前可以用书数为{0}...", HeadPicContext.Instance.Data.Count);
             }
             catch (Exception ex)
             {
@@ -269,16 +277,15 @@ namespace TxoooProductUpload.UI.Main
             btnUpdateHeadPic.Click += async (s, e) =>
             {
                 string url = txtUpdateHeadPicUrl.Text.Trim();
-                //if (!url.IsUrl())
-                //{
-                //    SM("图片地址没有啊亲...");
-                //    return;
-                //}
+                if (url.IsNullOrEmpty())
+                {
+                    SM("图片地址没有啊亲...");
+                    return;
+                }
                 try
                 {
                     var wc = new WebClient();
                     var imageB = wc.DownloadData(url);
-                    //var imageB = await _context.CommonService.GetImageStreamByImgUrl(url);
                     var headPic = Image.FromStream(new MemoryStream(imageB)).Thumbnail();
                     _userHeadPic = await _context.CommonService.UploadImg(headPic);
                     pbHead.Image = headPic;
@@ -423,26 +430,20 @@ namespace TxoooProductUpload.UI.Main
 
 
         /// <summary>
-        /// 检查并随机返回一个头像（压缩头像为100*100）
+        /// 检查并随机返回一个头像
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        async Task<string> GetHeadPic(string url)
+        string GetHeadPic(string url)
         {
-            Image image;
             if (url.IsNullOrEmpty() || _headPicsFilter.Contains(url))
             {
-                var index = _random.Next(_allHeadPicList.Count); //获取所有头像
-                url = _allHeadPicList[index];
-                _allHeadPicList.Remove(url);
-                //开始上传
-                image = Image.FromFile(url);
+                var index = _random.Next(HeadPicContext.Instance.Data.Count); //获取所有头像
+                url = HeadPicContext.Instance.Data[index];
+                HeadPicContext.Instance.Data.Remove(url);
+                HeadPicContext.Instance.Used.Add(url);
             }
-            else
-            {
-                image = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(url)));
-            }
-            return await _context.CommonService.UploadImg(image.Thumbnail());
+            return url;
         }
         #endregion
 
@@ -465,6 +466,7 @@ namespace TxoooProductUpload.UI.Main
                 if (isSuccess)
                 {
                     AppendLogWarning(txtLog, "上传成功...");
+                    HeadPicContext.Instance.Save();
                     return true;
                 }
             }
