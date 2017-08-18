@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <UpdateInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <AppName>创业赚钱商家工具  - by iwenli</AppName>
-  <AppVersion>1.4.0.0</AppVersion>
+  <AppVersion>1.4.1.0</AppVersion>
   <PublishUrl>http://iwenli.org</PublishUrl>
   <ExecuteTimeout>0</ExecuteTimeout>
   <TreatErrorAsNotUpdated>false</TreatErrorAsNotUpdated>
@@ -34,23 +34,28 @@
 5. 头像库生成
 6. 评价头像移植
 7. 天猫多级属性评价支持
-8. 虚拟商品无法上传的BUG</Desc>
+8. 虚拟商品无法上传的BUG
+### v1.4.1
++ 时间：
++ 升级内容：
+1. 天猫无SKU无图片商品生成支持
+2. 天猫店铺整店抓取</Desc>
   <Package>5CCC4B2E6874D16D728192EF71F819DC.zip</Package>
-  <MD5>530F00B8DBF05440376BA5D2F9F80B32</MD5>
+  <MD5>E2689A18FB0CE6840B3D14A1216B95E2</MD5>
   <DeleteMethod>None</DeleteMethod>
-  <PackageSize>6918436</PackageSize>
+  <PackageSize>6921168</PackageSize>
   <ForceUpdate>false</ForceUpdate>
   <Packages>
     <PackageInfo>
       <FilePath>商家工具.exe</FilePath>
-      <FileSize>416768</FileSize>
-      <Version>1.4.0.0</Version>
-      <PackageHash>B9EB2F085044D2E2230A558FDEBF9024</PackageHash>
+      <FileSize>424448</FileSize>
+      <Version>1.4.1.0</Version>
+      <PackageHash>990074FDA6F68B0B97F47EB187921600</PackageHash>
       <PackageName>6F0643365E46DEE66E3D6160F7C800B1.zip</PackageName>
-      <PackageSize>154784</PackageSize>
+      <PackageSize>157516</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>Size Hash</VerificationLevel>
-      <FileHash>37D2BEBDDF6D801AF6A2644713645096</FileHash>
+      <FileHash>A192532D99285D32ADD62850F1521226</FileHash>
       <Files>
         <string>商家工具.exe</string>
       </Files>
@@ -73,7 +78,7 @@
       <FilePath>bin\FSLib.Extension.dll</FilePath>
       <FileSize>134144</FileSize>
       <Version>1.4.3.0</Version>
-      <PackageHash>51637DFFF87F30C95FA2C5C6E0B68731</PackageHash>
+      <PackageHash>B575237933FF95E0BAA474AB2DC1CE35</PackageHash>
       <PackageName>15462B8D62E2994F946CC846BD025239.zip</PackageName>
       <PackageSize>59547</PackageSize>
       <Method>VersionCompare</Method>
@@ -87,7 +92,7 @@
       <FilePath>bin\FSLib.Network.dll</FilePath>
       <FileSize>189440</FileSize>
       <Version>2.2.2.0</Version>
-      <PackageHash>875F2B6BC20119294AFE88C06124DB1A</PackageHash>
+      <PackageHash>B48F21A1C59AB4C5D777BBB0A96C19D8</PackageHash>
       <PackageName>ECEB9F41BF89F259BF263DF0F9E59D1C.zip</PackageName>
       <PackageSize>77948</PackageSize>
       <Method>VersionCompare</Method>
@@ -101,7 +106,7 @@
       <FilePath>bin\log4net.dll</FilePath>
       <FileSize>276480</FileSize>
       <Version>2.0.8.0</Version>
-      <PackageHash>1D50BBBD10537290FE1C2E127BD4FFE1</PackageHash>
+      <PackageHash>4AB1C08AE9E67961B9E8A79AB217C980</PackageHash>
       <PackageName>EA209B6E80331F2324B179700447C176.zip</PackageName>
       <PackageSize>108808</PackageSize>
       <Method>VersionCompare</Method>
@@ -115,7 +120,7 @@
       <FilePath>bin\Newtonsoft.Json.dll</FilePath>
       <FileSize>653824</FileSize>
       <Version>10.0.3.21018</Version>
-      <PackageHash>09AAA284AA8CEDE9F85DF70E4AF918DF</PackageHash>
+      <PackageHash>066D097843A38EB571591402EF9AB672</PackageHash>
       <PackageName>B04F8E958654A9EC007C5648B1E1B112.zip</PackageName>
       <PackageSize>243004</PackageSize>
       <Method>VersionCompare</Method>
@@ -129,7 +134,7 @@
       <FilePath>bin\SimpleUpdater.dll</FilePath>
       <FileSize>387072</FileSize>
       <Version>4.3.0.0</Version>
-      <PackageHash>59D961AF354DBF22AAAF91BEEBEDAD1C</PackageHash>
+      <PackageHash>D7B8F2AC753A2B353FB9BFDDDB42A69A</PackageHash>
       <PackageName>09533D8EDAFA82E3296E81A800A04E6B.zip</PackageName>
       <PackageSize>149188</PackageSize>
       <Method>VersionCompare</Method>
@@ -143,7 +148,7 @@
       <FilePath>data\txooo.mdb</FilePath>
       <FileSize>27004928</FileSize>
       <Version>0.0.0.0</Version>
-      <PackageHash>7B2536CB6C02AE4AF57A1C15FB4A6633</PackageHash>
+      <PackageHash>D190CC5F0F5FA9A16AE18582A366D26C</PackageHash>
       <PackageName>37707B7DBB48FB1170E0AF056B80815A.zip</PackageName>
       <PackageSize>6100849</PackageSize>
       <Method>VersionCompare</Method>
@@ -157,7 +162,7 @@
       <FilePath>en\SimpleUpdater.resources.dll</FilePath>
       <FileSize>70656</FileSize>
       <Version>4.3.0.0</Version>
-      <PackageHash>F3CD44722CB82B501ECE9850F3F51E5E</PackageHash>
+      <PackageHash>A9DA00E40A42820EEBCEE9DAF41FC9DE</PackageHash>
       <PackageName>57DBEBDA16AD1DAF490836EB02E0692C.zip</PackageName>
       <PackageSize>23905</PackageSize>
       <Method>VersionCompare</Method>

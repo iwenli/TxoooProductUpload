@@ -38,38 +38,45 @@ namespace TxoooProductUpload.Service
             Regex mJdReg = new Regex("item.m.jd.com");//京东手机
             Regex mTmallReg = new Regex("detail.m.tmall.com");//天猫手机
             Regex mTaobaoReg = new Regex("h5.m.taobao.com/awp/core/detail.htm");// 淘宝无线
-            if (taobaoReg.Match(productUrl).Success)
+            try
             {
-                var id = new Regex("id=(\\d+)&").Match(productUrl).Groups[1].Value;
-                return await GetInfoByTaobaoUrl("https://h5.m.taobao.com/awp/core/detail.htm?id=" + id);
+                if (taobaoReg.Match(productUrl).Success)
+                {
+                    var id = new Regex("id=(\\d+)&").Match(productUrl).Groups[1].Value;
+                    return await GetInfoByTaobaoUrl("https://h5.m.taobao.com/awp/core/detail.htm?id=" + id);
+                }
+                else if (mTaobaoReg.Match(productUrl).Success)
+                {
+                    return await GetInfoByTaobaoUrl(productUrl);
+                }
+                else if (tmallReg.Match(productUrl).Success)
+                {
+                    return await GetInfoByTmallUrl(productUrl.Replace("detail.tmall.com", "detail.m.tmall.com"));
+                }
+                else if (mTmallReg.Match(productUrl).Success)
+                {
+                    return await GetInfoByTmallUrl(productUrl);
+                }
+                else if (aliReg.Match(productUrl).Success)
+                {
+                    return await GetInfoByAli(productUrl.Replace("detail.1688.com", "m.1688.com"));
+                }
+                else if (mAliReg.Match(productUrl).Success)
+                {
+                    return await GetInfoByAli(productUrl);
+                }
+                else if (jdReg.Match(productUrl).Success)
+                {
+                    return await GetInfoByJd(productUrl.Replace("item.jd.com", "item.m.jd.com/product"));
+                }
+                else if (mJdReg.Match(productUrl).Success)
+                {
+                    return await GetInfoByJd(productUrl);
+                }
             }
-            else if (mTaobaoReg.Match(productUrl).Success)
+            catch (Exception ex)
             {
-                return await GetInfoByTaobaoUrl(productUrl);
-            }
-            else if (tmallReg.Match(productUrl).Success)
-            {
-                return await GetInfoByTmallUrl(productUrl.Replace("detail.tmall.com", "detail.m.tmall.com"));
-            }
-            else if (mTmallReg.Match(productUrl).Success)
-            {
-                return await GetInfoByTmallUrl(productUrl);
-            }
-            else if (aliReg.Match(productUrl).Success)
-            {
-                return await GetInfoByAli(productUrl.Replace("detail.1688.com", "m.1688.com"));
-            }
-            else if (mAliReg.Match(productUrl).Success)
-            {
-                return await GetInfoByAli(productUrl);
-            }
-            else if (jdReg.Match(productUrl).Success)
-            {
-                return await GetInfoByJd(productUrl.Replace("item.jd.com", "item.m.jd.com/product"));
-            }
-            else if (mJdReg.Match(productUrl).Success)
-            {
-                return await GetInfoByJd(productUrl);
+                throw new Exception(string.Format("解析商品出错，错误信息：{0}",ex.Message));
             }
             return null;
         }
@@ -205,97 +212,105 @@ namespace TxoooProductUpload.Service
             Regex SalesCountRegex = new Regex("(?<=\"sellCount\":).+?(?=,)");  //销量
             Regex RateTotalsRegex = new Regex("(?<=\"rateCounts\":).+?(?=,)");  //评价
 
-            //主图
-            MatchCollection matchs = imgaeRegex.Matches(new Regex("(?=s-showcase)[\\s\\S]+?(?<=</div>\\s*</div>)").Match(str).Value, 0);
-            foreach (Match mat in matchs)
+            try
             {
-                string tempmat = mat.Value;
-                if (!tempmat.StartsWith("http"))
+                //主图
+                MatchCollection matchs = imgaeRegex.Matches(new Regex("(?=s-showcase)[\\s\\S]+?(?<=</div>\\s*</div>)").Match(str).Value, 0);
+                foreach (Match mat in matchs)
                 {
-                    tempmat = "http:" + tempmat;
-                }
-                if (!productModel.ThumImg.Contains(tempmat))
-                {
-                    productModel.ThumImg.Add(tempmat);
-                }
-            }
-
-            //天猫加载商品详情的方式比较复杂
-            //详情图片
-            productModel.DetailHtml = myRegex.Match(str).Value;
-            MatchCollection matches1 = null;
-
-            //https://detail.tmall.com/item.htm?id=552998726618
-            if (productModel.DetailHtml.IsNullOrEmpty())
-            {
-                string detailUrl = new Regex("(?<=\"descUrl\":\").+?(?=\",)").Match(str).Value;
-                var detail = NetClient.Create<string>(HttpMethod.Get, detailUrl).Send().Result;
-                matches1 = new Regex("(?<=src=\").+?(?=\")").Matches(detail, 0);
-            }
-            else
-            {
-                matches1 = detailimgRegex.Matches(productModel.DetailHtml, 0);
-            }
-            foreach (Match mat in matches1)
-            {
-                string tempmat = mat.Value;
-                if (!tempmat.StartsWith("http"))
-                {
-                    tempmat = "http:" + tempmat;
-                }
-                if (tempmat.IndexOf("assets.alicdn.com/kissy/1.0.0/build/imglazyload/spaceball.gif") == -1
-                    && !productModel.DetailImg.Contains(tempmat))
-                {
-                    productModel.DetailImg.Add(tempmat);
-                }
-            }
-
-            productModel.SKUTmall = JsonConvert.DeserializeObject<List<SkuTmallInfo>>(SKURegex.Match(str.ToString()).Value);//SKU
-            //处理SKU图片
-            if (productModel.SKUTmall != null)
-            {
-                var skuColor = productModel.SKUTmall.FirstOrDefault(m => m.text.Contains("颜色"));
-                var colorImg = new Regex("(?<=skuPics\":{).*?(?=})").Match(str).Value;
-                if (skuColor != null)
-                {
-                    string[] colorImgList;
-                    if (colorImg.IsNullOrEmpty())
+                    string tempmat = mat.Value;
+                    if (!tempmat.StartsWith("http"))
                     {
-                        colorImgList = new string[] { };
+                        tempmat = "http:" + tempmat;
                     }
-                    else
+                    if (!productModel.ThumImg.Contains(tempmat))
                     {
-                        colorImgList = colorImg.Split(',');
+                        productModel.ThumImg.Add(tempmat);
                     }
-                    //如果没有SKU图片  从主图拿
-                    for (int i = 0; i < skuColor.values.Length; i++)
+                }
+
+                //天猫加载商品详情的方式比较复杂
+                //详情图片
+                productModel.DetailHtml = myRegex.Match(str).Value;
+                MatchCollection matches1 = null;
+
+                //https://detail.tmall.com/item.htm?id=552998726618
+                if (productModel.DetailHtml.IsNullOrEmpty())
+                {
+                    string detailUrl = new Regex("(?<=\"descUrl\":\").+?(?=\",)").Match(str).Value;
+                    var detail = NetClient.Create<string>(HttpMethod.Get, detailUrl).Send().Result;
+                    matches1 = new Regex("(?<=src=\").+?(?=\")").Matches(detail, 0);
+                }
+                else
+                {
+                    matches1 = detailimgRegex.Matches(productModel.DetailHtml, 0);
+                }
+                foreach (Match mat in matches1)
+                {
+                    string tempmat = mat.Value;
+                    if (!tempmat.StartsWith("http"))
                     {
-                        var img = string.Empty;
-                        if (colorImgList.Length < skuColor.values.Length)
+                        tempmat = "http:" + tempmat;
+                    }
+                    if (tempmat.IndexOf("assets.alicdn.com/kissy/1.0.0/build/imglazyload/spaceball.gif") == -1
+                        && !productModel.DetailImg.Contains(tempmat))
+                    {
+                        productModel.DetailImg.Add(tempmat);
+                    }
+                }
+
+                productModel.SKUTmall = JsonConvert.DeserializeObject<List<SkuTmallInfo>>(SKURegex.Match(str.ToString()).Value);//SKU
+                                                                                                                                //处理SKU图片
+                if (productModel.SKUTmall != null)
+                {
+                    var skuColor = productModel.SKUTmall.FirstOrDefault(m => m.text.Contains("颜色"));
+                    var colorImg = new Regex("(?<=skuPics\":{).*?(?=})").Match(str).Value;
+                    if (skuColor != null)
+                    {
+                        string[] colorImgList;
+                        if (colorImg.IsNullOrEmpty())
                         {
-                            img = productModel.ThumImg.FirstOrDefault();
+                            colorImgList = new string[] { };
                         }
                         else
                         {
-                            img = colorImgList.FirstOrDefault(m => m.Contains(skuColor.values[i].id)).Split(':')[2].Replace("\"", "");
+                            colorImgList = colorImg.Split(',');
                         }
-                        if (!img.StartsWith("http"))
+                        //如果没有SKU图片  从主图拿
+                        for (int i = 0; i < skuColor.values.Length; i++)
                         {
-                            img = "http:" + img;
+                            var img = string.Empty;
+                            if (colorImgList.Length < skuColor.values.Length)
+                            {
+                                img = productModel.ThumImg.FirstOrDefault();
+                            }
+                            else
+                            {
+                                img = colorImgList.FirstOrDefault(m => m.Contains(skuColor.values[i].id)).Split(':')[2].Replace("\"", "");
+                            }
+                            if (!img.StartsWith("http"))
+                            {
+                                img = "http:" + img;
+                            }
+                            skuColor.values[i].image = img;
                         }
-                        skuColor.values[i].image = img;
                     }
                 }
-            }
-            productModel.ProductName = titleRegex.Match(str.ToString()).Value;
-            productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
-            productModel.ProductPrice = priceRegex.Match(str.ToString()).Value;
-            productModel.Location = LocationRegex.Match(str.ToString()).Value;
-            productModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
-            productModel.RateTotals = RateTotalsRegex.Match(str.ToString()).Value;
+                productModel.ProductName = titleRegex.Match(str.ToString()).Value;
+                productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(str.ToString()).Value);
+                productModel.ProductPrice = priceRegex.Match(str.ToString()).Value;
+                productModel.Location = LocationRegex.Match(str.ToString()).Value;
+                productModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
+                productModel.RateTotals = RateTotalsRegex.Match(str.ToString()).Value;
 
-            productModel.Source = "天猫";
-            productModel.SourceUrl = url;
+                productModel.Source = "天猫";
+                productModel.SourceUrl = url;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
             return productModel;
         }
         #endregion
@@ -511,7 +526,7 @@ namespace TxoooProductUpload.Service
             await getJdHtml.SendAsync();
             if (!getJdHtml.IsValid())
             {
-                new Exception("未能提交请求");
+               throw new Exception("未能提交请求");
             }
             str = getJdHtml.Result;
 
@@ -530,60 +545,68 @@ namespace TxoooProductUpload.Service
             //https://item.m.jd.com/ware/detail.json?wareId=2962435  详情
             //https://item.m.jd.com/ware/getSpecInfo.json?sid=a478e51bbe06746e0484fbf4baf137c8&wareId=11241122359&yanbaoIds= SKU
             //主图
-            MatchCollection mact = imgRegex.Matches(str);
-            foreach (Match mt in mact)
+            try
             {
-                string tempmat = mt.Value;
-                if (!tempmat.StartsWith("http"))
+                MatchCollection mact = imgRegex.Matches(str);
+                foreach (Match mt in mact)
                 {
-                    tempmat = "http:" + tempmat;
+                    string tempmat = mt.Value;
+                    if (!tempmat.StartsWith("http"))
+                    {
+                        tempmat = "http:" + tempmat;
+                    }
+                    if (!productModel.ThumImg.Contains(tempmat))
+                    {
+                        productModel.ThumImg.Add(tempmat);
+                    }
                 }
-                if (!productModel.ThumImg.Contains(tempmat))
+
+                //productid
+                var productId = new Regex("(?<=product/)[0-9]+(?=.html)").Match(url).Value;
+                var detailInfo = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/detail.json?wareId=" + productId).Send().Result;
+                var rateInfo = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/getDetailCommentList.json?wareId=" + productId).Send().Result;
+
+                productModel.DetailHtml = Regex.Unescape(new Regex("(?<=\"wdis\":\").+?(?=\",)").Match(detailInfo).Value);
+                MatchCollection matches1 = dImgRegex.Matches(productModel.DetailHtml, 0);
+                foreach (Match mat in matches1)
                 {
-                    productModel.ThumImg.Add(tempmat);
+                    string tempmat = mat.Value;
+                    if (!tempmat.StartsWith("http"))
+                    {
+                        tempmat = "http:" + tempmat;
+                    }
+                    if (!productModel.DetailImg.Contains(tempmat))
+                    {
+                        productModel.DetailImg.Add(tempmat);
+                    }
                 }
+
+                productModel.SKUJD = JsonConvert.DeserializeObject<SkuJdInfo>(Regex.Unescape(sKURegex.Match(detailInfo.ToString()).Value));   //SKU
+                foreach (var item in productModel.SKUJD.colorSize)
+                {
+                    var skuImgDetail = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/getSpecInfo.json?wareId=" + productId).Send().Result;
+                    item.image = new Regex("(?<=\"wareMainImageUrl\":\").+?(?=\",)").Match(Regex.Unescape(skuImgDetail)).Value.Replace("!q70.jpg", "");
+                }
+                productModel.Location = locationRegex.Match(str.ToString()).Value;
+                if (productModel.Location.Length > 3)
+                {
+                    productModel.Location = productModel.Location.Substring(productModel.Location.Length - 3, 2);
+                }
+
+                productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(detailInfo).Value);
+                productModel.ShopName = productModel.ShopName.IsNullOrEmpty() ? "自营" : productModel.ShopName;
+                productModel.ProductPrice = PriceRegex.Match(str).Value;
+                productModel.SalesCount = salesCountRegex.Match(rateInfo.ToString()).Value;
+                productModel.RateTotals = productModel.SalesCount;
+                productModel.ProductName = titleRegex.Match(str).Value;
+                productModel.Source = "京东";
+                productModel.SourceUrl = url;
             }
-
-            //productid
-            var productId = new Regex("(?<=product/)[0-9]+(?=.html)").Match(url).Value;
-            var detailInfo = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/detail.json?wareId=" + productId).Send().Result;
-            var rateInfo = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/getDetailCommentList.json?wareId=" + productId).Send().Result;
-
-            productModel.DetailHtml = Regex.Unescape(new Regex("(?<=\"wdis\":\").+?(?=\",)").Match(detailInfo).Value);
-            MatchCollection matches1 = dImgRegex.Matches(productModel.DetailHtml, 0);
-            foreach (Match mat in matches1)
+            catch (Exception ex)
             {
-                string tempmat = mat.Value;
-                if (!tempmat.StartsWith("http"))
-                {
-                    tempmat = "http:" + tempmat;
-                }
-                if (!productModel.DetailImg.Contains(tempmat))
-                {
-                    productModel.DetailImg.Add(tempmat);
-                }
+                throw ex;
             }
-
-            productModel.SKUJD = JsonConvert.DeserializeObject<SkuJdInfo>(Regex.Unescape(sKURegex.Match(detailInfo.ToString()).Value));   //SKU
-            foreach (var item in productModel.SKUJD.colorSize)
-            {
-                var skuImgDetail = NetClient.Create<string>(HttpMethod.Get, "https://item.m.jd.com/ware/getSpecInfo.json?wareId=" + productId).Send().Result;
-                item.image = new Regex("(?<=\"wareMainImageUrl\":\").+?(?=\",)").Match(Regex.Unescape(skuImgDetail)).Value.Replace("!q70.jpg", "");
-            }
-            productModel.Location = locationRegex.Match(str.ToString()).Value;
-            if (productModel.Location.Length > 3)
-            {
-                productModel.Location = productModel.Location.Substring(productModel.Location.Length - 3, 2);
-            }
-
-            productModel.ShopName = HttpUtility.UrlDecode(shopNameRegex.Match(detailInfo).Value);
-            productModel.ShopName = productModel.ShopName.IsNullOrEmpty() ? "自营" : productModel.ShopName;
-            productModel.ProductPrice = PriceRegex.Match(str).Value;
-            productModel.SalesCount = salesCountRegex.Match(rateInfo.ToString()).Value;
-            productModel.RateTotals = productModel.SalesCount;
-            productModel.ProductName = titleRegex.Match(str).Value;
-            productModel.Source = "京东";
-            productModel.SourceUrl = url;
+           
             return productModel;
         }
         #endregion

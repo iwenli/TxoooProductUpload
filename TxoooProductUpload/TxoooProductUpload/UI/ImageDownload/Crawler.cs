@@ -304,7 +304,7 @@ namespace TxoooProductUpload.UI.ImageDownload
                 string headPicUrl = null;
                 try
                 {
-                    headPicUrl = await _context.CommonService.UploadImg(Image.FromFile(currentTask));
+                    headPicUrl = await _context.ImageService.UploadImg(Image.FromFile(currentTask));
                     lock (data.WaitInsertImages)
                     {
                         data.WaitInsertImages.Enqueue(new Service.ImageUpload.HeadPicInfo()
