@@ -34,6 +34,9 @@ namespace TxoooProductUpload.UI.Main
         ProductInfo _productInfo = null;
         Random _random = new Random();//全局随机函数
 
+        List<ReviewInfo> _reviewList;
+        CommentDetail _commentDetail = null;
+
         string[] _headPicsFilter = new string[] {
             @"http://img.alicdn.com/tps/i3/TB1yeWeIFXXXXX5XFXXuAZJYXXX-210-210.png",
             @"http://misc.360buyimg.com/lib/img/u/b56.gif",
@@ -57,6 +60,8 @@ namespace TxoooProductUpload.UI.Main
             AppendLog(txtLog, "评价页面初始化[完毕]...");
             InitHeadPic();
         }
+
+
 
         #region 初始化 以及事件
         /// <summary>
@@ -128,7 +133,8 @@ namespace TxoooProductUpload.UI.Main
                 }
                 #endregion
             };
-            //解析json评价并上传
+            //解析json评价并展示
+            var isProcessData = false;  //当前评价是否处理过
             this.btnAddComments.Click += async (s, e) =>
             {
                 var json = txtJson.Text.Trim();
@@ -142,43 +148,64 @@ namespace TxoooProductUpload.UI.Main
                 #region 提交评价 批量
                 try
                 {
-                    var reviewList = JsonConvert.DeserializeObject<List<ReviewInfo>>(json);
-                    AppendLog(txtLog, "共识别出{0}条评价...", reviewList.Count);
-                    if (reviewList.Count > 0)
+                    btnAddComments.Enabled = false;
+                    if (!isProcessData)
                     {
-                        if (SMYN(string.Format("共解析评价{0}条，是否开始上传?", reviewList.Count)) == DialogResult.Yes)
+                        _reviewList = JsonConvert.DeserializeObject<List<ReviewInfo>>(json);
+                        AppendLog(txtLog, "共识别出{0}条评价...", _reviewList.Count);
+                    }
+                    if (_reviewList.Count > 0)
+                    {
+                        if (!isProcessData)
                         {
-                            var random = new Random();
-                            for (int i = 0; i < reviewList.Count; i++)
+                            #region 处理评价
+                            for (int i = 0; i < _reviewList.Count; i++)
                             {
-                                reviewList[i].ProductId = _productInfo.product[0].product_id;
-                                reviewList[i].AddUserId = _context.Session.Token.userid;
-                                reviewList[i].PropertyName = _productInfo.property[random.Next(0, _productInfo.property.Count)]
+                                _reviewList[i].ProductId = _productInfo.product[0].product_id;
+                                _reviewList[i].AddUserId = _context.Session.Token.userid;
+                                _reviewList[i].PropertyName = _productInfo.property[_random.Next(0, _productInfo.property.Count)]
                                 .json_info;
                                 //处理头像
-                                AppendLog(txtLog, "开始处理第[{0}]个评价的头像...", i + 1);
-                                reviewList[i].HeadPic = GetHeadPic(reviewList[i].HeadPic);
+                                //AppendLog(txtLog, "开始处理第[{0}]个评价的头像...", i + 1);
+                                _reviewList[i].HeadPic = GetHeadPic(_reviewList[i].HeadPic);
                                 AppendLog(txtLog, "第[{0}]个评价的头像处理完成...", i + 1);
                                 //循环处理评价图片
-                                if (_isUploadReviewImg && !string.IsNullOrEmpty(reviewList[i].ReviewImgs))
+                                if (_isUploadReviewImg && !string.IsNullOrEmpty(_reviewList[i].ReviewImgs))
                                 {
-                                    var imgList = reviewList[i].ReviewImgs.Split(',');
+                                    var imgList = _reviewList[i].ReviewImgs.Split(',');
                                     var updateImglist = new List<string>();
                                     for (int j = 0; j < imgList.Length; j++)
                                     {
-                                        AppendLog(txtLog, "开始处理第[{0}]个评价的第[{1}]张图片...", i + 1, j + 1);
-                                        updateImglist.Add(await _context.CommonService.UploadImg(imgList[j], 4));
+                                        //AppendLog(txtLog, "开始处理第[{0}]个评价的第[{1}]张图片...", i + 1, j + 1);
+                                        updateImglist.Add(await _context.ImageService.UploadImg(imgList[j], 4));
                                         AppendLog(txtLog, "第[{0}]个评价的第[{1}]张图片处理完成...", i + 1, j + 1);
                                     }
-                                    reviewList[i].ReviewImgs = string.Join(",", updateImglist);
+                                    _reviewList[i].ReviewImgs = string.Join(",", updateImglist);
                                 }
                                 else
                                 {
-                                    reviewList[i].ReviewImgs = "";
+                                    _reviewList[i].ReviewImgs = "";
                                 }
                             }
-                            await SubmintReview(reviewList);
+                            #endregion
+
+                            isProcessData = true;
                         }
+                        ReviewDataSoruce rds = new ReviewDataSoruce();
+                        rds.AddRange(_reviewList);
+                        _commentDetail = new CommentDetail(rds);
+
+                        _commentDetail.IsUploadData += async (sender, arge) =>
+                        {
+                            _reviewList = sender as List<ReviewInfo>;
+                            if (await SubmintReview(_reviewList))
+                            {
+                                txtJson.Text = "";
+                                isProcessData = false;
+                            } 
+                        };
+                        _commentDetail.ShowDialog(this);
+                        btnAddComments.Enabled = true;
                     }
                 }
                 catch (Exception ex)
@@ -231,7 +258,7 @@ namespace TxoooProductUpload.UI.Main
                 HeadPicContext.Instance.Init();
                 if (HeadPicContext.Instance.Data == null || HeadPicContext.Instance.Data.Count == 0)
                 {
-                    HeadPicContext.Instance.Data.AddRange(_context.CommonService.GetAllHeadPic());
+                    HeadPicContext.Instance.Data.AddRange(_context.ImageService.GetAllHeadPic());
                     HeadPicContext.Instance.Save();
                 }
                 AppendLog(txtLog, "获取头像数据[完成]...");
@@ -261,14 +288,14 @@ namespace TxoooProductUpload.UI.Main
                     try
                     {
                         Image headPic = Image.FromFile(ofdImgHead.FileName).Thumbnail();
-                        _userHeadPic = await _context.CommonService.UploadImg(headPic);
+                        _userHeadPic = await _context.ImageService.UploadImg(headPic);
                         pbHead.Image = headPic;
                         AppendLogWarning(txtLog, "头像更换[成功]...");
                     }
                     catch (Exception ex)
                     {
                         AppendLogWarning(txtLog, "头像更换[失败]...");
-                        Image headPic = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+                        Image headPic = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamByImgUrl(_userHeadPic)));
                         AppendLogWarning(txtLog, "[异常发生在]:", ex);
                     }
                 }
@@ -287,7 +314,7 @@ namespace TxoooProductUpload.UI.Main
                     var wc = new WebClient();
                     var imageB = wc.DownloadData(url);
                     var headPic = Image.FromStream(new MemoryStream(imageB)).Thumbnail();
-                    _userHeadPic = await _context.CommonService.UploadImg(headPic);
+                    _userHeadPic = await _context.ImageService.UploadImg(headPic);
                     pbHead.Image = headPic;
                     AppendLogWarning(txtLog, "头像更换[成功]...");
                     txtUpdateHeadPicUrl.Text = string.Empty;
@@ -295,7 +322,7 @@ namespace TxoooProductUpload.UI.Main
                 catch (Exception ex)
                 {
                     AppendLogWarning(txtLog, "头像更换[失败]...");
-                    Image headPic = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+                    Image headPic = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamByImgUrl(_userHeadPic)));
                     AppendLogWarning(txtLog, "[异常发生在]:", ex);
                 }
             };
@@ -407,7 +434,7 @@ namespace TxoooProductUpload.UI.Main
                      //上传评价图片
                      for (int i = 0; i < _reviewImgPathList.Count; i++)
                      {
-                         reviewImageUrls.Add(await _context.CommonService.UploadImg(Image.FromFile(_reviewImgPathList[i])));
+                         reviewImageUrls.Add(await _context.ImageService.UploadImg(Image.FromFile(_reviewImgPathList[i])));
                      }
                      _reviewInfo.ReviewImgs = string.Join(",", reviewImageUrls);
 
@@ -494,7 +521,7 @@ namespace TxoooProductUpload.UI.Main
             ilReviewImage.Images.Clear();
             lvReviewImage.Items.Clear();
             _userHeadPic = ConstParams.DEFAULT_HEAD_PIC;
-            pbHead.Image = Image.FromStream(new MemoryStream(await _context.CommonService.GetImageStreamByImgUrl(_userHeadPic)));
+            pbHead.Image = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamByImgUrl(_userHeadPic)));
             dtpAddTime.MaxDate = DateTime.Now.AddSeconds(1);
             dtpAddTime.Value = DateTime.Now;
             btnAddReviewOne.Enabled = !(pbAddReviewImage.Enabled = true);

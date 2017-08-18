@@ -36,6 +36,23 @@ namespace TxoooProductUpload.Service
         }
 
         /// <summary>
+        /// 根据URL获取图片  同步
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public Image GetImageByUrl(string url)
+        {
+            var stCtx = ServiceContext.Session.NetClient
+              .Create<byte[]>(HttpMethod.Get, url);
+            stCtx.Send();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("下载图片异常002[远程服务器未响应]，请重试！");
+            }
+            return Image.FromStream(new MemoryStream(stCtx.Result));
+        }
+
+        /// <summary>
         /// 通过url获取图片字节流
         /// </summary>
         /// <param name="url">图片url</param>

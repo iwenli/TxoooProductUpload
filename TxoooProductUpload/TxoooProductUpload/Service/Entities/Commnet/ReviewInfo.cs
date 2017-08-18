@@ -8,12 +8,22 @@ using TxoooProductUpload.Common;
 namespace TxoooProductUpload.Service.Entities.Commnet
 {
     /// <summary>
+    /// 绑定数据源使用
+    /// </summary>
+    class ReviewDataSoruce : List<ReviewInfo>
+    {
+        /// <summary>
+        /// 商品Name
+        /// </summary>
+        public string ProductName { set; get; }
+    }
+    /// <summary>
     /// 评论
     /// </summary>
     class ReviewInfo
     {
         /// <summary>
-        /// 用户ID
+        /// 商品ID
         /// </summary>
         public long ProductId { set; get; }
 

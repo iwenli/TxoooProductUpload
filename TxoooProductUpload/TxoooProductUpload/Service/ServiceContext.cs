@@ -18,7 +18,7 @@ namespace TxoooProductUpload.Service
             UrlConvertProductService = new UrlConvertProductService(this); 
             ClassDataService = new ClassDataService(this);
             AreaDataService = new AreaDataService(this);
-            CommonService = new ImageService(this);
+            ImageService = new ImageService(this);
             ProductService = new ProductService(this);
             CacheContext = CacheContext.Instance;
             CacheContext.Init();
@@ -49,7 +49,7 @@ namespace TxoooProductUpload.Service
         /// <summary>
         /// 通用数据服务
         /// </summary>
-        public ImageService CommonService { get; private set; }
+        public ImageService ImageService { get; private set; }
 
         /// <summary>
         /// 商品对接tx服务

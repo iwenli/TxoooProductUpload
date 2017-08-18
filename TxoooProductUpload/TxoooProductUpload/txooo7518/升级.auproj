@@ -2,7 +2,7 @@
 <AuProject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UpdateInfo>
     <AppName>创业赚钱商家工具  - by iwenli</AppName>
-    <AppVersion>1.2.0.0</AppVersion>
+    <AppVersion>1.4.1.0</AppVersion>
     <PublishUrl>http://iwenli.org</PublishUrl>
     <ExecuteTimeout>0</ExecuteTimeout>
     <TreatErrorAsNotUpdated>false</TreatErrorAsNotUpdated>
@@ -24,7 +24,23 @@
 + 升级内容：
 1. 修复评价头像URL无法上传问题
 2. 修复京东图片抓取不全的问题
-3. 修复单个上传不成功的问题</Desc>
+3. 修复单个上传不成功的问题
+### v1.4.0
++ 时间：2017年8月8日15:36:38
++ 升级内容：
+1. 修复评价图片压缩的问题
+2. 评价按钮防止多次提交
+3. 京东详情抓取出错
+4. 京东非自营识别商品发货地
+5. 头像库生成
+6. 评价头像移植
+7. 天猫多级属性评价支持
+8. 虚拟商品无法上传的BUG
+### v1.4.1
++ 时间：
++ 升级内容：
+1. 天猫无SKU无图片商品生成支持
+2. 天猫店铺整店抓取</Desc>
     <DeleteMethod>None</DeleteMethod>
     <PackageSize>0</PackageSize>
     <ForceUpdate>false</ForceUpdate>

@@ -117,29 +117,6 @@ namespace TxoooProductUpload.Service
         }
         #endregion
 
-        #region 抓取商品
-        /*
-         * 1.判断店铺  分页 抓取商品信息 一个线程 
-         * 2.处理商品信息 上传任务 一个线程
-         * 
-         */
-       
-
-        /// <summary>
-        /// 根据传入的地址获取所有商品基本信息
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        public async Task<List<ProductInfo>> GetAllProductsByUrl(string url)
-        {
-            //https://weishuo.jd.com/view_search-430422-0-5-1-24-1.html
-
-            //https://hongdoufushi.tmall.com/category.htm?orderType=hotsell_desc&pageNo=1
-            Regex tmReg = new Regex(@"https://([\s\S]*).tmall.com");
-
-            //https://infshop.1688.com/page/offerlist.htm?showType=windows&sortType=tradenumdown&pageNum=1
-
-        }
-        #endregion
+        
     }
 }

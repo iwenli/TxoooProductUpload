@@ -147,9 +147,10 @@ namespace TxoooProductUpload.UI.Main
             // 
             this.tsExit.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsExit.Image = global::TxoooProductUpload.Properties.Resources.block_16;
+            this.tsExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsExit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsExit.Name = "tsExit";
-            this.tsExit.Size = new System.Drawing.Size(76, 28);
+            this.tsExit.Size = new System.Drawing.Size(68, 28);
             this.tsExit.Text = "退出(&X)";
             // 
             // toolStripSeparator1
@@ -163,18 +164,20 @@ namespace TxoooProductUpload.UI.Main
             this.tsLogout.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsLogout.Enabled = false;
             this.tsLogout.Image = global::TxoooProductUpload.Properties.Resources.left_16;
+            this.tsLogout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsLogout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsLogout.Name = "tsLogout";
-            this.tsLogout.Size = new System.Drawing.Size(74, 28);
+            this.tsLogout.Size = new System.Drawing.Size(66, 28);
             this.tsLogout.Text = "注销(&L)";
             // 
             // tsLogin
             // 
             this.tsLogin.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsLogin.Image = global::TxoooProductUpload.Properties.Resources.user_16;
+            this.tsLogin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsLogin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsLogin.Name = "tsLogin";
-            this.tsLogin.Size = new System.Drawing.Size(72, 28);
+            this.tsLogin.Size = new System.Drawing.Size(64, 28);
             this.tsLogin.Text = "登录(&I)";
             // 
             // toolStripSeparator3
@@ -227,6 +230,7 @@ namespace TxoooProductUpload.UI.Main
             this.stStatus.AutoSize = false;
             this.stStatus.Image = global::TxoooProductUpload.Properties.Resources.info_16;
             this.stStatus.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.stStatus.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.stStatus.Name = "stStatus";
             this.stStatus.Size = new System.Drawing.Size(400, 37);
             this.stStatus.Text = "就绪";
@@ -241,42 +245,46 @@ namespace TxoooProductUpload.UI.Main
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(523, 37);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(550, 37);
             this.toolStripStatusLabel2.Spring = true;
             // 
             // toolStripStatusLabel3
             // 
             this.toolStripStatusLabel3.Image = global::TxoooProductUpload.Properties.Resources.globe_16;
+            this.toolStripStatusLabel3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripStatusLabel3.IsLink = true;
             this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(56, 37);
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(48, 37);
             this.toolStripStatusLabel3.Tag = "https://github.com/iwenli";
             this.toolStripStatusLabel3.Text = "开源";
             // 
             // toolStripStatusLabel4
             // 
             this.toolStripStatusLabel4.Image = global::TxoooProductUpload.Properties.Resources.globe_16;
+            this.toolStripStatusLabel4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripStatusLabel4.IsLink = true;
             this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(56, 37);
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(48, 37);
             this.toolStripStatusLabel4.Tag = "http://blog.iwenli.org";
             this.toolStripStatusLabel4.Text = "博客";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Image = global::TxoooProductUpload.Properties.Resources.globe_16;
+            this.toolStripStatusLabel1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripStatusLabel1.IsLink = true;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(56, 37);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(48, 37);
             this.toolStripStatusLabel1.Tag = "http://iwenli.org";
             this.toolStripStatusLabel1.Text = "主页";
             // 
             // toolStripStatusLabel5
             // 
             this.toolStripStatusLabel5.Image = global::TxoooProductUpload.Properties.Resources.counseling_style_51;
+            this.toolStripStatusLabel5.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripStatusLabel5.IsLink = true;
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(80, 37);
+            this.toolStripStatusLabel5.Size = new System.Drawing.Size(77, 37);
             this.toolStripStatusLabel5.Tag = "http://wpa.qq.com/msgrd?v=3&uin=234486036&site=qq&menu=yes";
             this.toolStripStatusLabel5.Text = "给我反馈";
             // 
@@ -503,6 +511,7 @@ namespace TxoooProductUpload.UI.Main
             // 
             // tbShare
             // 
+            this.tbShare.BackColor = System.Drawing.Color.White;
             this.tbShare.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbShare.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbShare.Location = new System.Drawing.Point(3, 19);
@@ -526,6 +535,7 @@ namespace TxoooProductUpload.UI.Main
             // 
             // tbBrand
             // 
+            this.tbBrand.BackColor = System.Drawing.Color.White;
             this.tbBrand.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbBrand.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbBrand.Location = new System.Drawing.Point(3, 19);

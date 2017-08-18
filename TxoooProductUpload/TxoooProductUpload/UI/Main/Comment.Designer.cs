@@ -48,12 +48,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lvReviewImage = new System.Windows.Forms.ListView();
             this.ilReviewImage = new System.Windows.Forms.ImageList(this.components);
-            this.pbAddReviewImage = new System.Windows.Forms.PictureBox();
             this.txtReviewContent = new System.Windows.Forms.RichTextBox();
             this.txtMchReplyContent = new System.Windows.Forms.TextBox();
             this.dtpAddTime = new System.Windows.Forms.DateTimePicker();
             this.btnUpdateHeadPic = new System.Windows.Forms.Button();
-            this.pbHead = new System.Windows.Forms.PictureBox();
             this.txtUpdateHeadPicUrl = new System.Windows.Forms.TextBox();
             this.nudExpressScore = new System.Windows.Forms.NumericUpDown();
             this.nudProductScore = new System.Windows.Forms.NumericUpDown();
@@ -73,6 +71,8 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.cmsReviewImage = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmDelReviewImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.pbAddReviewImage = new System.Windows.Forms.PictureBox();
+            this.pbHead = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
             this.batchPage.SuspendLayout();
             this.gbPage1.SuspendLayout();
@@ -82,12 +82,12 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbAddReviewImage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbHead)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudExpressScore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudProductScore)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLikeCount)).BeginInit();
             this.cmsReviewImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbAddReviewImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHead)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -319,17 +319,6 @@
             this.ilReviewImage.ImageSize = new System.Drawing.Size(42, 42);
             this.ilReviewImage.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // pbAddReviewImage
-            // 
-            this.pbAddReviewImage.Image = global::TxoooProductUpload.Properties.Resources.add1;
-            this.pbAddReviewImage.Location = new System.Drawing.Point(9, 32);
-            this.pbAddReviewImage.Name = "pbAddReviewImage";
-            this.pbAddReviewImage.Size = new System.Drawing.Size(30, 30);
-            this.pbAddReviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbAddReviewImage.TabIndex = 11;
-            this.pbAddReviewImage.TabStop = false;
-            this.toolTip1.SetToolTip(this.pbAddReviewImage, "点击上传评价图片");
-            // 
             // txtReviewContent
             // 
             this.txtReviewContent.BackColor = System.Drawing.Color.White;
@@ -368,16 +357,6 @@
             this.btnUpdateHeadPic.TabIndex = 6;
             this.btnUpdateHeadPic.Text = "从网址更新头像(&U)";
             this.btnUpdateHeadPic.UseVisualStyleBackColor = true;
-            // 
-            // pbHead
-            // 
-            this.pbHead.Location = new System.Drawing.Point(682, 20);
-            this.pbHead.Name = "pbHead";
-            this.pbHead.Size = new System.Drawing.Size(70, 70);
-            this.pbHead.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pbHead.TabIndex = 5;
-            this.pbHead.TabStop = false;
-            this.toolTip1.SetToolTip(this.pbHead, "点击头像上传更换");
             // 
             // txtUpdateHeadPicUrl
             // 
@@ -567,6 +546,27 @@
             this.tsmDelReviewImage.Size = new System.Drawing.Size(117, 22);
             this.tsmDelReviewImage.Text = "删除(&D)";
             // 
+            // pbAddReviewImage
+            // 
+            this.pbAddReviewImage.Image = global::TxoooProductUpload.Properties.Resources.add1;
+            this.pbAddReviewImage.Location = new System.Drawing.Point(9, 32);
+            this.pbAddReviewImage.Name = "pbAddReviewImage";
+            this.pbAddReviewImage.Size = new System.Drawing.Size(30, 30);
+            this.pbAddReviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbAddReviewImage.TabIndex = 11;
+            this.pbAddReviewImage.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbAddReviewImage, "点击上传评价图片");
+            // 
+            // pbHead
+            // 
+            this.pbHead.Location = new System.Drawing.Point(682, 20);
+            this.pbHead.Name = "pbHead";
+            this.pbHead.Size = new System.Drawing.Size(70, 70);
+            this.pbHead.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbHead.TabIndex = 5;
+            this.pbHead.TabStop = false;
+            this.toolTip1.SetToolTip(this.pbHead, "点击头像上传更换");
+            // 
             // Comment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -597,12 +597,12 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pbAddReviewImage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbHead)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudExpressScore)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudProductScore)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudLikeCount)).EndInit();
             this.cmsReviewImage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbAddReviewImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbHead)).EndInit();
             this.ResumeLayout(false);
 
         }
