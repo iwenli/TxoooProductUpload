@@ -162,12 +162,6 @@
     <Compile Include="UI\ImageDownload\Crawler.Designer.cs">
       <DependentUpon>Crawler.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Main\CommentDetail.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Main\CommentDetail.Designer.cs">
-      <DependentUpon>CommentDetail.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,14 +192,9 @@
     <Compile Include="UI\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI\Main\CommentDetail.resx">
-      <DependentUpon>CommentDetail.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Properties\DataSources\TxoooProductUpload.Service.Entities.Commnet.ReviewDataSoruce.datasource" />
-    <None Include="Properties\DataSources\TxoooProductUpload.Service.Entities.Commnet.ReviewInfo.datasource" />
     <None Include="updateList.md" />
     <None Include="Resources\msg.png" />
     <None Include="Resources\counseling_style_51.png" />
@@ -247,9 +236,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\block_16.png" />
   </ItemGroup>
