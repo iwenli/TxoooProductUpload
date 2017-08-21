@@ -76,7 +76,7 @@ namespace TxoooProductUpload.Service
             }
             catch (Exception ex)
             {
-                throw new Exception(string.Format("解析商品出错，错误信息：{0}",ex.Message));
+                throw new Exception(string.Format("解析商品出错，错误信息：{0}", ex.Message));
             }
             return null;
         }
@@ -522,11 +522,11 @@ namespace TxoooProductUpload.Service
         {
             ProductResult productModel = new ProductResult(ServiceContext);
             string str = "";
-            var getJdHtml = NetClient.Create<string>(HttpMethod.Get, url);
+            var getJdHtml = NetClient.Create<string>(HttpMethod.Get, url, allowAutoRedirect: true);
             await getJdHtml.SendAsync();
             if (!getJdHtml.IsValid())
             {
-               throw new Exception("未能提交请求");
+                throw new Exception("未能提交请求");
             }
             str = getJdHtml.Result;
 
@@ -606,7 +606,7 @@ namespace TxoooProductUpload.Service
             {
                 throw ex;
             }
-           
+
             return productModel;
         }
         #endregion

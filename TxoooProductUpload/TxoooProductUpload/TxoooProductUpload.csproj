@@ -162,6 +162,24 @@
     <Compile Include="UI\ImageDownload\Crawler.Designer.cs">
       <DependentUpon>Crawler.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Main\CommentDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\CommentDetail.Designer.cs">
+      <DependentUpon>CommentDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Main\CommentImages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Main\CommentImages.Designer.cs">
+      <DependentUpon>CommentImages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\OriginalImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\OriginalImage.Designer.cs">
+      <DependentUpon>OriginalImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,9 +210,19 @@
     <Compile Include="UI\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UI\Main\CommentDetail.resx">
+      <DependentUpon>CommentDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Main\CommentImages.resx">
+      <DependentUpon>CommentImages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\OriginalImage.resx">
+      <DependentUpon>OriginalImage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="DataSource\TxoooProductUpload.Service.Entities.Commnet.ReviewDataSoruce.datasource" />
     <None Include="updateList.md" />
     <None Include="Resources\msg.png" />
     <None Include="Resources\counseling_style_51.png" />

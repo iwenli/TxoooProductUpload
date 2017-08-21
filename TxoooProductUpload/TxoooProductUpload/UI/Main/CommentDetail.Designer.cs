@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommentDetail));
             this.cms = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmsDel = new System.Windows.Forms.ToolStripMenuItem();
             this.dgvComments = new System.Windows.Forms.DataGridView();
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.ts = new System.Windows.Forms.ToolStrip();
             this.tsSave = new System.Windows.Forms.ToolStripButton();
             this.st = new System.Windows.Forms.StatusStrip();
-            this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.nickNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HeadImage = new System.Windows.Forms.DataGridViewImageColumn();
             this.propertyNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,14 +45,15 @@
             this.expressReviewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.likeCountDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.addTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reviewImageBtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.reviewContentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mchReplyContentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.reviewImgsDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.reviewImageUrls = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HeadImageUrl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvComments)).BeginInit();
-            this.ts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
+            this.ts.SuspendLayout();
             this.SuspendLayout();
             // 
             // cms
@@ -74,8 +75,8 @@
             this.dgvComments.AllowUserToDeleteRows = false;
             this.dgvComments.AllowUserToOrderColumns = true;
             this.dgvComments.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.dgvComments.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.dgvComments.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvComments.AutoGenerateColumns = false;
             this.dgvComments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvComments.BackgroundColor = System.Drawing.Color.White;
@@ -89,9 +90,10 @@
             this.expressReviewDataGridViewTextBoxColumn,
             this.likeCountDataGridViewTextBoxColumn,
             this.addTimeDataGridViewTextBoxColumn,
+            this.reviewImageBtn,
             this.reviewContentDataGridViewTextBoxColumn,
             this.mchReplyContentDataGridViewTextBoxColumn,
-            this.reviewImgsDataGridViewTextBoxColumn,
+            this.reviewImageUrls,
             this.HeadImageUrl});
             this.dgvComments.ContextMenuStrip = this.cms;
             this.dgvComments.DataSource = this.bs;
@@ -107,6 +109,10 @@
             this.dgvComments.ShowCellToolTips = false;
             this.dgvComments.Size = new System.Drawing.Size(1067, 552);
             this.dgvComments.TabIndex = 3;
+            // 
+            // bs
+            // 
+            this.bs.DataSource = typeof(TxoooProductUpload.Service.Entities.Commnet.ReviewDataSoruce);
             // 
             // ts
             // 
@@ -135,10 +141,6 @@
             this.st.Size = new System.Drawing.Size(1067, 22);
             this.st.TabIndex = 0;
             this.st.Text = "statusStrip1";
-            // 
-            // bs
-            // 
-            this.bs.DataSource = typeof(TxoooProductUpload.Service.Entities.Commnet.ReviewDataSoruce);
             // 
             // nickNameDataGridViewTextBoxColumn
             // 
@@ -190,6 +192,7 @@
             // likeCountDataGridViewTextBoxColumn
             // 
             this.likeCountDataGridViewTextBoxColumn.DataPropertyName = "LikeCount";
+            this.likeCountDataGridViewTextBoxColumn.Frozen = true;
             this.likeCountDataGridViewTextBoxColumn.HeaderText = "点赞数";
             this.likeCountDataGridViewTextBoxColumn.Name = "likeCountDataGridViewTextBoxColumn";
             this.likeCountDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -198,10 +201,22 @@
             // addTimeDataGridViewTextBoxColumn
             // 
             this.addTimeDataGridViewTextBoxColumn.DataPropertyName = "AddTime";
+            this.addTimeDataGridViewTextBoxColumn.Frozen = true;
             this.addTimeDataGridViewTextBoxColumn.HeaderText = "评价时间";
             this.addTimeDataGridViewTextBoxColumn.Name = "addTimeDataGridViewTextBoxColumn";
             this.addTimeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.addTimeDataGridViewTextBoxColumn.Width = 81;
+            // 
+            // reviewImageBtn
+            // 
+            this.reviewImageBtn.Frozen = true;
+            this.reviewImageBtn.HeaderText = "评价图片";
+            this.reviewImageBtn.Name = "reviewImageBtn";
+            this.reviewImageBtn.ReadOnly = true;
+            this.reviewImageBtn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.reviewImageBtn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.reviewImageBtn.Text = "查看";
+            this.reviewImageBtn.Width = 81;
             // 
             // reviewContentDataGridViewTextBoxColumn
             // 
@@ -218,12 +233,13 @@
             this.mchReplyContentDataGridViewTextBoxColumn.Name = "mchReplyContentDataGridViewTextBoxColumn";
             this.mchReplyContentDataGridViewTextBoxColumn.Width = 81;
             // 
-            // reviewImgsDataGridViewTextBoxColumn
+            // reviewImageUrls
             // 
-            this.reviewImgsDataGridViewTextBoxColumn.DataPropertyName = "ReviewImgs";
-            this.reviewImgsDataGridViewTextBoxColumn.HeaderText = "评价图片";
-            this.reviewImgsDataGridViewTextBoxColumn.Name = "reviewImgsDataGridViewTextBoxColumn";
-            this.reviewImgsDataGridViewTextBoxColumn.Width = 81;
+            this.reviewImageUrls.DataPropertyName = "ReviewImgs";
+            this.reviewImageUrls.HeaderText = "评价图片URl";
+            this.reviewImageUrls.Name = "reviewImageUrls";
+            this.reviewImageUrls.Visible = false;
+            this.reviewImageUrls.Width = 101;
             // 
             // HeadImageUrl
             // 
@@ -250,9 +266,9 @@
             this.Text = "评价筛选";
             this.cms.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvComments)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             this.ts.ResumeLayout(false);
             this.ts.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,7 +293,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn addTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn reviewContentDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn mchReplyContentDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn reviewImgsDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn reviewImageUrls;
         private System.Windows.Forms.DataGridViewTextBoxColumn HeadImageUrl;
+        private System.Windows.Forms.DataGridViewButtonColumn reviewImageBtn;
     }
 }

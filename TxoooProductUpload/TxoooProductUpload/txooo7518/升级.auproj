@@ -2,7 +2,7 @@
 <AuProject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <UpdateInfo>
     <AppName>创业赚钱商家工具  - by iwenli</AppName>
-    <AppVersion>1.4.1.0</AppVersion>
+    <AppVersion>1.4.2.0</AppVersion>
     <PublishUrl>http://iwenli.org</PublishUrl>
     <ExecuteTimeout>0</ExecuteTimeout>
     <TreatErrorAsNotUpdated>false</TreatErrorAsNotUpdated>
@@ -37,10 +37,15 @@
 7. 天猫多级属性评价支持
 8. 虚拟商品无法上传的BUG
 ### v1.4.1
-+ 时间：
++ 时间：2017年8月18日16:18:52
 + 升级内容：
 1. 天猫无SKU无图片商品生成支持
-2. 天猫店铺整店抓取</Desc>
+2. 天猫店铺整店抓取
+### v1.4.2
++ 时间：2017年8月21日13:00:40
++ 升级内容：
+1. 批量评价支持编辑
+2. 京东内衣类目个别店铺302无法抓取的BUG</Desc>
     <DeleteMethod>None</DeleteMethod>
     <PackageSize>0</PackageSize>
     <ForceUpdate>false</ForceUpdate>
