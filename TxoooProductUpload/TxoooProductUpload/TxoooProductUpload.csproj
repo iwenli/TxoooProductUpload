@@ -76,6 +76,12 @@
       <HintPath>..\packages\network.fishlee.net.2.2.2.0\lib\net45\FSLib.Network.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FSLib.Network.Adapter.HtmlAgilityPack, Version=1.2.0.0, Culture=neutral, PublicKeyToken=8bf54bd6729f490c, processorArchitecture=MSIL">
+      <HintPath>..\packages\network.fishlee.net_html.adapter.1.2.0.0\lib\net45\FSLib.Network.Adapter.HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -118,6 +124,7 @@
     <Compile Include="Service\Cache\HeadPicCache\HeadPicCache.cs" />
     <Compile Include="Service\Cache\HeadPicCache\HeadPicContext.cs" />
     <Compile Include="Service\ContextBase.cs" />
+    <Compile Include="Service\Entities\TmallProductResult.cs" />
     <Compile Include="Service\ImageDownload\ImageDownloadTask.cs" />
     <Compile Include="Common\Extended\ImageExtended.cs" />
     <Compile Include="Common\Parameters.cs" />
@@ -291,6 +298,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="icon.ico" />
+    <None Include="Resources\comment.png" />
+    <None Include="Resources\file_extension_xls.png" />
+    <None Include="Resources\lcd_tv_image.png" />
     <Content Include="Web\Js\wx.js" />
     <None Include="Resources\add.jpg" />
     <None Include="Resources\add1.png" />

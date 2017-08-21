@@ -93,14 +93,14 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("商品上传提交失败！");
+                throw new Exception("创业赚钱-商品服务器无法连接");
             }
-
-            //入库记录
-            if (stCtx.Result.success)
+            if (!stCtx.Result.success)
             {
-                product.product_id = Convert.ToInt32(stCtx.Result.msg);
+                throw new Exception(stCtx.Result.msg);
             }
+             
+            product.product_id = Convert.ToInt32(stCtx.Result.msg);
             try
             {
                 DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertProduct, product.ProductName.Replace("'", "\""), product.Source, product.SourceUrl, product.ShopName.Replace("'", "\""),

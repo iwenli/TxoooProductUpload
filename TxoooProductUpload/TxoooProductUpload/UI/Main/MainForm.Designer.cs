@@ -130,17 +130,18 @@ namespace TxoooProductUpload.UI.Main
             this.ts.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.ts.Location = new System.Drawing.Point(0, 0);
             this.ts.Name = "ts";
-            this.ts.Size = new System.Drawing.Size(1186, 31);
+            this.ts.Size = new System.Drawing.Size(1186, 25);
             this.ts.TabIndex = 0;
             this.ts.Text = "toolStrip1";
             // 
             // tsImgManage
             // 
             this.tsImgManage.Enabled = false;
-            this.tsImgManage.Image = global::TxoooProductUpload.Properties.Resources.Postman;
+            this.tsImgManage.Image = global::TxoooProductUpload.Properties.Resources.lcd_tv_image;
+            this.tsImgManage.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsImgManage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsImgManage.Name = "tsImgManage";
-            this.tsImgManage.Size = new System.Drawing.Size(104, 28);
+            this.tsImgManage.Size = new System.Drawing.Size(96, 22);
             this.tsImgManage.Text = "图片管理(&M)";
             // 
             // tsExit
@@ -150,14 +151,14 @@ namespace TxoooProductUpload.UI.Main
             this.tsExit.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsExit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsExit.Name = "tsExit";
-            this.tsExit.Size = new System.Drawing.Size(68, 28);
+            this.tsExit.Size = new System.Drawing.Size(68, 22);
             this.tsExit.Text = "退出(&X)";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // tsLogout
             // 
@@ -167,7 +168,7 @@ namespace TxoooProductUpload.UI.Main
             this.tsLogout.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsLogout.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsLogout.Name = "tsLogout";
-            this.tsLogout.Size = new System.Drawing.Size(66, 28);
+            this.tsLogout.Size = new System.Drawing.Size(66, 22);
             this.tsLogout.Text = "注销(&L)";
             // 
             // tsLogin
@@ -177,36 +178,39 @@ namespace TxoooProductUpload.UI.Main
             this.tsLogin.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsLogin.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsLogin.Name = "tsLogin";
-            this.tsLogin.Size = new System.Drawing.Size(64, 28);
+            this.tsLogin.Size = new System.Drawing.Size(64, 22);
             this.tsLogin.Text = "登录(&I)";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // tsDataPack
             // 
             this.tsDataPack.Enabled = false;
-            this.tsDataPack.Image = global::TxoooProductUpload.Properties.Resources.processon;
+            this.tsDataPack.Image = global::TxoooProductUpload.Properties.Resources.file_extension_xls;
+            this.tsDataPack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsDataPack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsDataPack.Name = "tsDataPack";
-            this.tsDataPack.Size = new System.Drawing.Size(108, 28);
+            this.tsDataPack.Size = new System.Drawing.Size(100, 22);
             this.tsDataPack.Text = "数据包导入(&I)";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // tsComment
             // 
             this.tsComment.Enabled = false;
-            this.tsComment.Image = global::TxoooProductUpload.Properties.Resources.msg;
+            this.tsComment.Image = global::TxoooProductUpload.Properties.Resources.comment;
+            this.tsComment.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tsComment.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsComment.Name = "tsComment";
-            this.tsComment.Size = new System.Drawing.Size(100, 28);
+            this.tsComment.Size = new System.Drawing.Size(92, 22);
             this.tsComment.Text = "添加评论(&A)";
+            this.tsComment.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
             // 
             // st
             // 
@@ -296,7 +300,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbSetting.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbSetting.Enabled = false;
             this.gbSetting.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.gbSetting.Location = new System.Drawing.Point(0, 31);
+            this.gbSetting.Location = new System.Drawing.Point(0, 25);
             this.gbSetting.Margin = new System.Windows.Forms.Padding(2);
             this.gbSetting.Name = "gbSetting";
             this.gbSetting.Padding = new System.Windows.Forms.Padding(2);
@@ -473,29 +477,33 @@ namespace TxoooProductUpload.UI.Main
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Tag = "";
-            this.groupBox1.Text = "设置售价";
+            this.groupBox1.Text = "设置溢价";
             this.toolTip.SetToolTip(this.groupBox1, "批量设置价格\r\n如果不写则自动取抓取的价格");
             // 
             // txtPrice
             // 
             this.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPrice.DecimalPlaces = 2;
             this.txtPrice.Font = new System.Drawing.Font("微软雅黑", 9F);
-            this.txtPrice.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
             this.txtPrice.Location = new System.Drawing.Point(10, 30);
             this.txtPrice.Maximum = new decimal(new int[] {
-            10000000,
+            2000,
             0,
             0,
             0});
+            this.txtPrice.Minimum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            -2147483648});
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(91, 23);
             this.txtPrice.TabIndex = 3;
-            this.toolTip.SetToolTip(this.txtPrice, "单位：元");
+            this.toolTip.SetToolTip(this.txtPrice, "溢价百分比");
+            this.txtPrice.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             // 
             // gbShare
             // 
@@ -742,7 +750,7 @@ namespace TxoooProductUpload.UI.Main
             this.gbSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbSearch.Enabled = false;
             this.gbSearch.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F);
-            this.gbSearch.Location = new System.Drawing.Point(0, 203);
+            this.gbSearch.Location = new System.Drawing.Point(0, 197);
             this.gbSearch.Name = "gbSearch";
             this.gbSearch.Padding = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.gbSearch.Size = new System.Drawing.Size(1186, 60);

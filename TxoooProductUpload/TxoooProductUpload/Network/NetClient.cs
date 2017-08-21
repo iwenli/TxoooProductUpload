@@ -7,6 +7,7 @@ namespace TxoooProductUpload.Network
 {
     using System.Reflection;
     using FSLib.Network.Http;
+    using FSLib.Network.Adapter.HtmlAgilityPack;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 

@@ -288,7 +288,6 @@ namespace TxoooProductUpload.UI.Main
                 catch (Exception ex)
                 {
                     AppendLogError(txtLog, ex.Message);
-                    return;
                 }
             }
             else if (storeUrlReg.IsMatch(url))
@@ -358,6 +357,7 @@ namespace TxoooProductUpload.UI.Main
             {
                 stStatus.Text = tsClass5.Text = string.Format("分类：{0} | 比例：{1}", (tsClass3.SelectedItem as ProductClassInfo).ClassName
                     , currentTsCombbox.SelectedItem.ToString());
+                txtPrice.Value = Convert.ToDecimal( currentTsCombbox.SelectedItem);
             }
         }
 
@@ -637,11 +637,11 @@ namespace TxoooProductUpload.UI.Main
             try
             {
                 string name = "默认规格";
-                //处理本地价格
-                if (txtPrice.Value > 0)
-                {
-                    product.ProductPrice = txtPrice.Value.ToString();
-                }
+                ////处理本地价格
+                //if (txtPrice.Value > 0)
+                //{
+                //    product.ProductPrice = txtPrice.Value.ToString();
+                //}
                 await Task.Delay(500);
                 //0-编号 1-sku名称（颜色+尺码） 2-价格 3-图片 4-是否默认（id=0为默认）
                 string propertyFormat = "&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}=100&property_map_img_{0}={3}&radio_num_{0}={4}&is_default_{0}={5}";
@@ -853,7 +853,7 @@ namespace TxoooProductUpload.UI.Main
             }
             catch (Exception ex)
             {
-                new Exception(string.Format("上传商品异常，异常信息：{0}", ex.Message));
+               throw new Exception(string.Format("上传失败，异常信息：{0}", ex.Message));
             }
             #endregion
         }

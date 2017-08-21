@@ -192,15 +192,18 @@ namespace TxoooProductUpload.Service
         private async Task<ProductResult> GetInfoByTmallUrl(string url)
         {
             ProductResult productModel = new ProductResult(ServiceContext);
+            var getTmallHtml = NetClient.Create<HtmlAgilityPack.HtmlDocument>(HttpMethod.Get, url, allowAutoRedirect: true);
             string str = "";
-            var getTmallHtml = NetClient.Create<string>(HttpMethod.Get, url);
-            getTmallHtml.Request.AllowAutoRedirect = true;
+            // var getTmallHtml = NetClient.Create<string>(HttpMethod.Get, url, allowAutoRedirect: true);
             await getTmallHtml.SendAsync();
             if (!getTmallHtml.IsValid())
             {
                 new Exception("未能提交请求");
             }
-            str = getTmallHtml.Result;  //GetStrByUrl(url, "gb2312");//
+            //str = getTmallHtml.Result;
+            //https://detail.m.tmall.com/item.htm?id=536929636061&skuId=3205551032757
+            // FSLib.Network.Adapter.HtmlAgilityPack.ResponseHtmlDocumentResult
+            var html = getTmallHtml.Result; 
             Regex myRegex = new Regex("(?<=>商品图片</h3>)[\\s\\S]+?(?<=</div>\\s*</div>\\s*</div>)");//详情
             Regex imgaeRegex = new Regex("(?<=src=\").+?(?=_640x640q50.jpg)");//商品主图
             Regex detailimgRegex = new Regex("(?<=data-ks-lazyload=\").+?(?=\")");//商品详细图片
@@ -238,7 +241,7 @@ namespace TxoooProductUpload.Service
                 if (productModel.DetailHtml.IsNullOrEmpty())
                 {
                     string detailUrl = new Regex("(?<=\"descUrl\":\").+?(?=\",)").Match(str).Value;
-                    var detail = NetClient.Create<string>(HttpMethod.Get, detailUrl).Send().Result;
+                    var detail = NetClient.Create<string>(HttpMethod.Get, detailUrl, allowAutoRedirect: false).Send().Result;
                     matches1 = new Regex("(?<=src=\").+?(?=\")").Matches(detail, 0);
                 }
                 else
