@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FCB29AE0-FA8F-46A2-807E-7079D58130BC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TxoooProductUpload.UI</RootNamespace>
+    <AssemblyName>TxoooProductUpload.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>TxoooProductUpload.UI.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CSkin, Version=16.1.14.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\cskin.16.1.14.3\lib\net40\CSkin.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App.cs" />
+    <Compile Include="CefGlue\CefWebBrowser.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CefGlue\Client\WlCefClient.cs" />
+    <Compile Include="CefGlue\Client\WlCefDisplayHandler.cs" />
+    <Compile Include="CefGlue\Client\WlCefLifeSpanHandler.cs" />
+    <Compile Include="CefGlue\Client\WlCefLoadHandler.cs" />
+    <Compile Include="CefGlue\Client\WlCefRequestHandler.cs" />
+    <Compile Include="CefGlue\Browser\WlCefBrowserProcessHandler.cs" />
+    <Compile Include="CefGlue\Render\WlCefRenderProcessHandler.cs" />
+    <Compile Include="CefGlue\V8\Code\BindingHandler.cs" />
+    <Compile Include="CefGlue\V8\Code\CefRuntimeEx.cs" />
+    <Compile Include="CefGlue\V8\Code\PropertyAccessor.cs" />
+    <Compile Include="CefGlue\V8\Code\StringUtil.cs" />
+    <Compile Include="CefGlue\V8\Code\TypeUtil.cs" />
+    <Compile Include="CefGlue\V8\Code\UnmanagedWrapper.cs" />
+    <Compile Include="CefGlue\V8\ExampleObject.cs" />
+    <Compile Include="CefGlue\V8\TxCallJSEvent.cs" />
+    <Compile Include="CefGlue\WlCefApp.cs" />
+    <Compile Include="CefGlue\WlCefGlueLoader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="lib\cef\cef.pak" />
+    <None Include="lib\cef\cef_100_percent.pak" />
+    <None Include="lib\cef\cef_200_percent.pak" />
+    <None Include="lib\cef\cef_extensions.pak" />
+    <None Include="lib\cef\devtools_resources.pak" />
+    <None Include="lib\cef\icudtl.dat" />
+    <None Include="lib\cef\locales\am.pak" />
+    <None Include="lib\cef\locales\ar.pak" />
+    <None Include="lib\cef\locales\bg.pak" />
+    <None Include="lib\cef\locales\bn.pak" />
+    <None Include="lib\cef\locales\ca.pak" />
+    <None Include="lib\cef\locales\cs.pak" />
+    <None Include="lib\cef\locales\da.pak" />
+    <None Include="lib\cef\locales\de.pak" />
+    <None Include="lib\cef\locales\el.pak" />
+    <None Include="lib\cef\locales\en-GB.pak" />
+    <None Include="lib\cef\locales\en-US.pak" />
+    <None Include="lib\cef\locales\es-419.pak" />
+    <None Include="lib\cef\locales\es.pak" />
+    <None Include="lib\cef\locales\et.pak" />
+    <None Include="lib\cef\locales\fa.pak" />
+    <None Include="lib\cef\locales\fi.pak" />
+    <None Include="lib\cef\locales\fil.pak" />
+    <None Include="lib\cef\locales\fr.pak" />
+    <None Include="lib\cef\locales\gu.pak" />
+    <None Include="lib\cef\locales\he.pak" />
+    <None Include="lib\cef\locales\hi.pak" />
+    <None Include="lib\cef\locales\hr.pak" />
+    <None Include="lib\cef\locales\hu.pak" />
+    <None Include="lib\cef\locales\id.pak" />
+    <None Include="lib\cef\locales\it.pak" />
+    <None Include="lib\cef\locales\ja.pak" />
+    <None Include="lib\cef\locales\kn.pak" />
+    <None Include="lib\cef\locales\ko.pak" />
+    <None Include="lib\cef\locales\lt.pak" />
+    <None Include="lib\cef\locales\lv.pak" />
+    <None Include="lib\cef\locales\ml.pak" />
+    <None Include="lib\cef\locales\mr.pak" />
+    <None Include="lib\cef\locales\ms.pak" />
+    <None Include="lib\cef\locales\nb.pak" />
+    <None Include="lib\cef\locales\nl.pak" />
+    <None Include="lib\cef\locales\pl.pak" />
+    <None Include="lib\cef\locales\pt-BR.pak" />
+    <None Include="lib\cef\locales\pt-PT.pak" />
+    <None Include="lib\cef\locales\ro.pak" />
+    <None Include="lib\cef\locales\ru.pak" />
+    <None Include="lib\cef\locales\sk.pak" />
+    <None Include="lib\cef\locales\sl.pak" />
+    <None Include="lib\cef\locales\sr.pak" />
+    <None Include="lib\cef\locales\sv.pak" />
+    <None Include="lib\cef\locales\sw.pak" />
+    <None Include="lib\cef\locales\ta.pak" />
+    <None Include="lib\cef\locales\te.pak" />
+    <None Include="lib\cef\locales\th.pak" />
+    <None Include="lib\cef\locales\tr.pak" />
+    <None Include="lib\cef\locales\uk.pak" />
+    <None Include="lib\cef\locales\vi.pak" />
+    <None Include="lib\cef\locales\zh-CN.pak" />
+    <None Include="lib\cef\locales\zh-TW.pak" />
+    <None Include="lib\cef\natives_blob.bin" />
+    <None Include="lib\cef\snapshot_blob.bin" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TxoooProductUpload\TxoooProductUpload.csproj">
+      <Project>{2dc377b9-a78d-4ed1-ac1e-a61bdd040853}</Project>
+      <Name>TxoooProductUpload</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CefGlue\V8\ExampleObject.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CefGlue\V8\TxCallJSEvent.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\cef\d3dcompiler_43.dll" />
+    <Content Include="lib\cef\d3dcompiler_47.dll" />
+    <Content Include="lib\cef\libcef.dll" />
+    <Content Include="lib\cef\libEGL.dll" />
+    <Content Include="lib\cef\libGLESv2.dll" />
+    <Content Include="lib\cef\plugins\pepflashplayer.dll" />
+    <Content Include="lib\cef\qnviccub.dll" />
+    <Content Include="lib\cef\widevinecdmadapter.dll" />
+    <Content Include="lib\cef\wow_helper.exe" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

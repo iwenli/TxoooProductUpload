@@ -1,0 +1,40 @@
+﻿<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	body{background: #acd3d5;}
+  </style>
+ </head>
+ <body>
+	我是测试页面：<br>
+	function testc(){<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;alert("我是JS方法，我被c#程序调用了！");<br>
+	}<br>
+	<br>
+	function openMyPc(e){<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;e&nbsp;=&nbsp;e&nbsp;||&nbsp;null;<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;Cef.openMyPc(e);<br>		
+	}<br><br>
+	
+	<button id="but1" onclick="Cef.openMyPc()">打开我的电脑</button>（调用C#程序打开我的电脑）<br><br>
+	<input type="text" id="url" value="C:/Windows"/>
+	<button id="but2" onclick="Cef.openMyPc(document.getElementById('url').value);">&lt;--- 打开</button>（调用C#程序打开指定文件夹）
+
+	<script type="text/javascript">
+	    function testc() {
+	        alert("我是JS方法，我被c#程序调用了！");
+	    }
+
+	    function openMyPc(e) {
+	        e = e || null;
+	        Cef.openMyPc(e);
+	    }
+	</script>
+ </body>
+</html>

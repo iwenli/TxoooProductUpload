@@ -1,0 +1,81 @@
+﻿<!DOCTYPE HTML PUBLIC"-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+    <title>注册脚本测试页面</title>
+    <!--js调取C#方法-->
+    <script type="text/javascript">
+        function InsertResult(arg0) {
+            var obj = window.document.getElementById("result");
+            var insert = window.document.createElement("div");
+            insert.innerHTML = new Date() * 1 + ' -> ' + arg0;
+            obj.appendChild(insert);
+        }
+
+        function printObjFunInfo(objName, obj) {
+            document.write("<hr />'" + objName + "'对象的所有方法：<br />");
+            document.write("<ul>");
+
+            for (var name in obj) {
+                if (obj[name] != null) {
+                    if (obj[name].constructor.name != 'Function') continue;
+                    document.write("<li>" + name + "-----<input type='button' onclick='InsertResult(" + objName + "." + name + "());' value='" + objName + "." + name + "()' />-----" + obj[name] + "</li>");
+                }
+            }
+            document.write("</ul>");
+        }
+
+        function printObjAttInfo(objName, obj) {
+            document.write("<hr />'" + objName + "'对象的所有属性：<br />");
+            document.write("<ul>");
+
+            for (var name in obj) {
+                if (obj[name] != null) {
+                    if (obj[name].constructor.name == 'Function') continue;
+                    document.write("<li>" + name + "-----<input type='button' onclick='InsertResult(" + objName + "." + name + "());' value='" + objName + "." + name + "()' />-----" + obj[name] + "</li>");
+                } else {
+                    document.write("<li>" + name + "-----<input type='button' onclick='InsertResult(" + objName + "." + name + "());' value='" + objName + "." + name + "()' />-----" + obj[name] + "</li>");
+                }
+            }
+
+            document.write("</ul>");
+        }
+
+        function Call() {
+            var _phone = document.getElementById("phone").value;
+            alert("拨打" + _phone);
+            InsertResult(txCallHelper.call(_phone, 'callBack2'));
+        }
+
+        function callBack(data) {
+            InsertResult('拨号回调函数,参数:' + JSON.stringify(data));
+        }
+
+        function callBack2(data) {
+            InsertResult('拨号回调函数2,参数:' + JSON.stringify(data));
+        }
+    </script>
+
+    <!--C#执行js-->
+    <script>
+        function say(val) {
+            alert('asy:' + val);
+            return '执行成功，返回结果给navive'
+        }
+    </script>
+</head>
+<body>
+    <p>这里输出结果：<br /></p>
+    <div id="result"></div>
+
+    <hr />
+    <input name="phone" id="phone" type="text" value="13581952323" />
+    <button onclick="Call();">拨打电话</button>
+
+    <script type="text/javascript">printObjFunInfo("txCallHelper", txCallHelper)</script>
+    <script type="text/javascript">printObjAttInfo("txCallHelper", txCallHelper)</script>
+
+    <script type="text/javascript">printObjFunInfo("exampleObject", exampleObject)</script>
+    <script type="text/javascript">printObjAttInfo("exampleObject", exampleObject)</script>
+</body>
+
+</html>
