@@ -18,6 +18,8 @@ namespace TxoooProductUpload.Service
 {
     class UrlConvertProductService : ServiceBase
     {
+
+        string _exceptionFormat = "未能提交请求{0}";
         public UrlConvertProductService(ServiceContext context) : base(context)
         {
         }
@@ -198,12 +200,12 @@ namespace TxoooProductUpload.Service
             await getTmallHtml.SendAsync();
             if (!getTmallHtml.IsValid())
             {
-                new Exception("未能提交请求");
+                throw new Exception(string.Format(_exceptionFormat, url));
             }
             //str = getTmallHtml.Result;
             //https://detail.m.tmall.com/item.htm?id=536929636061&skuId=3205551032757
             // FSLib.Network.Adapter.HtmlAgilityPack.ResponseHtmlDocumentResult
-            var html = getTmallHtml.Result; 
+            var html = getTmallHtml.Result;
             Regex myRegex = new Regex("(?<=>商品图片</h3>)[\\s\\S]+?(?<=</div>\\s*</div>\\s*</div>)");//详情
             Regex imgaeRegex = new Regex("(?<=src=\").+?(?=_640x640q50.jpg)");//商品主图
             Regex detailimgRegex = new Regex("(?<=data-ks-lazyload=\").+?(?=\")");//商品详细图片
@@ -333,7 +335,7 @@ namespace TxoooProductUpload.Service
             await getTmallHtml.SendAsync();
             if (!getTmallHtml.IsValid())
             {
-                new Exception("未能提交请求");
+                throw new Exception(string.Format(_exceptionFormat, url));
             }
             str = getTmallHtml.Result;  //GetStrByUrl(url, "gb2312");//
             Regex myRegex = new Regex("(?<=>商品图片</h3>)[\\s\\S]+?(?<=</div>\\s*</div>\\s*</div>)");//详情
@@ -452,7 +454,7 @@ namespace TxoooProductUpload.Service
             await getAliHtml.SendAsync();
             if (!getAliHtml.IsValid())
             {
-                new Exception("未能提交请求");
+                throw new Exception(string.Format(_exceptionFormat, url));
             }
             str.Append(getAliHtml.Result); // GetStrByBorwserUrl(AliUrl); 
             #endregion
@@ -529,7 +531,7 @@ namespace TxoooProductUpload.Service
             await getJdHtml.SendAsync();
             if (!getJdHtml.IsValid())
             {
-                throw new Exception("未能提交请求");
+                throw new Exception(string.Format(_exceptionFormat, url));
             }
             str = getJdHtml.Result;
 

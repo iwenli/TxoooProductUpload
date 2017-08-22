@@ -101,6 +101,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
@@ -117,6 +118,7 @@
     <Compile Include="Common\AppConfig.cs" />
     <Compile Include="Common\ConstParams.cs" />
     <Compile Include="Common\DbHelperOleDb.cs" />
+    <Compile Include="Common\DynamicJson.cs" />
     <Compile Include="Network\NewWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -301,13 +303,15 @@
     <None Include="Resources\comment.png" />
     <None Include="Resources\file_extension_xls.png" />
     <None Include="Resources\lcd_tv_image.png" />
+    <Content Include="Web\Html\tmall\女装.html" />
+    <Content Include="Web\jd\秒杀.html" />
     <Content Include="Web\Js\wx.js" />
     <None Include="Resources\add.jpg" />
     <None Include="Resources\add1.png" />
     <Content Include="Web\Html\1688.html" />
     <Content Include="Web\Html\m.1688.html" />
     <Content Include="Web\Html\mTaobao.html" />
-    <Content Include="Web\Html\mTmall.html" />
+    <Content Include="Web\Html\tmall\jiaju.html" />
     <Content Include="Web\Html\taobao.html" />
     <Content Include="Web\Html\tmall.html" />
     <Content Include="Web\Js\review.js" />
