@@ -6,7 +6,7 @@ namespace TxoooProductUpload.Common
     /// <summary>
     /// app.config 操作类
     /// </summary>
-    static class AppConfig
+    public static class AppConfig
     {
         /// <summary>
         /// 是否记住密码

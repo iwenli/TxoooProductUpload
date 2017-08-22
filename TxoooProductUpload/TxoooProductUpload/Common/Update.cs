@@ -10,7 +10,7 @@ namespace TxoooProductUpload.Common
     /// <summary>
     /// 软件更新相关
     /// </summary>
-    class Update
+    public class Update
     {
         /// <summary>
         /// 是否启用更新
@@ -29,22 +29,23 @@ namespace TxoooProductUpload.Common
         /// <summary>
         /// 检测并更新
         /// </summary>
-        public static async void CheckUpdateTask()
+        public static async Task<Version> CheckUpdateTask()
         {
+            Version newVersion = null;
             if (Enable)
             {
-                var updater = Updater.CreateUpdaterInstance(@"http://iwenli.org/soft/7518/{0}", "update_c.xml");
                 //任务模式检测更新
-                Version newVersion = null;
+                var updater = Updater.CreateUpdaterInstance(@"http://iwenli.org/soft/7518/{0}", "update_c.xml");
                 try
                 {
                     newVersion = await updater.CheckUpdateTask();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + updater.Context.Exception.Message);
+                    Iwenli.LogHelper.GetLogger("App-Update").Error("升级程序异常", ex);
                 }
             }
+            return newVersion;
         }
     }
 }

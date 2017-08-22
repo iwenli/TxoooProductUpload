@@ -9,7 +9,7 @@ namespace TxoooProductUpload.Common
     /// <summary>
     /// 常量
     /// </summary>
-    class ConstParams
+    public class ConstParams
     {
         #region Const
         /// <summary>

@@ -17,11 +17,12 @@ namespace TxoooProductUpload
         [STAThread]
         static void Main()
         {
-            log4net.Config.XmlConfigurator.Configure();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Update.CheckUpdateTask();
-            Application.Run(new MainForm());
+            if (Update.CheckUpdateTask().Result == null)
+            {
+                Application.Run(new MainForm());
+            }
         }
     }
 }
