@@ -10,8 +10,12 @@ namespace TxoooProductUpload.UI
 {
     static class App
     {
-        public static Form MainForm { set; get; }
         static System.Threading.Mutex _mutex;
+
+        /// <summary>
+        /// 全局上下文
+        /// </summary>
+        public static Service.ServiceContext Context { get; private set; }
 
         /// <summary>
         /// 应用程序的主入口点。
@@ -23,8 +27,8 @@ namespace TxoooProductUpload.UI
             Application.SetCompatibleTextRenderingDefault(false);
             if (CanRun())
             {
-                MainForm = new BaseForm();
-                Application.Run(MainForm);
+                Context = Service.ServiceContext.Instance;
+                Application.Run(new LoginForm());
             }
         }
 

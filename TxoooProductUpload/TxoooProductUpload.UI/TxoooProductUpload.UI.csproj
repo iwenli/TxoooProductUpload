@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -88,6 +88,41 @@
     <Compile Include="CefGlue\V8\TxCallJSEvent.cs" />
     <Compile Include="CefGlue\WlCefApp.cs" />
     <Compile Include="CefGlue\WlCefGlueLoader.cs" />
+    <Compile Include="Form\Login\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\Login\LoginForm.designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\SendMessageHandler.cs" />
+    <Compile Include="Form\Login\LoginCode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form\Login\LoginCode.designer.cs">
+      <DependentUpon>LoginCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form\Login\PwdErro.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form\Login\PwdErro.designer.cs">
+      <DependentUpon>PwdErro.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ServiceContext.cs" />
+    <Compile Include="test\Msgtest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="test\Msgtest.Designer.cs">
+      <DependentUpon>Msgtest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\UserService.cs" />
+    <Compile Include="Service\ProductService.cs" />
+    <Compile Include="Service\ServiceBase.cs" />
     <Compile Include="test\CefTest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,7 +130,22 @@
       <DependentUpon>CefTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="test.cs" />
+    <Compile Include="test\test.cs" />
+    <EmbeddedResource Include="BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Login\LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Login\LoginCode.resx">
+      <DependentUpon>LoginCode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\Login\PwdErro.resx">
+      <DependentUpon>PwdErro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="test\Msgtest.resx">
+      <DependentUpon>Msgtest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="test\CefTest.resx">
       <DependentUpon>CefTest.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,9 +261,59 @@
     <Content Include="lib\CSkin.dll" />
     <Content Include="lib\CSkin.XML" />
     <Content Include="lib\Iwenli.dll" />
+    <None Include="Resources\head_d.png" />
+    <None Include="Resources\sysbtn_restore_normal.png" />
+    <None Include="Resources\sysbtn_restore_hover.png" />
+    <None Include="Resources\sysbtn_restore_down.png" />
+    <None Include="Resources\sysbtn_min_normal.png" />
+    <None Include="Resources\sysbtn_min_hover.png" />
+    <None Include="Resources\sysbtn_min_down.png" />
+    <None Include="Resources\sysbtn_max_normal.png" />
+    <None Include="Resources\sysbtn_max_hover.png" />
+    <None Include="Resources\sysbtn_max_down.png" />
+    <None Include="Resources\sysbtn_close_normal.png" />
+    <None Include="Resources\sysbtn_close_hover.png" />
+    <None Include="Resources\sysbtn_close_down.png" />
+    <None Include="Resources\ShadowPalace.png" />
+    <None Include="Resources\set_icon.png" />
+    <None Include="Resources\noon.jpg" />
+    <None Include="Resources\night.jpg" />
+    <None Include="Resources\morning.jpg" />
+    <None Include="Resources\menu_btn_normal.png" />
+    <None Include="Resources\menu_btn_highlight.png" />
+    <None Include="Resources\main_7.jpg" />
+    <None Include="Resources\main_6.jpg" />
+    <None Include="Resources\main_5.jpg" />
+    <None Include="Resources\main_4.jpg" />
+    <None Include="Resources\main_3.jpg" />
+    <None Include="Resources\main_2.jpg" />
+    <None Include="Resources\main_1.jpg" />
+    <None Include="Resources\icon_close_normal.png" />
+    <None Include="Resources\icon_close_hover.png" />
+    <None Include="Resources\icon_close_down.png" />
+    <None Include="Resources\Full_close_normal.PNG" />
+    <None Include="Resources\Full_close_hover.PNG" />
+    <None Include="Resources\Full_close_down.PNG" />
+    <None Include="Resources\btn_norml.png" />
+    <None Include="Resources\btn_Mouse.png" />
+    <None Include="Resources\btn_Down.png" />
+    <None Include="Resources\BackPalace1.png" />
+    <None Include="Resources\BackPalace.png" />
+    <None Include="Resources\allbtn_highlight.png" />
+    <None Include="Resources\allbtn_down.png" />
+    <None Include="Resources\aio_setting_white_normal.png" />
+    <None Include="Resources\aio_setting_white_hover.png" />
+    <None Include="Resources\aio_setting_white_down.png" />
+    <None Include="Resources\aio_setting_normal.png" />
+    <None Include="Resources\aio_setting_hover.png" />
+    <None Include="Resources\aio_setting_down.png" />
+    <None Include="Resources\aio_head_normal.png" />
+    <None Include="Resources\afternoon.jpg" />
+    <None Include="Resources\4.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
+    <Folder Include="Service\Message\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

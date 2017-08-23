@@ -1,6 +1,6 @@
 ﻿namespace TxoooProductUpload.UI
 {
-    partial class BaseForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.SuspendLayout();
-            // 
-            // BaseForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(243, 177);
-            this.Name = "BaseForm";
-            this.Text = "创业赚钱";
-            this.ResumeLayout(false);
-
+            this.Text = "MainForm";
         }
 
         #endregion
