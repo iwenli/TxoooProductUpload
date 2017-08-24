@@ -11,7 +11,7 @@ namespace TxoooProductUpload.Service.Entities.Web
     /// 服务器数据响应基类
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    class WebResponseResult<T>
+    public class WebResponseResult<T>
     {
         /// <summary>
         /// 状态

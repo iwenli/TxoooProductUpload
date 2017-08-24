@@ -10,7 +10,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 缓存管理上下文
     /// </summary>
-    class CacheContext : ContextBase
+    public class CacheContext : ContextBase
     {
 
         /// <summary>

@@ -117,6 +117,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\Serialize.cs" />
+    <Compile Include="Service\CommonService.cs" />
+    <Compile Include="Service\Entities\IpInfo.cs" />
     <Compile Include="_open\Cef\CefGlue.WindowsForms\AddressChangedEventArgs.cs" />
     <Compile Include="_open\Cef\CefGlue.WindowsForms\BeforePopupEventArgs.cs" />
     <Compile Include="_open\Cef\CefGlue.WindowsForms\CefWebBrowser.cs">

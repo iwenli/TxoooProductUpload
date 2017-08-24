@@ -12,7 +12,7 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// 商品信息
     /// </summary>
-    class ProductResult
+    public class ProductResult
     {
         /// <summary>
         /// 获得当前的服务上下文

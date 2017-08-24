@@ -10,7 +10,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 服务状态上下文
     /// </summary>
-    class ServiceContext
+    public class ServiceContext
     {
         public ServiceContext()
         {
@@ -20,11 +20,19 @@ namespace TxoooProductUpload.Service
             AreaDataService = new AreaDataService(this);
             ImageService = new ImageService(this);
             ProductService = new ProductService(this);
+            CommonService = new CommonService(this);
             CacheContext = CacheContext.Instance;
             CacheContext.Init();
         }
-         
 
+        /// <summary>
+        /// 获得当前的会话状态
+        /// </summary>
+        public CommonService CommonService { get; private set; }
+
+        /// <summary>
+        /// Access操作服务
+        /// </summary>
         public OleDbConnection OleDbConnection { set; get; }
 
         /// <summary>

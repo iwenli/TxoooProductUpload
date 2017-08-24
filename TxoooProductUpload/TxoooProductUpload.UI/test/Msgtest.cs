@@ -25,14 +25,14 @@ namespace TxoooProductUpload.UI
             SendMessageHandler.OnSendMessage += Event_OnSendMessage;
             loginService.OnSendMessage += Event_OnSendMessage;
 
-            Task.Run(async () =>
-            {
-                await loginService.Msg();
-                for (int i = 0; i < 5; i++)
-                {
-                    AppendLog("i=" + i.ToString());
-                }
-            });
+            //Task.Run(async () =>
+            //{
+            //    await loginService.Msg();
+            //    for (int i = 0; i < 5; i++)
+            //    {
+            //        AppendLog("i=" + i.ToString());
+            //    }
+            //});
 
             Task.Run(async () =>
             {

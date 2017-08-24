@@ -1,22 +1,18 @@
 using CCWin;
 using CCWin.SkinClass;
 using CCWin.SkinControl;
-using Microsoft.Win32;
-using TxoooProductUpload.UI.Properties;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Net;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using System.Diagnostics;
 using Iwenli;
+using Iwenli.Text;
+using System;
+using System.Drawing;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using TxoooProductUpload.Common;
+using TxoooProductUpload.Service.Entities;
+using TxoooProductUpload.UI.Properties;
+using TxoooProductUpload.UI.Service.Entities;
 
 namespace TxoooProductUpload.UI
 {
@@ -30,7 +26,27 @@ namespace TxoooProductUpload.UI
         /// <summary>
         /// 主窗体
         /// </summary>
-        MainForm main;
+        MainForm _main;
+        /// <summary>
+        /// 请求登陆的账号信息
+        /// </summary>
+        LoginInfo _loginUser;
+        /// <summary>
+        /// 用户列表
+        /// </summary>
+        LoginListInfo _loginUsers;
+        /// <summary>
+        /// 登陆缓存名称
+        /// </summary>
+        string _loginCacheName = "user.db";
+        /// <summary>
+        /// 上一次登陆时间
+        /// </summary>
+        DateTime _lastLoginTime = DateTime.Now;
+        /// <summary>
+        /// 当前登录的ip信息
+        /// </summary>
+        IpInfo _loginIp;
         #endregion
 
         #region 窗口加载时
@@ -41,18 +57,26 @@ namespace TxoooProductUpload.UI
         /// <param name="e"></param>
         private void FrmLogin_Load(object sender, EventArgs e)
         {
+            WindowState = FormWindowState.Minimized;
+            init_Notify();
             //根据时间换背景
             int H = DateTime.Now.Hour;
             this.BackgroundImage =
                 H > 5 & H <= 11 ? Resources.morning :     //早上
-                H > 11 & H <= 16 ? Resources.noon :       //中午
-                H > 16 & H <= 19 ? Resources.afternoon :      //下午
+                H > 11 & H <= 15 ? Resources.noon :       //中午
+                H > 15 & H <= 19 ? Resources.afternoon :  //下午
                 Resources.night;        //晚上
             //还原提示框位置
             pwdErro.Left = 0;
             loginCode.Left = 0;
             //多线程加载Id下拉框
-            System.Threading.ThreadPool.QueueUserWorkItem((s) => SetId());
+            System.Threading.ThreadPool.QueueUserWorkItem((s) => SetUsers());
+            //获取ip
+            Task.Run(async () =>
+            {
+                _loginIp = await App.Context.BaseContent.CommonService.GetIp();
+            });
+
         }
         #endregion
 
@@ -82,137 +106,55 @@ namespace TxoooProductUpload.UI
         void item_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
-            txtId.SkinTxt.Text = item.Tag.ToString();
-            pnlImgTx.BackgroundImage = item.Image;
-            txtPwd.Focus();
+            _loginUser = _loginUsers.List.FirstOrDefault(m => m.UserName.AESDecrypt() == item.Tag.ToString());
+            ChangeLoginInfo();
         }
 
-        #region 加载Id下拉框
-        //加载Id下拉框
-        private void SetId()
-        {
-            //获取所有本地登陆过的QQ
-            DirectoryInfo theFolder = new DirectoryInfo(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/Tencent Files");
-            //如果存在，说明数据缓冲在默认文档
-            if (!theFolder.Exists)
-            {
-                //默认文档不存在QQ号历史数据的话，读取注册表获取缓存路径
-                RegistryKey rsg = Registry.CurrentUser.OpenSubKey("Software\\Tencent\\bugReport\\QQ", true);
-                string QQGet = rsg.GetValue("InstallDir").ToString();
-                if (QQGet != null)
-                {
-                    theFolder = new DirectoryInfo(QQGet);
-                }
-            }
-            //获取下列所有文件夹
-            DirectoryInfo[] dirInfo = theFolder.GetDirectories();
-            //数组转List
-            ArrayList a = new ArrayList(dirInfo);
-            //删除文件名非QQ数组
-            RemoveNoQQ(ref a);
-            if (a.Count > 0)
-            {
-                //根据访问时间排序
-                SortTime(ref a);
-                //只加入六个最近访问QQ
-                WebClient web = new WebClient();
-                for (int i = 0; i < a.Count; i++)
-                {
-                    if (i < 5)
-                    {
-                        ToolStripMenuItem item = new ToolStripMenuItem();
-                        item.AutoSize = false;
-                        item.Size = new System.Drawing.Size(193, 45);
-                        string QQ = ((DirectoryInfo)a[i]).Name;
-                        item.Tag = QQ;
-                        //获取Q名
-                        web.Encoding = Encoding.GetEncoding("utf-8");//设置编码
-                        //获取QQ名称
-                        string qqName = web.DownloadString(string.Format("http://r.qzone.qq.com/cgi-bin/user/cgi_personal_card?uin={0}", QQ)).Replace("&quot;", "\"");
-                        Regex regex = new Regex("\"nickname\":\"(.+?)\"");
-                        MatchCollection match = regex.Matches(qqName);
-                        if (match.Count > 0)
-                        {
-                            item.Text = match[0].Success ? match[0].Groups[1].Value + "\n" + QQ : QQ;
-                            //获取QQ头像
-                            Image img = Image.FromStream(web.OpenRead(string.Format("http://q.qlogo.cn/headimg_dl?bs=qq&dst_uin={0}&spec=100", QQ)));
-                            item.Image = img;
-                            item.Click += new EventHandler(item_Click);
-                            this.Invoke(new MethodInvoker(delegate
-                            {
-                                if (i == 0)
-                                {
-                                    txtId.SkinTxt.Text = QQ;
-                                    pnlImgTx.BackgroundImage = img;
-                                    txtPwd.SkinTxt.Focus();
-                                }
-                                MenuId.Height += 45;
-                                MenuId.Items.Add(item);
-                            }));
-                        }
-                    }
-                }
-            }
-            else
-            {
-                //没找到QQ列表时加载随机Id下拉框
-                SetIdLx();
-            }
-        }
-
-        //没找到QQ列表时加载随机Id下拉框
-        Random rnd = new Random();
-        private void SetIdLx()
-        {
-            for (int i = 0; i < 6; i++)
-            {
-                ToolStripMenuItem item = new ToolStripMenuItem();
-                item.AutoSize = false;
-                item.Size = new System.Drawing.Size(193, 45);
-                item.Tag = rnd.Next(1000, 10000).ToString();
-                item.Text = "威廉乔克斯_汀\n" + rnd.Next(1000, 10000).ToString();
-                item.Image = Properties.Resources._4;
-                item.Click += new EventHandler(item_Click);
-                this.Invoke(new MethodInvoker(delegate
-                {
-                    MenuId.Height += 45;
-                    MenuId.Items.Add(item);
-                }));
-            }
-        }
-
+        #region 加载用户下拉框
         /// <summary>
-        /// 删除文件名非QQ数组
+        /// 读取历史登陆用户
         /// </summary>
-        /// <param name="a"></param>
-        private void RemoveNoQQ(ref ArrayList a)
+        private void SetUsers()
         {
-            foreach (DirectoryInfo item in a.ToArray())
+            try
             {
-                int i;
-                if (!int.TryParse(item.Name, out i))
-                {
-                    a.Remove(item);
-                }
+                _loginUsers = (LoginListInfo)Serialize.BinaryDeserialize(_loginCacheName);
             }
-        }
-
-        /// <summary>
-        /// 冒泡排序算法
-        /// </summary>
-        /// <param name="arrSort"></param>
-        public void SortTime(ref ArrayList arrSort)
-        {
-            DirectoryInfo temp;
-            for (int i = 0; i < arrSort.Count; i++)
+            catch (Exception ex)
             {
-                for (int j = i + 1; j < arrSort.Count; j++)
+                this.LogError(ex.Message, ex);
+            }
+            finally
+            {
+                if (_loginUsers == null)
                 {
-                    if (((DirectoryInfo)arrSort[j]).LastWriteTime > ((DirectoryInfo)arrSort[i]).LastWriteTime)
+                    _loginUsers = new LoginListInfo();
+                    WindowState = FormWindowState.Normal;
+                }
+                else
+                {
+                    //账号密码头像变更
+                    this.Invoke(new MethodInvoker(delegate
                     {
-                        temp = (DirectoryInfo)arrSort[j];
-                        arrSort[j] = arrSort[i];
-                        arrSort[i] = temp;
+                        _loginUser = _loginUsers.LastLoginInfo;
+                        ChangeLoginInfo();
+                        WindowState = FormWindowState.Normal;
+                    }));
+                    //下拉框
+                    foreach (var item in _loginUsers.List)
+                    {
+                        ToolStripMenuItem tsMenuItem = new ToolStripMenuItem();
+                        tsMenuItem.AutoSize = false;
+                        tsMenuItem.Size = new System.Drawing.Size(193, 45);
+                        var userName = item.UserName.AESDecrypt();
+                        tsMenuItem.Tag = userName;
+                        tsMenuItem.Text = userName + Environment.NewLine + item.MchInfo.NickName;
+                        //获取头像
+                        Image img = App.Context.UserService.GetHeadPic(userName);
+                        tsMenuItem.Image = img;
+                        tsMenuItem.Click += new EventHandler(item_Click);
+                        MenuId.Height += 45;
+                        MenuId.Items.Add(tsMenuItem);
                     }
                 }
             }
@@ -235,7 +177,6 @@ namespace TxoooProductUpload.UI
                 txtId.MouseState = ControlState.Hover;
             }
         }
-
         private void txtId_Leave(object sender, EventArgs e)
         {
             if (MenuId.Visible)
@@ -279,20 +220,11 @@ namespace TxoooProductUpload.UI
         }
         #endregion
 
-        #region 自动登录与记住密码
-        //自动登录
-        void chkZdLogin_CheckedChanged(object sender, EventArgs e)
+        #region 测试环境
+        //测试环境
+        private void chkIsTest_CheckedChanged(object sender, EventArgs e)
         {
-            chkRemember.Checked = chkIsTest.Checked ? true : chkRemember.Checked;
-        }
-
-        //记住密码
-        void chkMima_CheckedChanged(object sender, EventArgs e)
-        {
-            if (!chkRemember.Checked && chkIsTest.Checked)
-            {
-                chkIsTest.Checked = false;
-            }
+            ApiList.IsTest = (sender as CheckBox).Checked;
         }
         #endregion
 
@@ -316,21 +248,49 @@ namespace TxoooProductUpload.UI
             {
                 this.LogError(ex.Message, ex);
             }
-           
+
         }
         #endregion
 
         #region 托盘菜单事件
         /// <summary>
+        /// 初始化托盘信息
+        /// </summary>
+        private void init_Notify()
+        {
+            notify.Text = ConstParams.APP_NAME + "(未登陆)";
+            notify.Icon = Resources._icon;
+            notify.BalloonTipIcon = ToolTipIcon.Info;
+            notify.BalloonTipTitle = ConstParams.APP_NAME;
+            notify.BalloonTipText = "系统正在运行，双击显示窗口！" + Environment.NewLine
+                + "右击弹出快捷菜单..." + Environment.NewLine
+                + "当前版本" + ConstParams.Version.ToString();
+            notify.ShowBalloonTip(1000);
+            //绑定窗体失去焦点时时间  气泡提示
+            //Deactivate += LoginForm_DeacTivate;
+        }
+        /// <summary>
+        /// 重写当窗体失去焦点时事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LoginForm_DeacTivate(object sender, EventArgs e)
+        {
+            notify.ShowBalloonTip(1000);
+        }
+        /// <summary>
         /// 托盘图标双击显示
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolQQShow_Click(object sender, EventArgs e)
+        private void tsShow_Click(object sender, EventArgs e)
         {
-            if (main != null)
+            if (_main != null)
             {
-                main.Show();
+                _main.ShowInTaskbar = true;
+                _main.Show();
+                _main.Activate();
+                _main.WindowState = FormWindowState.Normal;
             }
             else
             {
@@ -343,26 +303,130 @@ namespace TxoooProductUpload.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolExit_Click(object sender, EventArgs e)
+        private void tsExit_Click(object sender, EventArgs e)
         {
-            this.Close();
+            if (_main != null)
+            {
+                _main.Dispose();
+                _main.Close();
+            }
+            else
+            {
+                this.Dispose();
+                this.Close();
+            }
+            Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
+            Application.ExitThread();//释放所有线程　
         }
         #endregion
 
-        #region 登录检查事件
+        #region 登录
         /// <summary>
         /// 登录
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnDl_Click(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
-            if (txtId.SkinTxt.Text.Length == 0 || txtPwd.SkinTxt.Text.Length == 0)
+            //pwdErro.Visible = true;
+            //loginCode.Visible = true;
+            #region 验证必输项
+            _loginUser = new LoginInfo(txtId.Text, txtPwd.Text, chkRemember.Checked);
+            if (_loginUser.UserName.IsNullOrEmpty())
             {
-                pwdErro.Visible = true;
+                MessageBoxEx.Show("登陆手机号不能为空", ConstParams.APP_NAME);
                 return;
             }
-            loginCode.Visible = true;
+            if (_loginUser.Password.IsNullOrEmpty())
+            {
+                MessageBoxEx.Show("密码不能为空", ConstParams.APP_NAME);
+                //msgBox = new MsgBox("密码不能为空");
+                //msgBox.ShowDialog();
+                return;
+            }
+            #endregion
+
+            btnLogin.Enabled = false;//加载资源过程中登陆按钮不可使用
+            prbLoading.Visible = true;
+            Thread thread = new Thread(new ThreadStart(Login));
+            thread.Start();
+        }
+
+        async void Login()
+        {
+            try
+            {
+                _loginUser = await App.Context.BaseContent.Session.LoginAsync(_loginUser);
+                ShowPro(50);
+            }
+            catch (Exception ex)
+            {
+                MessageBoxEx.Show(ex.Message, "登录失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Invoke(new Action(() =>
+                {
+                    btnLogin.Enabled = true;
+                    prbLoading.Value = 0;
+                    prbLoading.Visible = false;
+                }));
+                return;
+            }
+            #region 保存账号信息
+            int index = _loginUsers.IsExists(_loginUser.UserName.AESEncrypt());
+            if (index > -1)  //已经存在
+            {
+                _lastLoginTime = _loginUsers.List[index].LastLoginTime;
+                _loginUsers.List.RemoveAt(index);  //删除
+            }
+            Thread.Sleep(300);
+            //保存头像
+            await App.Context.UserService.SaveHeadPicSync(_loginUser);
+            ShowPro(75);
+            //保存登录信息
+            _loginUser.UserName = _loginUser.UserName.AESEncrypt();
+            _loginUser.Password = _loginUser.Password.AESEncrypt();
+            _loginUsers.List.Insert(0,_loginUser);//重新存储
+            Serialize.BinarySerialize(_loginCacheName, _loginUsers);
+            ShowPro(80);
+            #endregion
+            for (int i = 80; i <= 100; i++)
+            {
+                ShowPro(i);
+                i++; //模拟发送多少
+                Thread.Sleep(100);
+            }
+            Thread.CurrentThread.Abort();
+        }
+
+        private delegate void ProgressBarShow(int i);
+        private void ShowPro(int value)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new ProgressBarShow(ShowPro), value);
+            }
+            else
+            {
+                prbLoading.Value = value;
+                if (prbLoading.Value == 100)
+                {
+                    btnLogin.Enabled = true;
+                    prbLoading.Value = 0;
+                    prbLoading.Visible = false;
+                    //修改notify
+                    notify.Text = string.Format("{0} (已登陆为：{1})", ConstParams.APP_NAME, _loginUser.DisplayName);
+                    notify.Icon = Resources.__icon;
+                    //弹窗显示信息
+                    _loginUser.LastLoginTime = _lastLoginTime;
+                    new InformationFrm(_loginUser, _loginIp).Show();
+                    //显示主窗体
+                    _main = new MainForm();
+                    _main.Show();
+                    //登陆窗体隐藏
+                    Hide();
+                    btnLogin.Enabled = true;
+                }
+            }
+
         }
         #endregion
 
@@ -381,7 +445,7 @@ namespace TxoooProductUpload.UI
                 ChatListSubItem item = new ChatListSubItem();
                 item.NicName = "’失忆";
                 item.ID = uint.Parse(txtId.Text);
-                item.HeadImage = pnlImgTx.BackgroundImage;
+                item.HeadImage = pnlHeadPic.BackgroundImage;
                 item.QQShow = HttpHelper.GetUrlImg(string.Format("http://acfs.tencent.com/{0}/.jpg", txtId.Text));
                 item.PersonalMsg = "我的个性签名我的个性签名我的个性签名我的个性签名我的个性签名";
                 //main = new FrmMain(item, btnState);
@@ -393,26 +457,25 @@ namespace TxoooProductUpload.UI
         #region 窗口显示时
         private void FrmLogin_VisibleChanged(object sender, EventArgs e)
         {
-            //Environment.OSVersion.Version.Major小于6则是win7 Vista以下系统
             this.Special = Environment.OSVersion.Version.Major >= 6;
         }
         #endregion
 
-        #region ID框改变时自动检索头像
-        //QQ改变时
-        private void txtId_SkinTxt_TextChanged(object sender, EventArgs e)
+        #region 变更用户信息 
+        /// <summary>
+        /// 更改界面用户输入信息
+        /// </summary>
+        void ChangeLoginInfo()
         {
-            Image img = Properties.Resources._4;
-            foreach (ToolStripMenuItem item in MenuId.Items)
+            txtId.SkinTxt.Text = _loginUser.UserName.AESDecrypt();
+            pnlHeadPic.BackgroundImage = App.Context.UserService.GetHeadPic(txtId.SkinTxt.Text);
+            if (_loginUser.RememberPwd)
             {
-                if (item.Tag.ToString().Equals(txtId.SkinTxt.Text))
-                {
-                    img = item.Image;
-                    break;
-                }
+                txtPwd.SkinTxt.Text = _loginUser.Password.AESDecrypt();
             }
-            pnlImgTx.BackgroundImage = img;
+            chkRemember.Checked = _loginUser.RememberPwd;
         }
         #endregion
+
     }
 }

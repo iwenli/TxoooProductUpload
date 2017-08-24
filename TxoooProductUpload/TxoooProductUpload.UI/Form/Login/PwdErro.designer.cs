@@ -65,7 +65,7 @@ namespace TxoooProductUpload.UI
             this.btnFindPwd.DownBack = ((System.Drawing.Image)(resources.GetObject("btnFindPwd.DownBack")));
             this.btnFindPwd.DrawType = CCWin.SkinControl.DrawStyle.Img;
             this.btnFindPwd.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnFindPwd.Location = new System.Drawing.Point(166, 159);
+            this.btnFindPwd.Location = new System.Drawing.Point(213, 272);
             this.btnFindPwd.MouseBack = ((System.Drawing.Image)(resources.GetObject("btnFindPwd.MouseBack")));
             this.btnFindPwd.Name = "btnFindPwd";
             this.btnFindPwd.NormlBack = ((System.Drawing.Image)(resources.GetObject("btnFindPwd.NormlBack")));
@@ -138,7 +138,7 @@ namespace TxoooProductUpload.UI
             this.btnQx.DownBack = ((System.Drawing.Image)(resources.GetObject("btnQx.DownBack")));
             this.btnQx.DrawType = CCWin.SkinControl.DrawStyle.Img;
             this.btnQx.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnQx.Location = new System.Drawing.Point(252, 159);
+            this.btnQx.Location = new System.Drawing.Point(320, 272);
             this.btnQx.MouseBack = ((System.Drawing.Image)(resources.GetObject("btnQx.MouseBack")));
             this.btnQx.Name = "btnQx";
             this.btnQx.NormlBack = ((System.Drawing.Image)(resources.GetObject("btnQx.NormlBack")));
@@ -164,7 +164,7 @@ namespace TxoooProductUpload.UI
             this.Controls.Add(this.btnFindPwd);
             this.DoubleBuffered = true;
             this.Name = "PwdErro";
-            this.Size = new System.Drawing.Size(363, 235);
+            this.Size = new System.Drawing.Size(430, 300);
             ((System.ComponentModel.ISupportInitialize)(this.skinPictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

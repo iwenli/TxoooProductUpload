@@ -9,7 +9,7 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// 商品分类
     /// </summary>
-    class ProductClassInfo
+    public class ProductClassInfo
     {
         public long ClassId { get; set; }
         public string ClassName { get; set; }

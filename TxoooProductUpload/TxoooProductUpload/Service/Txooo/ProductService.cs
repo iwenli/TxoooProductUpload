@@ -18,7 +18,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 商品相关数据服务
     /// </summary>
-    class ProductService : ServiceBase
+    public class ProductService : ServiceBase
     {
         const string _sqlFormatInsertProduct = @"INSERT INTO iwenli_product(ProductName,Source,SourceUrl,ShopName,DetailHtml,ProductPrice,SKU,Location,SalesCount"
                                         + @",RateTotals,product_id,product_imgs,product_details,product_brand,UserId) VALUES("

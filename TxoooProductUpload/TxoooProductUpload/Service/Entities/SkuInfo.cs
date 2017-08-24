@@ -10,7 +10,7 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// 1688SKU解析
     /// </summary>
-    class SkuJdInfo
+    public class SkuJdInfo
     {
         /// <summary>
         /// SKU列表
@@ -24,7 +24,7 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// SKU详情
     /// </summary>
-    class ColorSize
+    public class ColorSize
     {
         public string color { set; get; }
         public string image { set; get; }
@@ -34,18 +34,18 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// SKU标题
     /// </summary>
-    class ColorSizeTitle
+    public class ColorSizeTitle
     {
         public string colorName { set; get; }
         public string sizeName { set; get; }
-    } 
+    }
     #endregion
 
     #region 1688
     /// <summary>
     /// 1688SKU解析
     /// </summary>
-    class Sku1688Info
+    public class Sku1688Info
     {
         /// <summary>
         /// 单位
@@ -61,7 +61,7 @@ namespace TxoooProductUpload.Service.Entities
         public string prop { set; get; }
     }
 
-    class Sku1688Item
+    public class Sku1688Item
     {
         /// <summary>
         /// 属性图像URL
@@ -78,7 +78,7 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// TmallSKU解析
     /// </summary>
-    class SkuTmallInfo
+    public class SkuTmallInfo
     {
         /// <summary>
         /// sku map id
@@ -96,7 +96,7 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// SKU详情
     /// </summary>
-    class SkuTmallItem
+    public class SkuTmallItem
     {
         public string id { set; get; }
         public string text { set; get; }

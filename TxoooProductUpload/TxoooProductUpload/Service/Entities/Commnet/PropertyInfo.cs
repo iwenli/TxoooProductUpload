@@ -9,7 +9,7 @@ namespace TxoooProductUpload.Service.Entities.Commnet
     /// <summary>
     /// 商品属性
     /// </summary>
-    class PropertyInfo
+    public class PropertyInfo
     {
 
         public string map_id { set; get; }

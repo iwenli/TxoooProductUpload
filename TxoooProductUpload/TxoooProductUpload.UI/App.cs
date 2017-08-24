@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using TxoooProductUpload.Common;
+using Iwenli;
+using CCWin;
 
 namespace TxoooProductUpload.UI
 {
@@ -25,10 +27,19 @@ namespace TxoooProductUpload.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            IsConnect();
             if (CanRun())
             {
-                Context = Service.ServiceContext.Instance;
-                Application.Run(new LoginForm());
+                try
+                {
+                    Context = Service.ServiceContext.Instance;
+                    Application.Run(new LoginForm());
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.GetLogger("App").LogError(ex.Message, ex);
+                }
+
             }
         }
 
@@ -45,10 +56,39 @@ namespace TxoooProductUpload.UI
             _mutex = new System.Threading.Mutex(true, guid, out canRun);
             if (!canRun)
             {
-                MessageBox.Show("已经在运行了。", ConstParams.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _mutex.ReleaseMutex();
+                MessageBoxEx.Show("已经在运行了。", ConstParams.APP_NAME,
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            return canRun && Update.CheckUpdateTask().Result == null;
+            else
+            {
+                canRun = Update.CheckUpdateTask().Result == null;
+            }
+            return canRun;
         }
+
+        #region 联网校验
+        private const int INTERNET_CONNECTION_MODEM = 1;
+        private const int INTERNET_CONNECTION_LAN = 2;
+        [DllImport("winInet.dll ")]
+        private static extern bool InternetGetConnectedState(
+        ref int dwFlag,
+        int dwReserved
+        );
+        /// <summary>
+        /// 是否联网
+        /// </summary>
+        static void IsConnect()
+        {
+            Int32 dwFlag = new int();
+            if (!InternetGetConnectedState(ref dwFlag, 0))
+                MessageBox.Show("未连网! ");
+            else
+            if ((dwFlag & INTERNET_CONNECTION_MODEM) != 0)
+                MessageBox.Show("采用调治解调器上网。 ");
+            else
+            if ((dwFlag & INTERNET_CONNECTION_LAN) != 0)
+                MessageBox.Show("采用网卡上网。 ");
+        }
+        #endregion
     }
 }

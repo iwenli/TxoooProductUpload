@@ -50,7 +50,7 @@ namespace TxoooProductUpload.UI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             CCWin.CmSysButton cmSysButton1 = new CCWin.CmSysButton();
             this.pnlTx = new CCWin.SkinControl.SkinPanel();
-            this.pnlImgTx = new CCWin.SkinControl.SkinPanel();
+            this.pnlHeadPic = new CCWin.SkinControl.SkinPanel();
             this.btnDuoId = new CCWin.SkinControl.SkinButton();
             this.btnSw = new CCWin.SkinControl.SkinButton();
             this.btnLogin = new CCWin.SkinControl.SkinButton();
@@ -62,8 +62,13 @@ namespace TxoooProductUpload.UI
             this.btnJpPwd = new CCWin.SkinControl.SkinButton();
             this.txtId = new CCWin.SkinControl.SkinTextBox();
             this.chkIsTest = new CCWin.SkinControl.SkinCheckBox();
+            this.toolShow = new System.Windows.Forms.ToolTip(this.components);
+            this.notify = new System.Windows.Forms.NotifyIcon(this.components);
+            this.NotifyMenu = new CCWin.SkinControl.SkinContextMenuStrip();
+            this.tsShow = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsExit = new System.Windows.Forms.ToolStripSeparator();
+            this.toolExit = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuId = new CCWin.SkinControl.SkinContextMenuStrip();
-            this.MenuState = new CCWin.SkinControl.SkinContextMenuStrip();
             this.ItemImonline = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemQme = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -72,19 +77,15 @@ namespace TxoooProductUpload.UI
             this.ItemMute = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.ItemInVisble = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolShow = new System.Windows.Forms.ToolTip(this.components);
-            this.tuopan = new System.Windows.Forms.NotifyIcon(this.components);
-            this.QQMenu = new CCWin.SkinControl.SkinContextMenuStrip();
-            this.toolQQShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.MenuState = new CCWin.SkinControl.SkinContextMenuStrip();
+            this.prbLoading = new System.Windows.Forms.ProgressBar();
             this.pwdErro = new TxoooProductUpload.UI.PwdErro();
             this.loginCode = new TxoooProductUpload.UI.LoginCode();
             this.pnlTx.SuspendLayout();
             this.txtPwd.SuspendLayout();
             this.txtId.SuspendLayout();
+            this.NotifyMenu.SuspendLayout();
             this.MenuState.SuspendLayout();
-            this.QQMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlTx
@@ -92,7 +93,7 @@ namespace TxoooProductUpload.UI
             this.pnlTx.BackColor = System.Drawing.Color.Transparent;
             this.pnlTx.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnlTx.BackgroundImage")));
             this.pnlTx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pnlTx.Controls.Add(this.pnlImgTx);
+            this.pnlTx.Controls.Add(this.pnlHeadPic);
             this.pnlTx.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.pnlTx.DownBack = null;
             this.pnlTx.Location = new System.Drawing.Point(42, 195);
@@ -103,22 +104,22 @@ namespace TxoooProductUpload.UI
             this.pnlTx.Size = new System.Drawing.Size(82, 82);
             this.pnlTx.TabIndex = 13;
             // 
-            // pnlImgTx
+            // pnlHeadPic
             // 
-            this.pnlImgTx.BackColor = System.Drawing.Color.White;
-            this.pnlImgTx.BackgroundImage = global::TxoooProductUpload.UI.Properties.Resources.head_d;
-            this.pnlImgTx.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pnlImgTx.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.pnlImgTx.DownBack = null;
-            this.pnlImgTx.Location = new System.Drawing.Point(1, 1);
-            this.pnlImgTx.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlImgTx.MouseBack = null;
-            this.pnlImgTx.Name = "pnlImgTx";
-            this.pnlImgTx.NormlBack = null;
-            this.pnlImgTx.Radius = 4;
-            this.pnlImgTx.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.pnlImgTx.Size = new System.Drawing.Size(80, 80);
-            this.pnlImgTx.TabIndex = 12;
+            this.pnlHeadPic.BackColor = System.Drawing.Color.White;
+            this.pnlHeadPic.BackgroundImage = global::TxoooProductUpload.UI.Properties.Resources.head_d;
+            this.pnlHeadPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pnlHeadPic.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.pnlHeadPic.DownBack = null;
+            this.pnlHeadPic.Location = new System.Drawing.Point(1, 1);
+            this.pnlHeadPic.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlHeadPic.MouseBack = null;
+            this.pnlHeadPic.Name = "pnlHeadPic";
+            this.pnlHeadPic.NormlBack = null;
+            this.pnlHeadPic.Radius = 4;
+            this.pnlHeadPic.RoundStyle = CCWin.SkinClass.RoundStyle.All;
+            this.pnlHeadPic.Size = new System.Drawing.Size(80, 80);
+            this.pnlHeadPic.TabIndex = 12;
             // 
             // btnDuoId
             // 
@@ -177,7 +178,7 @@ namespace TxoooProductUpload.UI
             this.btnLogin.TabIndex = 3;
             this.btnLogin.Text = "登  录";
             this.btnLogin.UseVisualStyleBackColor = false;
-            this.btnLogin.Click += new System.EventHandler(this.btnDl_Click);
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // chkRemember
             // 
@@ -202,7 +203,6 @@ namespace TxoooProductUpload.UI
             this.chkRemember.TabIndex = 1;
             this.chkRemember.Text = "记住密码";
             this.chkRemember.UseVisualStyleBackColor = false;
-            this.chkRemember.CheckedChanged += new System.EventHandler(this.chkMima_CheckedChanged);
             // 
             // btnFindPwd
             // 
@@ -268,7 +268,7 @@ namespace TxoooProductUpload.UI
             // 
             // txtPwd
             // 
-            this.txtPwd.BackColor = System.Drawing.Color.Transparent;
+            this.txtPwd.BackColor = System.Drawing.Color.White;
             this.txtPwd.Controls.Add(this.btnJpPwd);
             this.txtPwd.DownBack = null;
             this.txtPwd.Icon = null;
@@ -304,7 +304,7 @@ namespace TxoooProductUpload.UI
             this.txtPwd.SkinTxt.TabIndex = 0;
             this.txtPwd.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.txtPwd.SkinTxt.WaterText = "密码";
-            this.txtPwd.TabIndex = 40;
+            this.txtPwd.TabIndex = 1;
             this.txtPwd.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtPwd.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.txtPwd.WaterText = "密码";
@@ -334,7 +334,7 @@ namespace TxoooProductUpload.UI
             // 
             // txtId
             // 
-            this.txtId.BackColor = System.Drawing.Color.Transparent;
+            this.txtId.BackColor = System.Drawing.Color.White;
             this.txtId.Controls.Add(this.btnId);
             this.txtId.DownBack = null;
             this.txtId.Icon = null;
@@ -369,7 +369,7 @@ namespace TxoooProductUpload.UI
             this.txtId.SkinTxt.TabIndex = 0;
             this.txtId.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.txtId.SkinTxt.WaterText = "创业赚钱注册手机号码";
-            this.txtId.TabIndex = 39;
+            this.txtId.TabIndex = 0;
             this.txtId.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtId.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.txtId.WaterText = "创业赚钱注册手机号码";
@@ -398,7 +398,69 @@ namespace TxoooProductUpload.UI
             this.chkIsTest.TabIndex = 2;
             this.chkIsTest.Text = "测试环境";
             this.chkIsTest.UseVisualStyleBackColor = false;
-            this.chkIsTest.CheckedChanged += new System.EventHandler(this.chkZdLogin_CheckedChanged);
+            this.chkIsTest.CheckedChanged += new System.EventHandler(this.chkIsTest_CheckedChanged);
+            // 
+            // notify
+            // 
+            this.notify.ContextMenuStrip = this.NotifyMenu;
+            this.notify.Icon = ((System.Drawing.Icon)(resources.GetObject("notify.Icon")));
+            this.notify.Visible = true;
+            this.notify.DoubleClick += new System.EventHandler(this.tsShow_Click);
+            // 
+            // NotifyMenu
+            // 
+            this.NotifyMenu.Arrow = System.Drawing.Color.Black;
+            this.NotifyMenu.AutoSize = false;
+            this.NotifyMenu.Back = System.Drawing.Color.White;
+            this.NotifyMenu.BackRadius = 2;
+            this.NotifyMenu.Base = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(200)))), ((int)(((byte)(254)))));
+            this.NotifyMenu.DropDownImageSeparator = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.NotifyMenu.Fore = System.Drawing.Color.Black;
+            this.NotifyMenu.HoverFore = System.Drawing.Color.White;
+            this.NotifyMenu.ImageScalingSize = new System.Drawing.Size(11, 11);
+            this.NotifyMenu.ItemAnamorphosis = false;
+            this.NotifyMenu.ItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(136)))), ((int)(((byte)(200)))));
+            this.NotifyMenu.ItemBorderShow = false;
+            this.NotifyMenu.ItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(136)))), ((int)(((byte)(200)))));
+            this.NotifyMenu.ItemPressed = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(136)))), ((int)(((byte)(200)))));
+            this.NotifyMenu.ItemRadius = 4;
+            this.NotifyMenu.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
+            this.NotifyMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsShow,
+            this.tsExit,
+            this.toolExit});
+            this.NotifyMenu.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.NotifyMenu.Name = "MenuState";
+            this.NotifyMenu.RadiusStyle = CCWin.SkinClass.RoundStyle.None;
+            this.NotifyMenu.Size = new System.Drawing.Size(120, 53);
+            this.NotifyMenu.SkinAllColor = true;
+            this.NotifyMenu.TitleAnamorphosis = false;
+            this.NotifyMenu.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(233)))), ((int)(((byte)(236)))));
+            this.NotifyMenu.TitleRadius = 4;
+            this.NotifyMenu.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.None;
+            // 
+            // tsShow
+            // 
+            this.tsShow.AutoSize = false;
+            this.tsShow.Image = global::TxoooProductUpload.UI.Properties.Resources.show;
+            this.tsShow.Name = "tsShow";
+            this.tsShow.Size = new System.Drawing.Size(119, 22);
+            this.tsShow.Text = "打开主面板";
+            this.tsShow.Click += new System.EventHandler(this.tsShow_Click);
+            // 
+            // tsExit
+            // 
+            this.tsExit.Name = "tsExit";
+            this.tsExit.Size = new System.Drawing.Size(116, 6);
+            // 
+            // toolExit
+            // 
+            this.toolExit.AutoSize = false;
+            this.toolExit.Image = global::TxoooProductUpload.UI.Properties.Resources.close;
+            this.toolExit.Name = "toolExit";
+            this.toolExit.Size = new System.Drawing.Size(119, 22);
+            this.toolExit.Text = "退出";
+            this.toolExit.Click += new System.EventHandler(this.tsExit_Click);
             // 
             // MenuId
             // 
@@ -429,43 +491,6 @@ namespace TxoooProductUpload.UI
             this.MenuId.TitleRadius = 4;
             this.MenuId.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             this.MenuId.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.MenuId_Closing);
-            // 
-            // MenuState
-            // 
-            this.MenuState.Arrow = System.Drawing.Color.Black;
-            this.MenuState.AutoSize = false;
-            this.MenuState.Back = System.Drawing.Color.White;
-            this.MenuState.BackRadius = 2;
-            this.MenuState.Base = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(200)))), ((int)(((byte)(254)))));
-            this.MenuState.DropDownImageSeparator = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
-            this.MenuState.Fore = System.Drawing.Color.Black;
-            this.MenuState.HoverFore = System.Drawing.Color.White;
-            this.MenuState.ImageScalingSize = new System.Drawing.Size(15, 15);
-            this.MenuState.ItemAnamorphosis = false;
-            this.MenuState.ItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
-            this.MenuState.ItemBorderShow = false;
-            this.MenuState.ItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
-            this.MenuState.ItemPressed = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
-            this.MenuState.ItemRadius = 4;
-            this.MenuState.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            this.MenuState.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ItemImonline,
-            this.ItemQme,
-            this.toolStripMenuItem1,
-            this.ItemAway,
-            this.ItemBusy,
-            this.ItemMute,
-            this.toolStripMenuItem2,
-            this.ItemInVisble});
-            this.MenuState.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
-            this.MenuState.Name = "MenuState";
-            this.MenuState.RadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            this.MenuState.Size = new System.Drawing.Size(106, 147);
-            this.MenuState.SkinAllColor = true;
-            this.MenuState.TitleAnamorphosis = false;
-            this.MenuState.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
-            this.MenuState.TitleRadius = 2;
-            this.MenuState.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             // 
             // ItemImonline
             // 
@@ -507,66 +532,52 @@ namespace TxoooProductUpload.UI
             this.ItemInVisble.Name = "ItemInVisble";
             this.ItemInVisble.Size = new System.Drawing.Size(68, 22);
             // 
-            // tuopan
+            // MenuState
             // 
-            this.tuopan.ContextMenuStrip = this.QQMenu;
-            this.tuopan.Icon = ((System.Drawing.Icon)(resources.GetObject("tuopan.Icon")));
-            this.tuopan.Text = "CC";
-            this.tuopan.Visible = true;
-            this.tuopan.DoubleClick += new System.EventHandler(this.toolQQShow_Click);
+            this.MenuState.Arrow = System.Drawing.Color.Black;
+            this.MenuState.AutoSize = false;
+            this.MenuState.Back = System.Drawing.Color.White;
+            this.MenuState.BackRadius = 2;
+            this.MenuState.Base = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(200)))), ((int)(((byte)(254)))));
+            this.MenuState.DropDownImageSeparator = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.MenuState.Fore = System.Drawing.Color.Black;
+            this.MenuState.HoverFore = System.Drawing.Color.White;
+            this.MenuState.ImageScalingSize = new System.Drawing.Size(15, 15);
+            this.MenuState.ItemAnamorphosis = false;
+            this.MenuState.ItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.MenuState.ItemBorderShow = false;
+            this.MenuState.ItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.MenuState.ItemPressed = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.MenuState.ItemRadius = 4;
+            this.MenuState.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
+            this.MenuState.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ItemImonline,
+            this.ItemQme,
+            this.toolStripMenuItem1,
+            this.ItemAway,
+            this.ItemBusy,
+            this.ItemMute,
+            this.toolStripMenuItem2,
+            this.ItemInVisble});
+            this.MenuState.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.MenuState.Name = "MenuState";
+            this.MenuState.RadiusStyle = CCWin.SkinClass.RoundStyle.None;
+            this.MenuState.Size = new System.Drawing.Size(106, 147);
+            this.MenuState.SkinAllColor = true;
+            this.MenuState.TitleAnamorphosis = false;
+            this.MenuState.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(238)))), ((int)(((byte)(238)))));
+            this.MenuState.TitleRadius = 2;
+            this.MenuState.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             // 
-            // QQMenu
+            // prbLoading
             // 
-            this.QQMenu.Arrow = System.Drawing.Color.Black;
-            this.QQMenu.AutoSize = false;
-            this.QQMenu.Back = System.Drawing.Color.White;
-            this.QQMenu.BackRadius = 2;
-            this.QQMenu.Base = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(200)))), ((int)(((byte)(254)))));
-            this.QQMenu.DropDownImageSeparator = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
-            this.QQMenu.Fore = System.Drawing.Color.Black;
-            this.QQMenu.HoverFore = System.Drawing.Color.White;
-            this.QQMenu.ImageScalingSize = new System.Drawing.Size(11, 11);
-            this.QQMenu.ItemAnamorphosis = false;
-            this.QQMenu.ItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(136)))), ((int)(((byte)(200)))));
-            this.QQMenu.ItemBorderShow = false;
-            this.QQMenu.ItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(136)))), ((int)(((byte)(200)))));
-            this.QQMenu.ItemPressed = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(136)))), ((int)(((byte)(200)))));
-            this.QQMenu.ItemRadius = 4;
-            this.QQMenu.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            this.QQMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolQQShow,
-            this.toolStripMenuItem3,
-            this.toolExit});
-            this.QQMenu.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
-            this.QQMenu.Name = "MenuState";
-            this.QQMenu.RadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            this.QQMenu.Size = new System.Drawing.Size(120, 53);
-            this.QQMenu.SkinAllColor = true;
-            this.QQMenu.TitleAnamorphosis = false;
-            this.QQMenu.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(233)))), ((int)(((byte)(236)))));
-            this.QQMenu.TitleRadius = 4;
-            this.QQMenu.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            // 
-            // toolQQShow
-            // 
-            this.toolQQShow.AutoSize = false;
-            this.toolQQShow.Name = "toolQQShow";
-            this.toolQQShow.Size = new System.Drawing.Size(119, 22);
-            this.toolQQShow.Text = "打开主面板";
-            this.toolQQShow.Click += new System.EventHandler(this.toolQQShow_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(116, 6);
-            // 
-            // toolExit
-            // 
-            this.toolExit.AutoSize = false;
-            this.toolExit.Name = "toolExit";
-            this.toolExit.Size = new System.Drawing.Size(119, 22);
-            this.toolExit.Text = "退出";
-            this.toolExit.Click += new System.EventHandler(this.toolExit_Click);
+            this.prbLoading.BackColor = System.Drawing.Color.DarkRed;
+            this.prbLoading.ForeColor = System.Drawing.Color.Blue;
+            this.prbLoading.Location = new System.Drawing.Point(0, 184);
+            this.prbLoading.Name = "prbLoading";
+            this.prbLoading.Size = new System.Drawing.Size(430, 3);
+            this.prbLoading.TabIndex = 44;
+            this.prbLoading.Visible = false;
             // 
             // pwdErro
             // 
@@ -574,7 +585,7 @@ namespace TxoooProductUpload.UI
             this.pwdErro.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pwdErro.BackgroundImage")));
             this.pwdErro.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pwdErro.Diglog = System.Windows.Forms.DialogResult.None;
-            this.pwdErro.Location = new System.Drawing.Point(426, 30);
+            this.pwdErro.Location = new System.Drawing.Point(438, 25);
             this.pwdErro.Name = "pwdErro";
             this.pwdErro.Size = new System.Drawing.Size(430, 300);
             this.pwdErro.TabIndex = 42;
@@ -586,7 +597,7 @@ namespace TxoooProductUpload.UI
             this.loginCode.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("loginCode.BackgroundImage")));
             this.loginCode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.loginCode.Diglog = System.Windows.Forms.DialogResult.None;
-            this.loginCode.Location = new System.Drawing.Point(422, 30);
+            this.loginCode.Location = new System.Drawing.Point(443, 25);
             this.loginCode.Name = "loginCode";
             this.loginCode.Size = new System.Drawing.Size(430, 300);
             this.loginCode.TabIndex = 43;
@@ -611,9 +622,10 @@ namespace TxoooProductUpload.UI
             this.CloseMouseBack = ((System.Drawing.Image)(resources.GetObject("$this.CloseMouseBack")));
             this.CloseNormlBack = ((System.Drawing.Image)(resources.GetObject("$this.CloseNormlBack")));
             this.ControlBoxOffset = new System.Drawing.Point(0, 0);
+            this.Controls.Add(this.prbLoading);
+            this.Controls.Add(this.txtId);
             this.Controls.Add(this.pwdErro);
             this.Controls.Add(this.loginCode);
-            this.Controls.Add(this.txtId);
             this.Controls.Add(this.chkIsTest);
             this.Controls.Add(this.chkRemember);
             this.Controls.Add(this.btnFindPwd);
@@ -660,7 +672,7 @@ namespace TxoooProductUpload.UI
             cmSysButton1.ToolTip = "设置";
             this.SysButtonItems.AddRange(new CCWin.CmSysButton[] {
             cmSysButton1});
-            this.Text = "QQ";
+            this.Text = "";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FrmLogin_Load);
             this.VisibleChanged += new System.EventHandler(this.FrmLogin_VisibleChanged);
@@ -670,8 +682,8 @@ namespace TxoooProductUpload.UI
             this.txtPwd.PerformLayout();
             this.txtId.ResumeLayout(false);
             this.txtId.PerformLayout();
+            this.NotifyMenu.ResumeLayout(false);
             this.MenuState.ResumeLayout(false);
-            this.QQMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -680,7 +692,7 @@ namespace TxoooProductUpload.UI
         #endregion
 
         private CCWin.SkinControl.SkinPanel pnlTx;
-        private CCWin.SkinControl.SkinPanel pnlImgTx;
+        private CCWin.SkinControl.SkinPanel pnlHeadPic;
         private CCWin.SkinControl.SkinButton btnDuoId;
         private CCWin.SkinControl.SkinButton btnSw;
         private CCWin.SkinControl.SkinButton btnLogin;
@@ -692,8 +704,15 @@ namespace TxoooProductUpload.UI
         private CCWin.SkinControl.SkinTextBox txtId;
         private CCWin.SkinControl.SkinCheckBox chkIsTest;
         private CCWin.SkinControl.SkinButton btnJpPwd;
+        private System.Windows.Forms.ToolTip toolShow;
+        public System.Windows.Forms.NotifyIcon notify;
+        private CCWin.SkinControl.SkinContextMenuStrip NotifyMenu;
+        private System.Windows.Forms.ToolStripMenuItem tsShow;
+        private System.Windows.Forms.ToolStripSeparator tsExit;
+        private System.Windows.Forms.ToolStripMenuItem toolExit;
+        private PwdErro pwdErro;
+        private LoginCode loginCode;
         private CCWin.SkinControl.SkinContextMenuStrip MenuId;
-        private CCWin.SkinControl.SkinContextMenuStrip MenuState;
         private System.Windows.Forms.ToolStripMenuItem ItemImonline;
         private System.Windows.Forms.ToolStripMenuItem ItemQme;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
@@ -702,14 +721,8 @@ namespace TxoooProductUpload.UI
         private System.Windows.Forms.ToolStripMenuItem ItemMute;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem ItemInVisble;
-        private System.Windows.Forms.ToolTip toolShow;
-        public System.Windows.Forms.NotifyIcon tuopan;
-        private CCWin.SkinControl.SkinContextMenuStrip QQMenu;
-        private System.Windows.Forms.ToolStripMenuItem toolQQShow;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolExit;
-        private PwdErro pwdErro;
-        private LoginCode loginCode;
+        private CCWin.SkinControl.SkinContextMenuStrip MenuState;
+        private System.Windows.Forms.ProgressBar prbLoading;
     }
 }
 

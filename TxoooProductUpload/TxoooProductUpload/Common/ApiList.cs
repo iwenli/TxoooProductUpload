@@ -10,7 +10,7 @@ namespace TxoooProductUpload.Common
     /// <summary>
     /// 创业赚钱接口
     /// </summary>
-    class ApiList
+    public class ApiList
     {
         #region 基础
         private static bool _isTest = false;
