@@ -16,7 +16,7 @@ using TxoooProductUpload.Service.Entities;
 
 namespace TxoooProductUpload.Service
 {
-    class UrlConvertProductService : ServiceBase
+    public class UrlConvertProductService : ServiceBase
     {
 
         string _exceptionFormat = "未能提交请求{0}";

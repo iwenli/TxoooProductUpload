@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>TxoooProductUpload.UI</RootNamespace>
     <AssemblyName>商家工具</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -50,7 +50,9 @@
       <HintPath>lib\Iwenli.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -94,6 +96,12 @@
     <Compile Include="Form\Login\LoginForm.designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form\MinForms\MsgBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\MinForms\MsgBox.designer.cs">
+      <DependentUpon>MsgBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Handler\SendMessageHandler.cs" />
     <Compile Include="Form\Login\LoginCode.cs">
       <SubType>UserControl</SubType>
@@ -113,6 +121,7 @@
     <Compile Include="Form\Login\PwdErro.designer.cs">
       <DependentUpon>PwdErro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\Entities\LoginListInfo.cs" />
     <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="test\Msgtest.cs">
       <SubType>Form</SubType>
@@ -142,6 +151,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\Login\PwdErro.resx">
       <DependentUpon>PwdErro.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\MinForms\MsgBox.resx">
+      <DependentUpon>MsgBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="test\Msgtest.resx">
       <DependentUpon>Msgtest.cs</DependentUpon>
@@ -224,7 +236,6 @@
     <None Include="lib\cef\locales\zh-TW.pak" />
     <None Include="lib\cef\natives_blob.bin" />
     <None Include="lib\cef\snapshot_blob.bin" />
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -261,6 +272,38 @@
     <Content Include="lib\CSkin.dll" />
     <Content Include="lib\CSkin.XML" />
     <Content Include="lib\Iwenli.dll" />
+    <None Include="Resources\16.png" />
+    <None Include="Resources\15.png" />
+    <None Include="Resources\14.png" />
+    <None Include="Resources\13.png" />
+    <None Include="Resources\12.png" />
+    <None Include="Resources\11.png" />
+    <None Include="Resources\10.png" />
+    <None Include="Resources\9.png" />
+    <None Include="Resources\8.png" />
+    <None Include="Resources\7.png" />
+    <None Include="Resources\6.png" />
+    <None Include="Resources\5.png" />
+    <None Include="Resources\3.png" />
+    <None Include="Resources\2.png" />
+    <None Include="Resources\1.png" />
+    <None Include="Resources\btn_restore_down.png" />
+    <None Include="Resources\BoxBack.jpg" />
+    <None Include="Resources\btn_close_disable.png" />
+    <None Include="Resources\btn_close_highlight.png" />
+    <None Include="Resources\btn_close_down.png" />
+    <None Include="Resources\btn_max_normal.png" />
+    <None Include="Resources\btn_max_highlight.png" />
+    <None Include="Resources\btn_max_down.png" />
+    <None Include="Resources\btn_mini_normal.png" />
+    <None Include="Resources\btn_mini_highlight.png" />
+    <None Include="Resources\btn_mini_down.png" />
+    <None Include="Resources\btn_restore_normal.png" />
+    <None Include="Resources\btn_restore_highlight.png" />
+    <None Include="Resources\btn_set_press.png" />
+    <None Include="Resources\infoBg.jpg" />
+    <None Include="Resources\close.png" />
+    <None Include="Resources\show.png" />
     <None Include="Resources\head_d.png" />
     <None Include="Resources\sysbtn_restore_normal.png" />
     <None Include="Resources\sysbtn_restore_hover.png" />
@@ -313,7 +356,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Service\Message\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

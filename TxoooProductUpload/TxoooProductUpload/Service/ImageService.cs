@@ -21,7 +21,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 图像服务
     /// </summary>
-    class ImageService : ServiceBase
+    public class ImageService : ServiceBase
     {
         Regex _txoooImgReg = new Regex("img.txooo.com");
         const string _sqlFormatInsertIMg = @"INSERT INTO iwenli_image(SourceUrl,ToooUrl,UserId,UploadType,Remard) values('{0}','{1}',{2},'{3}','{4}')";

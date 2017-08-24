@@ -9,7 +9,7 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// 地域信息
     /// </summary>
-    class AreaInfo
+    public class AreaInfo
     {
         /// <summary>
         /// ID

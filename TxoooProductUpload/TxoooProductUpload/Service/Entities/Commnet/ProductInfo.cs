@@ -9,7 +9,7 @@ namespace TxoooProductUpload.Service.Entities.Commnet
     /// <summary>
     /// 添加评价商品信息集合
     /// </summary>
-    class ProductInfo
+    public class ProductInfo
     {
         /// <summary>
         /// 商品基本信息
@@ -22,7 +22,7 @@ namespace TxoooProductUpload.Service.Entities.Commnet
         public List<PropertyInfo> property { set; get; }
     }
 
-    class Product
+    public class Product
     {
         /// <summary>
         /// 商品id

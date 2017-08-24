@@ -13,7 +13,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 分类数据服务
     /// </summary>
-    class ClassDataService : ServiceBase
+    public class ClassDataService : ServiceBase
     {
         /// <summary>
 		/// 当前分类

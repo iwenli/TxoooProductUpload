@@ -11,7 +11,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 通用的上下文缓存基类
     /// </summary>
-    abstract class ContextBase
+    public abstract class ContextBase
     {
         /// <summary>
         /// 缓存名称

@@ -55,7 +55,7 @@ namespace TxoooProductUpload.UI.Service
         public UserService UserService { private set; get; }
 
         /// <summary>
-        /// 业务逻辑
+        /// 业务逻辑服务
         /// </summary>
         public TxoooProductUpload.Service.ServiceContext BaseContent { private set; get; }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,12 +13,31 @@ namespace TxoooProductUpload.UI.Service
     /// </summary>
     abstract class ServiceBase : SendMessageHandler
     {
+
+        public ServiceBase() {
+        
+}
+
+        /// <summary>
+        /// 获取相对于data目录下的子目录
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public string GetCachePath(string subDirectoryName = "")
+        {
+            var path = Path.Combine(Environment.CurrentDirectory, "data");
+            if (!string.IsNullOrEmpty(path))
+            {
+                path = Path.Combine(path, subDirectoryName);
+            }
+            return path;
+        }
+
         /// <summary>
         /// 消息模板
         /// </summary>
         public string MsgTemplate { set; get; }
 
-        public ServiceBase() { }
 
         #region 消息委托
         /// <summary>

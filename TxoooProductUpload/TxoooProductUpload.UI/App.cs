@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using TxoooProductUpload.Common;
+using Iwenli;
 
 namespace TxoooProductUpload.UI
 {
@@ -27,8 +28,16 @@ namespace TxoooProductUpload.UI
             Application.SetCompatibleTextRenderingDefault(false);
             if (CanRun())
             {
-                Context = Service.ServiceContext.Instance;
-                Application.Run(new LoginForm());
+                try
+                {
+                    Context = Service.ServiceContext.Instance;
+                    Application.Run(new LoginForm());
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.GetLogger("App").LogError(ex.Message, ex);
+                }
+                
             }
         }
 
@@ -45,10 +54,12 @@ namespace TxoooProductUpload.UI
             _mutex = new System.Threading.Mutex(true, guid, out canRun);
             if (!canRun)
             {
-                MessageBox.Show("已经在运行了。", ConstParams.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _mutex.ReleaseMutex();
+                new MsgBox("已经在运行了。", "", Handler.MessageType.FATAL).ShowDialog();
             }
-            return canRun && Update.CheckUpdateTask().Result == null;
+            else {
+                canRun = Update.CheckUpdateTask().Result == null;
+            }
+            return canRun;
         }
     }
 }

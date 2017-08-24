@@ -10,7 +10,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 缓存数据
     /// </summary>
-    class CacheData
+    public class CacheData
     {
         /// <summary>
         /// 城市信息

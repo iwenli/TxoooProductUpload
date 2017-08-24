@@ -15,6 +15,7 @@ namespace TxoooProductUpload.UI
     using Handler;
     using Iwenli;
     using Service;
+    using TxoooProductUpload.Common;
 
     public partial class BaseForm : CCSkinMain
     {
@@ -30,7 +31,7 @@ namespace TxoooProductUpload.UI
         public BaseForm()
         {
             InitializeComponent();
-            this.XTheme = new Skin_Mac() { };
+           // this.XTheme = new Skin_Mac() { };
         }
 
         public void Event_OnSendMessage(object sender, Handler.SendMessageEventArgs e)

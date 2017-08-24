@@ -8,9 +8,9 @@ using TxoooProductUpload.Network;
 namespace TxoooProductUpload.Service
 {
     /// <summary>
-	/// 通用的服务基类，提供一些额外的基础服务
-	/// </summary>
-	abstract class ServiceBase
+    /// 通用的服务基类，提供一些额外的基础服务
+    /// </summary>
+    public abstract class ServiceBase
     {
         protected ServiceBase(ServiceContext context)
         {

@@ -13,7 +13,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 地域数据服务
     /// </summary>
-    class AreaDataService : ServiceBase
+    public class AreaDataService : ServiceBase
     {
 
         public AreaDataService(ServiceContext context) : base(context)

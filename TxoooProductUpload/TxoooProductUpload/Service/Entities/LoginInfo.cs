@@ -8,9 +8,29 @@ namespace TxoooProductUpload.Service.Entities
     /// <summary>
     /// 登录信息
     /// </summary>
-    class LoginInfo
+    [Serializable]
+    public class LoginInfo
     {
+        /// <summary>
+        /// 初始化一个 LoginInfo 对象
+        /// </summary>
+        /// <param name="uName"></param>
+        /// <param name="pWd"></param>
+        /// <param name="isRemember"></param>
+        public LoginInfo(string uName, string pWd, bool isRemember) : this()
+        {
+            UserName = uName;
+            Password = pWd;
+            RememberPwd = isRemember;
+        }
 
+        /// <summary>
+        /// 初始化一个 LoginInfo 对象
+        /// </summary>
+        public LoginInfo()
+        {
+            LastLoginTime = DateTime.Now;
+        }
         /// <summary>
         /// 获得或设置当前的显示名
         /// </summary>
@@ -27,12 +47,22 @@ namespace TxoooProductUpload.Service.Entities
         public string Password { get; set; }
 
         /// <summary>
+        /// 记住密码
+        /// </summary>
+        public bool RememberPwd { get; set; }
+
+        /// <summary>
+        /// 最后一次登陆时间
+        /// </summary>
+        public DateTime LastLoginTime { set; get; }
+
+        /// <summary>
         /// 登陆者商户信息
         /// </summary>
         public MchInfo MchInfo { get; set; }
-}
-
-    class MchInfo
+    }
+    [Serializable]
+    public class MchInfo
     {
         public int UserId { get; set; }
         public int MchId { get; set; }

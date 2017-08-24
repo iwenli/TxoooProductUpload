@@ -10,7 +10,7 @@ namespace TxoooProductUpload.Service
     /// <summary>
     /// 服务状态上下文
     /// </summary>
-    class ServiceContext
+    public class ServiceContext
     {
         public ServiceContext()
         {

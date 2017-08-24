@@ -15,9 +15,9 @@ using TxoooProductUpload.Service.Entities.Web;
 namespace TxoooProductUpload.Service
 {
     /// <summary>
-	/// 表示当前的登录会话，以及一些必须的状态信息。
-	/// </summary>
-	class Session
+    /// 表示当前的登录会话，以及一些必须的状态信息。
+    /// </summary>
+    public class Session
     {
         bool _isLogined;
 
@@ -93,6 +93,7 @@ namespace TxoooProductUpload.Service
 
         }
 
+
         /// <summary>
         /// 登录。如果返回异常则说明登录失败
         /// </summary>
@@ -158,6 +159,71 @@ namespace TxoooProductUpload.Service
             IsLogined = true;
             ApiList.Token = _token;
             return null;
+        }
+
+
+        /// <summary>
+        /// 登陆
+        /// </summary>
+        /// <param name="loginInfo"></param>
+        /// <returns></returns>
+        public async Task<LoginInfo> LoginAsync(LoginInfo loginInfo)
+        {
+            IsLogined = false;
+            LoginInfo = loginInfo;
+            var webLoginData = new
+            {
+                userName = LoginInfo.UserName,
+                passWord = LoginInfo.Password
+            };
+            var apploginData = new
+            {
+                username = LoginInfo.UserName,
+                password = LoginInfo.Password.MD5().ToLower()
+            };
+            //网页登录
+            var webResult = NetClient.Create<string>(HttpMethod.Post, ApiList.MchWebLogin, data: webLoginData);
+            webResult.Send();
+
+            //app登陆
+            var loginCheck = NetClient.Create<LoginAsyncResult>(HttpMethod.Post, ApiList.Login, data: apploginData);
+            await loginCheck.SendAsync();
+            if (!loginCheck.IsValid())
+            {
+                throw loginCheck.Exception ?? new Exception(string.Format("未能提交请求{0}", ApiList.Login));
+            }
+            _token = loginCheck.Result;
+            if (!_token.IsSuceess)
+            {
+                throw new Exception(_token.msg);
+            }
+
+            //登录好了。等等。。我们好像想拿到显示的中文名？
+            //所以多加一个请求吧。
+            var realNameCtx = NetClient.Create<WebResponseResult<MchInfo>>(
+                                                     HttpMethod.Get,
+                                                    ApiList.GetMchStateInfo,
+                                                    "https://0.u.7518.cn/",
+                                                    _token
+                );
+            await realNameCtx.SendAsync();
+            if (!realNameCtx.IsValid())
+            {
+                throw realNameCtx.Exception ?? new Exception(string.Format("未能提交请求{0}", ApiList.GetMchStateInfo));
+            }
+            //匹配出名字信息
+            if (realNameCtx.Result.success && realNameCtx.Result.Data.Length > 0)
+            {
+                _loginInfo.MchInfo = realNameCtx.Result.Data[0];
+                LoginInfo.DisplayName = _loginInfo.MchInfo.ComName + "-" + _loginInfo.MchInfo.NickName;
+            }
+            //这里失败了我们就随便起个名字，嗯。
+            if (LoginInfo.DisplayName.IsNullOrEmpty())
+                LoginInfo.DisplayName = "路人甲";
+            
+            IsLogined = true;
+            ApiList.Token = _token;
+            return LoginInfo;
         }
     }
 }
