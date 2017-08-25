@@ -108,6 +108,12 @@
     <Compile Include="Form\MinForms\MsgBox.designer.cs">
       <DependentUpon>MsgBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmMain.designer.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Handler\SendMessageHandler.cs" />
     <Compile Include="Form\Login\LoginCode.cs">
       <SubType>UserControl</SubType>
@@ -163,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\MinForms\MsgBox.resx">
       <DependentUpon>MsgBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmMain.resx">
+      <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="test\Msgtest.resx">
       <DependentUpon>Msgtest.cs</DependentUpon>
@@ -281,6 +290,34 @@
     <Content Include="lib\CSkin.dll" />
     <Content Include="lib\CSkin.XML" />
     <Content Include="lib\Iwenli.dll" />
+    <Content Include="Skin\00001[800x90x24BPP].jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\2.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\3.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\5.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\6.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\8.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\BaiduShurufa_2014-8-2_16-32-58.png" />
     <None Include="Resources\icon.ico" />
     <None Include="Resources\_icon.ico" />
     <None Include="Resources\16.png" />

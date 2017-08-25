@@ -45,7 +45,7 @@ namespace TxoooProductUpload.UI
 
         /// <summary>
         /// 是否可以启动窗体
-        /// 暂无运行的窗体  &&  没有需要更新的版本
+        /// 暂无运行的窗体  &&  没有需要更新的版本  && 网络
         /// </summary>
         /// <returns></returns>
         static bool CanRun()
@@ -56,12 +56,21 @@ namespace TxoooProductUpload.UI
             _mutex = new System.Threading.Mutex(true, guid, out canRun);
             if (!canRun)
             {
-                MessageBoxEx.Show("已经在运行了。", ConstParams.APP_NAME,
+                MessageBoxEx.Show("已经在运行了!", ConstParams.APP_NAME,
                                         MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                canRun = Update.CheckUpdateTask().Result == null;
+                canRun = IsConnect();
+                if (!canRun)
+                {
+                    MessageBoxEx.Show("网络异常，请检查网络是否连接!", ConstParams.APP_NAME,
+                                                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    canRun = Update.CheckUpdateTask().Result == null;
+                }
             }
             return canRun;
         }
@@ -77,17 +86,24 @@ namespace TxoooProductUpload.UI
         /// <summary>
         /// 是否联网
         /// </summary>
-        static void IsConnect()
+        static bool IsConnect()
         {
             Int32 dwFlag = new int();
+            bool result = true;
             if (!InternetGetConnectedState(ref dwFlag, 0))
-                MessageBox.Show("未连网! ");
-            else
-            if ((dwFlag & INTERNET_CONNECTION_MODEM) != 0)
-                MessageBox.Show("采用调治解调器上网。 ");
-            else
-            if ((dwFlag & INTERNET_CONNECTION_LAN) != 0)
-                MessageBox.Show("采用网卡上网。 ");
+            {
+                LogHelper.GetLogger("newWork").LogInfo("网络连接已断开...");
+                result = false;
+            }
+            else if ((dwFlag & INTERNET_CONNECTION_MODEM) != 0)
+            {
+                LogHelper.GetLogger("newWork").LogInfo("网络已连接[调治解调器]...");
+            }
+            else if ((dwFlag & INTERNET_CONNECTION_LAN) != 0)
+            {
+                LogHelper.GetLogger("newWork").LogInfo("网络已连接[网卡]...");
+            }
+            return result;
         }
         #endregion
     }

@@ -363,6 +363,16 @@ namespace TxoooProductUpload.UI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap BaiduShurufa_2014_8_2_16_32_58 {
+            get {
+                object obj = ResourceManager.GetObject("BaiduShurufa_2014_8_2_16_32_58", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap BoxBack {
             get {
                 object obj = ResourceManager.GetObject("BoxBack", resourceCulture);

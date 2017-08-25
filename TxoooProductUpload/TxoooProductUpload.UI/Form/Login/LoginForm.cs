@@ -258,7 +258,7 @@ namespace TxoooProductUpload.UI
         /// </summary>
         private void init_Notify()
         {
-            notify.Text = ConstParams.APP_NAME + "(未登陆)";
+            notify.Text = ConstParams.APP_NAME + Environment.NewLine + "状态:未登陆" + Environment.NewLine + "版本:" + ConstParams.Version.ToString();
             notify.Icon = Resources._icon;
             notify.BalloonTipIcon = ToolTipIcon.Info;
             notify.BalloonTipTitle = ConstParams.APP_NAME;
@@ -326,7 +326,7 @@ namespace TxoooProductUpload.UI
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void btnLogin_Click(object sender, EventArgs e)
+        private void btnLogin_Click(object sender, EventArgs e)
         {
             //pwdErro.Visible = true;
             //loginCode.Visible = true;
@@ -384,7 +384,7 @@ namespace TxoooProductUpload.UI
             //保存登录信息
             _loginUser.UserName = _loginUser.UserName.AESEncrypt();
             _loginUser.Password = _loginUser.Password.AESEncrypt();
-            _loginUsers.List.Insert(0,_loginUser);//重新存储
+            _loginUsers.List.Insert(0, _loginUser);//重新存储
             Serialize.BinarySerialize(_loginCacheName, _loginUsers);
             ShowPro(80);
             #endregion
@@ -412,8 +412,9 @@ namespace TxoooProductUpload.UI
                     btnLogin.Enabled = true;
                     prbLoading.Value = 0;
                     prbLoading.Visible = false;
-                    //修改notify
-                    notify.Text = string.Format("{0} (已登陆为：{1})", ConstParams.APP_NAME, _loginUser.DisplayName);
+                    notify.Text = string.Format("{0}{1}状态:已登陆({2}){3}店铺:{4}{5}版本:{6}",
+                        ConstParams.APP_NAME, Environment.NewLine, _loginUser.UserName.AESDecrypt()
+                        , Environment.NewLine, _loginUser.MchInfo.ComName, Environment.NewLine, ConstParams.Version.ToString());
                     notify.Icon = Resources.__icon;
                     //弹窗显示信息
                     _loginUser.LastLoginTime = _lastLoginTime;

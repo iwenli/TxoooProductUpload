@@ -66,8 +66,8 @@ namespace TxoooProductUpload.UI
             this.notify = new System.Windows.Forms.NotifyIcon(this.components);
             this.NotifyMenu = new CCWin.SkinControl.SkinContextMenuStrip();
             this.tsShow = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsExit = new System.Windows.Forms.ToolStripSeparator();
-            this.toolExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.tsExit = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuId = new CCWin.SkinControl.SkinContextMenuStrip();
             this.ItemImonline = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemQme = new System.Windows.Forms.ToolStripMenuItem();
@@ -427,8 +427,8 @@ namespace TxoooProductUpload.UI
             this.NotifyMenu.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             this.NotifyMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsShow,
-            this.tsExit,
-            this.toolExit});
+            this.tsSeparator,
+            this.tsExit});
             this.NotifyMenu.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
             this.NotifyMenu.Name = "MenuState";
             this.NotifyMenu.RadiusStyle = CCWin.SkinClass.RoundStyle.None;
@@ -445,22 +445,22 @@ namespace TxoooProductUpload.UI
             this.tsShow.Image = global::TxoooProductUpload.UI.Properties.Resources.show;
             this.tsShow.Name = "tsShow";
             this.tsShow.Size = new System.Drawing.Size(119, 22);
-            this.tsShow.Text = "打开主面板";
+            this.tsShow.Text = "打开主面板(&S)";
             this.tsShow.Click += new System.EventHandler(this.tsShow_Click);
+            // 
+            // tsSeparator
+            // 
+            this.tsSeparator.Name = "tsSeparator";
+            this.tsSeparator.Size = new System.Drawing.Size(116, 6);
             // 
             // tsExit
             // 
+            this.tsExit.AutoSize = false;
+            this.tsExit.Image = global::TxoooProductUpload.UI.Properties.Resources.close;
             this.tsExit.Name = "tsExit";
-            this.tsExit.Size = new System.Drawing.Size(116, 6);
-            // 
-            // toolExit
-            // 
-            this.toolExit.AutoSize = false;
-            this.toolExit.Image = global::TxoooProductUpload.UI.Properties.Resources.close;
-            this.toolExit.Name = "toolExit";
-            this.toolExit.Size = new System.Drawing.Size(119, 22);
-            this.toolExit.Text = "退出";
-            this.toolExit.Click += new System.EventHandler(this.tsExit_Click);
+            this.tsExit.Size = new System.Drawing.Size(119, 22);
+            this.tsExit.Text = "退出(&E)";
+            this.tsExit.Click += new System.EventHandler(this.tsExit_Click);
             // 
             // MenuId
             // 
@@ -708,8 +708,8 @@ namespace TxoooProductUpload.UI
         public System.Windows.Forms.NotifyIcon notify;
         private CCWin.SkinControl.SkinContextMenuStrip NotifyMenu;
         private System.Windows.Forms.ToolStripMenuItem tsShow;
-        private System.Windows.Forms.ToolStripSeparator tsExit;
-        private System.Windows.Forms.ToolStripMenuItem toolExit;
+        private System.Windows.Forms.ToolStripSeparator tsSeparator;
+        private System.Windows.Forms.ToolStripMenuItem tsExit;
         private PwdErro pwdErro;
         private LoginCode loginCode;
         private CCWin.SkinControl.SkinContextMenuStrip MenuId;

@@ -173,5 +173,10 @@ namespace TxoooProductUpload.UI
         }
 
         #endregion
+
+        private void skinRollingBar1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
