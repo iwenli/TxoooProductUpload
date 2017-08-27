@@ -86,7 +86,7 @@ namespace TxoooProductUpload.UI.ImageDownload
         /// </summary>
         void Init()
         {
-            this.Text = "图片管理  " + ConstParams.APP_NAME;
+            this.Text = "图片管理  " + ConstParams.AssemblyTitle;
             _pageTask = _detailTask = _imageTask = _insertHeadPicTask = _uploadHeadPicTask = null;
             //添加来源JSON
             btnAddSource.Click += (s, e) => { AddSource(); };

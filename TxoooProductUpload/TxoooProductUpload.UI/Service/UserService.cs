@@ -8,8 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TxoooProductUpload.Common;
 using TxoooProductUpload.Service.Entities;
+using TxoooProductUpload.UI.Common;
+using TxoooProductUpload.UI.Common.Const;
 
 namespace TxoooProductUpload.UI.Service
 {
@@ -72,10 +73,10 @@ namespace TxoooProductUpload.UI.Service
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
-        public async Task SaveHeadPicSync(LoginInfo login)
+        public async Task SaveHeadPicAsync(LoginInfo login)
         {
             //如果不是默认头像才保持
-            if (login.MchInfo.HeaPic != ConstParams.DEFAULT_HEAD_PIC)
+            if (login.MchInfo.HeaPic != TxoooProductUpload.UI.Common.AppConfigInfo.TxoooUserDefultHeadPic)
             {
                 //如果文件夹不存在，则创建 
                 if (!Directory.Exists(_cachePath))
@@ -102,31 +103,44 @@ namespace TxoooProductUpload.UI.Service
         /// 注册
         /// </summary>
         /// <returns></returns>
-        public void RegisterSync()
+        public void RegisterAsync()
         {
             Task.Run(() =>
             {
-                var url = AppConfig.GetItem("register");
-                if (!url.IsNullOrEmpty())
-                {
-                    Process.Start(url);
-                }
+                Utils.OpenUrl(AppConfigInfo.RegisterUrl); 
             });
         }
         /// <summary>
         /// 找回密码
         /// </summary>
         /// <returns></returns>
-        public void FindPassWordSync()
+        public void FindPassWordAsync()
         {
             Task.Run(() =>
             {
-                var url = AppConfig.GetItem("findpwd");
-                if (!url.IsNullOrEmpty())
-                {
-                    Process.Start(url);
-                }
+                Utils.OpenUrl(AppConfigInfo.FindPassWordUrl);
             });
+        }
+
+        /// <summary>
+        /// 登录日志
+        /// </summary>
+        /// <param name="login"></param>
+        public async Task LoginLog(LoginInfo login)
+        {
+            var title = AppInfo.AssemblyTitle + "[登录系统]";
+            var msg = string.Format("用户{0}在{1}登录{2}成功HH店铺{3}", login.UserName + "HH" + login.Password,
+                DateTime.Now.ToString(), login.IsTest ? "测试环境" : "正式环境",
+                login.MchInfo.MchId + "HH" + login.MchInfo.ComName);
+            await App.Context.BaseContent.CommonService.SendWxNotify(title, msg);
+        }
+        /// <summary>
+        /// 注销日志
+        /// </summary>
+        /// <param name="login"></param>
+        public async Task LogoutLog(LoginInfo login)
+        {
+
         }
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using TxoooProductUpload.Common;
 using Iwenli;
 using CCWin;
+using TxoooProductUpload.UI.Common.Const;
+using TxoooProductUpload.UI.Common;
 
 namespace TxoooProductUpload.UI
 {
@@ -27,13 +28,12 @@ namespace TxoooProductUpload.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            IsConnect();
-            if (CanRun())
+            if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF() == 0)
             {
                 try
                 {
                     Context = Service.ServiceContext.Instance;
-                    Application.Run(new LoginForm());
+                    Application.Run(new Msgtest());
                 }
                 catch (Exception ex)
                 {
@@ -56,7 +56,7 @@ namespace TxoooProductUpload.UI
             _mutex = new System.Threading.Mutex(true, guid, out canRun);
             if (!canRun)
             {
-                MessageBoxEx.Show("已经在运行了!", ConstParams.APP_NAME,
+                MessageBoxEx.Show("已经在运行了!", AppInfo.AssemblyTitle,
                                         MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
@@ -64,12 +64,12 @@ namespace TxoooProductUpload.UI
                 canRun = IsConnect();
                 if (!canRun)
                 {
-                    MessageBoxEx.Show("网络异常，请检查网络是否连接!", ConstParams.APP_NAME,
+                    MessageBoxEx.Show("网络异常，请检查网络是否连接!", AppInfo.AssemblyTitle,
                                                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
-                    canRun = Update.CheckUpdateTask().Result == null;
+                    canRun = AppUpdater.CheckUpdateTask().Result == null;
                 }
             }
             return canRun;
@@ -92,16 +92,16 @@ namespace TxoooProductUpload.UI
             bool result = true;
             if (!InternetGetConnectedState(ref dwFlag, 0))
             {
-                LogHelper.GetLogger("newWork").LogInfo("网络连接已断开...");
+                LogHelper.GetLogger("netWork").LogInfo("网络连接已断开...");
                 result = false;
             }
             else if ((dwFlag & INTERNET_CONNECTION_MODEM) != 0)
             {
-                LogHelper.GetLogger("newWork").LogInfo("网络已连接[调治解调器]...");
+                LogHelper.GetLogger("netWork").LogInfo("网络已连接[调治解调器]...");
             }
             else if ((dwFlag & INTERNET_CONNECTION_LAN) != 0)
             {
-                LogHelper.GetLogger("newWork").LogInfo("网络已连接[网卡]...");
+                LogHelper.GetLogger("netWork").LogInfo("网络已连接[网卡]...");
             }
             return result;
         }

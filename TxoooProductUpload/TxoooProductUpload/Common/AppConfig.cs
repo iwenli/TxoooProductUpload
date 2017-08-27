@@ -20,6 +20,7 @@ namespace TxoooProductUpload.Common
             get { return Convert.ToBoolean(AppConfig.GetItem("remember")); }
         }
 
+
         #region 方法
         /// <summary>
         /// 添加配置文件的项，键为keyName，值为keyValue  

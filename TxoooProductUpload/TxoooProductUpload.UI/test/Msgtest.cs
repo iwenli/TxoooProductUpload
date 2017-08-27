@@ -25,6 +25,14 @@ namespace TxoooProductUpload.UI
             SendMessageHandler.OnSendMessage += Event_OnSendMessage;
             loginService.OnSendMessage += Event_OnSendMessage;
 
+            btnOK.Click += async (s, e) =>
+            {
+                btnOK.Enabled = false;
+                await productService.Run(3);
+                //var task = Task.Run(() => { productService.Run(); });
+                //Task.WaitAll(task);
+                btnOK.Enabled = true;
+            };
             //Task.Run(async () =>
             //{
             //    await loginService.Msg();
@@ -34,14 +42,14 @@ namespace TxoooProductUpload.UI
             //    }
             //});
 
-            Task.Run(async () =>
-            {
-                await productService.Msg();
-                for (int j = 0; j < 5; j++)
-                {
-                    AppendLog("j=" + j.ToString());
-                }
-            });
+            //Task.Run(async () =>
+            //{
+            //    await productService.Msg();
+            //    for (int j = 0; j < 5; j++)
+            //    {
+            //        AppendLog("j=" + j.ToString());
+            //    }
+            //});
 
         }
     }

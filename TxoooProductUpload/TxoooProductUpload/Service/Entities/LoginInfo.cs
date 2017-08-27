@@ -17,6 +17,16 @@ namespace TxoooProductUpload.Service.Entities
         /// <param name="uName"></param>
         /// <param name="pWd"></param>
         /// <param name="isRemember"></param>
+        public LoginInfo(string uName, string pWd, bool isRemember, bool isTest) : this(uName, pWd, isRemember)
+        {
+            IsTest = isTest;
+        }
+        /// <summary>
+        /// 初始化一个 LoginInfo 对象
+        /// </summary>
+        /// <param name="uName"></param>
+        /// <param name="pWd"></param>
+        /// <param name="isRemember"></param>
         public LoginInfo(string uName, string pWd, bool isRemember) : this()
         {
             UserName = uName;
@@ -55,6 +65,10 @@ namespace TxoooProductUpload.Service.Entities
         /// 最后一次登陆时间
         /// </summary>
         public DateTime LastLoginTime { set; get; }
+        /// <summary>
+        /// 是否测试环境
+        /// </summary>
+        public bool IsTest { set; get; }
 
         /// <summary>
         /// 登陆者商户信息

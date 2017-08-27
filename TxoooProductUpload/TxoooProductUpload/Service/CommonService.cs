@@ -26,6 +26,7 @@ namespace TxoooProductUpload.Service
         {
             var ipReg = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", RegexOptions.IgnoreCase);
             var url = @"http://1212.ip138.com/ic.asp";
+            url = @"http://www.ip168.com/json.do?view=myipaddress";
             var ctx = NetClient.Create<string>(HttpMethod.Get, url, allowAutoRedirect: true);
             await ctx.SendAsync();
             if (!ctx.IsValid())
@@ -46,6 +47,21 @@ namespace TxoooProductUpload.Service
                 }
             }
             return ip;
+        }
+
+        /// <summary>
+        /// 发送微信通知 Server酱免费服务
+        /// </summary>
+        /// <param name="title">消息标题</param>
+        /// <param name="msg">消息内容</param>
+        /// <returns></returns>
+        public async Task SendWxNotify(string title, string msg)
+        {
+            var url = @"https://sc.ftqq.com/SCU4952T19b4d5800b74cc1a7af7cdae0aebf02e586bc33d6943c.send";
+            var ctx = NetClient.Create<string>(HttpMethod.Post, url,
+                data: new { text = title, desp = msg }, allowAutoRedirect: true);
+            await ctx.SendAsync();
+
         }
     }
 }

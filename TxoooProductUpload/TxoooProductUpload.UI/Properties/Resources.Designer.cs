@@ -373,6 +373,16 @@ namespace TxoooProductUpload.UI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap block_16 {
+            get {
+                object obj = ResourceManager.GetObject("block_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap BoxBack {
             get {
                 object obj = ResourceManager.GetObject("BoxBack", resourceCulture);
@@ -553,6 +563,16 @@ namespace TxoooProductUpload.UI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap counseling_style_51 {
+            get {
+                object obj = ResourceManager.GetObject("counseling_style_51", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap Full_close_down {
             get {
                 object obj = ResourceManager.GetObject("Full_close_down", resourceCulture);
@@ -623,9 +643,29 @@ namespace TxoooProductUpload.UI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap info_16 {
+            get {
+                object obj = ResourceManager.GetObject("info_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap infoBg {
             get {
                 object obj = ResourceManager.GetObject("infoBg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap left_16 {
+            get {
+                object obj = ResourceManager.GetObject("left_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

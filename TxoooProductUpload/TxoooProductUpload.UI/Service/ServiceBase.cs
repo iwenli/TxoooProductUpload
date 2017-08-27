@@ -14,9 +14,10 @@ namespace TxoooProductUpload.UI.Service
     abstract class ServiceBase : SendMessageHandler
     {
 
-        public ServiceBase() {
-        
-}
+        public ServiceBase()
+        {
+
+        }
 
         /// <summary>
         /// 获取相对于data目录下的子目录
@@ -45,65 +46,78 @@ namespace TxoooProductUpload.UI.Service
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="args"></param>
-        public virtual void ErrorMessage(string msg, params object[] args)
+        public virtual Task ErrorMessage(string msg, params object[] args)
         {
-            if (args == null || args.Length == 0)
+            return Task.Run(() =>
             {
-                SendMessage(new SendMessageEventArgs(msg, MessageType.ERROR));
-            }
-            else
-            {
-                SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.ERROR));
-            }
-
+                if (args == null || args.Length == 0)
+                {
+                    SendMessage(new SendMessageEventArgs(msg, MessageType.ERROR));
+                }
+                else
+                {
+                    SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.ERROR));
+                }
+            });
         }
         /// <summary>
         /// 正常消息
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="args"></param>
-        public virtual void InfoMessage(string msg, params object[] args)
+        public virtual Task InfoMessage(string msg, params object[] args)
         {
-            if (args == null || args.Length == 0)
+            return Task.Run(() =>
             {
-                SendMessage(new SendMessageEventArgs(msg, MessageType.INFO));
-            }
-            else
-            {
-                SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.INFO));
-            }
+                if (args == null || args.Length == 0)
+                {
+                    SendMessage(new SendMessageEventArgs(msg, MessageType.INFO));
+                }
+                else
+                {
+                    SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.INFO));
+                }
+            });
         }
         /// <summary>
         /// 警告消息
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="args"></param>
-        public virtual void WarnMessage(string msg, params object[] args)
+        public virtual Task WarnMessage(string msg, params object[] args)
         {
-            if (args == null || args.Length == 0)
+            return Task.Run(() =>
             {
-                SendMessage(new SendMessageEventArgs(msg, MessageType.WARN));
-            }
-            else
-            {
-                SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.WARN));
-            }
+
+                if (args == null || args.Length == 0)
+                {
+                    SendMessage(new SendMessageEventArgs(msg, MessageType.WARN));
+                }
+                else
+                {
+                    SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.WARN));
+                }
+            });
         }
         /// <summary>
         /// 致命消息
         /// </summary>
         /// <param name="msg"></param>
         /// <param name="args"></param>
-        public virtual void FatalMessage(string msg, params object[] args)
+        public virtual Task FatalMessage(string msg, params object[] args)
         {
-            if (args == null || args.Length == 0)
+            return Task.Run(() =>
             {
-                SendMessage(new SendMessageEventArgs(msg, MessageType.FATAL));
-            }
-            else
-            {
-                SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.FATAL));
-            }
+
+                if (args == null || args.Length == 0)
+                {
+                    SendMessage(new SendMessageEventArgs(msg, MessageType.FATAL));
+                }
+                else
+                {
+                    SendMessage(new SendMessageEventArgs(string.Format(msg, args), MessageType.FATAL));
+                }
+            });
         }
         #endregion
     }

@@ -127,7 +127,8 @@ namespace TxoooProductUpload.UI.CefGlue
 
         protected override void Dispose(bool disposing)
         {
-            if (_browser != null && disposing) // TODO: ugly hack to avoid crashes when CefWebBrowser are Finalized and underlying objects already finalized
+            // TODO: ugly hack to avoid crashes when CefWebBrowser are Finalized and underlying objects already finalized
+            if (_browser != null && disposing) 
             {
                 var host = _browser.GetHost();
                 if (host != null)

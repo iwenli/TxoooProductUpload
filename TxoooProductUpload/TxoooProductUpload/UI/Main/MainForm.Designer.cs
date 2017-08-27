@@ -249,7 +249,7 @@ namespace TxoooProductUpload.UI.Main
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(550, 37);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(117, 37);
             this.toolStripStatusLabel2.Spring = true;
             // 
             // toolStripStatusLabel3

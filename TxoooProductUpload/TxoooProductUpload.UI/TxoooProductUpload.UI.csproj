@@ -49,6 +49,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Iwenli.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleUpdater, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c532149a76b9a64b, processorArchitecture=MSIL">
+      <HintPath>..\packages\fishlee.net.simpleupdater.4.3.0.0\lib\net45\SimpleUpdater.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -90,47 +94,57 @@
     <Compile Include="CefGlue\V8\TxCallJSEvent.cs" />
     <Compile Include="CefGlue\WlCefApp.cs" />
     <Compile Include="CefGlue\WlCefGlueLoader.cs" />
-    <Compile Include="Form\Login\LoginForm.cs">
+    <Compile Include="Common\AppConfigInfo.cs" />
+    <Compile Include="Common\AppUpdater.cs" />
+    <Compile Include="Common\Const\AppInfo.cs" />
+    <Compile Include="Common\Utils.cs" />
+    <Compile Include="Forms\MinForms\PhoneBorwser.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\Login\LoginForm.designer.cs">
+    <Compile Include="Forms\MinForms\PhoneBorwser.Designer.cs">
+      <DependentUpon>PhoneBorwser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Login\LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Login\LoginForm.designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\MinForms\InformationFrm.cs">
+    <Compile Include="Forms\MinForms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\MinForms\InformationFrm.designer.cs">
+    <Compile Include="Forms\MinForms\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MinForms\InformationFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MinForms\InformationFrm.designer.cs">
       <DependentUpon>InformationFrm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\MinForms\MsgBox.cs">
+    <Compile Include="Forms\MinForms\MsgBox.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form\MinForms\MsgBox.designer.cs">
+    <Compile Include="Forms\MinForms\MsgBox.designer.cs">
       <DependentUpon>MsgBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FrmMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FrmMain.designer.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Handler\SendMessageHandler.cs" />
-    <Compile Include="Form\Login\LoginCode.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Form\Login\LoginCode.designer.cs">
-      <DependentUpon>LoginCode.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="MainForm.designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form\Login\PwdErro.cs">
+    <Compile Include="Handler\SendMessageHandler.cs" />
+    <Compile Include="Forms\Login\LoginCode.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Form\Login\PwdErro.designer.cs">
+    <Compile Include="Forms\Login\LoginCode.designer.cs">
+      <DependentUpon>LoginCode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Login\PwdErro.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\Login\PwdErro.designer.cs">
       <DependentUpon>PwdErro.cs</DependentUpon>
     </Compile>
     <Compile Include="Service\Entities\LoginListInfo.cs" />
@@ -155,23 +169,29 @@
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Login\LoginForm.resx">
+    <EmbeddedResource Include="Forms\MinForms\PhoneBorwser.resx">
+      <DependentUpon>PhoneBorwser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Login\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Login\LoginCode.resx">
+    <EmbeddedResource Include="Forms\Login\LoginCode.resx">
       <DependentUpon>LoginCode.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\Login\PwdErro.resx">
+    <EmbeddedResource Include="Forms\Login\PwdErro.resx">
       <DependentUpon>PwdErro.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\MinForms\InformationFrm.resx">
+    <EmbeddedResource Include="Forms\MinForms\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MinForms\InformationFrm.resx">
       <DependentUpon>InformationFrm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form\MinForms\MsgBox.resx">
+    <EmbeddedResource Include="Forms\MinForms\MsgBox.resx">
       <DependentUpon>MsgBox.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmMain.resx">
-      <DependentUpon>FrmMain.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="test\Msgtest.resx">
       <DependentUpon>Msgtest.cs</DependentUpon>
@@ -254,6 +274,7 @@
     <None Include="lib\cef\locales\zh-TW.pak" />
     <None Include="lib\cef\natives_blob.bin" />
     <None Include="lib\cef\snapshot_blob.bin" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -271,6 +292,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="bin\Debug\Wave.dll" />
     <Content Include="CefGlue\V8\ExampleObject.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -290,33 +312,38 @@
     <Content Include="lib\CSkin.dll" />
     <Content Include="lib\CSkin.XML" />
     <Content Include="lib\Iwenli.dll" />
-    <Content Include="Skin\00001[800x90x24BPP].jpg">
+    <None Include="Resources\block_16.png" />
+    <None Include="Resources\left_16.png" />
+    <None Include="Resources\counseling_style_51.png" />
+    <None Include="Resources\info_16.png" />
+    <Content Include="Skin\copyright_bg2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\1.jpg">
+    <Content Include="Skin\FormSkin\原木韵味.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\2.jpg">
+    <Content Include="Skin\FormSkin\固若精钢.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\3.jpg">
+    <Content Include="Skin\FormSkin\恭贺新春.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\4.jpg">
+    <Content Include="Skin\FormSkin\悠然百合.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\5.jpg">
+    <Content Include="Skin\FormSkin\漫舞派对.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\6.jpg">
+    <Content Include="Skin\FormSkin\炫彩紫色.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\7.jpg">
+    <Content Include="Skin\FormSkin\绿化环保.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\8.jpg">
+    <Content Include="Skin\FormSkin\蔚蓝风车.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="lib\Wave.dll" />
     <None Include="Resources\BaiduShurufa_2014-8-2_16-32-58.png" />
     <None Include="Resources\icon.ico" />
     <None Include="Resources\_icon.ico" />
@@ -403,7 +430,7 @@
     <None Include="Resources\4.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\" />
+    <Folder Include="lib\WebKit.NET-0.5-bin-cairo\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

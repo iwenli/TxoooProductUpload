@@ -76,7 +76,8 @@ namespace TxoooProductUpload.UI.CefGlue
                 //此处的目的是让浏览器的消息循环在一个单独的线程中执行
                 //注意：强烈建议设置成true,要不然你得在你的程序中自己处理消息循环；自己调用CefDoMessageLoopWork()
                 MultiThreadedMessageLoop = true,
-
+                //UserAgent= "Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Mobile Safari/537.36",
+                //UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1",
                 LogSeverity = CefLogSeverity.Disable,
                 LogFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"log\CefGlue.log"),
 
@@ -85,6 +86,7 @@ namespace TxoooProductUpload.UI.CefGlue
                 Locale = "zh_CN",
                 LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"locales"),
                 //RemoteDebuggingPort = 7789,
+
             };
 
             //这句代码把创建的配置信息和命令行信息传递个cef的运行时

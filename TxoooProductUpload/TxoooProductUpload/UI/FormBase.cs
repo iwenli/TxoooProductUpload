@@ -140,7 +140,7 @@ namespace TxoooProductUpload.UI
         /// <param name="msg">提示内容</param>
         protected void SM(string msg)
         {
-            MessageBox.Show(msg, ConstParams.APP_NAME);
+            MessageBox.Show(msg, ConstParams.AssemblyTitle);
         }
         /// <summary>
         /// 显示错误内容
@@ -148,7 +148,7 @@ namespace TxoooProductUpload.UI
         /// <param name="msg">错误内容</param>
         protected void EM(string msg)
         {
-            MessageBox.Show(msg, ConstParams.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(msg, ConstParams.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         /// <summary>
         /// 显示信息提示
@@ -156,7 +156,7 @@ namespace TxoooProductUpload.UI
         /// <param name="msg">错误内容</param>
         protected void IS(string msg)
         {
-            MessageBox.Show(msg, ConstParams.APP_NAME, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(msg, ConstParams.AssemblyTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         /// <summary>
         /// 显示提示，带ye和no提示的
@@ -164,7 +164,7 @@ namespace TxoooProductUpload.UI
         /// <param name="msg">错误内容</param>
         protected DialogResult SMYN(string msg)
         {
-            return MessageBox.Show(msg, ConstParams.APP_NAME, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            return MessageBox.Show(msg, ConstParams.AssemblyTitle, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
         }
 
         #endregion

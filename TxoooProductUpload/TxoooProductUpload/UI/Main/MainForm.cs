@@ -54,8 +54,8 @@ namespace TxoooProductUpload.UI.Main
         private async void MainForm_Load(object sender, EventArgs e)
         {
             await InitServiceContext();
-            this.Text = ConstParams.APP_NAME + string.Format(" V{0}    PowerBy:{1}"
-                , ConstParams.Version.Substring(0, ConstParams.Version.LastIndexOf('.'))
+            this.Text = ConstParams.AssemblyTitle + string.Format(" V{0}    PowerBy:{1}"
+                , ConstParams.AssemblyVersion.Substring(0, ConstParams.AssemblyVersion.LastIndexOf('.'))
                 , ConstParams.APP_AUTHOR);
             InitToolbar();
             InitStatusBar();

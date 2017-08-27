@@ -19,7 +19,7 @@ namespace TxoooProductUpload.UI.Main
         {
             _context = context;
             InitializeComponent();
-            Text = "登录 " + ConstParams.APP_NAME;
+            Text = "登录 " + ConstParams.AssemblyTitle;
             Init();
         }
 
