@@ -65,8 +65,8 @@ namespace TxoooProductUpload.UI.Service
             //{
             //    AddProducts(3);
             //});
-            Parallel.For(0, count, (i) => {
-                AddProducts(i);
+            Parallel.For(0, count, async(i) => {
+               await AddProducts(i);
             });
             //for (int i = 0; i < count; i++)
             //{

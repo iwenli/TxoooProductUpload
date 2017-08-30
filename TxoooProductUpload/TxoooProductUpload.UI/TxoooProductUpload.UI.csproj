@@ -325,6 +325,9 @@
     <None Include="Resources\left_16.png" />
     <None Include="Resources\counseling_style_51.png" />
     <None Include="Resources\info_16.png" />
+    <None Include="Resources\left_round.png" />
+    <None Include="Resources\right_round.png" />
+    <None Include="Resources\Refresh_round.png" />
     <Content Include="Skin\copyright_bg2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

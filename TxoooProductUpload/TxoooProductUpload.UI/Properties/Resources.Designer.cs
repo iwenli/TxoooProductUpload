@@ -673,6 +673,16 @@ namespace TxoooProductUpload.UI.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap left_round {
+            get {
+                object obj = ResourceManager.GetObject("left_round", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap main_1 {
             get {
                 object obj = ResourceManager.GetObject("main_1", resourceCulture);
@@ -786,6 +796,26 @@ namespace TxoooProductUpload.UI.Properties {
         internal static System.Drawing.Bitmap noon {
             get {
                 object obj = ResourceManager.GetObject("noon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Refresh_round {
+            get {
+                object obj = ResourceManager.GetObject("Refresh_round", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap right_round {
+            get {
+                object obj = ResourceManager.GetObject("right_round", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

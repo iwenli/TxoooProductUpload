@@ -128,7 +128,7 @@ namespace TxoooProductUpload.UI
             this.tabShow.PageNorml = null;
             this.tabShow.SelectedIndex = 0;
             this.tabShow.ShowToolTips = true;
-            this.tabShow.Size = new System.Drawing.Size(1000, 473);
+            this.tabShow.Size = new System.Drawing.Size(992, 573);
             this.tabShow.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabShow.TabIndex = 2;
             this.tabShow.SelectedIndexChanged += new System.EventHandler(this.tabShow_SelectedIndexChanged);
@@ -142,7 +142,7 @@ namespace TxoooProductUpload.UI
             this.tabPage1.Location = new System.Drawing.Point(0, 30);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage1.Size = new System.Drawing.Size(992, 543);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.TabItemImage = null;
             this.tabPage1.Text = "主页";
@@ -153,7 +153,7 @@ namespace TxoooProductUpload.UI
             this.cefWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cefWebBrowser1.Location = new System.Drawing.Point(0, 30);
             this.cefWebBrowser1.Name = "cefWebBrowser1";
-            this.cefWebBrowser1.Size = new System.Drawing.Size(1000, 413);
+            this.cefWebBrowser1.Size = new System.Drawing.Size(992, 513);
             this.cefWebBrowser1.StartUrl = "http://www.7518.cn";
             this.cefWebBrowser1.TabIndex = 7;
             // 
@@ -169,7 +169,7 @@ namespace TxoooProductUpload.UI
             this.skinPanel1.MouseBack = null;
             this.skinPanel1.Name = "skinPanel1";
             this.skinPanel1.NormlBack = null;
-            this.skinPanel1.Size = new System.Drawing.Size(1000, 30);
+            this.skinPanel1.Size = new System.Drawing.Size(992, 30);
             this.skinPanel1.TabIndex = 6;
             // 
             // tabPage2
@@ -444,7 +444,7 @@ namespace TxoooProductUpload.UI
             this.ToolShow.Location = new System.Drawing.Point(4, 32);
             this.ToolShow.Name = "ToolShow";
             this.ToolShow.RadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            this.ToolShow.Size = new System.Drawing.Size(1000, 66);
+            this.ToolShow.Size = new System.Drawing.Size(992, 66);
             this.ToolShow.SkinAllColor = true;
             this.ToolShow.TabIndex = 1;
             this.ToolShow.Text = "skinToolStrip1";
@@ -555,9 +555,9 @@ namespace TxoooProductUpload.UI
             this.stStates,
             this.stLoginInfo,
             this.stCompany});
-            this.ss.Location = new System.Drawing.Point(4, 571);
+            this.ss.Location = new System.Drawing.Point(4, 671);
             this.ss.Name = "ss";
-            this.ss.Size = new System.Drawing.Size(1000, 25);
+            this.ss.Size = new System.Drawing.Size(992, 25);
             this.ss.TabIndex = 4;
             this.ss.Text = "statusStrip1";
             // 
@@ -572,7 +572,7 @@ namespace TxoooProductUpload.UI
             // stLoginInfo
             // 
             this.stLoginInfo.Name = "stLoginInfo";
-            this.stLoginInfo.Size = new System.Drawing.Size(777, 20);
+            this.stLoginInfo.Size = new System.Drawing.Size(769, 20);
             this.stLoginInfo.Spring = true;
             this.stLoginInfo.Text = "toolStripStatusLabel2";
             // 
@@ -593,7 +593,7 @@ namespace TxoooProductUpload.UI
             this.BorderPalace = ((System.Drawing.Image)(resources.GetObject("$this.BorderPalace")));
             this.CaptionFont = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.CaptionHeight = 28;
-            this.ClientSize = new System.Drawing.Size(1008, 600);
+            this.ClientSize = new System.Drawing.Size(1000, 700);
             this.CloseBoxSize = new System.Drawing.Size(39, 20);
             this.CloseDownBack = ((System.Drawing.Image)(resources.GetObject("$this.CloseDownBack")));
             this.CloseMouseBack = ((System.Drawing.Image)(resources.GetObject("$this.CloseMouseBack")));
@@ -616,7 +616,7 @@ namespace TxoooProductUpload.UI
             this.MaxSize = new System.Drawing.Size(28, 20);
             this.MiniDownBack = ((System.Drawing.Image)(resources.GetObject("$this.MiniDownBack")));
             this.MiniMouseBack = ((System.Drawing.Image)(resources.GetObject("$this.MiniMouseBack")));
-            this.MinimumSize = new System.Drawing.Size(1000, 600);
+            this.MinimumSize = new System.Drawing.Size(1000, 700);
             this.MiniNormlBack = ((System.Drawing.Image)(resources.GetObject("$this.MiniNormlBack")));
             this.MiniSize = new System.Drawing.Size(28, 20);
             this.Name = "MainForm";
@@ -626,18 +626,18 @@ namespace TxoooProductUpload.UI
             this.ShadowPalace = ((System.Drawing.Image)(resources.GetObject("$this.ShadowPalace")));
             this.ShowSystemMenu = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            cmSysButton1.Bounds = new System.Drawing.Rectangle(885, -1, 28, 20);
+            cmSysButton1.Bounds = new System.Drawing.Rectangle(877, -1, 28, 20);
             cmSysButton1.BoxState = CCWin.ControlBoxState.Normal;
-            cmSysButton1.Location = new System.Drawing.Point(885, -1);
+            cmSysButton1.Location = new System.Drawing.Point(877, -1);
             cmSysButton1.Name = "ToolSet";
             cmSysButton1.OwnerForm = this;
             cmSysButton1.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonDown")));
             cmSysButton1.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonMouse")));
             cmSysButton1.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonNorml")));
             cmSysButton1.ToolTip = "设置";
-            cmSysButton2.Bounds = new System.Drawing.Rectangle(857, -1, 28, 20);
+            cmSysButton2.Bounds = new System.Drawing.Rectangle(849, -1, 28, 20);
             cmSysButton2.BoxState = CCWin.ControlBoxState.Normal;
-            cmSysButton2.Location = new System.Drawing.Point(857, -1);
+            cmSysButton2.Location = new System.Drawing.Point(849, -1);
             cmSysButton2.Name = "ToolSkin";
             cmSysButton2.OwnerForm = this;
             cmSysButton2.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton2.SysButtonDown")));
