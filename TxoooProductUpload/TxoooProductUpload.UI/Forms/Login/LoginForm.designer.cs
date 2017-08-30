@@ -48,7 +48,7 @@ namespace TxoooProductUpload.UI
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            CCWin.CmSysButton cmSysButton1 = new CCWin.CmSysButton();
+            CCWin.CmSysButton cmSysButton3 = new CCWin.CmSysButton();
             this.pnlTx = new CCWin.SkinControl.SkinPanel();
             this.pnlHeadPic = new CCWin.SkinControl.SkinPanel();
             this.btnDuoId = new CCWin.SkinControl.SkinButton();
@@ -70,6 +70,9 @@ namespace TxoooProductUpload.UI
             this.tsLogout = new System.Windows.Forms.ToolStripMenuItem();
             this.tsExit = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuId = new CCWin.SkinControl.SkinContextMenuStrip();
+            this.prbLoading = new System.Windows.Forms.ProgressBar();
+            this.pwdErro = new TxoooProductUpload.UI.PwdErro();
+            this.loginCode = new TxoooProductUpload.UI.LoginCode();
             this.ItemImonline = new System.Windows.Forms.ToolStripMenuItem();
             this.ItemQme = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
@@ -79,9 +82,6 @@ namespace TxoooProductUpload.UI
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.ItemInVisble = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuState = new CCWin.SkinControl.SkinContextMenuStrip();
-            this.prbLoading = new System.Windows.Forms.ProgressBar();
-            this.pwdErro = new TxoooProductUpload.UI.PwdErro();
-            this.loginCode = new TxoooProductUpload.UI.LoginCode();
             this.pnlTx.SuspendLayout();
             this.txtPwd.SuspendLayout();
             this.txtId.SuspendLayout();
@@ -433,7 +433,7 @@ namespace TxoooProductUpload.UI
             this.NotifyMenu.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
             this.NotifyMenu.Name = "MenuState";
             this.NotifyMenu.RadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            this.NotifyMenu.Size = new System.Drawing.Size(153, 98);
+            this.NotifyMenu.Size = new System.Drawing.Size(152, 76);
             this.NotifyMenu.SkinAllColor = true;
             this.NotifyMenu.TitleAnamorphosis = false;
             this.NotifyMenu.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(233)))), ((int)(((byte)(236)))));
@@ -452,14 +452,14 @@ namespace TxoooProductUpload.UI
             // tsSeparator
             // 
             this.tsSeparator.Name = "tsSeparator";
-            this.tsSeparator.Size = new System.Drawing.Size(149, 6);
+            this.tsSeparator.Size = new System.Drawing.Size(148, 6);
             // 
             // tsLogout
             // 
             this.tsLogout.Enabled = false;
             this.tsLogout.Image = global::TxoooProductUpload.UI.Properties.Resources.left_16;
             this.tsLogout.Name = "tsLogout";
-            this.tsLogout.Size = new System.Drawing.Size(152, 22);
+            this.tsLogout.Size = new System.Drawing.Size(151, 22);
             this.tsLogout.Text = "注销(&L)";
             this.tsLogout.Click += new System.EventHandler(this.tsLogout_Click);
             // 
@@ -501,6 +501,41 @@ namespace TxoooProductUpload.UI
             this.MenuId.TitleRadius = 4;
             this.MenuId.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             this.MenuId.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.MenuId_Closing);
+            // 
+            // prbLoading
+            // 
+            this.prbLoading.BackColor = System.Drawing.Color.DarkRed;
+            this.prbLoading.ForeColor = System.Drawing.Color.Blue;
+            this.prbLoading.Location = new System.Drawing.Point(0, 184);
+            this.prbLoading.Name = "prbLoading";
+            this.prbLoading.Size = new System.Drawing.Size(430, 3);
+            this.prbLoading.TabIndex = 44;
+            this.prbLoading.Visible = false;
+            // 
+            // pwdErro
+            // 
+            this.pwdErro.BackColor = System.Drawing.Color.Transparent;
+            this.pwdErro.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pwdErro.BackgroundImage")));
+            this.pwdErro.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pwdErro.Diglog = System.Windows.Forms.DialogResult.None;
+            this.pwdErro.Location = new System.Drawing.Point(438, 25);
+            this.pwdErro.Name = "pwdErro";
+            this.pwdErro.Size = new System.Drawing.Size(430, 300);
+            this.pwdErro.TabIndex = 42;
+            this.pwdErro.Visible = false;
+            // 
+            // loginCode
+            // 
+            this.loginCode.BackColor = System.Drawing.Color.Transparent;
+            this.loginCode.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("loginCode.BackgroundImage")));
+            this.loginCode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.loginCode.Diglog = System.Windows.Forms.DialogResult.None;
+            this.loginCode.Location = new System.Drawing.Point(443, 25);
+            this.loginCode.Name = "loginCode";
+            this.loginCode.Size = new System.Drawing.Size(430, 300);
+            this.loginCode.TabIndex = 43;
+            this.loginCode.Visible = false;
+            this.loginCode.VisibleChanged += new System.EventHandler(this.loginCode_VisibleChanged);
             // 
             // ItemImonline
             // 
@@ -579,41 +614,6 @@ namespace TxoooProductUpload.UI
             this.MenuState.TitleRadius = 2;
             this.MenuState.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             // 
-            // prbLoading
-            // 
-            this.prbLoading.BackColor = System.Drawing.Color.DarkRed;
-            this.prbLoading.ForeColor = System.Drawing.Color.Blue;
-            this.prbLoading.Location = new System.Drawing.Point(0, 184);
-            this.prbLoading.Name = "prbLoading";
-            this.prbLoading.Size = new System.Drawing.Size(430, 3);
-            this.prbLoading.TabIndex = 44;
-            this.prbLoading.Visible = false;
-            // 
-            // pwdErro
-            // 
-            this.pwdErro.BackColor = System.Drawing.Color.Transparent;
-            this.pwdErro.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pwdErro.BackgroundImage")));
-            this.pwdErro.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pwdErro.Diglog = System.Windows.Forms.DialogResult.None;
-            this.pwdErro.Location = new System.Drawing.Point(438, 25);
-            this.pwdErro.Name = "pwdErro";
-            this.pwdErro.Size = new System.Drawing.Size(430, 300);
-            this.pwdErro.TabIndex = 42;
-            this.pwdErro.Visible = false;
-            // 
-            // loginCode
-            // 
-            this.loginCode.BackColor = System.Drawing.Color.Transparent;
-            this.loginCode.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("loginCode.BackgroundImage")));
-            this.loginCode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.loginCode.Diglog = System.Windows.Forms.DialogResult.None;
-            this.loginCode.Location = new System.Drawing.Point(443, 25);
-            this.loginCode.Name = "loginCode";
-            this.loginCode.Size = new System.Drawing.Size(430, 300);
-            this.loginCode.TabIndex = 43;
-            this.loginCode.Visible = false;
-            this.loginCode.VisibleChanged += new System.EventHandler(this.loginCode_VisibleChanged);
-            // 
             // LoginForm
             // 
             this.AcceptButton = this.btnLogin;
@@ -670,18 +670,18 @@ namespace TxoooProductUpload.UI
             this.ShowDrawIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            cmSysButton1.Bounds = new System.Drawing.Rectangle(340, 0, 30, 30);
-            cmSysButton1.BoxState = CCWin.ControlBoxState.Normal;
-            cmSysButton1.Location = new System.Drawing.Point(340, 0);
-            cmSysButton1.Name = "SysSet";
-            cmSysButton1.OwnerForm = this;
-            cmSysButton1.Size = new System.Drawing.Size(30, 30);
-            cmSysButton1.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonDown")));
-            cmSysButton1.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonMouse")));
-            cmSysButton1.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonNorml")));
-            cmSysButton1.ToolTip = "设置";
+            cmSysButton3.Bounds = new System.Drawing.Rectangle(340, 0, 30, 30);
+            cmSysButton3.BoxState = CCWin.ControlBoxState.Normal;
+            cmSysButton3.Location = new System.Drawing.Point(340, 0);
+            cmSysButton3.Name = "SysSet";
+            cmSysButton3.OwnerForm = this;
+            cmSysButton3.Size = new System.Drawing.Size(30, 30);
+            cmSysButton3.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonDown")));
+            cmSysButton3.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonMouse")));
+            cmSysButton3.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonNorml")));
+            cmSysButton3.ToolTip = "设置";
             this.SysButtonItems.AddRange(new CCWin.CmSysButton[] {
-            cmSysButton1});
+            cmSysButton3});
             this.Text = "";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FrmLogin_Load);
@@ -722,6 +722,8 @@ namespace TxoooProductUpload.UI
         private PwdErro pwdErro;
         private LoginCode loginCode;
         private CCWin.SkinControl.SkinContextMenuStrip MenuId;
+        private System.Windows.Forms.ProgressBar prbLoading;
+        private System.Windows.Forms.ToolStripMenuItem tsLogout;
         private System.Windows.Forms.ToolStripMenuItem ItemImonline;
         private System.Windows.Forms.ToolStripMenuItem ItemQme;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
@@ -731,8 +733,6 @@ namespace TxoooProductUpload.UI
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem ItemInVisble;
         private CCWin.SkinControl.SkinContextMenuStrip MenuState;
-        private System.Windows.Forms.ProgressBar prbLoading;
-        private System.Windows.Forms.ToolStripMenuItem tsLogout;
     }
 }
 

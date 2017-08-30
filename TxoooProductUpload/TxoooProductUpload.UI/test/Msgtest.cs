@@ -28,7 +28,7 @@ namespace TxoooProductUpload.UI
             btnOK.Click += async (s, e) =>
             {
                 btnOK.Enabled = false;
-                await productService.Run(3);
+                await productService.Run(50);
                 //var task = Task.Run(() => { productService.Run(); });
                 //Task.WaitAll(task);
                 btnOK.Enabled = true;

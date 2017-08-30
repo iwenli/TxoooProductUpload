@@ -588,9 +588,6 @@
   <metadata name="MenuId.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="MenuState.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>114, 17</value>
-  </metadata>
   <data name="pwdErro.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAa4AAAFKCAYAAABFILsOAAAABGdBTUEAALGPC/xhBQAADEJJREFUeF7t
@@ -707,6 +704,9 @@
         AIgiXAAEuf3KWwDBnTRT3RlKdgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="MenuState.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>114, 17</value>
+  </metadata>
   <data name="$this.Back" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAa4AAAC4CAYAAAC7DQioAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -1602,7 +1602,7 @@
         gkPJYLO5BxG3R1lAoaeOAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="cmSysButton1.SysButtonDown" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton3.SysButtonDown" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAC9SURBVEhL7dIxCsIwFMZxL1gQRHAqiOcLuETBaG7Q
@@ -1611,7 +1611,7 @@
         +U6JAjkMc7zv+8swDFdqFFaFASFr7R6oUVgd/haHi+FwMRwuJFZPJ7+NUy5xEXgAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="cmSysButton1.SysButtonMouse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton3.SysButtonMouse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADESURBVEhL7dIxCsIwFMZxT1NwEBycFASPlj1byexU
@@ -1621,7 +1621,7 @@
         TkSuQmCC
 </value>
   </data>
-  <data name="cmSysButton1.SysButtonNorml" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton3.SysButtonNorml" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADySURBVEhLxY8xCsJAEEUtLCwsLBUsPLGdYiGCeJUk

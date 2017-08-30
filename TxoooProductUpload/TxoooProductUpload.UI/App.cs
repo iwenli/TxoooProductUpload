@@ -33,7 +33,7 @@ namespace TxoooProductUpload.UI
                 try
                 {
                     Context = Service.ServiceContext.Instance;
-                    Application.Run(new Msgtest());
+                    Application.Run(new LoginForm());
                 }
                 catch (Exception ex)
                 {
