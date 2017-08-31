@@ -118,6 +118,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Serialize.cs" />
+    <Compile Include="Entities\Product\ProductSourceInfo.cs" />
+    <Compile Include="Entities\Product\ProductSourceType.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\Entities\IpInfo.cs" />
     <Compile Include="_open\Cef\CefGlue.WindowsForms\AddressChangedEventArgs.cs" />

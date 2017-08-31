@@ -97,6 +97,7 @@
     <Compile Include="Common\AppConfigInfo.cs" />
     <Compile Include="Common\AppUpdater.cs" />
     <Compile Include="Common\Const\AppInfo.cs" />
+    <Compile Include="Common\Extended\Winform\DataGridViewCheckBoxHeaderCell.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Forms\MinForms\PhoneBorwser.cs">
       <SubType>Form</SubType>
@@ -284,6 +285,7 @@
     <None Include="lib\cef\natives_blob.bin" />
     <None Include="lib\cef\snapshot_blob.bin" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\TxoooProductUpload.Entities.Product.ProductSourceInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

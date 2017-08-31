@@ -94,7 +94,7 @@ namespace TxoooProductUpload.UI
                 if (page.Tag != null)
                 {
                     Assembly asb = Assembly.GetExecutingAssembly();//得到当前的程序集
-                    object c = asb.CreateInstance("TxoooProductUpload.UI." + page.Tag.ToString(), true);
+                    object c = asb.CreateInstance("TxoooProductUpload.UI.Forms.SubForms." + page.Tag.ToString(), true);
                     if (c != null)
                     {
                         Form f = (Form)c;

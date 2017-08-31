@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TxoooProductUpload.UI.Common.Extended.Winform;
 
 namespace TxoooProductUpload.UI.Forms.SubForms
 {
@@ -18,6 +19,17 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         public CrawlProductsForm()
         {
             InitializeComponent();
+
+            DataGridViewCheckBoxColumn colCB = new DataGridViewCheckBoxColumn();
+            DataGridViewCheckBoxHeaderCell cbHeader = new DataGridViewCheckBoxHeaderCell();
+            colCB.HeaderCell = cbHeader;
+            sdgvProduct.Columns.Add(colCB);
+            cbHeader.OnCheckBoxClicked += CbHeader_OnCheckBoxClicked;
+        }
+
+        private void CbHeader_OnCheckBoxClicked(object sender, datagridviewCheckboxHeaderEventArgs e)
+        {
+            
         }
     }
 }

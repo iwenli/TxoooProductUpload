@@ -126,7 +126,7 @@ namespace TxoooProductUpload.UI
             this.tabShow.PageHover = ((System.Drawing.Image)(resources.GetObject("tabShow.PageHover")));
             this.tabShow.PageImagePosition = CCWin.SkinControl.SkinTabControl.ePageImagePosition.Left;
             this.tabShow.PageNorml = null;
-            this.tabShow.SelectedIndex = 0;
+            this.tabShow.SelectedIndex = 1;
             this.tabShow.ShowToolTips = true;
             this.tabShow.Size = new System.Drawing.Size(992, 573);
             this.tabShow.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
@@ -179,10 +179,10 @@ namespace TxoooProductUpload.UI
             this.tabPage2.Location = new System.Drawing.Point(0, 30);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage2.Size = new System.Drawing.Size(992, 543);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.TabItemImage = null;
-            this.tabPage2.Tag = "FrmBbx";
+            this.tabPage2.Tag = "CrawlProductsForm";
             this.tabPage2.Text = "抓取商品";
             // 
             // tabPage3
@@ -192,7 +192,7 @@ namespace TxoooProductUpload.UI
             this.tabPage3.Location = new System.Drawing.Point(0, 30);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage3.Size = new System.Drawing.Size(992, 543);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.TabItemImage = null;
             this.tabPage3.Tag = "FrmScSo";
@@ -205,7 +205,7 @@ namespace TxoooProductUpload.UI
             this.tabPage4.Location = new System.Drawing.Point(0, 30);
             this.tabPage4.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage4.Size = new System.Drawing.Size(992, 543);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.TabItemImage = null;
             this.tabPage4.Tag = "FrmSpy";
@@ -218,7 +218,7 @@ namespace TxoooProductUpload.UI
             this.tabPage5.Location = new System.Drawing.Point(0, 30);
             this.tabPage5.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage5.Size = new System.Drawing.Size(992, 543);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.TabItemImage = null;
             this.tabPage5.Tag = "FrmWebSpy";
@@ -231,7 +231,7 @@ namespace TxoooProductUpload.UI
             this.tabPage6.Location = new System.Drawing.Point(0, 30);
             this.tabPage6.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage6.Size = new System.Drawing.Size(992, 543);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.TabItemImage = null;
             this.tabPage6.Tag = "FrmPrcColor";
@@ -244,7 +244,7 @@ namespace TxoooProductUpload.UI
             this.tabPage7.Location = new System.Drawing.Point(0, 30);
             this.tabPage7.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage7.Size = new System.Drawing.Size(992, 543);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.TabItemImage = null;
             this.tabPage7.Tag = "FrmPrcImg";
@@ -257,7 +257,7 @@ namespace TxoooProductUpload.UI
             this.tabPage8.Location = new System.Drawing.Point(0, 30);
             this.tabPage8.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(1000, 443);
+            this.tabPage8.Size = new System.Drawing.Size(992, 543);
             this.tabPage8.TabIndex = 7;
             this.tabPage8.TabItemImage = null;
             this.tabPage8.Tag = "FrmExeManager";
@@ -304,8 +304,6 @@ namespace TxoooProductUpload.UI
             // tool1
             // 
             this.tool1.AutoSize = false;
-            this.tool1.Checked = true;
-            this.tool1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tool1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tool1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool1.Margin = new System.Windows.Forms.Padding(0);
@@ -317,6 +315,8 @@ namespace TxoooProductUpload.UI
             // tool2
             // 
             this.tool2.AutoSize = false;
+            this.tool2.Checked = true;
+            this.tool2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tool2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tool2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool2.Margin = new System.Windows.Forms.Padding(0);
