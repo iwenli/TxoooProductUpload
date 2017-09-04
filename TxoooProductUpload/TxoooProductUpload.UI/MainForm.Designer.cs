@@ -126,7 +126,7 @@ namespace TxoooProductUpload.UI
             this.tabShow.PageHover = ((System.Drawing.Image)(resources.GetObject("tabShow.PageHover")));
             this.tabShow.PageImagePosition = CCWin.SkinControl.SkinTabControl.ePageImagePosition.Left;
             this.tabShow.PageNorml = null;
-            this.tabShow.SelectedIndex = 1;
+            this.tabShow.SelectedIndex = 2;
             this.tabShow.ShowToolTips = true;
             this.tabShow.Size = new System.Drawing.Size(992, 573);
             this.tabShow.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
@@ -195,7 +195,7 @@ namespace TxoooProductUpload.UI
             this.tabPage3.Size = new System.Drawing.Size(992, 543);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.TabItemImage = null;
-            this.tabPage3.Tag = "FrmScSo";
+            this.tabPage3.Tag = "";
             this.tabPage3.Text = "整店复制";
             // 
             // tabPage4
@@ -308,31 +308,31 @@ namespace TxoooProductUpload.UI
             this.tool1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool1.Margin = new System.Windows.Forms.Padding(0);
             this.tool1.Name = "tool1";
-            this.tool1.Size = new System.Drawing.Size(60, 55);
+            this.tool1.Size = new System.Drawing.Size(60, 60);
             this.tool1.Tag = "0";
             this.tool1.Text = "主页";
             // 
             // tool2
             // 
             this.tool2.AutoSize = false;
-            this.tool2.Checked = true;
-            this.tool2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tool2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tool2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool2.Margin = new System.Windows.Forms.Padding(0);
             this.tool2.Name = "tool2";
-            this.tool2.Size = new System.Drawing.Size(60, 55);
+            this.tool2.Size = new System.Drawing.Size(60, 60);
             this.tool2.Tag = "1";
             this.tool2.Text = "百宝箱";
             // 
             // tool3
             // 
             this.tool3.AutoSize = false;
+            this.tool3.Checked = true;
+            this.tool3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tool3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tool3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool3.Margin = new System.Windows.Forms.Padding(0);
             this.tool3.Name = "tool3";
-            this.tool3.Size = new System.Drawing.Size(60, 55);
+            this.tool3.Size = new System.Drawing.Size(60, 60);
             this.tool3.Tag = "2";
             this.tool3.Text = "手册查询";
             // 
@@ -343,7 +343,7 @@ namespace TxoooProductUpload.UI
             this.tool4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool4.Margin = new System.Windows.Forms.Padding(0);
             this.tool4.Name = "tool4";
-            this.tool4.Size = new System.Drawing.Size(60, 55);
+            this.tool4.Size = new System.Drawing.Size(60, 60);
             this.tool4.Tag = "3";
             this.tool4.Text = "窗口SPY";
             // 
@@ -354,7 +354,7 @@ namespace TxoooProductUpload.UI
             this.tool5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool5.Margin = new System.Windows.Forms.Padding(0);
             this.tool5.Name = "tool5";
-            this.tool5.Size = new System.Drawing.Size(60, 55);
+            this.tool5.Size = new System.Drawing.Size(60, 60);
             this.tool5.Tag = "4";
             this.tool5.Text = "网页SPY";
             // 
@@ -365,7 +365,7 @@ namespace TxoooProductUpload.UI
             this.tool6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool6.Margin = new System.Windows.Forms.Padding(0);
             this.tool6.Name = "tool6";
-            this.tool6.Size = new System.Drawing.Size(60, 55);
+            this.tool6.Size = new System.Drawing.Size(60, 60);
             this.tool6.Tag = "5";
             this.tool6.Text = "屏幕取色";
             // 
@@ -376,7 +376,7 @@ namespace TxoooProductUpload.UI
             this.tool7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool7.Margin = new System.Windows.Forms.Padding(0);
             this.tool7.Name = "tool7";
-            this.tool7.Size = new System.Drawing.Size(60, 55);
+            this.tool7.Size = new System.Drawing.Size(60, 60);
             this.tool7.Tag = "6";
             this.tool7.Text = "屏幕截图";
             // 
@@ -387,7 +387,7 @@ namespace TxoooProductUpload.UI
             this.tool8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool8.Margin = new System.Windows.Forms.Padding(0);
             this.tool8.Name = "tool8";
-            this.tool8.Size = new System.Drawing.Size(60, 55);
+            this.tool8.Size = new System.Drawing.Size(60, 60);
             this.tool8.Tag = "7";
             this.tool8.Text = "进程管理";
             // 
@@ -490,8 +490,6 @@ namespace TxoooProductUpload.UI
             // 
             // stmTop
             // 
-            this.stmTop.Checked = true;
-            this.stmTop.CheckState = System.Windows.Forms.CheckState.Checked;
             this.stmTop.Name = "stmTop";
             this.stmTop.Size = new System.Drawing.Size(140, 22);
             this.stmTop.Text = "窗口置顶(&T)";

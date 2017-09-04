@@ -182,5 +182,10 @@ namespace TxoooProductUpload.UI.CefGlue
         }
 
         #endregion
+
+        //protected override bool OnBeforeNavigation(CefBrowser browser, CefFrame frame, CefRequest request, CefNavigationType navigation_type, bool isRedirect)
+        //{
+        //   return base.OnBeforeNavigation(browser, frame, request, navigation_type, false);
+        //}
     }
 }

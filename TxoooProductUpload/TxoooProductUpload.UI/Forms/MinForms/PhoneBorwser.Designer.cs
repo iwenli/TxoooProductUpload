@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PhoneBorwser));
             this.paLweb = new System.Windows.Forms.Panel();
-            this.cefWebBrowser1 = new Xilium.CefGlue.WindowsForms.CefWebBrowser();
+            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
             this.cms = new CCWin.SkinControl.SkinContextMenuStrip();
             this.cmsGo = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsIn = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,21 +42,21 @@
             // 
             // paLweb
             // 
-            this.paLweb.Controls.Add(this.cefWebBrowser1);
+            this.paLweb.Controls.Add(this.webBrowser);
             this.paLweb.Location = new System.Drawing.Point(23, 77);
             this.paLweb.Name = "paLweb";
             this.paLweb.Size = new System.Drawing.Size(307, 544);
             this.paLweb.TabIndex = 0;
             // 
-            // cefWebBrowser1
+            // webBrowser
             // 
-            this.cefWebBrowser1.BrowserSettings = null;
-            this.cefWebBrowser1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cefWebBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.cefWebBrowser1.Name = "cefWebBrowser1";
-            this.cefWebBrowser1.Size = new System.Drawing.Size(325, 544);
-            this.cefWebBrowser1.StartUrl = "";
-            this.cefWebBrowser1.TabIndex = 1;
+            this.webBrowser.BrowserSettings = null;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Left;
+            this.webBrowser.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(325, 544);
+            this.webBrowser.StartUrl = "0.u.7518.cn";
+            this.webBrowser.TabIndex = 1;
             // 
             // cms
             // 
@@ -134,7 +134,7 @@
         private System.Windows.Forms.Panel paLweb;
         private CCWin.SkinControl.SkinContextMenuStrip cms;
         private System.Windows.Forms.ToolStripMenuItem cmsGo;
-        private Xilium.CefGlue.WindowsForms.CefWebBrowser cefWebBrowser1;
+        private TxoooProductUpload.UI.CefGlue.CefWebBrowser webBrowser;
         private System.Windows.Forms.ToolStripMenuItem cmsIn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem cmsClose;

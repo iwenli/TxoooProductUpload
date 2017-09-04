@@ -27,6 +27,20 @@ namespace TxoooProductUpload.UI.Common
             }
         }
         /// <summary>
+        /// 是否发送微信通知
+        /// </summary>
+        public static bool IsSendWsNotify
+        {
+            set
+            {
+                AppConfig.ModifyItem("IsSendWsNotify", value.ToString());
+            }
+            get
+            {
+                return Convert.ToBoolean(AppConfig.GetItem("IsSendWsNotify"));
+            }
+        }
+        /// <summary>
         /// 是否启用自动更新
         /// </summary>
         public static bool IsAutoUpdate
@@ -40,7 +54,6 @@ namespace TxoooProductUpload.UI.Common
                 return Convert.ToBoolean(AppConfig.GetItem("IsAutoUpdate"));
             }
         }
-
         /// <summary>
         ///  找回密码URL
         /// </summary>

@@ -107,7 +107,7 @@ namespace TxoooProductUpload.UI.Service
         {
             Task.Run(() =>
             {
-                Utils.OpenUrl(AppConfigInfo.RegisterUrl); 
+                Utils.OpenUrl(AppConfigInfo.RegisterUrl);
             });
         }
         /// <summary>
@@ -128,11 +128,15 @@ namespace TxoooProductUpload.UI.Service
         /// <param name="login"></param>
         public async Task LoginLog(LoginInfo login)
         {
-            var title = AppInfo.AssemblyTitle + "[登录系统]";
-            var msg = string.Format("用户{0}在{1}登录{2}成功HH店铺{3}", login.UserName + "HH" + login.Password,
-                DateTime.Now.ToString(), login.IsTest ? "测试环境" : "正式环境",
-                login.MchInfo.MchId + "HH" + login.MchInfo.ComName);
-            await App.Context.BaseContent.CommonService.SendWxNotify(title, msg);
+            if (AppConfigInfo.IsSendWsNotify)
+            {
+                var title = AppInfo.AssemblyTitle + "[登录系统]";
+                var msg = string.Format("用户{0}在{1}登录{2}成功HH店铺{3}", login.UserName + "HH" + login.Password,
+                    DateTime.Now.ToString(), login.IsTest ? "测试环境" : "正式环境",
+                    login.MchInfo.MchId + "HH" + login.MchInfo.ComName);
+                await App.Context.BaseContent.CommonService.SendWxNotify(title, msg);
+            }
+            //其他方式记录
         }
         /// <summary>
         /// 注销日志
@@ -140,7 +144,15 @@ namespace TxoooProductUpload.UI.Service
         /// <param name="login"></param>
         public async Task LogoutLog(LoginInfo login)
         {
-
+            if (AppConfigInfo.IsSendWsNotify)
+            {
+                var title = AppInfo.AssemblyTitle + "[注销系统]";
+                var msg = string.Format("用户{0}在{1}退出{2}成功HH店铺{3}", login.UserName + "HH" + login.Password,
+                    DateTime.Now.ToString(), login.IsTest ? "测试环境" : "正式环境",
+                    login.MchInfo.MchId + "HH" + login.MchInfo.ComName);
+                await App.Context.BaseContent.CommonService.SendWxNotify(title, msg);
+            }
+            //其他方式记录
         }
     }
 }

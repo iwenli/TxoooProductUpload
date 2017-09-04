@@ -50,7 +50,7 @@ namespace TxoooProductUpload.Service
         }
 
         /// <summary>
-        /// 发送微信通知 Server酱免费服务
+        /// 发送微信通知 Server 酱免费服务
         /// </summary>
         /// <param name="title">消息标题</param>
         /// <param name="msg">消息内容</param>
@@ -61,7 +61,6 @@ namespace TxoooProductUpload.Service
             var ctx = NetClient.Create<string>(HttpMethod.Post, url,
                 data: new { text = title, desp = msg }, allowAutoRedirect: true);
             await ctx.SendAsync();
-
         }
     }
 }

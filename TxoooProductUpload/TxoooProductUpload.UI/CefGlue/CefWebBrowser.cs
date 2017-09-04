@@ -99,6 +99,7 @@ namespace TxoooProductUpload.UI.CefGlue
                 //SetAsChild函数使CEF浏览器窗口作为winform窗口的子窗口呈现
                 //CefRectangle标志着CEF浏览器窗口将出现在父窗口中的位置和大小
                 windowInfo.SetAsChild(Handle, new CefRectangle { X = 0, Y = 0, Width = Width, Height = Height });
+                
 
                 //这个类没有任何逻辑和属性，只是继承了CefClient类
                 //CefClient类有很多虚方法以供重写，比如GetDisplayHandler、GetDownloadHandler、GetJSDialogHandler等等
@@ -114,7 +115,9 @@ namespace TxoooProductUpload.UI.CefGlue
                 //JavaScriptOpenWindows（用于所有网页是否可以通过JS来打开窗口）
                 //（还有很多类似的设置，读者可以自己去研究）
                 var settings = BrowserSettings;
-                if (settings == null) settings = new CefBrowserSettings { };
+                if (settings == null) settings = new CefBrowserSettings {
+                    JavaScriptOpenWindows = CefState.Disabled
+                };
 
                 //最后一个参数就是你想让浏览器访问的页面
                 //注意：这个方法是异步执行的（非阻塞的），也就是说你无法知道什么时候窗口被创建出来

@@ -42,15 +42,20 @@ namespace TxoooProductUpload.UI.CefGlue
 
         protected override bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref bool noJavascriptAccess)
 		{
-			var e = new BeforePopupEventArgs(frame, targetUrl, targetFrameName, popupFeatures, windowInfo, client, settings,
-								 noJavascriptAccess);
+            frame.LoadUrl(targetUrl);
+            return true;
+            // _core.Browser.GetMainFrame().LoadUrl(targetUrl);
+            //return true;
 
-			_core.InvokeIfRequired(() => _core.OnBeforePopup(e));
+            //var e = new BeforePopupEventArgs(frame, targetUrl, targetFrameName, popupFeatures, windowInfo, client, settings,
+            //                     noJavascriptAccess);
 
-			client = e.Client;
-			noJavascriptAccess = e.NoJavascriptAccess;
+            //_core.InvokeIfRequired(() => _core.OnBeforePopup(e));
 
-			return e.Handled;
-		}
+            //client = e.Client;
+            //noJavascriptAccess = e.NoJavascriptAccess;
+
+            //return e.Handled;
+        }
     }
 }

@@ -42,8 +42,8 @@ namespace TxoooProductUpload.UI
 
         void ProdutBorwser_Load(object sender, EventArgs e)
         {
-            cefWebBrowser1.StartUrl = _url;
-            cefWebBrowser1.BringToFront();
+            webBrowser.StartUrl = _url;
+            webBrowser.BringToFront();
 
             cmsGo.Click += CmsGo_Click;
             cmsIn.Click += CmsIn_Click;
@@ -87,7 +87,7 @@ namespace TxoooProductUpload.UI
         void CmsGo_Click(object sender, EventArgs e)
         {
             var hidePop = "document.getElementsByClassName('app-download-popup')[0].style.display = 'none';";
-            cefWebBrowser1.Browser.GetMainFrame().ExecuteJavaScript(hidePop, _url, 1);
+            webBrowser.Browser.GetMainFrame().ExecuteJavaScript(hidePop, _url, 1);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace TxoooProductUpload.UI
         {
             if (_url.IsUrl())
             {
-                cefWebBrowser1.Browser.GetMainFrame().LoadUrl(_url);
+                webBrowser.Browser.GetMainFrame().LoadUrl(_url);
             }
-            cefWebBrowser1.BringToFront();
+            webBrowser.BringToFront();
         }
     }
 }

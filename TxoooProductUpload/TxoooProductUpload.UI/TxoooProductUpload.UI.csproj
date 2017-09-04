@@ -74,6 +74,7 @@
     <Compile Include="BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CefGlue\Browser\SourceVisitor.cs" />
     <Compile Include="CefGlue\CefWebBrowser.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -134,6 +135,12 @@
     </Compile>
     <Compile Include="Forms\SubForms\CrawlProductsForm.Designer.cs">
       <DependentUpon>CrawlProductsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SubForms\FrmExeManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\FrmExeManager.designer.cs">
+      <DependentUpon>FrmExeManager.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -199,6 +206,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\CrawlProductsForm.resx">
       <DependentUpon>CrawlProductsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\FrmExeManager.resx">
+      <DependentUpon>FrmExeManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
