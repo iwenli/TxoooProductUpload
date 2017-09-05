@@ -38,6 +38,7 @@
             this.miniToolStrip = new CCWin.SkinControl.SkinToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.skinSplitContainer1 = new CCWin.SkinControl.SkinSplitContainer();
+            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
             this.skinToolStrip3 = new CCWin.SkinControl.SkinToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tsBtnLeft = new System.Windows.Forms.ToolStripButton();
@@ -53,6 +54,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsBtnTest = new System.Windows.Forms.ToolStripButton();
             this.sdgvProduct = new CCWin.SkinControl.SkinDataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,9 +65,10 @@
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
             this.sourceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ShowPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.查看 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.del = new System.Windows.Forms.DataGridViewButtonColumn();
             this.sourceTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -73,7 +76,6 @@
             this.shopNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.h5UrlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tsBtnTest = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.skinSplitContainer1)).BeginInit();
             this.skinSplitContainer1.Panel1.SuspendLayout();
@@ -171,6 +173,16 @@
             this.skinSplitContainer1.Size = new System.Drawing.Size(992, 551);
             this.skinSplitContainer1.SplitterDistance = 355;
             this.skinSplitContainer1.TabIndex = 2;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.BrowserSettings = null;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 31);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(992, 324);
+            this.webBrowser.StartUrl = "www.taobao.com";
+            this.webBrowser.TabIndex = 0;
             // 
             // skinToolStrip3
             // 
@@ -359,6 +371,15 @@
             this.toolStripMenuItem3.Size = new System.Drawing.Size(160, 22);
             this.toolStripMenuItem3.Text = "按向导抓取";
             // 
+            // tsBtnTest
+            // 
+            this.tsBtnTest.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnTest.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnTest.Image")));
+            this.tsBtnTest.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnTest.Name = "tsBtnTest";
+            this.tsBtnTest.Size = new System.Drawing.Size(107, 21);
+            this.tsBtnTest.Text = "toolStripButton1";
+            // 
             // sdgvProduct
             // 
             this.sdgvProduct.AllowUserToAddRows = false;
@@ -385,6 +406,8 @@
             this.sdgvProduct.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sourceNameDataGridViewTextBoxColumn,
             this.productNameDataGridViewTextBoxColumn,
+            this.Location,
+            this.ShowPrice,
             this.查看,
             this.del,
             this.sourceTypeDataGridViewTextBoxColumn,
@@ -413,7 +436,6 @@
             this.sdgvProduct.MouseCellBackColor = System.Drawing.Color.White;
             this.sdgvProduct.MultiSelect = false;
             this.sdgvProduct.Name = "sdgvProduct";
-            this.sdgvProduct.ReadOnly = true;
             this.sdgvProduct.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.sdgvProduct.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -504,48 +526,56 @@
             this.dataGridViewTextBoxColumn7.Visible = false;
             this.dataGridViewTextBoxColumn7.Width = 136;
             // 
-            // webBrowser
-            // 
-            this.webBrowser.BrowserSettings = null;
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 31);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(992, 324);
-            this.webBrowser.StartUrl = "www.taobao.com";
-            this.webBrowser.TabIndex = 0;
-            // 
             // sourceNameDataGridViewTextBoxColumn
             // 
+            this.sourceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.sourceNameDataGridViewTextBoxColumn.DataPropertyName = "SourceName";
             this.sourceNameDataGridViewTextBoxColumn.HeaderText = "所属平台";
             this.sourceNameDataGridViewTextBoxColumn.Name = "sourceNameDataGridViewTextBoxColumn";
             this.sourceNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.sourceNameDataGridViewTextBoxColumn.Width = 150;
             // 
             // productNameDataGridViewTextBoxColumn
             // 
             this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
             this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
             this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            this.productNameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // Location
+            // 
+            this.Location.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Location.DataPropertyName = "Location";
+            this.Location.HeaderText = "发货地";
+            this.Location.Name = "Location";
+            // 
+            // ShowPrice
+            // 
+            this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ShowPrice.DataPropertyName = "ShowPrice";
+            this.ShowPrice.HeaderText = "售价";
+            this.ShowPrice.Name = "ShowPrice";
+            this.ShowPrice.Width = 70;
             // 
             // 查看
             // 
+            this.查看.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.查看.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.查看.HeaderText = "查看";
             this.查看.Name = "查看";
-            this.查看.ReadOnly = true;
+            this.查看.Text = "查看";
             // 
             // del
             // 
+            this.del.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.del.HeaderText = "删除";
             this.del.Name = "del";
-            this.del.ReadOnly = true;
+            this.del.Text = "删除";
             // 
             // sourceTypeDataGridViewTextBoxColumn
             // 
             this.sourceTypeDataGridViewTextBoxColumn.DataPropertyName = "SourceType";
             this.sourceTypeDataGridViewTextBoxColumn.HeaderText = "SourceType";
             this.sourceTypeDataGridViewTextBoxColumn.Name = "sourceTypeDataGridViewTextBoxColumn";
-            this.sourceTypeDataGridViewTextBoxColumn.ReadOnly = true;
             this.sourceTypeDataGridViewTextBoxColumn.Visible = false;
             // 
             // idDataGridViewTextBoxColumn
@@ -553,7 +583,6 @@
             this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
             this.idDataGridViewTextBoxColumn.HeaderText = "Id";
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.ReadOnly = true;
             this.idDataGridViewTextBoxColumn.Visible = false;
             // 
             // shopNameDataGridViewTextBoxColumn
@@ -561,7 +590,6 @@
             this.shopNameDataGridViewTextBoxColumn.DataPropertyName = "ShopName";
             this.shopNameDataGridViewTextBoxColumn.HeaderText = "ShopName";
             this.shopNameDataGridViewTextBoxColumn.Name = "shopNameDataGridViewTextBoxColumn";
-            this.shopNameDataGridViewTextBoxColumn.ReadOnly = true;
             this.shopNameDataGridViewTextBoxColumn.Visible = false;
             // 
             // urlDataGridViewTextBoxColumn
@@ -579,15 +607,6 @@
             this.h5UrlDataGridViewTextBoxColumn.Name = "h5UrlDataGridViewTextBoxColumn";
             this.h5UrlDataGridViewTextBoxColumn.ReadOnly = true;
             this.h5UrlDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // tsBtnTest
-            // 
-            this.tsBtnTest.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnTest.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnTest.Image")));
-            this.tsBtnTest.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnTest.Name = "tsBtnTest";
-            this.tsBtnTest.Size = new System.Drawing.Size(107, 21);
-            this.tsBtnTest.Text = "toolStripButton1";
             // 
             // CrawlProductsForm
             // 
@@ -631,15 +650,6 @@
         private System.Windows.Forms.ToolStripButton tsBtnRight;
         private System.Windows.Forms.ToolStripButton tsBtnRefresh;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sourceNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn 查看;
-        private System.Windows.Forms.DataGridViewButtonColumn del;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sourceTypeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn shopNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn urlDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn h5UrlDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripLabel toolStripButton10;
         private System.Windows.Forms.ToolStripTextBox tsTxtUrl;
@@ -654,5 +664,16 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripButton tsBtnTest;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sourceNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Location;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ShowPrice;
+        private System.Windows.Forms.DataGridViewButtonColumn 查看;
+        private System.Windows.Forms.DataGridViewButtonColumn del;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sourceTypeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn shopNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn urlDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn h5UrlDataGridViewTextBoxColumn;
     }
 }

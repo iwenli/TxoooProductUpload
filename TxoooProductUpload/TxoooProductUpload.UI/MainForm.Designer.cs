@@ -54,7 +54,9 @@ namespace TxoooProductUpload.UI
             CCWin.CmSysButton cmSysButton2 = new CCWin.CmSysButton();
             this.tabShow = new CCWin.SkinControl.SkinTabControl();
             this.tabPage1 = new CCWin.SkinControl.SkinTabPage();
-            this.cefWebBrowser1 = new Xilium.CefGlue.WindowsForms.CefWebBrowser();
+            this.palShow = new System.Windows.Forms.Panel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.webBrowser = new Xilium.CefGlue.WindowsForms.CefWebBrowser();
             this.skinPanel1 = new CCWin.SkinControl.SkinPanel();
             this.tabPage2 = new CCWin.SkinControl.SkinTabPage();
             this.tabPage3 = new CCWin.SkinControl.SkinTabPage();
@@ -90,6 +92,7 @@ namespace TxoooProductUpload.UI
             this.stCompany = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabShow.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.palShow.SuspendLayout();
             this.SkinMenu.SuspendLayout();
             this.ToolShow.SuspendLayout();
             this.SkinToolMenu.SuspendLayout();
@@ -126,17 +129,18 @@ namespace TxoooProductUpload.UI
             this.tabShow.PageHover = ((System.Drawing.Image)(resources.GetObject("tabShow.PageHover")));
             this.tabShow.PageImagePosition = CCWin.SkinControl.SkinTabControl.ePageImagePosition.Left;
             this.tabShow.PageNorml = null;
-            this.tabShow.SelectedIndex = 2;
+            this.tabShow.SelectedIndex = 0;
             this.tabShow.ShowToolTips = true;
             this.tabShow.Size = new System.Drawing.Size(992, 573);
             this.tabShow.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.tabShow.TabIndex = 2;
+            this.tabShow.TabIndex = 0;
             this.tabShow.SelectedIndexChanged += new System.EventHandler(this.tabShow_SelectedIndexChanged);
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.cefWebBrowser1);
+            this.tabPage1.Controls.Add(this.palShow);
+            this.tabPage1.Controls.Add(this.webBrowser);
             this.tabPage1.Controls.Add(this.skinPanel1);
             this.tabPage1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabPage1.Location = new System.Drawing.Point(0, 30);
@@ -147,15 +151,33 @@ namespace TxoooProductUpload.UI
             this.tabPage1.TabItemImage = null;
             this.tabPage1.Text = "主页";
             // 
-            // cefWebBrowser1
+            // palShow
             // 
-            this.cefWebBrowser1.BrowserSettings = null;
-            this.cefWebBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cefWebBrowser1.Location = new System.Drawing.Point(0, 30);
-            this.cefWebBrowser1.Name = "cefWebBrowser1";
-            this.cefWebBrowser1.Size = new System.Drawing.Size(992, 513);
-            this.cefWebBrowser1.StartUrl = "http://www.7518.cn";
-            this.cefWebBrowser1.TabIndex = 7;
+            this.palShow.Controls.Add(this.progressBar1);
+            this.palShow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.palShow.Location = new System.Drawing.Point(0, 30);
+            this.palShow.Name = "palShow";
+            this.palShow.Size = new System.Drawing.Size(992, 513);
+            this.palShow.TabIndex = 8;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(96, 200);
+            this.progressBar1.MarqueeAnimationSpeed = 20;
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(803, 30);
+            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 0;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.BrowserSettings = null;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 30);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(992, 513);
+            this.webBrowser.StartUrl = "http://www.7518.cn";
+            this.webBrowser.TabIndex = 7;
             // 
             // skinPanel1
             // 
@@ -304,6 +326,8 @@ namespace TxoooProductUpload.UI
             // tool1
             // 
             this.tool1.AutoSize = false;
+            this.tool1.Checked = true;
+            this.tool1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tool1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tool1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool1.Margin = new System.Windows.Forms.Padding(0);
@@ -321,20 +345,18 @@ namespace TxoooProductUpload.UI
             this.tool2.Name = "tool2";
             this.tool2.Size = new System.Drawing.Size(60, 60);
             this.tool2.Tag = "1";
-            this.tool2.Text = "百宝箱";
+            this.tool2.Text = "抓取商品";
             // 
             // tool3
             // 
             this.tool3.AutoSize = false;
-            this.tool3.Checked = true;
-            this.tool3.CheckState = System.Windows.Forms.CheckState.Checked;
             this.tool3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tool3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool3.Margin = new System.Windows.Forms.Padding(0);
             this.tool3.Name = "tool3";
             this.tool3.Size = new System.Drawing.Size(60, 60);
             this.tool3.Tag = "2";
-            this.tool3.Text = "手册查询";
+            this.tool3.Text = "整店复制";
             // 
             // tool4
             // 
@@ -345,7 +367,7 @@ namespace TxoooProductUpload.UI
             this.tool4.Name = "tool4";
             this.tool4.Size = new System.Drawing.Size(60, 60);
             this.tool4.Tag = "3";
-            this.tool4.Text = "窗口SPY";
+            this.tool4.Text = "图片管理";
             // 
             // tool5
             // 
@@ -356,7 +378,7 @@ namespace TxoooProductUpload.UI
             this.tool5.Name = "tool5";
             this.tool5.Size = new System.Drawing.Size(60, 60);
             this.tool5.Tag = "4";
-            this.tool5.Text = "网页SPY";
+            this.tool5.Text = "评价管理";
             // 
             // tool6
             // 
@@ -367,7 +389,7 @@ namespace TxoooProductUpload.UI
             this.tool6.Name = "tool6";
             this.tool6.Size = new System.Drawing.Size(60, 60);
             this.tool6.Tag = "5";
-            this.tool6.Text = "屏幕取色";
+            this.tool6.Text = "商品管理";
             // 
             // tool7
             // 
@@ -378,7 +400,7 @@ namespace TxoooProductUpload.UI
             this.tool7.Name = "tool7";
             this.tool7.Size = new System.Drawing.Size(60, 60);
             this.tool7.Tag = "6";
-            this.tool7.Text = "屏幕截图";
+            this.tool7.Text = "订单管理";
             // 
             // tool8
             // 
@@ -389,7 +411,7 @@ namespace TxoooProductUpload.UI
             this.tool8.Name = "tool8";
             this.tool8.Size = new System.Drawing.Size(60, 60);
             this.tool8.Tag = "7";
-            this.tool8.Text = "进程管理";
+            this.tool8.Text = "店铺设置";
             // 
             // ToolShow
             // 
@@ -582,7 +604,6 @@ namespace TxoooProductUpload.UI
             // 
             // MainForm
             // 
-            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(10)))), ((int)(((byte)(180)))), ((int)(((byte)(255)))));
@@ -648,12 +669,12 @@ namespace TxoooProductUpload.UI
             this.Text = "";
             this.TitleCenter = true;
             this.TitleColor = System.Drawing.Color.White;
-            this.TopMost = true;
             this.SysBottomClick += new CCWin.CCSkinMain.SysBottomEventHandler(this.FrmMain_SysBottomClick);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.FrmMain_Paint);
             this.tabShow.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.palShow.ResumeLayout(false);
             this.SkinMenu.ResumeLayout(false);
             this.ToolShow.ResumeLayout(false);
             this.ToolShow.PerformLayout();
@@ -701,7 +722,9 @@ namespace TxoooProductUpload.UI
         private System.Windows.Forms.ToolStripStatusLabel stLoginInfo;
         private System.Windows.Forms.ToolStripStatusLabel stCompany;
         private System.Windows.Forms.ToolStripMenuItem stmLogout;
-        private Xilium.CefGlue.WindowsForms.CefWebBrowser cefWebBrowser1;
+        private Xilium.CefGlue.WindowsForms.CefWebBrowser webBrowser;
+        private System.Windows.Forms.Panel palShow;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

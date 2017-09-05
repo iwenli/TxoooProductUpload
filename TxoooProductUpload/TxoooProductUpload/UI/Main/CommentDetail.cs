@@ -34,7 +34,6 @@ namespace TxoooProductUpload.UI.Main
         public CommentDetail(ReviewDataSoruce ds)
         {
             InitializeComponent();
-            bs.DataSource = ds;
             this.Load += CommentDetail_Load;
             _context = new Service.ServiceContext();
 

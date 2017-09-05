@@ -4,9 +4,77 @@
         <name>Iwenli</name>
     </assembly>
     <members>
+        <member name="T:Iwenli.Cache.MemoryCache`2">
+            <summary>
+            基于内存的缓存管理类的实现
+            </summary>
+            <typeparam name="K"></typeparam>
+            <typeparam name="V"></typeparam>
+        </member>
+        <member name="P:Iwenli.Cache.MemoryCache`2.Instance">
+            <summary>
+            返回内存缓存实现的单例模式
+            </summary>
+        </member>
+        <member name="M:Iwenli.Cache.MemoryCache`2.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Iwenli.Cache.MemoryCache`2.Get``1(`0,System.Func{`0,System.Object,``0})">
+            <summary>
+            从缓存中提取对象，如果没有缓存对象，则通过函数[getUncachedValue]提取
+            </summary>
+            <typeparam name="V"></typeparam>
+            <param name="cacheKey"></param>
+            <param name="getUncachedValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Cache.MemoryCache`2.Get``1(`0,System.Func{`0,``0},System.DateTimeOffset)">
+            <summary>
+            从缓存中提取对象，如果没有缓存对象，则通过函数[getUncachedValue]提取，并且根据缓存策略缓存
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="cacheKey"></param>
+            <param name="getUncachedValue"></param>
+            <param name="dateTimeOffset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Cache.MemoryCache`2.Get``1(`0,System.Func{`0,``0},System.Runtime.Caching.CacheItemPolicy)">
+            <summary>
+            从缓存中提取对象，如果没有缓存对象，则通过函数[getUncachedValue]提取，并且根据缓存策略缓存
+            </summary>
+            <typeparam name="V"></typeparam>
+            <param name="cacheKey"></param>
+            <param name="getUncachedValue"></param>
+            <param name="policy"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Cache.MemoryCache`2.Set(`0,`1,System.DateTimeOffset)">
+            <summary>
+            向缓存中插入缓存项，同时指定基于时间的过期详细信息。
+            </summary>
+            <param name="key">该缓存项的唯一标识</param>
+            <param name="value">要插入的对象</param>
+            <param name="dateTimeOffset">缓存项的固定的过期日期和时间</param>
+        </member>
+        <member name="M:Iwenli.Cache.MemoryCache`2.Set(`0,`1,System.Runtime.Caching.CacheItemPolicy)">
+            <summary>
+            向缓存中插入缓存项。
+            </summary>
+            <param name="key">该缓存项的唯一标识符。</param>
+            <param name="value">要插入的对象。</param>
+            <param name="policy"> 一个包含该缓存项的逐出详细信息的对象。 此对象提供比简单绝对过期更多的逐出选项。</param>
+        </member>
         <member name="T:Iwenli.Config">
             <summary>
-            配置文件解析类，读取根目录下的Iwenli.config文件
+            配置文件解析类，读取根目录下的wl.config文件
+            </summary>
+        </member>
+        <member name="F:Iwenli.Config._variables">
+            <summary>
+            当前配置结点键值对信息
             </summary>
         </member>
         <member name="P:Iwenli.Config.Name">
@@ -252,7 +320,7 @@
             <summary>
             获得数据操作类
             </summary>
-            <param name="name">数据库名称，与[Iwenli_Data.config]中配置的一致</param>
+            <param name="name">数据库名称，与[Wl_Data.config]中配置的一致</param>
             <returns></returns>
         </member>
         <member name="M:Iwenli.DataHelper.GetDataHelper(Iwenli.Data.DatabaseInfo)">
@@ -803,6 +871,82 @@
             </summary>
             <typeparam name="T"></typeparam>
         </member>
+        <member name="T:Iwenli.Extension.ToolHelper">
+            <summary>
+            常用工具类  暂未分类
+            </summary>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.CheckStrSplit(System.String)">
+            <summary>
+            校验逗号分隔字符串
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.ConvertObjectToString(System.Object)">
+            <summary>
+            对象序列化
+            </summary>
+            <param name="CookieValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.ConvertObjectToByte(System.Object)">
+            <summary>
+            对象序列化
+            </summary>
+            <param name="info"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.ConvertStringToObject(System.String)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.ConvertByteToObject(System.Byte[])">
+            <summary>
+            反序列化
+            </summary>
+            <param name="buffer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.Json(System.Boolean,System.Object,System.Int32,System.Object)">
+            <summary>
+            返回对象json字符串，带有错误代码
+            </summary>
+            <param name="success"></param>
+            <param name="msg"></param>
+            <param name="errcode"></param>
+            <param name="otherInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.Json(System.Boolean,System.Object,System.String[])">
+            <summary>
+            返回数组json字符串，接口访问自动转为对象json
+            </summary>
+            <param name="success"></param>
+            <param name="msg"></param>
+            <param name="other"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.SerializeObject(System.Object,Newtonsoft.Json.Formatting)">
+            <summary>
+            数据序列化
+            </summary>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Extension.ToolHelper.GetDistance(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            获得地图两点间距离
+            </summary>
+            <param name="lat1"></param>
+            <param name="lng1"></param>
+            <param name="lat2"></param>
+            <param name="lng2"></param>
+            <returns></returns>
+        </member>
         <member name="T:Iwenli.IConfig">
             <summary>
             Config通用接口
@@ -814,6 +958,1747 @@
             </summary>
             <param name="node">XML节点</param>
         </member>
+        <member name="M:Iwenli.Net.NetHelper.CountIP(System.String)">
+            <summary>
+            IP地址算法
+            </summary>
+            <param name="ipAddress">IP地址</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Net.NetHelper.InSameSubNet(System.String,System.String,System.String)">
+            <summary>
+            检查是否在一个IP段
+            </summary>
+            <param name="maskAddress">掩码</param>
+            <param name="address1">网段</param>
+            <param name="address2">要检查的IP地址</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Net.NetHelper.IpStringToInt(System.String)">
+            <summary>
+            IP字符串->长整型值 转换
+            </summary>
+            <param name="IpString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Net.NetHelper.IntToIpString(System.Int64)">
+            <summary>
+            // 长整型值->IP字符串 转换
+            </summary>
+            <param name="Ipv"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Net.NetHelper.LoadPage(System.String)">
+            <summary>
+            获得系统默认编码的页面
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Net.NetHelper.LoadWebPage1(System.String,System.String)">
+            <summary>
+            根据指定编码获得网页代码
+            </summary>
+            <param name="url"></param>
+            <param name="encode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Net.NetHelper.LoadGB2312WebPage(System.String)">
+            <summary>
+            以GB2312编码获得网页代码
+            </summary>
+            <param name="url">网页地址</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Net.NetHelper.LoadUTF8WebPage(System.String)">
+            <summary>
+            以UTF8编码获得网页代码
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.StringHelper">
+            <summary>
+            文本字符串处理
+            </summary>
+        </member>
+        <member name="M:Iwenli.StringHelper.GetMiddleStr(System.String,System.String,System.String)">
+            <summary>
+             获得两个字符串中间的字符串
+            </summary>
+            <param name="original">原始字符</param>
+            <param name="startStr">开始字符</param>
+            <param name="endStr">结束字符</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.GetMiddleStr(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            截取字符串
+            </summary>
+            <param name="original">原始字符串</param>
+            <param name="startStr">开始字符串</param>
+            <param name="endStr">结束字符串</param>
+            <param name="include">是否包含前后字符串，0：不包含，1：包含前，2：包含后，3：包含前后</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.CheckIDCard(System.String)">
+            <summary>
+            验证身份证号码
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.IsIPAddress(System.String)">
+            <summary>
+            是否IP地址
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.IsNumeric(System.String)">
+            <summary>
+            判断是否是数字
+            </summary>
+            <param name="str">字符串</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.IsChina(System.String)">
+            <summary>
+            判断是否是中文
+            </summary>
+            <param name="CString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.IsMobile(System.String)">
+            <summary>
+            校验手机号码是否符合标准。
+            </summary>
+            <param name="mobile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.CreateRandomStr(System.Int32)">
+            <summary>
+            创建随机字符
+            </summary>
+            <param name="length">创建随机字符</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.GetByteLenght(System.String)">
+            <summary>
+            字符串所占字节数
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.GetSemblance(System.String,System.String)">
+            <summary>
+            比较2个字符的显示度，返回100内的整数（显示度50%返回50）【移位算法】
+            </summary>
+            <param name="str1"></param>
+            <param name="str2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.StringHelper.Unicode2CHr(System.String)">
+            <summary>
+            unicode转中文
+            </summary>
+            <param name="unicodeStr"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.Ajax.AjaxHandler">
+            <summary>
+            Ajax交互数据处理类
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Ajax.AjaxHandler.Context">
+            <summary>
+            当前请求HttpContext
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Ajax.AjaxHandler.Request">
+            <summary>
+            当前请HttpRequest对象
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Ajax.AjaxHandler.Response">
+            <summary>
+            当前请HttpResponse对象
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Domain">
+            <summary>
+            域名信息
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Domain._domainInfo">
+            <summary>
+            域名
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Domain.DomainInfo">
+            <summary>
+            域名
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Domain._tdl">
+            <summary>
+            顶级域名（top level domain，.com）
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Domain.TDL">
+            <summary>
+            顶级域名（top level domain）
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Domain._mainDomain">
+            <summary>
+            主域（二级域名,iwenli.com）
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Domain.MainDomain">
+            <summary>
+            主域
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Domain._secondDomain">
+            <summary>
+            二级域名
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Domain.SecondDomain">
+            <summary>
+            二级域名
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Domain.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="domain"></param>
+        </member>
+        <member name="T:Iwenli.Web.Htmx.HtmxFactory">
+            <summary>
+            Htmx页面处理工厂
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxFilter.#ctor(System.IO.Stream,Iwenli.Web.Url,Iwenli.Web.Page)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="sink"></param>
+            <param name="url"></param>
+            <param name="page"></param>
+        </member>
+        <member name="P:Iwenli.Web.Htmx.HtmxFilter.CanRead">
+            <summary>
+            当前流是否支持读取
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Htmx.HtmxFilter.CanSeek">
+            <summary>
+            当前流是否支持查找功能
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Htmx.HtmxFilter.CanWrite">
+            <summary>
+            当前流是否支持写入功能
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxFilter.Flush">
+            <summary>
+            当在派生类中重写时，将清除该流的所有缓冲区，并使得所有缓冲数据被写入到基础设备。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Htmx.HtmxFilter.Length">
+            <summary>
+            用字节表示的流长度
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Htmx.HtmxFilter.Position">
+            <summary>
+            获取或设置当前流中的位置
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxFilter.Read(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            当在派生类中重写时，从当前流读取字节序列，并将此流中的位置提升读取的字节数。
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxFilter.Seek(System.Int64,System.IO.SeekOrigin)">
+            <summary>
+             当在派生类中重写时，设置当前流中的位置。
+            </summary>
+            <param name="offset"></param>
+            <param name="origin"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxFilter.SetLength(System.Int64)">
+            <summary>
+            当在派生类中重写时，设置当前流的长度。
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxFilter.Write(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            当在派生类中重写时，向当前流中写入字节序列，并将此流中的当前位置提升写入的字节数。
+            </summary>
+            <param name="buffer"></param>
+            <param name="offset"></param>
+            <param name="count"></param>
+        </member>
+        <member name="T:Iwenli.Web.Htmx.HtmxHandler">
+            <summary>
+            Htmx模板页面处理程序
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Htmx.HtmxHandler.ThisPageCode">
+            <summary>
+            页面代码
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Htmx.HtmxHandler.m_mainTemplate">
+            <summary>
+            页面模板
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler.LoadMainTemplateBegin">
+            <summary>
+            0、加载主模板开始
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler.LoadMainTemplate">
+            <summary>
+            1、加载主模板
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler.LoadMainTemplateEnd">
+            <summary>
+            2、加载主模板结束
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler.ParsePageBegin">
+            <summary>
+            3、解析页面开始
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler.ParsePage">
+            <summary>
+            4、解析页面
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler.ParsePageEnd">
+            <summary>
+            5、解析页面结束
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Htmx.HtmxHandler1.ThisPageCode">
+            <summary>
+            页面代码
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Htmx.HtmxHandler1.m_mainTemplate">
+            <summary>
+            页面模板
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler1.LoadMainTemplateBegin">
+            <summary>
+            0、加载主模板开始
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler1.LoadMainTemplate">
+            <summary>
+            1、加载主模板
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler1.LoadMainTemplateEnd">
+            <summary>
+            2、加载主模板结束
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler1.ParsePageBegin">
+            <summary>
+            3、解析页面开始
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler1.ParsePage">
+            <summary>
+            4、解析页面
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandler1.ParsePageEnd">
+            <summary>
+            5、解析页面结束
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandlerBase.GetThisPageCode">
+            <summary>
+            获得当前请求时段的页面代码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandlerBase.GetThisPageTempVariable">
+            <summary>
+            获得当前请求页面的临时变量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:Iwenli.Web.Htmx.HtmxHandlerBase.Context">
+            <summary>
+            当前请求HttpContext
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Htmx.HtmxHandlerBase.Request">
+            <summary>
+            当前请HttpRequest对象
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Htmx.HtmxHandlerBase.Response">
+            <summary>
+            当前请HttpResponse对象
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandlerBase.InitPage(System.Web.HttpContext,Iwenli.Web.Url,Iwenli.Web.IWeb,Iwenli.Web.ISite,Iwenli.Web.ISkin,Iwenli.Web.Page)">
+            <summary>
+            初始化当前页面
+            </summary>
+            <param name="context"></param>
+            <param name="url"></param>
+            <param name="web"></param>
+            <param name="site"></param>
+            <param name="skin"></param>
+            <param name="page"></param>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandlerBase.AddTempVariable(System.String,System.String)">
+            <summary>
+            添加临时变量
+            </summary>
+            <param name="value"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:Iwenli.Web.Htmx.HtmxHandlerBase.AddTempVariable(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            添加临时变量
+            </summary>
+            <param name="variable"></param>
+        </member>
+        <member name="T:Iwenli.Web.Htmx.HtmxPage">
+            <summary>
+            Htmx 页面配置信息
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Htmx.Redirect301Page">
+            <summary>
+            页面永久重定向
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Htmx.RedirectPage">
+            <summary>
+            跳转页面
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Module.HtmxModule">
+            <summary>
+            Htmx页面处理模块
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Module.StopwatchModule">
+            <summary>
+            页面执行时间监控模块
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Module.StopwatchModule.RunNoteTime">
+            <summary>
+            允许记录时间间隔
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Module.DebugModule">
+            <summary>
+            页面请求过程流水，调试模块
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.PagePublic">
+            <summary>
+            公共页面配置
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.PagePublic.#ctor">
+            <summary>
+            初始化一个 PagePublic 实例
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.PagePublic._pageList">
+            <summary>
+            页面配置信息集合
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.PagePublic.PageList">
+            <summary>
+            页面配置信息集合
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.PagePublic._defaultPage">
+            <summary>
+            默认页面配置信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.PagePublic.DefaultPage">
+            <summary>
+            默认页面配置信息
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.PagePublic._defaulutSkin">
+            <summary>
+            默认皮肤配置信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.PagePublic.DefaulutSkin">
+            <summary>
+            默认皮肤配置信息
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.PagePublic.SetDefaultPage(Iwenli.Web.Page)">
+            <summary>
+            设置页面默认处理配置信息
+            </summary>
+            <param name="page"></param>
+        </member>
+        <member name="T:Iwenli.Web.Parse.TemplateParser">
+            <summary>
+            模版标签处理
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Parse.TemplateParser.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Parse.ParserBase">
+            <summary>
+            解析表情数据，抽象类
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Parse.ParserBase.TagRegexStr">
+            <summary>
+            标签正则
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Parse.Tag">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Parse.Tag.TAG_REGEX">
+            <summary>
+            要解析的标签正则
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Parse.Tag.UrlInfo">
+            <summary>
+            URL地址
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Parse.Tag.TagName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Parse.Tag.TagAttributeStr">
+            <summary>
+            标签属性串
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Parse.Tag.TagStr">
+            <summary>
+            标签字符串
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Parse.Tag.#ctor(System.String,Iwenli.Web.Url)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="tagStr"></param>
+            <param name="urlInfo"></param>
+        </member>
+        <member name="T:Iwenli.Web.Parse.VariableParser">
+            <summary>
+            页面变量解析者
+            变量替换顺序，先替换页面变量、再替换皮肤变量、后替换站点变量
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Parse.VariableParser.Parse(Iwenli.Web.Url,Iwenli.Web.ISite,Iwenli.Web.ISkin,Iwenli.Web.Page,System.Text.StringBuilder@)">
+            <summary>
+            解析入口
+            </summary>
+            <param name="urlInfo"></param>
+            <param name="site"></param>
+            <param name="skin"></param>
+            <param name="page"></param>
+            <param name="pageCode"></param>
+        </member>
+        <member name="T:Iwenli.Web.RequestType">
+            <summary>
+            请求类型
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.HTM">
+            <summary>
+            Htm页面
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.PIC">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.CSS">
+            <summary>
+            样式文件
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.JS">
+            <summary>
+            JS脚本文件
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.Falsh">
+            <summary>
+            Falsh文件
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.ASPX">
+            <summary>
+            ASPX页面
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.Other">
+            <summary>
+            其他文件
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestType.Wap">
+            <summary>
+            Wap手机页面
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.RequestViewType">
+            <summary>
+            页面请求视图，由页面后缀名决定
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestViewType.Put">
+            <summary>
+            发布（正常）试图
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestViewType.Edit">
+            <summary>
+            编辑视图,[.htme]
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestViewType.Update">
+            <summary>
+            更新页面,[.htmx]
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestViewType.Delete">
+            <summary>
+            删除页面,[.htmd]
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestViewType.Save">
+            <summary>
+            保存视图,[.htms]
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestViewType.Null">
+            <summary>
+            清空,[.htmn]
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.RequestViewType.Cache">
+            <summary>
+            缓存页面，[.htmc]
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Security.Identity">
+            <summary>
+            用户标识
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.Identity.AuthenticationType">
+            <summary>
+            获取所使用的身份验证的类型，接口成员
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.Identity.IsAuthenticated">
+            <summary>
+            否验证了用户，接口成员
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.Identity.Name">
+            <summary>
+            用户名,接口成员
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Security.Principal">
+            <summary>
+            用户对象的基本功能
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.Principal.Identity">
+            <summary>
+            获取当前用户的标识，接口成员（实现IIdentity接口）
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Security.Principal.IsInRole(System.String)">
+            <summary>
+            确定当前用户是否属于指定的角色，接口成员
+            </summary>
+            <param name="str"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.Principal.IsInWlRole(System.String)">
+            <summary>
+            Wl角色认证
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.Principal.IsInWlPermission(System.String)">
+            <summary>
+            Wl权限认证
+            </summary>
+            <param name="permission"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.Principal.IsInWlGroup(System.String)">
+            <summary>
+            Wl部门认证
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.Principal.IsInWlService(System.String)">
+            <summary>
+            Wl服务认证
+            </summary>
+            <param name="service"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.Principal.IsBrowseUrl(Iwenli.Web.Url)">
+            <summary>
+            目录认证
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.Security.SecurityConfig">
+            <summary>
+            Web安全配置信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.LoginUrl">
+            <summary>
+            登录页面地址
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.DefaultUrl">
+            <summary>
+            定义在身份验证之后用于重定向的默认 URL。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.Key">
+            <summary>
+            加密键值
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.CookieName">
+            <summary>
+            认证Cookie名称
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.RequireSSL">
+            <summary>
+            指定是否需要 SSL 连接来传输身份验证 Cookie。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.SlidingExpiration">
+            <summary>
+            指定是否启用可调过期时间。可调过期将 Cookie 的当前身份验证时间重置为在单个会话期间收到每个请求时过期。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.Timeout">
+            <summary>
+            指定 Cookie 过期前逝去的时间（以整数分钟为单位）。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.CookiePath">
+            <summary>
+            Cookie路径
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.CookieMode">
+            <summary>
+            定义是否使用 Cookie 以及 Cookie 的行为。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.CookieDomain">
+            <summary>
+            Cookie 中设置的可选域
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.CookieUseCurrentRootDomain">
+            <summary>
+            是否使用当前根域
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.ValidateIP">
+            <summary>
+            指定是否验证IP信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.CheckUrl">
+            <summary>
+            是否验证URL
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.PrincipalType">
+            <summary>
+            用户的类型
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.AuthorizationPath">
+            <summary>
+            需要授权的目录
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.OpenPath">
+            <summary>
+            开放的路径
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.OpenDomain">
+            <summary>
+            开放域名
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.SecurityIP">
+            <summary>
+            安全IP范围
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.StopInfo">
+            <summary>
+            终止信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.SecurityConfig.StopType">
+            <summary>
+            终止流量的类型
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Security.SecurityConfig.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Security.SecurityHelper.GetAuthCookie(Iwenli.Web.Security.UserTicket)">
+            <summary>
+            根据用户票证获取Cookie
+            </summary>
+            <param name="userTicket"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.SecurityHelper.SetAuthCookie(System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            为提供的用户名创建一个身份验证票证，并将其添加到响应的 Cookie 集合或 URL。
+            </summary>
+            <param name="username">已验证身份的用户的名称</param>
+            <param name="timeOut">过期时间</param>
+            <param name="createPersistentCookie">若要创建持久 Cookie（跨浏览器会话保存的 Cookie），则为 true；否则为 false</param>
+            <param name="slidingExpiration">是否启用可调过期时间</param>
+        </member>
+        <member name="M:Iwenli.Web.Security.SecurityHelper.SetAuthCookie(System.String,System.Boolean)">
+            <summary>
+            为提供的用户名创建一个身份验证票证，并将其添加到响应的 Cookie 集合或 URL。
+            </summary>
+            <param name="username">已验证身份的用户的名称</param>
+            <param name="createPersistentCookie">若要创建持久 Cookie（跨浏览器会话保存的 Cookie），则为 true；否则为 false</param>
+        </member>
+        <member name="M:Iwenli.Web.Security.SecurityHelper.SignOut">
+            <summary>
+            从浏览器删除 Forms 身份验证票证
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Security.SecurityHelper.GetTicketFormCookie">
+            <summary>
+            从Cookie获得用户票证
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.SecurityHelper.IsHavePotence(System.String)">
+            <summary>
+            判断当前用户是否拥有相关权限
+            </summary>
+            <param name="str">权限值</param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.Security.StopBrowseType">
+            <summary>
+            终止请求浏览类型
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Iwenli.Web.Security.StopBrowseType.Redirect" -->
+        <member name="F:Iwenli.Web.Security.StopBrowseType.Stop">
+            <summary>
+            终止请求，返回空
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Security.StopBrowseType.Exception">
+            <summary>
+            抛出异常
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:Iwenli.Web.Security.StopBrowseType.Info" -->
+        <member name="T:Iwenli.Web.Security.UserTicket">
+            <summary>
+            用户票证
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Security.UserTicket._encryptValue">
+            <summary>
+            加密的字符
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Security.UserTicket._decryptValue">
+            <summary>
+            解密后的字符
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Security.UserTicket._username">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.Username">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Security.UserTicket._ip">
+            <summary>
+            客户最后访问IP
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.IP">
+            <summary>
+            最后更新IP
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Security.UserTicket._time">
+            <summary>
+            客户最后访问时间
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.Time">
+            <summary>
+            最后更新时间
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Security.UserTicket._expiration">
+            <summary>
+            票证过期的时间
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.Expiration">
+            <summary>
+            票证过期的时间
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.Expired">
+            <summary>
+            票证是否已过期
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.SlidingExpiration">
+            <summary>
+            指定是否启用可调过期时间。可调过期将 Cookie 的当前身份验证时间重置为在单个会话期间收到每个请求时过期。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.CreatePersistentCookie">
+            <summary>
+            若要创建持久 Cookie（跨浏览器会话保存的 Cookie），则为 true；否则为 false。
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Security.UserTicket.Timeout">
+            <summary>
+            指定 Cookie 过期前逝去的时间（以整数分钟为单位）。
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.#ctor(System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="code">票证代码</param>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.#ctor(System.String,System.Int32)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="username">用户名</param>
+            <param name="outTime">过期时间</param>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.#ctor(System.String,System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="username">用户名</param>
+            <param name="outTime">过期时间</param>
+            <param name="slidingExpiration">是否启用可调过期时间</param>
+            <param name="createPersistentCookie">若要创建持久 Cookie（跨浏览器会话保存的 Cookie），则为 true；否则为 false</param>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.ToString">
+            <summary>
+            获得票证代码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.Security.UserTicket.RBACAES">
+            <summary>
+            加密解密类
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.RBACAES._AESEncrypt(System.String)">
+            <summary>
+            AES加密
+            </summary>
+            <param name="plainStr">明文字符串</param>
+            <returns>密文</returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.RBACAES._AESDecrypt(System.String)">
+            <summary>
+            AES解密
+            </summary>
+            <param name="encryptStr">密文字符串</param>
+            <returns>明文</returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.RBACAES.AESEncrypt(System.String)">
+            <summary>
+            AES加密
+            </summary>
+            <param name="plainStr">明文字符串</param>
+            <returns>密文</returns>
+        </member>
+        <member name="M:Iwenli.Web.Security.UserTicket.RBACAES.AESDecrypt(System.String)">
+            <summary>
+            AES解密
+            </summary>
+            <param name="encryptStr">密文字符串</param>
+            <returns>明文</returns>
+        </member>
+        <member name="T:Iwenli.Web.Site">
+            <summary>
+            站点配置信息的默认实现
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Site.#ctor">
+            <summary>
+            构造函数
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Site._defaulutSkin">
+            <summary>
+            默认皮肤配置信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Site.DefaulutSkin">
+            <summary>
+            默认皮肤配置信息
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Site._skinList">
+            <summary>
+            皮肤配置信息集合
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Site.SkinList">
+            <summary>
+            皮肤配置信息集合
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Site._defaultPage">
+            <summary>
+            默认页面配置信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Site.DefaultPage">
+            <summary>
+            默认页面配置信息
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Site._pageList">
+            <summary>
+            页面配置信息集合
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Site.PageList">
+            <summary>
+            页面配置信息集合
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Site._pulicPageConfig">
+            <summary>
+            公共页面配置
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Site.PulicPageConfig">
+            <summary>
+            公共页面配置
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Site.Load(System.Xml.XmlElement)">
+            <summary>
+            加载站点配置结点信息
+            </summary>
+            <param name="node"></param>
+        </member>
+        <member name="M:Iwenli.Web.Site.GetSkinConfig(System.Web.HttpContext)">
+            <summary>
+            获取当前请求对应的皮肤
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Site.GetRequestConfig(System.Web.HttpContext)">
+            <summary>
+            提取页面处理程序
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Iwenli.Web.Site._hostList">
+            <summary>
+            主机
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Site.SetHost(System.String)">
+            <summary>
+            设置当前站点对应的主机头Host
+            </summary>
+            <param name="host"></param>
+        </member>
+        <member name="M:Iwenli.Web.Site.IsThis(System.Web.HttpContext)">
+            <summary>
+            监测当前请求是否适应此站点配置,Host完全匹配模式
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.Skin">
+            <summary>
+            ISkin的默认实现
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Skin.SkinName">
+            <summary>
+            皮肤名称
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Skin.ImagePath">
+            <summary>
+            皮肤图片路径
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Skin.CssPath">
+            <summary>
+            皮肤样式路径
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Skin.JsPath">
+            <summary>
+            皮肤脚本路径
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Skin.TemplatePath">
+            <summary>
+            皮肤模板路径
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Skin.GetTemplateSavePath(System.String)">
+            <summary>
+            获得模板保存路径
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Skin.GetTemplate(System.String)">
+            <summary>
+            获取模板代码，如果没有找到，将抛出异常
+            </summary>
+            <param name="templateName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Skin.TryGetTemplate(System.String,System.String@)">
+            <summary>
+            尝试获取模板代码
+            </summary>
+            <param name="templateName"></param>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.Url">
+            <summary>
+            请求URL信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.Current">
+            <summary>
+            获得当前请求的 URL 信息
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Url._domain">
+            <summary>
+            域名信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.Domain">
+            <summary>
+            域名信息
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Url._absolutePath">
+            <summary>
+            请求路径
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.AbsolutePath">
+            <summary>
+            请求路径,带“/”，小写副本
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.QueryString">
+            <summary>
+            请求字符串
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Url._queryString">
+            <summary>
+            请求字符
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Url._requestFilePathExtension">
+            <summary>
+            请求文件扩展名
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.RequestFilePathExtension">
+            <summary>
+            请求文件扩展名
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.RequestType">
+            <summary>
+            页面请求类型
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Url._requestViewType">
+            <summary>
+            页面请求视图
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.RequestViewType">
+            <summary>
+            页面请求视图
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.TemplateFile">
+            <summary>
+            对应的模板文件
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Url.SavePath">
+            <summary>
+            对于的物理路径
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Url.#ctor(System.Web.HttpContext)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:Iwenli.Web.Web">
+            <summary>
+            Web应用池
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Web.#ctor">
+            <summary>
+            初始化一个 Web 对象
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Web._siteConfigList">
+            <summary>
+            站点配置信息
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Web.Load(System.Xml.XmlElement)">
+            <summary>
+            加载配置信息
+            </summary>
+            <param name="node"></param>
+        </member>
+        <member name="M:Iwenli.Web.Web.GetSite(System.Web.HttpContext)">
+            <summary>
+            匹配当前请求站点信息
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.WebLog.WebLogConfig">
+            <summary>
+            Web点击流日志数据
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.Instance">
+            <summary>
+            当前站点Web日志数据配置
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.IfNote">
+            <summary>
+            是否记录
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.DatabaseName">
+            <summary>
+            记录到库
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.DataTableName">
+            <summary>
+            记录到的表
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.PathExcludeInfo">
+            <summary>
+            页面排除数据
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.PathIncludeInfo">
+            <summary>
+            页面包含数据
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.UserAgentExclude">
+            <summary>
+            用户代理排除
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.WebLog.WebLogConfig.IpExclude">
+            <summary>
+            IP排除
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.WebLog.WebLogInfo">
+            <summary>
+            Web访问日志数据
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.WebLog.WebLogInfo.#ctor(System.Web.HttpContext)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:Iwenli.Web.WebLog.WebLogInfo.InitInfo">
+            <summary>
+            初始化记录数据
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._clientIp">
+            <summary>
+            客户IP
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._clientUserAgent">
+            <summary>
+            客户端代理
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._clientCookie">
+            <summary>
+            客户端Cookie
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._refererHost">
+            <summary>
+            来源页面
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._requestMethod">
+            <summary>
+            请求方法
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._requestHost">
+            <summary>
+            请求主机
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._requestPath">
+            <summary>
+            请求页面
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._requestQuery">
+            <summary>
+            请求查询数据
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._requestUrl">
+            <summary>
+            请求URL
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._serverName">
+            <summary>
+            服务器名称
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.WebLog.WebLogInfo._responseStatus">
+            <summary>
+            返回状态码
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.WebLog.WebLogInfo.Note">
+            <summary>
+            记录数据
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.WebUtility">
+            <summary>
+            Web相关公共处理函数
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.RemoveHtml(System.String)">
+            <summary>
+            移除Html标记
+            </summary>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.HtmlEncode(System.String)">
+            <summary>
+            返回 HTML 字符串的编码结果
+            </summary>
+            <param name="str">字符串</param>
+            <returns>编码结果</returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.HtmlDecode(System.String)">
+            <summary>
+            返回 HTML 字符串的解码结果
+            </summary>
+            <param name="str">字符串</param>
+            <returns>解码结果</returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.UrlEncode(System.String)">
+            <summary>
+            返回 URL 字符串的编码结果
+            </summary>
+            <param name="str">字符串</param>
+            <returns>编码结果</returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.UrlDecode(System.String)">
+            <summary>
+            返回 URL 字符串的编码结果
+            </summary>
+            <param name="str">字符串</param>
+            <returns>解码结果</returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.GetMapPath(System.String)">
+            <summary>
+            获得文件物理路径
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.GetMapPath(System.String,System.Boolean)">
+            <summary>
+            获得文件物理路径
+            </summary>
+            <param name="path">路径</param>
+            <param name="isRoot">是否相对根路径</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.GetIP">
+            <summary>
+            获得当前请求IP地址
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.GetIP(System.Web.HttpContext)">
+            <summary>
+            获得请求IP地址
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.IPAuthentication(System.String)">
+            <summary>
+            验证IP是否是安全IP
+            </summary>
+            <param name="ip">IP</param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.WebUtility.IPAuthentication">
+            <summary>
+            验证当前IP是否是安全IP
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.IParser">
+            <summary>
+            解析容器接口,负责将相应的标签转到相应的类进行处理
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.ISite">
+            <summary>
+            站点配置接口
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.ISite.GetSkinConfig(System.Web.HttpContext)">
+            <summary>
+            获取当前请求对应的皮肤配置信息
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.ISite.GetRequestConfig(System.Web.HttpContext)">
+            <summary>
+            获取当前请求对应的处理页面配置信息
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.ISite.SetHost(System.String)">
+            <summary>
+            设置当前站点对应的主机头Host
+            </summary>
+            <param name="host"></param>
+        </member>
+        <member name="M:Iwenli.Web.ISite.IsThis(System.Web.HttpContext)">
+            <summary>
+            检测当前请求是否适应此站点配置
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.IWeb">
+            <summary>
+            站点信息接口
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.IWeb.GetSite(System.Web.HttpContext)">
+            <summary>
+            获得站点信息
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.ISkin">
+            <summary>
+            页面相关配置接口
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.ISkin.GetTemplate(System.String)">
+            <summary>
+            获取模板
+            </summary>
+            <param name="templateName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.ISkin.TryGetTemplate(System.String,System.String@)">
+            <summary>
+            获取模板
+            </summary>
+            <param name="templateName"></param>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.ISkin.IsThis(System.Web.HttpContext)">
+            <summary>
+            是否当前皮肤
+            </summary>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Iwenli.Web.ISkin.TemplateList">
+            <summary>
+            额外属性
+            </summary>
+        </member>
+        <member name="T:Iwenli.Web.Page">
+            <summary>
+            请求页面配置信息
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.SaveWay">
+            <summary>
+             页面保存方法
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.UpdateTime">
+            <summary>
+            页面更新时间
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.Location">
+            <summary>
+            允许缓存的位置
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.Custom">
+            <summary>
+            自定义缓存健
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.Header">
+            <summary>
+            根据标头缓存
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.Param">
+            <summary>
+            根据参数缓存
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Page.Load(System.Xml.XmlElement)">
+            <summary>
+            加载配置文件
+            </summary>
+            <param name="node"></param>
+        </member>
+        <member name="F:Iwenli.Web.Page._defaultRequestConfig">
+            <summary>
+            默认页面配置信息
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Page.SetDefault(Iwenli.Web.Page)">
+            <summary>
+            设置默认页面处理配置
+            </summary>
+            <param name="page"></param>
+        </member>
+        <member name="M:Iwenli.Web.Page.IsThis(System.Web.HttpContext)">
+            <summary>
+            是否当前页面
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Page.GetHandler(System.Web.HttpContext)">
+            <summary>
+            获取页面处理方法
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Page.SetHandler(System.String)">
+            <summary>
+            设置页面处理方法
+            </summary>
+            <param name="handlerTypeStr"></param>
+        </member>
+        <member name="M:Iwenli.Web.Page.SetHandler(System.Type)">
+            <summary>
+            设置页面处理方法
+            </summary>
+            <param name="handlerType"></param>
+        </member>
+        <member name="F:Iwenli.Web.Page._mappedRegexStr">
+            <summary>
+            URL正则规则字符串
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.MappedRegexStr">
+            <summary>
+            URL正则规则匹配字符串
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Page._mappedRegex">
+            <summary>
+            URL正则规则
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.Page._templateRegexStr">
+            <summary>
+            模板正则规则
+            </summary>
+        </member>
+        <member name="P:Iwenli.Web.Page.TemplateRegexStr">
+            <summary>
+            模板正则规则
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Page.GetTemplateName">
+            <summary>
+            获取当前请求页面对应的模板名称
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Iwenli.Web.Page.GetPageVariable">
+            <summary>
+            获取页面变量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Iwenli.Web.Page.ParseList">
+            <summary>
+            解析处理类列表
+            </summary>
+        </member>
+        <member name="M:Iwenli.Web.Page.GetParseList">
+            <summary>
+            获取解析处理程序集合
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Iwenli.Web.PageSaveType">
+            <summary>
+            页面保存方法
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.PageSaveType.Null">
+            <summary>
+            没有配置
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.PageSaveType.Save">
+            <summary>
+            静态化处理页面
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.PageSaveType.Cache">
+            <summary>
+            不带参数，缓存页面
+            </summary>
+        </member>
+        <member name="F:Iwenli.Web.PageSaveType.None">
+            <summary>
+            不做处理
+            </summary>
+        </member>
+        <member name="T:Iwenli.WlException">
+            <summary>
+            异常基础类
+            </summary>
+        </member>
         <member name="T:Iwenli.LogHelper">
             <summary>
             日志处理帮助类
@@ -823,7 +2708,7 @@
             <summary>
             记录日志对象
             对于独立类，
-            请使用引用Txooo命名空间后，使用this.TxLogDebug()记录日志信息
+            请使用引用Iwenli命名空间后，使用this.LogDebug()记录日志信息
             </summary>
         </member>
         <member name="F:Iwenli.LogHelper._watchingAppender">
@@ -949,6 +2834,22 @@
         <member name="T:Iwenli.LogMemoryAppender">
             <summary>
             内存缓存日志记录Appender
+            </summary>
+        </member>
+        <member name="T:Iwenli.SingletonHelper`1">
+            <summary>
+            单例提供者
+            </summary>
+            <typeparam name="T">泛型</typeparam>
+        </member>
+        <member name="P:Iwenli.SingletonHelper`1.Instance">
+            <summary>
+            单例对象
+            </summary>
+        </member>
+        <member name="T:Iwenli.SingletonHelper`1.SingletonCreator">
+            <summary>
+            单例创建者
             </summary>
         </member>
         <member name="T:Iwenli.Text.EncryptHelper">

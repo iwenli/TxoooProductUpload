@@ -45,9 +45,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\CSkin.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Iwenli, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Iwenli.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="SimpleUpdater, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c532149a76b9a64b, processorArchitecture=MSIL">
       <HintPath>..\packages\fishlee.net.simpleupdater.4.3.0.0\lib\net45\SimpleUpdater.dll</HintPath>
@@ -230,7 +238,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="Iwenli.config">
+    <None Include="wl.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="lib\cef\cef.pak" />
@@ -340,6 +348,7 @@
     <None Include="Resources\left_round.png" />
     <None Include="Resources\right_round.png" />
     <None Include="Resources\Refresh_round.png" />
+    <Content Include="lib\Iwenli.XML" />
     <Content Include="Skin\copyright_bg2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

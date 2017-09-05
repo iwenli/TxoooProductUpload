@@ -55,7 +55,19 @@ namespace TxoooProductUpload.UI
         void InitFormEvent()
         {
             FormClosing += MainForm_FormClosing;
+            webBrowser.LoadEnd += WebBrowser_LoadEnd;
         }
+
+        /// <summary>
+        /// 加载完显示页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void WebBrowser_LoadEnd(object sender, Xilium.CefGlue.WindowsForms.LoadEndEventArgs e)
+        {
+            palShow.Visible = false;
+        }
+
         /// <summary>
         /// 关闭最小化
         /// </summary>

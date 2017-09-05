@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TxoooProductUpload.UI.CefGlue.Browser;
 using TxoooProductUpload.UI.Common.Extended.Winform;
-using Xilium.CefGlue;
+using HtmlAgilityPack;
+using TxoooProductUpload.Entities.Product;
+using CCWin.SkinControl;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace TxoooProductUpload.UI.Forms.SubForms
 {
@@ -19,10 +16,13 @@ namespace TxoooProductUpload.UI.Forms.SubForms
     /// </summary>
     public partial class CrawlProductsForm : Form
     {
-        /// <summary>
-        /// 当前页面的html
-        /// </summary>
-        public string Html { set; get; }
+
+        List<ProductSourceInfo> _productList = new List<ProductSourceInfo>();
+
+        ///// <summary>
+        ///// 当前页面的html
+        ///// </summary>
+        //public string Html { set; get; }
 
 
         public CrawlProductsForm()
@@ -41,6 +41,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             colCB.HeaderCell = cbHeader;
             sdgvProduct.Columns.Add(colCB);
             cbHeader.OnCheckBoxClicked += CbHeader_OnCheckBoxClicked;
+            bs.DataSource = _productList;
         }
 
         private void CbHeader_OnCheckBoxClicked(object sender, datagridviewCheckboxHeaderEventArgs e)
@@ -59,28 +60,69 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             tsBtnRefresh.Click += TsBtnRefresh_Click;
             tsTxtUrl.KeyUp += TsTxtUrl_KeyUp;
             webBrowser.AddressChanged += WebBrowser_AddressChanged;
-            webBrowser.LoadEnd += WebBrowser_LoadEnd;
+            //webBrowser.LoadEnd += WebBrowser_LoadEnd;
         }
 
-        void WebBrowser_LoadEnd(object sender, Xilium.CefGlue.WindowsForms.LoadEndEventArgs e)
+        //void WebBrowser_LoadEnd(object sender, Xilium.CefGlue.WindowsForms.LoadEndEventArgs e)
+        //{
+        //    HtmlChange(text =>
+        //    {
+        //        BeginInvoke(new Action(() =>
+        //        {
+        //            Html = text;
+        //        }));
+        //    });
+        //}
+
+        void HtmlChange(Action<string> callBack)
         {
             if (webBrowser.Browser.GetMainFrame().IsMain)
             {
-                var visitor = new SourceVisitor(text =>
-                {
-                    BeginInvoke(new Action(() =>
-                    {
-                        Html = text;
-                    }));
-                });
+                var visitor = new SourceVisitor(callBack);
                 webBrowser.Browser.GetMainFrame().GetSource(visitor);
             }
         }
 
         void TsBtnTest_Click(object sender, EventArgs e)
         {
-            //CefStringVisitor vister = new CefStringVisitor();
-            //webBrowser.Browser.GetMainFrame().GetSource(CefGlue.)
+            HtmlChange(Html =>
+            {
+                BeginInvoke(new Action(() =>
+                {
+                    HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+                    document.LoadHtml(Html);
+                    var productNodeList = document.GetElementbyId("mainsrp-itemlist").SelectNodes("//div[starts-with(@class,'item J_MouserOnverReq')]");
+                    HtmlNode temp = null;
+                    foreach (HtmlNode categoryNode in productNodeList)
+                    {
+                        temp = HtmlNode.CreateNode(categoryNode.OuterHtml);
+                        var picElement = temp.SelectSingleNode("//a[starts-with(@class,'pic-link')]");
+                        var idStr = picElement.Attributes["trace-nid"].Value;
+                        if (!idStr.IsNullOrEmpty())
+                        {
+                            var id = Convert.ToInt64(idStr);
+                            if (_productList.Exists(m => m.Id == id)) { continue; }
+
+                            ProductSourceInfo product = new ProductSourceInfo(id);
+                            product.SourceType = temp.SelectSingleNode("//span[@class='icon-service-tianmao']") == null ?
+                                SourceType.Taobao : SourceType.Tamll;
+
+                            product.ShowPrice = Convert.ToDouble(picElement.Attributes["trace-price"].Value ?? "0");
+                            product.FirstImg = picElement.SelectSingleNode("//img").Attributes["data-src"].Value;
+
+                            product.IsFreePostage = temp.SelectSingleNode("//span[@class='baoyou-intitle icon-service-free']") != null;
+                            product.ProductName = temp.SelectSingleNode("//a[@class='J_ClickStat']").InnerText.Trim();
+
+                            product.DealCnt = Convert.ToInt32(temp.SelectSingleNode("//div[@class='deal-cnt']").InnerText.Trim().Replace("人付款", ""));
+                            product.UserNick = temp.SelectSingleNode("//a[@class='shopname J_MouseEneterLeave J_ShopInfo']").InnerText;
+                            product.UserId = Convert.ToInt64(temp.SelectSingleNode("//a[@class='shopname J_MouseEneterLeave J_ShopInfo']").Attributes["data-userid"].Value);
+                            product.Location = temp.SelectSingleNode("//div[@class='location']").InnerText.Trim();
+
+                            bs.Add(product);
+                        }
+                    }
+                }));
+            });
         }
 
         void TsBtnRefresh_Click(object sender, EventArgs e)
