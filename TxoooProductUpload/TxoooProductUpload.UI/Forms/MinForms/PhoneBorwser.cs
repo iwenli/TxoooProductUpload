@@ -19,17 +19,16 @@ namespace TxoooProductUpload.UI
     public partial class PhoneBorwser : SkinMain
     {
         string _url = "https://0.u.7518.cn";
-        /// <summary>
-        /// 设置或获取当前浏览地址
-        /// </summary>
-        public string Url { set { _url = value; } get { return _url; } }
+
+        string _loadUrl = string.Empty;
+
         /// <summary>
         /// 通过参数URL实例化一个 PhoneBorwser 对象
         /// </summary>
         /// <param name="url"></param>
-        public PhoneBorwser(string  url):this()
+        public PhoneBorwser(string url) : this()
         {
-            _url = url;
+            _loadUrl = url;
         }
         /// <summary>
         /// 实例化一个 PhoneBorwser 对象
@@ -47,31 +46,34 @@ namespace TxoooProductUpload.UI
 
             cmsGo.Click += CmsGo_Click;
             cmsIn.Click += CmsIn_Click;
-            cmsClose.Click += CmsClose_Click;
+            cmsClose.Click += Close_Click;
+            panClose.Click += Close_Click;
 
-            //cefWebBrowser1.TitleChanged += (s, e1) =>
-            //{
-            //    BeginInvoke(new Action(() =>
-            //    {
-            //        var title = cefWebBrowser1.Title;
-            //        if (title != null)
-            //        {
-            //            Text = title;
-            //        }
-            //    }));
-            //};
+            //打开页面
+            webBrowser.TitleChanged += (s, e1) =>
+            {
+                BeginInvoke(new Action(() =>
+                {
+                    if (_loadUrl != string.Empty)
+                    {
+                        _url = _loadUrl;
+                        Go();
+                        _loadUrl = string.Empty;
+                    }
+                }));
+            };
         }
 
         public void Open(string url)
         {
             _url = url;
             Go();
+            WindowState = FormWindowState.Normal;
         }
 
-        void CmsClose_Click(object sender, EventArgs e)
+        void Close_Click(object sender, EventArgs e)
         {
             Close();
-            //Hide();
         }
 
         void CmsIn_Click(object sender, EventArgs e)

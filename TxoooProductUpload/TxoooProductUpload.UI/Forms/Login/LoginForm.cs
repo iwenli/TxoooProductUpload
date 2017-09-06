@@ -275,7 +275,9 @@ namespace TxoooProductUpload.UI
             notify.BalloonTipText = "系统正在运行，双击显示窗口！" + Environment.NewLine
                 + "右击弹出快捷菜单..." + Environment.NewLine
                 + "当前版本" + AppInfo.AssemblyVersion.ToString();
-            notify.ShowBalloonTip(1000);
+
+            //notify.ShowBalloonTip(1000);
+
             //绑定窗体失去焦点时时间  气泡提示
             //Deactivate += LoginForm_DeacTivate;
         }

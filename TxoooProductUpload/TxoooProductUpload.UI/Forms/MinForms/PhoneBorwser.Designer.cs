@@ -36,6 +36,7 @@
             this.cmsIn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.cmsClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.panClose = new CCWin.SkinControl.SkinPanel();
             this.paLweb.SuspendLayout();
             this.cms.SuspendLayout();
             this.SuspendLayout();
@@ -112,16 +113,30 @@
             this.cmsClose.Size = new System.Drawing.Size(136, 22);
             this.cmsClose.Text = "关闭";
             // 
+            // panClose
+            // 
+            this.panClose.BackColor = System.Drawing.Color.Transparent;
+            this.panClose.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.panClose.DownBack = null;
+            this.panClose.Location = new System.Drawing.Point(149, 628);
+            this.panClose.MouseBack = null;
+            this.panClose.Name = "panClose";
+            this.panClose.NormlBack = null;
+            this.panClose.Size = new System.Drawing.Size(51, 63);
+            this.panClose.TabIndex = 1;
+            // 
             // PhoneBorwser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 703);
             this.ContextMenuStrip = this.cms;
+            this.Controls.Add(this.panClose);
             this.Controls.Add(this.paLweb);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PhoneBorwser";
             this.SkinBack = ((System.Drawing.Image)(resources.GetObject("$this.SkinBack")));
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "手机浏览器";
             this.paLweb.ResumeLayout(false);
             this.cms.ResumeLayout(false);
@@ -138,5 +153,6 @@
         private System.Windows.Forms.ToolStripMenuItem cmsIn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem cmsClose;
+        private CCWin.SkinControl.SkinPanel panClose;
     }
 }

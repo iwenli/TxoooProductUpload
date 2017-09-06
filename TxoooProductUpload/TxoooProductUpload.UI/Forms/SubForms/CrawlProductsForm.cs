@@ -7,6 +7,8 @@ using TxoooProductUpload.Entities.Product;
 using CCWin.SkinControl;
 using System.Linq;
 using System.Collections.Generic;
+using CCWin;
+using TxoooProductUpload.UI.Common;
 
 namespace TxoooProductUpload.UI.Forms.SubForms
 {
@@ -35,18 +37,49 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         private void CrawlProductsForm_Load(object sender, EventArgs e)
         {
             InitMenuEvent();
+            InitDgvAllSelect();
 
-            DataGridViewCheckBoxColumn colCB = new DataGridViewCheckBoxColumn();
-            DataGridViewCheckBoxHeaderCell cbHeader = new DataGridViewCheckBoxHeaderCell();
-            colCB.HeaderCell = cbHeader;
-            sdgvProduct.Columns.Add(colCB);
-            cbHeader.OnCheckBoxClicked += CbHeader_OnCheckBoxClicked;
             bs.DataSource = _productList;
+            sdgvProduct.CellContentClick += SdgvProduct_CellContentClick;
         }
 
-        private void CbHeader_OnCheckBoxClicked(object sender, datagridviewCheckboxHeaderEventArgs e)
+        void SdgvProduct_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewCell cell = sdgvProduct.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (sdgvProduct.Columns[e.ColumnIndex] == Delete)
+                {
+                    //删除
+                    sdgvProduct.Rows.Remove(sdgvProduct.Rows[e.RowIndex]);
+                }
+                if (sdgvProduct.Columns[e.ColumnIndex] == ShowPhone)
+                {
+                    Utils.OpenUrl(sdgvProduct.Rows[e.RowIndex].Cells["h5UrlDataGridViewTextBoxColumn"].Value.ToString(), true);
+                }
+                if (sdgvProduct.Columns[e.ColumnIndex] == ShowPc)
+                {
+                    Utils.OpenUrl(sdgvProduct.Rows[e.RowIndex].Cells["urlDataGridViewTextBoxColumn"].Value.ToString());
+                }
+            }
+        }
 
+        void InitDgvAllSelect()
+        {
+            DataGridViewCheckBoxColumn colCB = new DataGridViewCheckBoxColumn();
+            DataGridViewCheckBoxHeaderCell cbHeader = new DataGridViewCheckBoxHeaderCell();
+            colCB.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colCB.HeaderText = "全选";
+            colCB.Width = 50;
+            colCB.HeaderCell = cbHeader;
+            sdgvProduct.Columns.Insert(0, colCB);
+            cbHeader.OnCheckBoxClicked += CbHeader_OnCheckBoxClicked;
+        }
+
+        void CbHeader_OnCheckBoxClicked(object sender, datagridviewCheckboxHeaderEventArgs e)
+        {
+            sdgvProduct.EndEdit();
+            sdgvProduct.Rows.OfType<DataGridViewRow>().ToList().ForEach(t => t.Cells[0].Value = e.CheckedState);
         }
 
 
@@ -56,23 +89,21 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             tsBtnGO.Click += TsBtnGO_Click;
             tsBtnLeft.Click += TsBtnLeft_Click;
             tsBtnRight.Click += TsBtnRight_Click;
-            tsBtnTest.Click += TsBtnTest_Click;
             tsBtnRefresh.Click += TsBtnRefresh_Click;
             tsTxtUrl.KeyUp += TsTxtUrl_KeyUp;
             webBrowser.AddressChanged += WebBrowser_AddressChanged;
-            //webBrowser.LoadEnd += WebBrowser_LoadEnd;
+
+            webBrowser.LoadEnd += WebBrowser_LoadEnd;
+
+
+            tsBtnPageProducts.Click += TsBtnTest_Click;
         }
 
-        //void WebBrowser_LoadEnd(object sender, Xilium.CefGlue.WindowsForms.LoadEndEventArgs e)
-        //{
-        //    HtmlChange(text =>
-        //    {
-        //        BeginInvoke(new Action(() =>
-        //        {
-        //            Html = text;
-        //        }));
-        //    });
-        //}
+        void WebBrowser_LoadEnd(object sender, Xilium.CefGlue.WindowsForms.LoadEndEventArgs e)
+        {
+            var url = tsTxtUrl.Text;
+            tsBtnPageProducts.Enabled = url.IndexOf("s.taobao.com/search") > -1;
+        }
 
         void HtmlChange(Action<string> callBack)
         {
@@ -130,7 +161,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             webBrowser.Browser.Reload();
         }
 
-        private void TsBtnRight_Click(object sender, EventArgs e)
+         void TsBtnRight_Click(object sender, EventArgs e)
         {
             webBrowser.Browser.GoForward();
         }
@@ -148,6 +179,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             }
         }
 
+        void TsBtnGO_Click(object sender, EventArgs e)
+        {
+            OpenNewUrl(tsTxtUrl.Text.Trim());
+        }
+
         void WebBrowser_AddressChanged(object sender, Xilium.CefGlue.WindowsForms.AddressChangedEventArgs e)
         {
             tsTxtUrl.Text = webBrowser.Browser.GetMainFrame().Url;
@@ -155,10 +191,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             tsBtnRight.Enabled = webBrowser.Browser.CanGoForward;
         }
 
-        void TsBtnGO_Click(object sender, EventArgs e)
-        {
-            OpenNewUrl(tsTxtUrl.Text.Trim());
-        }
 
         /// <summary>
         /// 在webBrowser中打开新url
