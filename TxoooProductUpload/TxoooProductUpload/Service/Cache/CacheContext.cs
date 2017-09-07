@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TxoooProductUpload.Common;
+using TxoooProductUpload.Network;
 
 namespace TxoooProductUpload.Service
 {
@@ -12,6 +13,10 @@ namespace TxoooProductUpload.Service
     /// </summary>
     public class CacheContext : ContextBase
     {
+        /// <summary>
+        /// 服务上下文
+        /// </summary>
+        public ServiceContext ServiceContext { get; set; }
 
         /// <summary>
         /// 缓存数据
@@ -20,7 +25,7 @@ namespace TxoooProductUpload.Service
 
         #region 单例模式
 
-        static CacheContext _instance;
+        protected static CacheContext _instance;
         static readonly object _lockObject = new object();
 
         public static CacheContext Instance
@@ -34,6 +39,11 @@ namespace TxoooProductUpload.Service
                         if (_instance == null)
                         {
                             _instance = new CacheContext();
+                            _instance.Init();
+                            //Task.Run(() =>
+                            //{
+                            //    _instance.Update();
+                            //});
                         }
                     }
                 }
@@ -103,6 +113,43 @@ namespace TxoooProductUpload.Service
                             continue;
                         }
                         var childList = await context.AreaDataService.LoadAreaDatasAsync(item.region_id);
+                        Data.AreaList.AddRange(childList);
+                    }
+                    Data.LastUpdateTime = DateTime.Now;
+                    Data.IsLine = !ApiList.IsTest;
+                }
+                catch (Exception EX)
+                {
+                    MessageBox.Show(EX.Message);
+                }
+            }
+            Save();
+        }
+        /// <summary>
+        /// 更新缓存
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task Update()
+        {
+            if ((Data.LastUpdateTime != null && Data.LastUpdateTime.AddDays(1) < DateTime.Now)
+                || Data.ProductClassList.Count == 0 || Data.AreaList.Count == 0
+                || !ApiList.IsTest != Data.IsLine)
+            {
+                Data.ProductClassList.Clear();
+                Data.AreaList.Clear();
+                Data.ProductClassList.AddRange(await ServiceContext.ClassDataService.GetAllProductClass());
+                Data.AreaList.AddRange(await ServiceContext.AreaDataService.LoadAreaDatasAsync(1));
+                var list = Data.AreaList.ToList();
+                try
+                {
+                    foreach (var item in list)
+                    {
+                        if (new int[] { 110000, 120000, 310000, 500000 }.Contains(item.region_code))
+                        {
+                            continue;
+                        }
+                        var childList = await ServiceContext.AreaDataService.LoadAreaDatasAsync(item.region_id);
                         Data.AreaList.AddRange(childList);
                     }
                     Data.LastUpdateTime = DateTime.Now;

@@ -1,6 +1,5 @@
 using CCWin;
 using CCWin.SkinClass;
-using CCWin.SkinControl;
 using Iwenli;
 using Iwenli.Text;
 using System;
@@ -14,6 +13,7 @@ using TxoooProductUpload.UI.Properties;
 using TxoooProductUpload.UI.Service.Entities;
 using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.Common;
+using CCWin.SkinControl;
 
 namespace TxoooProductUpload.UI
 {
@@ -354,12 +354,12 @@ namespace TxoooProductUpload.UI
             //loginCode.Visible = true;
             #region 验证必输项
             _loginUser = new LoginInfo(txtId.Text, txtPwd.Text, chkRemember.Checked);
-            if (_loginUser.UserName.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(_loginUser.UserName))
             {
                 MessageBoxEx.Show("登陆手机号不能为空", AppInfo.AssemblyTitle);
                 return;
             }
-            if (_loginUser.Password.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(_loginUser.Password))
             {
                 MessageBoxEx.Show("密码不能为空", AppInfo.AssemblyTitle);
                 //msgBox = new MsgBox("密码不能为空");
@@ -520,6 +520,9 @@ namespace TxoooProductUpload.UI
                 notify.Text = notifyText.Length > 64 ? (notifyText.Substring(0, 60) + "...") : notifyText;
                 notify.Icon = Resources.__icon;
                 await App.Context.UserService.LoginLog(_loginUser);
+                Task.Run(() => {
+                    App.Context.BaseContent.CacheContext.Update();
+                });
             }
             else
             {
