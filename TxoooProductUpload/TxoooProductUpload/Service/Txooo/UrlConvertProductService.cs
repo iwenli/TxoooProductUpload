@@ -192,33 +192,33 @@ namespace TxoooProductUpload.Service
         private async Task<ProductResult> GetInfoByTmallUrl(string url)
         {
             ProductResult productModel = new ProductResult(ServiceContext);
-            var getTmallHtml = NetClient.Create<HtmlAgilityPack.HtmlDocument>(HttpMethod.Get, url, allowAutoRedirect: true);
+            //var getTmallHtml = NetClient.Create<HtmlAgilityPack.HtmlDocument>(HttpMethod.Get, url, allowAutoRedirect: true);
             string str = "";
-            // var getTmallHtml = NetClient.Create<string>(HttpMethod.Get, url, allowAutoRedirect: true);
+            var getTmallHtml = NetClient.Create<string>(HttpMethod.Get, url, allowAutoRedirect: true);
             await getTmallHtml.SendAsync();
             if (!getTmallHtml.IsValid())
             {
                 new Exception("未能提交请求");
             }
-            //str = getTmallHtml.Result;
+            str = getTmallHtml.Result;
             //https://detail.m.tmall.com/item.htm?id=536929636061&skuId=3205551032757
             // FSLib.Network.Adapter.HtmlAgilityPack.ResponseHtmlDocumentResult
-            var html = getTmallHtml.Result; 
+            var html = getTmallHtml.Result;
             Regex myRegex = new Regex("(?<=>商品图片</h3>)[\\s\\S]+?(?<=</div>\\s*</div>\\s*</div>)");//详情
-            Regex imgaeRegex = new Regex("(?<=src=\").+?(?=_640x640q50.jpg)");//商品主图
+            Regex imgaeRegex = new Regex("(?<=src=\").+?(?=_640x640q50.jpg)|(?<=src=\").+?(?=_640x640Q50s50.jpg)|(?<=src=\").+?(?=\")");//商品主图
             Regex detailimgRegex = new Regex("(?<=data-ks-lazyload=\").+?(?=\")");//商品详细图片
-            Regex priceRegex = new Regex("(?<=\"price\":\")\\d+\\.\\d{1,2}");    //售价
+            Regex priceRegex = new Regex("(?<=\"priceText\":\")\\d+?(?=\")|(?<=\"price\":\")\\d+\\.\\d{1,2}");    //售价
             Regex shopNameRegex = new Regex("(?<=\"shop-t\">).+?(?=</div>)");//店铺名称
             Regex titleRegex = new Regex("(?<=<title>).+?(?= - 天猫Tmall.com)");  //标题
             Regex SKURegex = new Regex("(?<=skuName\":).+?(?<=}]}])");  //SKU
-            Regex LocationRegex = new Regex("(?<=\"deliveryAddress\":\").+?(?=\",)");  //发货地
+            Regex LocationRegex = new Regex("(?<=\"location\":\").+?(?=\",)|(?<=\"from\":\").+?(?=\",)");  //发货地
             Regex SalesCountRegex = new Regex("(?<=\"sellCount\":).+?(?=,)");  //销量
-            Regex RateTotalsRegex = new Regex("(?<=\"rateCounts\":).+?(?=,)");  //评价
+            Regex RateTotalsRegex = new Regex("(?<=\"commentCount\":).+?(?=,)");  //评价
 
             try
             {
                 //主图
-                MatchCollection matchs = imgaeRegex.Matches(new Regex("(?=s-showcase)[\\s\\S]+?(?<=</div>\\s*</div>)").Match(str).Value, 0);
+                MatchCollection matchs = imgaeRegex.Matches(new Regex("(?=s-showcase)[\\s\\S]+?(?<=</div>\\s*</div>)|(?=scroller preview-scroller)[\\s\\S]+?(?<=</div>\\s*</div>)").Match(str).Value, 0);
                 foreach (Match mat in matchs)
                 {
                     string tempmat = mat.Value;
@@ -241,6 +241,10 @@ namespace TxoooProductUpload.Service
                 if (productModel.DetailHtml.IsNullOrEmpty())
                 {
                     string detailUrl = new Regex("(?<=\"descUrl\":\").+?(?=\",)").Match(str).Value;
+                    if (!detailUrl.StartsWith("http"))
+                    {
+                        detailUrl = "http:" + detailUrl;
+                    }
                     var detail = NetClient.Create<string>(HttpMethod.Get, detailUrl, allowAutoRedirect: false).Send().Result;
                     matches1 = new Regex("(?<=src=\").+?(?=\")").Matches(detail, 0);
                 }
@@ -304,7 +308,7 @@ namespace TxoooProductUpload.Service
                 productModel.ProductPrice = priceRegex.Match(str.ToString()).Value;
                 productModel.Location = LocationRegex.Match(str.ToString()).Value;
                 productModel.SalesCount = SalesCountRegex.Match(str.ToString()).Value;
-                productModel.RateTotals = RateTotalsRegex.Match(str.ToString()).Value;
+                //productModel.RateTotals = RateTotalsRegex.Match(str.ToString()).Value;
 
                 productModel.Source = "天猫";
                 productModel.SourceUrl = url;

@@ -1,5 +1,4 @@
-﻿
-if (typeof Date.prototype.format != 'function') {
+﻿if (typeof Date.prototype.format != 'function') {
     Date.prototype.format = function (fmt) {
         var o = {
             'M+': this.getMonth() + 1,                 //月份 
@@ -23,25 +22,42 @@ if (typeof Date.prototype.format != 'function') {
 }
 if (typeof getTmallReview != 'function') {
     getTmallReview = function () {
-        var reviewModelList = [];
-        var reviewContionar = document.getElementById('s-review');
-        var reviewItem = reviewContionar.childNodes[0].childNodes[1].childNodes;
+        var reviewModelList = [], reviewContionar, reviewItem;
+        var nickNameClass = '.nick';
+        reviewContionar = document.getElementById('s-review');
+        if (reviewContionar == null) {
+            reviewContionar = document.getElementById('J_CommentsWrapper');
+            reviewItem = reviewContionar.childNodes[3].childNodes;
+        } else {
+            reviewItem = reviewContionar.childNodes[0].childNodes[1].childNodes;
+            nickNameClass = '.nike';
+        }
         for (var i = 0; i < reviewItem.length; i++) {
             if (reviewItem[i].nodeName == 'LI' && reviewItem[i].classList.contains('item')) {
                 var reviewModel = { NickName: '', AddTime: Date(), ReviewContent: '', MchReplyContent: '', ReviewImgs: '' };
-                reviewModel.NickName = reviewItem[i].querySelector('.nike').innerText; //昵称
+                reviewModel.NickName = reviewItem[i].querySelector(nickNameClass).innerText; //昵称
                 reviewModel.AddTime = reviewItem[i].querySelector('time').innerText; //评价时间
                 reviewModel.ReviewContent = reviewItem[i].querySelector('blockquote').innerText; //评价内容
                 var mchReplyContent = reviewItem[i].querySelector('.reply');
                 if (mchReplyContent) {
                     reviewModel.MchReplyContent = mchReplyContent.innerText.replace('掌柜回复:', ''); //商家回复
                 }
+                if (!isLegitimate(reviewModel.ReviewContent) || !isLegitimate(reviewModel.MchReplyContent)) { continue; }
                 var reviewImgs = reviewItem[i].querySelector('.pics');
                 if (reviewImgs) {
                     var imgUrls = [];
                     var rawImgs = reviewImgs.querySelectorAll('img');
                     for (j = 0; j < rawImgs.length; j++) {
-                        imgUrls.push(rawImgs[j].src.replace('_100x100q75.jpg', ''));
+                        var imgSrc = rawImgs[j].src;
+                        if (imgSrc.indexOf('_.webp') > -1) {
+                            imgSrc = imgSrc.replace(/_110x100[\s\S]*_.webp/, '');
+                        } else {
+                            imgSrc = imgSrc.replace('_100x100q75.jpg', '');
+                        }
+                        if (imgSrc.indexOf('http') != 0) {
+                            imgSrc = 'https://' + imgSrc;
+                        }
+                        imgUrls.push(imgSrc);
                     }
                     reviewModel.ReviewImgs = imgUrls.join(); //评价图片
                 }
@@ -76,6 +92,7 @@ if (typeof getJdReview != 'function') {
                         reviewModel.MchReplyContent = replyContent.substr(replyContent.indexOf('回复：') + 3);
                     }
                 }
+                if (!isLegitimate(reviewModel.ReviewContent) || !isLegitimate(reviewModel.MchReplyContent)) { continue; }
                 var mchReplyContent = '';//京东没有商家回复
                 var reviewImgs = reviewItem[i].querySelector('.pic-list');
                 if (reviewImgs) {
@@ -103,6 +120,7 @@ if (typeof get1688Review != 'function') {
                 reviewModel.NickName = reviewItem[i].querySelector('.member').innerText; //昵称
                 reviewModel.AddTime = reviewItem[i].querySelector('.date').childNodes[1].innerText; //评价时间
                 reviewModel.ReviewContent = reviewItem[i].querySelector('.bd').innerText; //评价内容
+                if (!isLegitimate(reviewModel.ReviewContent)) { continue; }
                 //reviewModel.ProductReview =
                 //    reviewModel.ExpressReview = reviewItem[i].querySelector('.member-star').outerHTML.match(/star([1-5])/)[1]; //商品和快递评分
                 //1688没有商家回复 和 赛图
@@ -122,6 +140,7 @@ if (typeof getTaobaoReview != 'function') {
             reviewModel.NickName = reviewItem[i].querySelector('.rates_header_nick').innerText; //昵称
             reviewModel.AddTime = reviewItem[i].querySelector('.lib-rates-feedbackDate').innerText; //评价时间
             reviewModel.ReviewContent = reviewItem[i].querySelector('.lib-rates-content').innerText; //评价内容
+            if (!isLegitimate(reviewModel.ReviewContent)) { continue; }
             reviewModel.HeadPic = reviewItem[0].querySelector('.rates_header_img img').src.replace('_40x40.jpg', ''); //头像
             var mchReplyContent = reviewItem[i].querySelector('.reply');
             if (mchReplyContent) {
@@ -146,10 +165,15 @@ if (typeof getTaobaoReview != 'function') {
         return reviewModelList;
     };
 }
+if (typeof isLegitimate == 'undefined') {
+    isLegitimate = function (str) {
+        return /天猫|京东|阿里|淘宝/gi.test(str) == false;
+    }
+}
 if (typeof getReview == 'undefined') {
     getReview = function () {
         var host = location.host;
-        if (host == 'detail.m.tmall.com') {
+        if (host.indexOf('detail.m.tmall') > -1) {
             return getTmallReview();
         }
         else if (host == 'item.jd.com') {

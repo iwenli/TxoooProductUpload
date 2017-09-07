@@ -1,29 +1,29 @@
 <?xml version="1.0"?>
 <UpdateInfo xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <AppName>创业赚钱商家工具  - by iwenli</AppName>
-  <AppVersion>1.4.2.0</AppVersion>
+  <AppVersion>1.4.3.0</AppVersion>
   <PublishUrl>http://iwenli.org</PublishUrl>
   <ExecuteTimeout>0</ExecuteTimeout>
   <TreatErrorAsNotUpdated>false</TreatErrorAsNotUpdated>
   <PromptUserBeforeAutomaticUpgrade>true</PromptUserBeforeAutomaticUpgrade>
   <AutoCloseSucceedWindow>true</AutoCloseSucceedWindow>
   <Desc># 升级说明
-### v1.2.1 
-+ 时间：2017年7月25日10:23:49 
+### v1.4.3
++ 时间：2017年9月7日13:18:25
 + 升级内容：
-1. 修复工具里设置包邮后app里显示邮费1块
-2. SUK出错后注销再登录发货地显示出错：选择的地址与显示不符
-3. 注销后再传商品发货地没了
-4. 新增批量评论功能[支持天猫数据]
-5. 增加SKU价格批量设置，增加返现比例
-6. 修复发货地自动匹配
-7. 单条评价上传功能[全覆盖]
-### v1.3.0
-+ 时间：2017年7月27日15:27:47 
+1. 天猫商品无法抓取主图和价格的问题
+2. 价格自动根据比例溢价
+3. 评价抓取脚本天猫个别类目无法识别的问题
+### v1.4.2
++ 时间：2017年8月21日13:00:40
 + 升级内容：
-1. 修复评价头像URL无法上传问题
-2. 修复京东图片抓取不全的问题
-3. 修复单个上传不成功的问题
+1. 批量评价支持编辑
+2. 京东内衣类目个别店铺302无法抓取的BUG
+### v1.4.1
++ 时间：2017年8月18日16:18:52
++ 升级内容：
+1. 天猫无SKU无图片商品生成支持
+2. 天猫店铺整店抓取
 ### v1.4.0
 + 时间：2017年8月8日15:36:38
 + 升级内容：
@@ -35,32 +35,38 @@
 6. 评价头像移植
 7. 天猫多级属性评价支持
 8. 虚拟商品无法上传的BUG
-### v1.4.1
-+ 时间：2017年8月18日16:18:52
+### v1.3.0
++ 时间：2017年7月27日15:27:47 
 + 升级内容：
-1. 天猫无SKU无图片商品生成支持
-2. 天猫店铺整店抓取
-### v1.4.2
-+ 时间：2017年8月21日13:00:40
+1. 修复评价头像URL无法上传问题
+2. 修复京东图片抓取不全的问题
+3. 修复单个上传不成功的问题
+### v1.2.1 
++ 时间：2017年7月25日10:23:49 
 + 升级内容：
-1. 批量评价支持编辑
-2. 京东内衣类目个别店铺302无法抓取的BUG</Desc>
+1. 修复工具里设置包邮后app里显示邮费1块
+2. SUK出错后注销再登录发货地显示出错：选择的地址与显示不符
+3. 注销后再传商品发货地没了
+4. 新增批量评论功能[支持天猫数据]
+5. 增加SKU价格批量设置，增加返现比例
+6. 修复发货地自动匹配
+7. 单条评价上传功能[全覆盖]</Desc>
   <Package>5CCC4B2E6874D16D728192EF71F819DC.zip</Package>
-  <MD5>EE65EF3EE9FA9707E744F29D148E3B9A</MD5>
+  <MD5>CA571CC552908F4240C66F9D676845D8</MD5>
   <DeleteMethod>None</DeleteMethod>
-  <PackageSize>6987755</PackageSize>
+  <PackageSize>6991449</PackageSize>
   <ForceUpdate>false</ForceUpdate>
   <Packages>
     <PackageInfo>
       <FilePath>商家工具.exe</FilePath>
-      <FileSize>504320</FileSize>
-      <Version>1.4.2.0</Version>
-      <PackageHash>59E9B65AE363F2A8032D455D57150A02</PackageHash>
+      <FileSize>512000</FileSize>
+      <Version>1.4.3.0</Version>
+      <PackageHash>80BE993747FD95496F097F633262C4EF</PackageHash>
       <PackageName>6F0643365E46DEE66E3D6160F7C800B1.zip</PackageName>
-      <PackageSize>224103</PackageSize>
+      <PackageSize>227797</PackageSize>
       <Method>VersionCompare</Method>
       <VerificationLevel>Size Hash</VerificationLevel>
-      <FileHash>F186B5C22E7114EE534E577CD319F1F4</FileHash>
+      <FileHash>4A3E0FB531F2E3F0ED7012A84C97232F</FileHash>
       <Files>
         <string>商家工具.exe</string>
       </Files>
@@ -83,7 +89,7 @@
       <FilePath>bin\FSLib.Extension.dll</FilePath>
       <FileSize>134144</FileSize>
       <Version>1.4.3.0</Version>
-      <PackageHash>FD62177CF90578F41034E6A1D9124D0C</PackageHash>
+      <PackageHash>8BFA8FD704FE6745C3D6A9398EB196CF</PackageHash>
       <PackageName>15462B8D62E2994F946CC846BD025239.zip</PackageName>
       <PackageSize>59547</PackageSize>
       <Method>VersionCompare</Method>
@@ -97,7 +103,7 @@
       <FilePath>bin\FSLib.Network.dll</FilePath>
       <FileSize>189440</FileSize>
       <Version>2.2.2.0</Version>
-      <PackageHash>4DAFFFC40AF78142477540A6BC005E1C</PackageHash>
+      <PackageHash>11F6162E22060C9B66CE55DF099B599D</PackageHash>
       <PackageName>ECEB9F41BF89F259BF263DF0F9E59D1C.zip</PackageName>
       <PackageSize>77948</PackageSize>
       <Method>VersionCompare</Method>
@@ -111,7 +117,7 @@
       <FilePath>bin\log4net.dll</FilePath>
       <FileSize>276480</FileSize>
       <Version>2.0.8.0</Version>
-      <PackageHash>B9568E107285033756CD0D214B3742AD</PackageHash>
+      <PackageHash>048C148B47CBBE598E13323AAD2FB506</PackageHash>
       <PackageName>EA209B6E80331F2324B179700447C176.zip</PackageName>
       <PackageSize>108808</PackageSize>
       <Method>VersionCompare</Method>
@@ -125,7 +131,7 @@
       <FilePath>bin\Newtonsoft.Json.dll</FilePath>
       <FileSize>653824</FileSize>
       <Version>10.0.3.21018</Version>
-      <PackageHash>7F5D3B59BC68E4B787FD5C8E09E4E464</PackageHash>
+      <PackageHash>C9F68B47B8ADE3CB7C7E23CC4D8CD08D</PackageHash>
       <PackageName>B04F8E958654A9EC007C5648B1E1B112.zip</PackageName>
       <PackageSize>243004</PackageSize>
       <Method>VersionCompare</Method>
@@ -139,7 +145,7 @@
       <FilePath>bin\SimpleUpdater.dll</FilePath>
       <FileSize>387072</FileSize>
       <Version>4.3.0.0</Version>
-      <PackageHash>3F9C82BA1DE1555AF00958E6950357EF</PackageHash>
+      <PackageHash>185BC4AEBCF13DBB81FB3E9D7C52B5D4</PackageHash>
       <PackageName>09533D8EDAFA82E3296E81A800A04E6B.zip</PackageName>
       <PackageSize>149188</PackageSize>
       <Method>VersionCompare</Method>
@@ -153,7 +159,7 @@
       <FilePath>data\txooo.mdb</FilePath>
       <FileSize>27004928</FileSize>
       <Version>0.0.0.0</Version>
-      <PackageHash>6BCF24D2343E875DB8FD3B27D3A2E836</PackageHash>
+      <PackageHash>7FDE41AD38F6C75BF2F5F2FE700CDA7A</PackageHash>
       <PackageName>37707B7DBB48FB1170E0AF056B80815A.zip</PackageName>
       <PackageSize>6100849</PackageSize>
       <Method>VersionCompare</Method>
@@ -167,7 +173,7 @@
       <FilePath>en\SimpleUpdater.resources.dll</FilePath>
       <FileSize>70656</FileSize>
       <Version>4.3.0.0</Version>
-      <PackageHash>26F385CC1689BA52C439B87FE611A9D9</PackageHash>
+      <PackageHash>26AF2F4980E2C1C0EAFA9BE1F0E15B50</PackageHash>
       <PackageName>57DBEBDA16AD1DAF490836EB02E0692C.zip</PackageName>
       <PackageSize>23905</PackageSize>
       <Method>VersionCompare</Method>
