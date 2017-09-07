@@ -22,7 +22,7 @@ namespace TxoooProductUpload.Service
             ProductService = new ProductService(this);
             CommonService = new CommonService(this);
             CacheContext = CacheContext.Instance;
-            CacheContext.Init();
+            CacheContext.ServiceContext = this;
         }
 
         /// <summary>

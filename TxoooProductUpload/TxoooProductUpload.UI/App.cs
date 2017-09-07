@@ -8,6 +8,7 @@ using Iwenli;
 using CCWin;
 using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.UI.Common;
+using TxoooProductUpload.UI.Forms.SubForms;
 
 namespace TxoooProductUpload.UI
 {
@@ -33,11 +34,14 @@ namespace TxoooProductUpload.UI
                 try
                 {
                     Context = Service.ServiceContext.Instance;
-                    Application.Run(new Forms.SubForms.CrawlProductsForm());
+                    //TxoooProductUpload.UI.Main.MainForm()
+                    //LoginForm
+                    Application.Run(new CrawlProductsForm());
                 }
                 catch (Exception ex)
                 {
                     LogHelper.GetLogger("App").LogError(ex.Message, ex);
+                    CefGlue.WlCefGlueLoader.ShutDownCEF();
                 }
 
             }

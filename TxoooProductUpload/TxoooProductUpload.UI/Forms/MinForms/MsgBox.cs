@@ -27,7 +27,7 @@ namespace TxoooProductUpload.UI
         public MsgBox(string message, string title = "", MessageType type = MessageType.INFO)
         {
             InitializeComponent();
-            if (title.IsNullOrEmpty()) {
+            if (string.IsNullOrEmpty(title)) {
                 title = AppInfo.AssemblyTitle;
             }
             Text = title;

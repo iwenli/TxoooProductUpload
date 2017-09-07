@@ -22,7 +22,7 @@ namespace TxoooProductUpload.UI.Main
     using FSLib.Network.Http;
     using System.Threading;
 
-    partial class MainForm : FormBase
+    public partial class MainForm : FormBase
     {
         #region 页面变量
         //h5.m.taobao.com/awp/core/detail.htm|item.taobao.com|

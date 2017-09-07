@@ -45,6 +45,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\CSkin.dll</HintPath>
     </Reference>
+    <Reference Include="FSLib.Extension, Version=1.4.3.0, Culture=neutral, PublicKeyToken=61d6a007a0eb6994, processorArchitecture=MSIL">
+      <HintPath>..\packages\extension.fishlee.net.1.4.3.0\lib\net45\FSLib.Extension.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FSLib.Network, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eb0741d7f117d5c6, processorArchitecture=MSIL">
+      <HintPath>..\packages\network.fishlee.net.2.2.2.0\lib\net45\FSLib.Network.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
@@ -65,6 +73,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -108,6 +117,12 @@
     <Compile Include="Common\Const\AppInfo.cs" />
     <Compile Include="Common\Extended\Winform\DataGridViewCheckBoxHeaderCell.cs" />
     <Compile Include="Common\Utils.cs" />
+    <Compile Include="Forms\ChangeClassForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangeClassForm.Designer.cs">
+      <DependentUpon>ChangeClassForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MinForms\PhoneBorwser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,6 +184,7 @@
     <Compile Include="Forms\Login\PwdErro.designer.cs">
       <DependentUpon>PwdErro.cs</DependentUpon>
     </Compile>
+    <Compile Include="Service\Entities\CrawlType.cs" />
     <Compile Include="Service\Entities\LoginListInfo.cs" />
     <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="test\Msgtest.cs">
@@ -190,6 +206,9 @@
     <Compile Include="test\test.cs" />
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeClassForm.resx">
+      <DependentUpon>ChangeClassForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MinForms\PhoneBorwser.resx">
       <DependentUpon>PhoneBorwser.cs</DependentUpon>

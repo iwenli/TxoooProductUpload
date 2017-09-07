@@ -10,7 +10,7 @@ namespace TxoooProductUpload.UI
     /// <summary>
     /// 抽象窗口基类
     /// </summary>
-    class FormBase : Form
+   public class FormBase : Form
     {
         /// <summary>
         /// 获得当前的上下文
