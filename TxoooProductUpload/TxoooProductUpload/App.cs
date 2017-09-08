@@ -20,7 +20,7 @@ namespace TxoooProductUpload
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Update.CheckUpdateTask();
-            Application.Run(new MainForm());
+            Application.Run(new UI.TestForm());
         }
     }
 }
