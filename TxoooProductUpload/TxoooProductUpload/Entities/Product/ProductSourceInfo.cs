@@ -38,6 +38,8 @@ namespace TxoooProductUpload.Entities.Product
         public ProductSourceInfo(long id)
         {
             Id = id;
+            ThumImgList = new List<string>();
+            DetailImgList = new List<string>();
         }
         #endregion
 
@@ -62,9 +64,7 @@ namespace TxoooProductUpload.Entities.Product
         }
         #endregion
 
-
-
-        #region 公共
+        #region 公共属性
         /// <summary>
         /// 默认显示的第一张主图
         /// </summary>
@@ -128,7 +128,7 @@ namespace TxoooProductUpload.Entities.Product
         /// 来源店铺名称,如果有的话
         /// </summary>
         public string ShopName { get; set; }
-         
+
         /// <summary>
         /// 来源类型名称
         /// </summary>
@@ -161,5 +161,64 @@ namespace TxoooProductUpload.Entities.Product
             }
         }
         #endregion
+
+
+        /// <summary>
+        /// 商品品牌
+        /// </summary>
+        public string Brand { set; get; }
+        /// <summary>
+        /// 子标题  推广语
+        /// </summary>
+        public string SubTitle { set; get; }
+
+
+        /// <summary>
+        /// 商品主图
+        /// </summary>
+        public List<string> ThumImgList { set; get; }
+        /// <summary>
+        /// 商品详情图
+        /// </summary>
+        public List<string> DetailImgList { set; get; }
+
+
+        /// <summary>
+        /// 检查主图地址并添加到主图列表，如果存在则不添加
+        /// </summary>
+        /// <param name="imgUrl">图片地址</param>
+        public void AddThumImgWithCheck(string imgUrl)
+        {
+            if (imgUrl.IsNullOrEmpty())
+            {
+                if (!imgUrl.StartsWith("http"))
+                {
+                    imgUrl = "http:" + imgUrl;
+                }
+                if (!ThumImgList.Contains(imgUrl))
+                {
+                    ThumImgList.Add(imgUrl);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 检查详情图片地址并添加到详情图片列表
+        /// </summary>
+        /// <param name="imgUrl">图片地址</param>
+        public void AddDetailImgWithCheck(string imgUrl)
+        {
+            if (imgUrl.IsNullOrEmpty())
+            {
+                if (!imgUrl.StartsWith("http"))
+                {
+                    imgUrl = "http:" + imgUrl;
+                }
+                if (!DetailImgList.Contains(imgUrl))
+                {
+                    DetailImgList.Add(imgUrl);
+                }
+            }
+        }
     }
 }

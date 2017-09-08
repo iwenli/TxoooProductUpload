@@ -29,22 +29,24 @@ namespace TxoooProductUpload.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF() == 0)
-            {
-                try
-                {
-                    Context = Service.ServiceContext.Instance;
-                    //TxoooProductUpload.UI.Main.MainForm()
-                    //LoginForm
-                    Application.Run(new CrawlProductsForm());
-                }
-                catch (Exception ex)
-                {
-                    LogHelper.GetLogger("App").LogError(ex.Message, ex);
-                    CefGlue.WlCefGlueLoader.ShutDownCEF();
-                }
-
-            }
+            Application.Run(new TestForm());
+            //if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF() == 0)
+            //{
+            //    try
+            //    {
+            //        Context = Service.ServiceContext.Instance;
+            //        //TxoooProductUpload.UI.Main.MainForm()
+            //        //LoginForm
+            //        Application.Run(new CrawlProductsForm());
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        LogHelper.GetLogger("App").LogError(ex.Message, ex);
+            //        TxoooProductUpload.UI.CefGlue.WlCefGlueLoader.ShutDownCEF();
+            //        Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
+            //        Application.ExitThread();//释放所有线程　
+            //    }
+            //}
         }
 
         /// <summary>

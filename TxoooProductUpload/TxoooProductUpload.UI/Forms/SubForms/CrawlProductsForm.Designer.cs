@@ -30,58 +30,39 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CrawlProductsForm));
-<<<<<<< HEAD
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-=======
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.miniToolStrip = new CCWin.SkinControl.SkinToolStrip();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.ss = new System.Windows.Forms.StatusStrip();
+            this.tssLblSp1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssBtnPrevious = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLblSp2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssBtnNext = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLblSp3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssBtnBatchDel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLblSp4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssBtnBatchEditClass = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssLblSp5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.skinSplitContainer1 = new CCWin.SkinControl.SkinSplitContainer();
-            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
-            this.skinToolStrip3 = new CCWin.SkinControl.SkinToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.ts = new CCWin.SkinControl.SkinToolStrip();
+            this.rslpsp1 = new System.Windows.Forms.ToolStripLabel();
             this.tsBtnLeft = new System.Windows.Forms.ToolStripButton();
             this.tsBtnRight = new System.Windows.Forms.ToolStripButton();
             this.tsBtnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton10 = new System.Windows.Forms.ToolStripLabel();
+            this.tslableUrl = new System.Windows.Forms.ToolStripLabel();
             this.tsTxtUrl = new System.Windows.Forms.ToolStripTextBox();
             this.tsBtnGO = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.rslpsp2 = new System.Windows.Forms.ToolStripLabel();
             this.tsddProduct = new System.Windows.Forms.ToolStripDropDownButton();
             this.tsBtnOneProduct = new System.Windows.Forms.ToolStripMenuItem();
             this.tsBtnPageProducts = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,7 +70,6 @@
             this.tsBtnBatch = new System.Windows.Forms.ToolStripMenuItem();
             this.tsBtnGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-<<<<<<< HEAD
             this.tsBtnAutoAll = new System.Windows.Forms.ToolStripButton();
             this.sdgvProduct = new CCWin.SkinControl.SkinDataGridView();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
@@ -105,10 +85,7 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewButtonColumn2 = new System.Windows.Forms.DataGridViewButtonColumn();
-=======
-            this.sdgvProduct = new CCWin.SkinControl.SkinDataGridView();
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
+            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
             this.sourceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -121,30 +98,12 @@
             this.shopNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.h5UrlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-<<<<<<< HEAD
-=======
-            this.bs = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewLinkColumn1 = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.dataGridViewLinkColumn2 = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewButtonColumn2 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.tsBtnAutoAll = new System.Windows.Forms.ToolStripButton();
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
-            this.statusStrip1.SuspendLayout();
+            this.ss.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinSplitContainer1)).BeginInit();
             this.skinSplitContainer1.Panel1.SuspendLayout();
             this.skinSplitContainer1.Panel2.SuspendLayout();
             this.skinSplitContainer1.SuspendLayout();
-            this.skinToolStrip3.SuspendLayout();
+            this.ts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sdgvProduct)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).BeginInit();
             this.SuspendLayout();
@@ -202,32 +161,32 @@
             this.miniToolStrip.TitleRadius = 4;
             this.miniToolStrip.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.All;
             // 
-            // statusStrip1
+            // ss
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
+            this.ss.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tssLblSp1,
             this.tssBtnPrevious,
-            this.toolStripStatusLabel3,
+            this.tssLblSp2,
             this.tssBtnNext,
-            this.toolStripStatusLabel6,
+            this.tssLblSp3,
             this.tssBtnBatchDel,
-            this.toolStripStatusLabel4,
+            this.tssLblSp4,
             this.tssBtnBatchEditClass,
-            this.toolStripStatusLabel2});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 547);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(992, 26);
-            this.statusStrip1.SizingGrip = false;
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
+            this.tssLblSp5});
+            this.ss.Location = new System.Drawing.Point(0, 547);
+            this.ss.Name = "ss";
+            this.ss.Size = new System.Drawing.Size(992, 26);
+            this.ss.SizingGrip = false;
+            this.ss.TabIndex = 1;
+            this.ss.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
+            // tssLblSp1
             // 
-            this.toolStripStatusLabel1.AutoSize = false;
-            this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(301, 21);
-            this.toolStripStatusLabel1.Spring = true;
+            this.tssLblSp1.AutoSize = false;
+            this.tssLblSp1.BackColor = System.Drawing.Color.Transparent;
+            this.tssLblSp1.Name = "tssLblSp1";
+            this.tssLblSp1.Size = new System.Drawing.Size(301, 21);
+            this.tssLblSp1.Spring = true;
             // 
             // tssBtnPrevious
             // 
@@ -241,12 +200,12 @@
             this.tssBtnPrevious.Tag = "prev";
             this.tssBtnPrevious.Text = "上一步";
             // 
-            // toolStripStatusLabel3
+            // tssLblSp2
             // 
-            this.toolStripStatusLabel3.AutoSize = false;
-            this.toolStripStatusLabel3.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(50, 21);
+            this.tssLblSp2.AutoSize = false;
+            this.tssLblSp2.BackColor = System.Drawing.Color.Transparent;
+            this.tssLblSp2.Name = "tssLblSp2";
+            this.tssLblSp2.Size = new System.Drawing.Size(50, 21);
             // 
             // tssBtnNext
             // 
@@ -259,12 +218,12 @@
             this.tssBtnNext.Tag = "next";
             this.tssBtnNext.Text = "下一步";
             // 
-            // toolStripStatusLabel6
+            // tssLblSp3
             // 
-            this.toolStripStatusLabel6.AutoSize = false;
-            this.toolStripStatusLabel6.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripStatusLabel6.Name = "toolStripStatusLabel6";
-            this.toolStripStatusLabel6.Size = new System.Drawing.Size(50, 21);
+            this.tssLblSp3.AutoSize = false;
+            this.tssLblSp3.BackColor = System.Drawing.Color.Transparent;
+            this.tssLblSp3.Name = "tssLblSp3";
+            this.tssLblSp3.Size = new System.Drawing.Size(50, 21);
             // 
             // tssBtnBatchDel
             // 
@@ -277,12 +236,12 @@
             this.tssBtnBatchDel.Tag = "del";
             this.tssBtnBatchDel.Text = "批量删除";
             // 
-            // toolStripStatusLabel4
+            // tssLblSp4
             // 
-            this.toolStripStatusLabel4.AutoSize = false;
-            this.toolStripStatusLabel4.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(50, 21);
+            this.tssLblSp4.AutoSize = false;
+            this.tssLblSp4.BackColor = System.Drawing.Color.Transparent;
+            this.tssLblSp4.Name = "tssLblSp4";
+            this.tssLblSp4.Size = new System.Drawing.Size(50, 21);
             // 
             // tssBtnBatchEditClass
             // 
@@ -295,12 +254,12 @@
             this.tssBtnBatchEditClass.Tag = "class";
             this.tssBtnBatchEditClass.Text = "批量设置类目";
             // 
-            // toolStripStatusLabel2
+            // tssLblSp5
             // 
-            this.toolStripStatusLabel2.BackColor = System.Drawing.Color.Transparent;
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(301, 21);
-            this.toolStripStatusLabel2.Spring = true;
+            this.tssLblSp5.BackColor = System.Drawing.Color.Transparent;
+            this.tssLblSp5.Name = "tssLblSp5";
+            this.tssLblSp5.Size = new System.Drawing.Size(301, 21);
+            this.tssLblSp5.Spring = true;
             // 
             // skinSplitContainer1
             // 
@@ -316,7 +275,7 @@
             // skinSplitContainer1.Panel1
             // 
             this.skinSplitContainer1.Panel1.Controls.Add(this.webBrowser);
-            this.skinSplitContainer1.Panel1.Controls.Add(this.skinToolStrip3);
+            this.skinSplitContainer1.Panel1.Controls.Add(this.ts);
             // 
             // skinSplitContainer1.Panel2
             // 
@@ -325,86 +284,76 @@
             this.skinSplitContainer1.SplitterDistance = 351;
             this.skinSplitContainer1.TabIndex = 2;
             // 
-            // webBrowser
+            // ts
             // 
-            this.webBrowser.BrowserSettings = null;
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 31);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(992, 320);
-            this.webBrowser.StartUrl = "www.taobao.com";
-            this.webBrowser.TabIndex = 0;
-            // 
-            // skinToolStrip3
-            // 
-            this.skinToolStrip3.Arrow = System.Drawing.Color.White;
-            this.skinToolStrip3.Back = System.Drawing.Color.White;
-            this.skinToolStrip3.BackColor = System.Drawing.Color.Transparent;
-            this.skinToolStrip3.BackgroundImage = global::TxoooProductUpload.UI.Properties.Resources.BaiduShurufa_2014_8_2_16_32_58;
-            this.skinToolStrip3.BackRadius = 4;
-            this.skinToolStrip3.BackRectangle = new System.Drawing.Rectangle(10, 10, 10, 10);
-            this.skinToolStrip3.Base = System.Drawing.Color.Transparent;
-            this.skinToolStrip3.BaseFore = System.Drawing.Color.Black;
-            this.skinToolStrip3.BaseForeAnamorphosis = false;
-            this.skinToolStrip3.BaseForeAnamorphosisBorder = 4;
-            this.skinToolStrip3.BaseForeAnamorphosisColor = System.Drawing.Color.White;
-            this.skinToolStrip3.BaseForeOffset = new System.Drawing.Point(0, 0);
-            this.skinToolStrip3.BaseHoverFore = System.Drawing.Color.Black;
-            this.skinToolStrip3.BaseItemAnamorphosis = true;
-            this.skinToolStrip3.BaseItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(93)))), ((int)(((byte)(93)))));
-            this.skinToolStrip3.BaseItemBorderShow = true;
-            this.skinToolStrip3.BaseItemDown = ((System.Drawing.Image)(resources.GetObject("skinToolStrip3.BaseItemDown")));
-            this.skinToolStrip3.BaseItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.skinToolStrip3.BaseItemMouse = ((System.Drawing.Image)(resources.GetObject("skinToolStrip3.BaseItemMouse")));
-            this.skinToolStrip3.BaseItemNorml = ((System.Drawing.Image)(resources.GetObject("skinToolStrip3.BaseItemNorml")));
-            this.skinToolStrip3.BaseItemPressed = System.Drawing.Color.Transparent;
-            this.skinToolStrip3.BaseItemRadius = 2;
-            this.skinToolStrip3.BaseItemRadiusStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinToolStrip3.BaseItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(128)))), ((int)(((byte)(134)))));
-            this.skinToolStrip3.BindTabControl = null;
-            this.skinToolStrip3.DropDownImageSeparator = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
-            this.skinToolStrip3.Fore = System.Drawing.Color.Black;
-            this.skinToolStrip3.GripMargin = new System.Windows.Forms.Padding(0);
-            this.skinToolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.skinToolStrip3.HoverFore = System.Drawing.Color.White;
-            this.skinToolStrip3.ItemAnamorphosis = false;
-            this.skinToolStrip3.ItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
-            this.skinToolStrip3.ItemBorderShow = false;
-            this.skinToolStrip3.ItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
-            this.skinToolStrip3.ItemPressed = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
-            this.skinToolStrip3.ItemRadius = 1;
-            this.skinToolStrip3.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
-            this.skinToolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
+            this.ts.Arrow = System.Drawing.Color.White;
+            this.ts.Back = System.Drawing.Color.White;
+            this.ts.BackColor = System.Drawing.Color.Transparent;
+            this.ts.BackgroundImage = global::TxoooProductUpload.UI.Properties.Resources.BaiduShurufa_2014_8_2_16_32_58;
+            this.ts.BackRadius = 4;
+            this.ts.BackRectangle = new System.Drawing.Rectangle(10, 10, 10, 10);
+            this.ts.Base = System.Drawing.Color.Transparent;
+            this.ts.BaseFore = System.Drawing.Color.Black;
+            this.ts.BaseForeAnamorphosis = false;
+            this.ts.BaseForeAnamorphosisBorder = 4;
+            this.ts.BaseForeAnamorphosisColor = System.Drawing.Color.White;
+            this.ts.BaseForeOffset = new System.Drawing.Point(0, 0);
+            this.ts.BaseHoverFore = System.Drawing.Color.Black;
+            this.ts.BaseItemAnamorphosis = true;
+            this.ts.BaseItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(93)))), ((int)(((byte)(93)))), ((int)(((byte)(93)))));
+            this.ts.BaseItemBorderShow = true;
+            this.ts.BaseItemDown = ((System.Drawing.Image)(resources.GetObject("ts.BaseItemDown")));
+            this.ts.BaseItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.ts.BaseItemMouse = ((System.Drawing.Image)(resources.GetObject("ts.BaseItemMouse")));
+            this.ts.BaseItemNorml = ((System.Drawing.Image)(resources.GetObject("ts.BaseItemNorml")));
+            this.ts.BaseItemPressed = System.Drawing.Color.Transparent;
+            this.ts.BaseItemRadius = 2;
+            this.ts.BaseItemRadiusStyle = CCWin.SkinClass.RoundStyle.All;
+            this.ts.BaseItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(99)))), ((int)(((byte)(128)))), ((int)(((byte)(134)))));
+            this.ts.BindTabControl = null;
+            this.ts.DropDownImageSeparator = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.ts.Fore = System.Drawing.Color.Black;
+            this.ts.GripMargin = new System.Windows.Forms.Padding(0);
+            this.ts.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.ts.HoverFore = System.Drawing.Color.White;
+            this.ts.ItemAnamorphosis = false;
+            this.ts.ItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.ts.ItemBorderShow = false;
+            this.ts.ItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.ts.ItemPressed = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.ts.ItemRadius = 1;
+            this.ts.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
+            this.ts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rslpsp1,
             this.tsBtnLeft,
             this.tsBtnRight,
             this.tsBtnRefresh,
-            this.toolStripButton10,
+            this.tslableUrl,
             this.tsTxtUrl,
             this.tsBtnGO,
-            this.toolStripLabel2,
+            this.rslpsp2,
             this.tsddProduct,
             this.toolStripButton1,
             this.tsBtnAutoAll});
-            this.skinToolStrip3.Location = new System.Drawing.Point(0, 0);
-            this.skinToolStrip3.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.skinToolStrip3.Name = "skinToolStrip3";
-            this.skinToolStrip3.Padding = new System.Windows.Forms.Padding(0, 3, 0, 4);
-            this.skinToolStrip3.RadiusStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinToolStrip3.Size = new System.Drawing.Size(992, 31);
-            this.skinToolStrip3.SkinAllColor = true;
-            this.skinToolStrip3.TabIndex = 126;
-            this.skinToolStrip3.Text = "skinToolStrip3";
-            this.skinToolStrip3.TitleAnamorphosis = false;
-            this.skinToolStrip3.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(228)))), ((int)(((byte)(236)))));
-            this.skinToolStrip3.TitleRadius = 4;
-            this.skinToolStrip3.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.All;
+            this.ts.Location = new System.Drawing.Point(0, 0);
+            this.ts.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
+            this.ts.Name = "ts";
+            this.ts.Padding = new System.Windows.Forms.Padding(0, 3, 0, 4);
+            this.ts.RadiusStyle = CCWin.SkinClass.RoundStyle.All;
+            this.ts.Size = new System.Drawing.Size(992, 31);
+            this.ts.SkinAllColor = true;
+            this.ts.TabIndex = 126;
+            this.ts.Text = "skinToolStrip3";
+            this.ts.TitleAnamorphosis = false;
+            this.ts.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(228)))), ((int)(((byte)(236)))));
+            this.ts.TitleRadius = 4;
+            this.ts.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.All;
             // 
-            // toolStripLabel1
+            // rslpsp1
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(24, 21);
-            this.toolStripLabel1.Text = "    ";
+            this.rslpsp1.Name = "rslpsp1";
+            this.rslpsp1.Size = new System.Drawing.Size(24, 21);
+            this.rslpsp1.Text = "    ";
             // 
             // tsBtnLeft
             // 
@@ -445,18 +394,18 @@
             this.tsBtnRefresh.Size = new System.Drawing.Size(40, 23);
             this.tsBtnRefresh.Text = "刷新";
             // 
-            // toolStripButton10
+            // tslableUrl
             // 
-            this.toolStripButton10.AutoSize = false;
-            this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton10.ForeColor = System.Drawing.Color.White;
-            this.toolStripButton10.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton10.Image")));
-            this.toolStripButton10.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton10.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(60, 23);
-            this.toolStripButton10.Text = "     网址:";
+            this.tslableUrl.AutoSize = false;
+            this.tslableUrl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tslableUrl.ForeColor = System.Drawing.Color.White;
+            this.tslableUrl.Image = ((System.Drawing.Image)(resources.GetObject("tslableUrl.Image")));
+            this.tslableUrl.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tslableUrl.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tslableUrl.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.tslableUrl.Name = "tslableUrl";
+            this.tslableUrl.Size = new System.Drawing.Size(60, 23);
+            this.tslableUrl.Text = "     网址:";
             // 
             // tsTxtUrl
             // 
@@ -473,11 +422,11 @@
             this.tsBtnGO.Size = new System.Drawing.Size(36, 21);
             this.tsBtnGO.Text = "进入";
             // 
-            // toolStripLabel2
+            // rslpsp2
             // 
-            this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(24, 21);
-            this.toolStripLabel2.Text = "    ";
+            this.rslpsp2.Name = "rslpsp2";
+            this.rslpsp2.Size = new System.Drawing.Size(24, 21);
+            this.rslpsp2.Text = "    ";
             // 
             // tsddProduct
             // 
@@ -535,7 +484,6 @@
             this.toolStripButton1.Text = "分类";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-<<<<<<< HEAD
             // tsBtnAutoAll
             // 
             this.tsBtnAutoAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -545,30 +493,31 @@
             this.tsBtnAutoAll.Size = new System.Drawing.Size(36, 21);
             this.tsBtnAutoAll.Text = "自动";
             // 
-=======
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             // sdgvProduct
             // 
             this.sdgvProduct.AllowUserToAddRows = false;
             this.sdgvProduct.AllowUserToDeleteRows = false;
             this.sdgvProduct.AllowUserToOrderColumns = true;
             this.sdgvProduct.AlternatingCellBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
-            this.sdgvProduct.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.DimGray;
+            this.sdgvProduct.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.sdgvProduct.AutoGenerateColumns = false;
             this.sdgvProduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.sdgvProduct.BackgroundColor = System.Drawing.SystemColors.Window;
             this.sdgvProduct.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.sdgvProduct.ColumnFont = null;
+            this.sdgvProduct.ColumnForeColor = System.Drawing.Color.DimGray;
             this.sdgvProduct.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(246)))), ((int)(((byte)(239)))));
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.sdgvProduct.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(246)))), ((int)(((byte)(239)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.sdgvProduct.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.sdgvProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.sdgvProduct.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sourceNameDataGridViewTextBoxColumn,
@@ -585,30 +534,19 @@
             this.h5UrlDataGridViewTextBoxColumn});
             this.sdgvProduct.ColumnSelectForeColor = System.Drawing.SystemColors.HighlightText;
             this.sdgvProduct.DataSource = this.bs;
-<<<<<<< HEAD
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.sdgvProduct.DefaultCellStyle = dataGridViewCellStyle8;
-=======
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.sdgvProduct.DefaultCellStyle = dataGridViewCellStyle20;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.DarkGray;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.sdgvProduct.DefaultCellStyle = dataGridViewCellStyle7;
             this.sdgvProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sdgvProduct.EnableHeadersVisualStyles = false;
             this.sdgvProduct.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.sdgvProduct.GridColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.sdgvProduct.HeadFont = new System.Drawing.Font("微软雅黑", 9F);
+            this.sdgvProduct.HeadFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.sdgvProduct.HeadSelectForeColor = System.Drawing.SystemColors.HighlightText;
             this.sdgvProduct.Location = new System.Drawing.Point(0, 0);
             this.sdgvProduct.Margin = new System.Windows.Forms.Padding(10);
@@ -617,17 +555,10 @@
             this.sdgvProduct.Name = "sdgvProduct";
             this.sdgvProduct.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.sdgvProduct.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-<<<<<<< HEAD
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.sdgvProduct.RowsDefaultCellStyle = dataGridViewCellStyle9;
-=======
-            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.sdgvProduct.RowsDefaultCellStyle = dataGridViewCellStyle21;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.sdgvProduct.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.sdgvProduct.RowTemplate.Height = 23;
             this.sdgvProduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.sdgvProduct.Size = new System.Drawing.Size(992, 192);
@@ -637,263 +568,104 @@
             this.sdgvProduct.TitleBackColorBegin = System.Drawing.Color.White;
             this.sdgvProduct.TitleBackColorEnd = System.Drawing.SystemColors.Control;
             // 
-<<<<<<< HEAD
             // bs
             // 
-=======
-            // sourceNameDataGridViewTextBoxColumn
-            // 
-            this.sourceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.sourceNameDataGridViewTextBoxColumn.DataPropertyName = "SourceName";
-            this.sourceNameDataGridViewTextBoxColumn.HeaderText = "所属平台";
-            this.sourceNameDataGridViewTextBoxColumn.Name = "sourceNameDataGridViewTextBoxColumn";
-            this.sourceNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.sourceNameDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
-            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            // 
-            // Location
-            // 
-            this.Location.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Location.DataPropertyName = "Location";
-            this.Location.HeaderText = "发货地";
-            this.Location.Name = "Location";
-            // 
-            // ShowPrice
-            // 
-            this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ShowPrice.DataPropertyName = "ShowPrice";
-            dataGridViewCellStyle16.Format = "C2";
-            dataGridViewCellStyle16.NullValue = null;
-            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle16;
-            this.ShowPrice.HeaderText = "售价";
-            this.ShowPrice.Name = "ShowPrice";
-            this.ShowPrice.Width = 70;
-            // 
-            // ShowPhone
-            // 
-            this.ShowPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ShowPhone.DefaultCellStyle = dataGridViewCellStyle17;
-            this.ShowPhone.HeaderText = "查看手机页面";
-            this.ShowPhone.Name = "ShowPhone";
-            this.ShowPhone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ShowPhone.Text = "查看";
-            this.ShowPhone.UseColumnTextForLinkValue = true;
-            this.ShowPhone.Width = 120;
-            // 
-            // ShowPc
-            // 
-            this.ShowPc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ShowPc.DefaultCellStyle = dataGridViewCellStyle18;
-            this.ShowPc.HeaderText = "查看PC页面";
-            this.ShowPc.Name = "ShowPc";
-            this.ShowPc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ShowPc.Text = "查看";
-            this.ShowPc.UseColumnTextForLinkValue = true;
-            this.ShowPc.Width = 120;
-            // 
-            // Delete
-            // 
-            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.Delete.DefaultCellStyle = dataGridViewCellStyle19;
-            this.Delete.HeaderText = "删除";
-            this.Delete.Name = "Delete";
-            this.Delete.Text = "删除";
-            this.Delete.UseColumnTextForButtonValue = true;
-            // 
-            // sourceTypeDataGridViewTextBoxColumn
-            // 
-            this.sourceTypeDataGridViewTextBoxColumn.DataPropertyName = "SourceType";
-            this.sourceTypeDataGridViewTextBoxColumn.HeaderText = "SourceType";
-            this.sourceTypeDataGridViewTextBoxColumn.Name = "sourceTypeDataGridViewTextBoxColumn";
-            this.sourceTypeDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // shopNameDataGridViewTextBoxColumn
-            // 
-            this.shopNameDataGridViewTextBoxColumn.DataPropertyName = "ShopName";
-            this.shopNameDataGridViewTextBoxColumn.HeaderText = "ShopName";
-            this.shopNameDataGridViewTextBoxColumn.Name = "shopNameDataGridViewTextBoxColumn";
-            this.shopNameDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // urlDataGridViewTextBoxColumn
-            // 
-            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
-            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
-            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
-            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
-            this.urlDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // h5UrlDataGridViewTextBoxColumn
-            // 
-            this.h5UrlDataGridViewTextBoxColumn.DataPropertyName = "H5Url";
-            this.h5UrlDataGridViewTextBoxColumn.HeaderText = "H5Url";
-            this.h5UrlDataGridViewTextBoxColumn.Name = "h5UrlDataGridViewTextBoxColumn";
-            this.h5UrlDataGridViewTextBoxColumn.ReadOnly = true;
-            this.h5UrlDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // bs
-            // 
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.bs.DataSource = typeof(TxoooProductUpload.Entities.Product.ProductSourceInfo);
             // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn1.DataPropertyName = "SourceName";
-            this.dataGridViewTextBoxColumn1.HeaderText = "商品来源";
+            this.dataGridViewTextBoxColumn1.HeaderText = "所属平台";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 316;
+            this.dataGridViewTextBoxColumn1.Width = 120;
             // 
             // dataGridViewTextBoxColumn2
             // 
-            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn2.DataPropertyName = "ProductName";
-<<<<<<< HEAD
-            dataGridViewCellStyle10.Format = "C2";
-            dataGridViewCellStyle10.NullValue = null;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle10;
-=======
-            dataGridViewCellStyle22.Format = "C2";
-            dataGridViewCellStyle22.NullValue = null;
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle22;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.dataGridViewTextBoxColumn2.HeaderText = "商品名称";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 317;
+            this.dataGridViewTextBoxColumn2.Width = 431;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn3.DataPropertyName = "ShopName";
-            this.dataGridViewTextBoxColumn3.HeaderText = "店铺名称";
+            this.dataGridViewTextBoxColumn3.DataPropertyName = "Location";
+            this.dataGridViewTextBoxColumn3.HeaderText = "发货地";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Visible = false;
-            this.dataGridViewTextBoxColumn3.Width = 316;
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewTextBoxColumn4.DataPropertyName = "Id";
-<<<<<<< HEAD
-            dataGridViewCellStyle11.Format = "C2";
-            dataGridViewCellStyle11.NullValue = null;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle11;
-=======
-            dataGridViewCellStyle23.Format = "C2";
-            dataGridViewCellStyle23.NullValue = null;
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle23;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
-            this.dataGridViewTextBoxColumn4.HeaderText = "Id";
+            this.dataGridViewTextBoxColumn4.DataPropertyName = "ShowPrice";
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.Format = "C2";
+            dataGridViewCellStyle9.NullValue = null;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle9;
+            this.dataGridViewTextBoxColumn4.HeaderText = "售价";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.ReadOnly = true;
-            this.dataGridViewTextBoxColumn4.Visible = false;
-            this.dataGridViewTextBoxColumn4.Width = 135;
+            this.dataGridViewTextBoxColumn4.Width = 70;
             // 
             // dataGridViewLinkColumn1
             // 
             this.dataGridViewLinkColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-<<<<<<< HEAD
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dataGridViewLinkColumn1.DefaultCellStyle = dataGridViewCellStyle12;
-=======
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.dataGridViewLinkColumn1.DefaultCellStyle = dataGridViewCellStyle24;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
-            this.dataGridViewLinkColumn1.HeaderText = "查看";
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridViewLinkColumn1.DefaultCellStyle = dataGridViewCellStyle10;
+            this.dataGridViewLinkColumn1.HeaderText = "查看手机页面";
             this.dataGridViewLinkColumn1.Name = "dataGridViewLinkColumn1";
             this.dataGridViewLinkColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewLinkColumn1.Text = "111";
+            this.dataGridViewLinkColumn1.Text = "查看";
             this.dataGridViewLinkColumn1.UseColumnTextForLinkValue = true;
-            this.dataGridViewLinkColumn1.Width = 120;
+            this.dataGridViewLinkColumn1.Width = 90;
             // 
             // dataGridViewLinkColumn2
             // 
             this.dataGridViewLinkColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-<<<<<<< HEAD
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewLinkColumn2.DefaultCellStyle = dataGridViewCellStyle13;
-=======
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dataGridViewLinkColumn2.DefaultCellStyle = dataGridViewCellStyle25;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewLinkColumn2.DefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridViewLinkColumn2.HeaderText = "查看PC页面";
             this.dataGridViewLinkColumn2.Name = "dataGridViewLinkColumn2";
             this.dataGridViewLinkColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewLinkColumn2.Text = "查看";
             this.dataGridViewLinkColumn2.UseColumnTextForLinkValue = true;
-            this.dataGridViewLinkColumn2.Width = 120;
+            this.dataGridViewLinkColumn2.Width = 80;
             // 
             // dataGridViewButtonColumn1
             // 
             this.dataGridViewButtonColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-<<<<<<< HEAD
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.dataGridViewButtonColumn1.DefaultCellStyle = dataGridViewCellStyle14;
-=======
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.dataGridViewButtonColumn1.DefaultCellStyle = dataGridViewCellStyle26;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
-            this.dataGridViewButtonColumn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.dataGridViewButtonColumn1.HeaderText = "查看";
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.dataGridViewButtonColumn1.DefaultCellStyle = dataGridViewCellStyle12;
+            this.dataGridViewButtonColumn1.HeaderText = "删除";
             this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
-            this.dataGridViewButtonColumn1.ReadOnly = true;
-            this.dataGridViewButtonColumn1.Text = "查看";
+            this.dataGridViewButtonColumn1.Text = "删除";
             this.dataGridViewButtonColumn1.UseColumnTextForButtonValue = true;
-            this.dataGridViewButtonColumn1.Width = 237;
+            this.dataGridViewButtonColumn1.Width = 60;
             // 
             // dataGridViewTextBoxColumn5
             // 
-            this.dataGridViewTextBoxColumn5.DataPropertyName = "Url";
-            this.dataGridViewTextBoxColumn5.HeaderText = "Url";
+            this.dataGridViewTextBoxColumn5.DataPropertyName = "SourceType";
+            this.dataGridViewTextBoxColumn5.HeaderText = "SourceType";
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.ReadOnly = true;
             this.dataGridViewTextBoxColumn5.Visible = false;
-            this.dataGridViewTextBoxColumn5.Width = 136;
             // 
             // dataGridViewTextBoxColumn6
             // 
-            this.dataGridViewTextBoxColumn6.DataPropertyName = "H5Url";
-            this.dataGridViewTextBoxColumn6.HeaderText = "H5Url";
+            this.dataGridViewTextBoxColumn6.DataPropertyName = "Id";
+            this.dataGridViewTextBoxColumn6.HeaderText = "Id";
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
             this.dataGridViewTextBoxColumn6.Visible = false;
-            this.dataGridViewTextBoxColumn6.Width = 136;
             // 
             // dataGridViewTextBoxColumn7
             // 
-            this.dataGridViewTextBoxColumn7.DataPropertyName = "H5Url";
-            this.dataGridViewTextBoxColumn7.HeaderText = "H5Url";
+            this.dataGridViewTextBoxColumn7.DataPropertyName = "ShopName";
+            this.dataGridViewTextBoxColumn7.HeaderText = "ShopName";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
             this.dataGridViewTextBoxColumn7.Visible = false;
-            this.dataGridViewTextBoxColumn7.Width = 136;
             // 
             // dataGridViewTextBoxColumn8
             // 
@@ -911,26 +683,24 @@
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
             this.dataGridViewTextBoxColumn9.Visible = false;
             // 
-            // dataGridViewButtonColumn2
+            // webBrowser
             // 
-            this.dataGridViewButtonColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.dataGridViewButtonColumn2.HeaderText = "删除";
-            this.dataGridViewButtonColumn2.Name = "dataGridViewButtonColumn2";
-            this.dataGridViewButtonColumn2.ReadOnly = true;
-            this.dataGridViewButtonColumn2.Text = "删除";
-            this.dataGridViewButtonColumn2.Width = 238;
+            this.webBrowser.BrowserSettings = null;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 31);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(992, 320);
+            this.webBrowser.StartUrl = "www.taobao.com";
+            this.webBrowser.TabIndex = 0;
             // 
-<<<<<<< HEAD
             // sourceNameDataGridViewTextBoxColumn
             // 
             this.sourceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.sourceNameDataGridViewTextBoxColumn.DataPropertyName = "SourceName";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.sourceNameDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.sourceNameDataGridViewTextBoxColumn.HeaderText = "所属平台";
             this.sourceNameDataGridViewTextBoxColumn.Name = "sourceNameDataGridViewTextBoxColumn";
             this.sourceNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.sourceNameDataGridViewTextBoxColumn.Width = 80;
+            this.sourceNameDataGridViewTextBoxColumn.Width = 120;
             // 
             // productNameDataGridViewTextBoxColumn
             // 
@@ -949,9 +719,10 @@
             // 
             this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ShowPrice.DataPropertyName = "ShowPrice";
-            dataGridViewCellStyle4.Format = "C2";
-            dataGridViewCellStyle4.NullValue = null;
-            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "C2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle3;
             this.ShowPrice.HeaderText = "售价";
             this.ShowPrice.Name = "ShowPrice";
             this.ShowPrice.Width = 70;
@@ -959,23 +730,23 @@
             // ShowPhone
             // 
             this.ShowPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ShowPhone.DefaultCellStyle = dataGridViewCellStyle5;
-            this.ShowPhone.HeaderText = "手机页面";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ShowPhone.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ShowPhone.HeaderText = "查看手机页面";
             this.ShowPhone.Name = "ShowPhone";
             this.ShowPhone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ShowPhone.Text = "查看";
             this.ShowPhone.UseColumnTextForLinkValue = true;
-            this.ShowPhone.Width = 80;
+            this.ShowPhone.Width = 90;
             // 
             // ShowPc
             // 
             this.ShowPc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ShowPc.DefaultCellStyle = dataGridViewCellStyle6;
-            this.ShowPc.HeaderText = "PC页面";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ShowPc.DefaultCellStyle = dataGridViewCellStyle5;
+            this.ShowPc.HeaderText = "查看PC页面";
             this.ShowPc.Name = "ShowPc";
             this.ShowPc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.ShowPc.Text = "查看";
@@ -985,15 +756,15 @@
             // Delete
             // 
             this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.Delete.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Delete.DefaultCellStyle = dataGridViewCellStyle6;
             this.Delete.HeaderText = "删除";
             this.Delete.Name = "Delete";
             this.Delete.Text = "删除";
             this.Delete.UseColumnTextForButtonValue = true;
-            this.Delete.Width = 50;
+            this.Delete.Width = 60;
             // 
             // sourceTypeDataGridViewTextBoxColumn
             // 
@@ -1031,16 +802,6 @@
             this.h5UrlDataGridViewTextBoxColumn.Name = "h5UrlDataGridViewTextBoxColumn";
             this.h5UrlDataGridViewTextBoxColumn.ReadOnly = true;
             this.h5UrlDataGridViewTextBoxColumn.Visible = false;
-=======
-            // tsBtnAutoAll
-            // 
-            this.tsBtnAutoAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnAutoAll.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnAutoAll.Image")));
-            this.tsBtnAutoAll.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnAutoAll.Name = "tsBtnAutoAll";
-            this.tsBtnAutoAll.Size = new System.Drawing.Size(36, 21);
-            this.tsBtnAutoAll.Text = "自动";
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             // 
             // CrawlProductsForm
             // 
@@ -1049,18 +810,18 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(992, 573);
             this.Controls.Add(this.skinSplitContainer1);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.ss);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "CrawlProductsForm";
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.ss.ResumeLayout(false);
+            this.ss.PerformLayout();
             this.skinSplitContainer1.Panel1.ResumeLayout(false);
             this.skinSplitContainer1.Panel1.PerformLayout();
             this.skinSplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.skinSplitContainer1)).EndInit();
             this.skinSplitContainer1.ResumeLayout(false);
-            this.skinToolStrip3.ResumeLayout(false);
-            this.skinToolStrip3.PerformLayout();
+            this.ts.ResumeLayout(false);
+            this.ts.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sdgvProduct)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bs)).EndInit();
             this.ResumeLayout(false);
@@ -1070,53 +831,37 @@
 
         #endregion
         private System.Windows.Forms.BindingSource bs;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private CCWin.SkinControl.SkinToolStrip miniToolStrip;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip ss;
         private CCWin.SkinControl.SkinSplitContainer skinSplitContainer1;
         private TxoooProductUpload.UI.CefGlue.CefWebBrowser webBrowser;
         private CCWin.SkinControl.SkinDataGridView sdgvProduct;
-        private CCWin.SkinControl.SkinToolStrip skinToolStrip3;
+        private CCWin.SkinControl.SkinToolStrip ts;
         private System.Windows.Forms.ToolStripButton tsBtnLeft;
         private System.Windows.Forms.ToolStripButton tsBtnRight;
         private System.Windows.Forms.ToolStripButton tsBtnRefresh;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripLabel toolStripButton10;
+        private System.Windows.Forms.ToolStripLabel rslpsp1;
+        private System.Windows.Forms.ToolStripLabel tslableUrl;
         private System.Windows.Forms.ToolStripTextBox tsTxtUrl;
         private System.Windows.Forms.ToolStripButton tsBtnGO;
-        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
-        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn2;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel rslpsp2;
         private System.Windows.Forms.ToolStripDropDownButton tsddProduct;
         private System.Windows.Forms.ToolStripMenuItem tsBtnOneProduct;
         private System.Windows.Forms.ToolStripMenuItem tsBtnPageProducts;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem tsBtnBatch;
         private System.Windows.Forms.ToolStripMenuItem tsBtnGuide;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
-        private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn1;
-        private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn2;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel tssLblSp1;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnPrevious;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel tssLblSp2;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchDel;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-<<<<<<< HEAD
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.ToolStripStatusLabel tssLblSp5;
+        private System.Windows.Forms.ToolStripStatusLabel tssLblSp4;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchEditClass;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnNext;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
+        private System.Windows.Forms.ToolStripStatusLabel tssLblSp3;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton tsBtnAutoAll;
-=======
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
         private System.Windows.Forms.DataGridViewTextBoxColumn sourceNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Location;
@@ -1129,14 +874,17 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn shopNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn urlDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn h5UrlDataGridViewTextBoxColumn;
-<<<<<<< HEAD
-=======
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
-        private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchEditClass;
-        private System.Windows.Forms.ToolStripStatusLabel tssBtnNext;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton tsBtnAutoAll;
->>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn1;
+        private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn2;
+        private System.Windows.Forms.DataGridViewButtonColumn dataGridViewButtonColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
     }
 }
