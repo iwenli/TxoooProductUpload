@@ -121,6 +121,9 @@
     <Compile Include="Entities\Product\ProductSourceInfo.cs" />
     <Compile Include="Entities\Product\ProductSourceType.cs" />
     <Compile Include="Service\CommonService.cs" />
+    <Compile Include="Service\Crawl\IHelper.cs" />
+    <Compile Include="Service\Crawl\ProductHelper.cs" />
+    <Compile Include="Service\Crawl\TmallHepler.cs" />
     <Compile Include="Service\Entities\IpInfo.cs" />
     <Compile Include="_open\Cef\CefGlue.WindowsForms\AddressChangedEventArgs.cs" />
     <Compile Include="_open\Cef\CefGlue.WindowsForms\BeforePopupEventArgs.cs" />
