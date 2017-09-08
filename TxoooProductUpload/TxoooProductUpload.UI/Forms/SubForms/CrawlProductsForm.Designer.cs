@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CrawlProductsForm));
+<<<<<<< HEAD
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -44,6 +45,21 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+=======
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.miniToolStrip = new CCWin.SkinControl.SkinToolStrip();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -73,6 +89,7 @@
             this.tsBtnBatch = new System.Windows.Forms.ToolStripMenuItem();
             this.tsBtnGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+<<<<<<< HEAD
             this.tsBtnAutoAll = new System.Windows.Forms.ToolStripButton();
             this.sdgvProduct = new CCWin.SkinControl.SkinDataGridView();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
@@ -89,6 +106,9 @@
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewButtonColumn2 = new System.Windows.Forms.DataGridViewButtonColumn();
+=======
+            this.sdgvProduct = new CCWin.SkinControl.SkinDataGridView();
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.sourceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -101,6 +121,24 @@
             this.shopNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.h5UrlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+<<<<<<< HEAD
+=======
+            this.bs = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewLinkColumn1 = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.dataGridViewLinkColumn2 = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.dataGridViewButtonColumn1 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewButtonColumn2 = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.tsBtnAutoAll = new System.Windows.Forms.ToolStripButton();
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinSplitContainer1)).BeginInit();
             this.skinSplitContainer1.Panel1.SuspendLayout();
@@ -497,6 +535,7 @@
             this.toolStripButton1.Text = "分类";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+<<<<<<< HEAD
             // tsBtnAutoAll
             // 
             this.tsBtnAutoAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -506,28 +545,30 @@
             this.tsBtnAutoAll.Size = new System.Drawing.Size(36, 21);
             this.tsBtnAutoAll.Text = "自动";
             // 
+=======
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             // sdgvProduct
             // 
             this.sdgvProduct.AllowUserToAddRows = false;
             this.sdgvProduct.AllowUserToDeleteRows = false;
             this.sdgvProduct.AllowUserToOrderColumns = true;
             this.sdgvProduct.AlternatingCellBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.sdgvProduct.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.White;
+            this.sdgvProduct.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
             this.sdgvProduct.AutoGenerateColumns = false;
             this.sdgvProduct.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.sdgvProduct.BackgroundColor = System.Drawing.SystemColors.Window;
             this.sdgvProduct.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.sdgvProduct.ColumnFont = null;
             this.sdgvProduct.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(246)))), ((int)(((byte)(239)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.sdgvProduct.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(246)))), ((int)(((byte)(239)))));
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.sdgvProduct.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.sdgvProduct.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.sdgvProduct.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.sourceNameDataGridViewTextBoxColumn,
@@ -544,6 +585,7 @@
             this.h5UrlDataGridViewTextBoxColumn});
             this.sdgvProduct.ColumnSelectForeColor = System.Drawing.SystemColors.HighlightText;
             this.sdgvProduct.DataSource = this.bs;
+<<<<<<< HEAD
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 9F);
@@ -552,6 +594,16 @@
             dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.White;
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.sdgvProduct.DefaultCellStyle = dataGridViewCellStyle8;
+=======
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.sdgvProduct.DefaultCellStyle = dataGridViewCellStyle20;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.sdgvProduct.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sdgvProduct.EnableHeadersVisualStyles = false;
             this.sdgvProduct.Font = new System.Drawing.Font("微软雅黑", 9F);
@@ -565,10 +617,17 @@
             this.sdgvProduct.Name = "sdgvProduct";
             this.sdgvProduct.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.sdgvProduct.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+<<<<<<< HEAD
             dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             this.sdgvProduct.RowsDefaultCellStyle = dataGridViewCellStyle9;
+=======
+            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.sdgvProduct.RowsDefaultCellStyle = dataGridViewCellStyle21;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.sdgvProduct.RowTemplate.Height = 23;
             this.sdgvProduct.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.sdgvProduct.Size = new System.Drawing.Size(992, 192);
@@ -578,8 +637,121 @@
             this.sdgvProduct.TitleBackColorBegin = System.Drawing.Color.White;
             this.sdgvProduct.TitleBackColorEnd = System.Drawing.SystemColors.Control;
             // 
+<<<<<<< HEAD
             // bs
             // 
+=======
+            // sourceNameDataGridViewTextBoxColumn
+            // 
+            this.sourceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.sourceNameDataGridViewTextBoxColumn.DataPropertyName = "SourceName";
+            this.sourceNameDataGridViewTextBoxColumn.HeaderText = "所属平台";
+            this.sourceNameDataGridViewTextBoxColumn.Name = "sourceNameDataGridViewTextBoxColumn";
+            this.sourceNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.sourceNameDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
+            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            // 
+            // Location
+            // 
+            this.Location.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Location.DataPropertyName = "Location";
+            this.Location.HeaderText = "发货地";
+            this.Location.Name = "Location";
+            // 
+            // ShowPrice
+            // 
+            this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ShowPrice.DataPropertyName = "ShowPrice";
+            dataGridViewCellStyle16.Format = "C2";
+            dataGridViewCellStyle16.NullValue = null;
+            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle16;
+            this.ShowPrice.HeaderText = "售价";
+            this.ShowPrice.Name = "ShowPrice";
+            this.ShowPrice.Width = 70;
+            // 
+            // ShowPhone
+            // 
+            this.ShowPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ShowPhone.DefaultCellStyle = dataGridViewCellStyle17;
+            this.ShowPhone.HeaderText = "查看手机页面";
+            this.ShowPhone.Name = "ShowPhone";
+            this.ShowPhone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ShowPhone.Text = "查看";
+            this.ShowPhone.UseColumnTextForLinkValue = true;
+            this.ShowPhone.Width = 120;
+            // 
+            // ShowPc
+            // 
+            this.ShowPc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ShowPc.DefaultCellStyle = dataGridViewCellStyle18;
+            this.ShowPc.HeaderText = "查看PC页面";
+            this.ShowPc.Name = "ShowPc";
+            this.ShowPc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ShowPc.Text = "查看";
+            this.ShowPc.UseColumnTextForLinkValue = true;
+            this.ShowPc.Width = 120;
+            // 
+            // Delete
+            // 
+            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Delete.DefaultCellStyle = dataGridViewCellStyle19;
+            this.Delete.HeaderText = "删除";
+            this.Delete.Name = "Delete";
+            this.Delete.Text = "删除";
+            this.Delete.UseColumnTextForButtonValue = true;
+            // 
+            // sourceTypeDataGridViewTextBoxColumn
+            // 
+            this.sourceTypeDataGridViewTextBoxColumn.DataPropertyName = "SourceType";
+            this.sourceTypeDataGridViewTextBoxColumn.HeaderText = "SourceType";
+            this.sourceTypeDataGridViewTextBoxColumn.Name = "sourceTypeDataGridViewTextBoxColumn";
+            this.sourceTypeDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // shopNameDataGridViewTextBoxColumn
+            // 
+            this.shopNameDataGridViewTextBoxColumn.DataPropertyName = "ShopName";
+            this.shopNameDataGridViewTextBoxColumn.HeaderText = "ShopName";
+            this.shopNameDataGridViewTextBoxColumn.Name = "shopNameDataGridViewTextBoxColumn";
+            this.shopNameDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // urlDataGridViewTextBoxColumn
+            // 
+            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
+            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
+            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
+            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
+            this.urlDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // h5UrlDataGridViewTextBoxColumn
+            // 
+            this.h5UrlDataGridViewTextBoxColumn.DataPropertyName = "H5Url";
+            this.h5UrlDataGridViewTextBoxColumn.HeaderText = "H5Url";
+            this.h5UrlDataGridViewTextBoxColumn.Name = "h5UrlDataGridViewTextBoxColumn";
+            this.h5UrlDataGridViewTextBoxColumn.ReadOnly = true;
+            this.h5UrlDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // bs
+            // 
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.bs.DataSource = typeof(TxoooProductUpload.Entities.Product.ProductSourceInfo);
             // 
             // dataGridViewTextBoxColumn1
@@ -595,9 +767,15 @@
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn2.DataPropertyName = "ProductName";
+<<<<<<< HEAD
             dataGridViewCellStyle10.Format = "C2";
             dataGridViewCellStyle10.NullValue = null;
             this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle10;
+=======
+            dataGridViewCellStyle22.Format = "C2";
+            dataGridViewCellStyle22.NullValue = null;
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle22;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.dataGridViewTextBoxColumn2.HeaderText = "商品名称";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
@@ -617,9 +795,15 @@
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.dataGridViewTextBoxColumn4.DataPropertyName = "Id";
+<<<<<<< HEAD
             dataGridViewCellStyle11.Format = "C2";
             dataGridViewCellStyle11.NullValue = null;
             this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle11;
+=======
+            dataGridViewCellStyle23.Format = "C2";
+            dataGridViewCellStyle23.NullValue = null;
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle23;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.dataGridViewTextBoxColumn4.HeaderText = "Id";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
@@ -629,9 +813,15 @@
             // dataGridViewLinkColumn1
             // 
             this.dataGridViewLinkColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+<<<<<<< HEAD
             dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dataGridViewLinkColumn1.DefaultCellStyle = dataGridViewCellStyle12;
+=======
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.dataGridViewLinkColumn1.DefaultCellStyle = dataGridViewCellStyle24;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.dataGridViewLinkColumn1.HeaderText = "查看";
             this.dataGridViewLinkColumn1.Name = "dataGridViewLinkColumn1";
             this.dataGridViewLinkColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -642,8 +832,13 @@
             // dataGridViewLinkColumn2
             // 
             this.dataGridViewLinkColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+<<<<<<< HEAD
             dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridViewLinkColumn2.DefaultCellStyle = dataGridViewCellStyle13;
+=======
+            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewLinkColumn2.DefaultCellStyle = dataGridViewCellStyle25;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.dataGridViewLinkColumn2.HeaderText = "查看PC页面";
             this.dataGridViewLinkColumn2.Name = "dataGridViewLinkColumn2";
             this.dataGridViewLinkColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
@@ -654,10 +849,17 @@
             // dataGridViewButtonColumn1
             // 
             this.dataGridViewButtonColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+<<<<<<< HEAD
             dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle14.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             dataGridViewCellStyle14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.dataGridViewButtonColumn1.DefaultCellStyle = dataGridViewCellStyle14;
+=======
+            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.dataGridViewButtonColumn1.DefaultCellStyle = dataGridViewCellStyle26;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             this.dataGridViewButtonColumn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.dataGridViewButtonColumn1.HeaderText = "查看";
             this.dataGridViewButtonColumn1.Name = "dataGridViewButtonColumn1";
@@ -718,6 +920,7 @@
             this.dataGridViewButtonColumn2.Text = "删除";
             this.dataGridViewButtonColumn2.Width = 238;
             // 
+<<<<<<< HEAD
             // sourceNameDataGridViewTextBoxColumn
             // 
             this.sourceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -828,6 +1031,16 @@
             this.h5UrlDataGridViewTextBoxColumn.Name = "h5UrlDataGridViewTextBoxColumn";
             this.h5UrlDataGridViewTextBoxColumn.ReadOnly = true;
             this.h5UrlDataGridViewTextBoxColumn.Visible = false;
+=======
+            // tsBtnAutoAll
+            // 
+            this.tsBtnAutoAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnAutoAll.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnAutoAll.Image")));
+            this.tsBtnAutoAll.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnAutoAll.Name = "tsBtnAutoAll";
+            this.tsBtnAutoAll.Size = new System.Drawing.Size(36, 21);
+            this.tsBtnAutoAll.Text = "自动";
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
             // 
             // CrawlProductsForm
             // 
@@ -895,12 +1108,15 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchDel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+<<<<<<< HEAD
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchEditClass;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnNext;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton tsBtnAutoAll;
+=======
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
         private System.Windows.Forms.DataGridViewTextBoxColumn sourceNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn Location;
@@ -913,5 +1129,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn shopNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn urlDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn h5UrlDataGridViewTextBoxColumn;
+<<<<<<< HEAD
+=======
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchEditClass;
+        private System.Windows.Forms.ToolStripStatusLabel tssBtnNext;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel6;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton tsBtnAutoAll;
+>>>>>>> 7724b905817fb50bc8acf1fa681dc6227eee3f25
     }
 }
