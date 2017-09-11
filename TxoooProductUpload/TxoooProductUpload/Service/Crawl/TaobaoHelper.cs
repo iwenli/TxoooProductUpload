@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FSLib.Network.Http;
 using HtmlAgilityPack;
-using TxoooProductUpload.Entities.Product;
-using TxoooProductUpload.Network;
-using FSLib.Network.Http;
 using Newtonsoft.Json;
-using TxoooProductUpload.Service.Crawl.ProductResult;
+using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using TxoooProductUpload.Entities.Product;
+using TxoooProductUpload.Entities.Resporse;
+using TxoooProductUpload.Network;
+using System.Linq;
 
 namespace TxoooProductUpload.Service.Crawl
-{ 
+{
     /// <summary>
     /// 淘宝相关处理
     /// </summary>
@@ -40,23 +38,17 @@ namespace TxoooProductUpload.Service.Crawl
 
             #region 解析HTML 获取内容
             var jsNodes = document.DocumentNode.SelectNodes(".//script");
-            string json = string.Empty, skuJson = string.Empty;
+            string json = string.Empty;
             foreach (var item in jsNodes)
             {
-                if (item.InnerHtml.IndexOf("g_config") > -1)
+                if (item.InnerHtml.IndexOf("var g_config = {") > -1)
                 {
                     json = item.InnerHtml.Substring(0, item.InnerHtml.IndexOf(";")).Replace(" ", "")
                         .Replace("+newDate", "0").Replace("!true", "false")
                         .Replace("location.protocol==='http:'?", "\"")
                         .Replace(",\ncounterApi", "\",\ncounterApi").Replace("\nvarg_config=", "");
+                    break;
                 }
-                if (item.InnerHtml.IndexOf("Hub.config.set") > -1)
-                {
-                    if (_skuMapRegex.IsMatch(item.InnerHtml)) {
-                        skuJson = _skuMapRegex.Match(item.InnerHtml).Groups[1].Value;
-                    }
-                }
-                
             }
             if (json.IsNullOrEmpty())
             {
@@ -66,6 +58,78 @@ namespace TxoooProductUpload.Service.Crawl
 
             var thumModel = JsonConvert.DeserializeObject<TaoBaoProductResult>(json);
 
+            var detailJsonUrl = @"https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?itemId={0}&sellerId={1}&modules=delivery,soldQuantity,xmpPromotion&callback="
+                                .FormatWith(product.Id, thumModel.sellerId);
+            var ctxJson = client.Create<string>(HttpMethod.Get, detailJsonUrl, refer: product.Url, allowAutoRedirect: true);
+            ctxJson.Send();
+            if (!ctxJson.IsValid())
+            {
+                throw new WlException(string.Format("未能提交请求,连接：{0}", detailJsonUrl));
+            }
+            var detailModel = JsonConvert.DeserializeObject<TaoBaoProductDetailResult>(ctxJson.Result);
+            if (detailModel.code.code != 0)
+            {
+                throw new WlException("淘宝抓取异常，{0}请求失败！".FormatWith(detailJsonUrl));
+            }
+
+            #region 基本信息 没有拿到子标题 收藏数 评价数
+            product.UserNick = thumModel.sellerNick;
+            product.ShopName = thumModel.shopName;
+            product.UserId = thumModel.sellerId;
+
+            product.ProductName = thumModel.idata.item.title;
+            //product.SubTitle = detailModel.item.subtitle;  淘宝没有子标题
+            foreach (var url in thumModel.idata.item.auctionImages)
+            {
+                product.AddThumImgWithCheck(url);
+            }
+            //product.FavCnt = detailModel.item.favcount;  //收藏没有拿到
+            //product.CommnetCnt = mdSkipModel.item.commentCount;  //评价没有拿到
+            product.SellCnt = detailModel.data.soldQuantity.soldTotalCount;
+            product.Location = product.Location ?? detailModel.data.deliveryFee.data.sendCity;
+            #endregion
+
+            #region 邮费 以及 包邮处理
+            if (product.Postage == 0 && detailModel.data.deliveryFee.data.serviceInfo.list != null)
+            {
+                var postageInfo = detailModel.data.deliveryFee.data.serviceInfo.list.FirstOrDefault(m => m.isDefault == true);
+                if (postageInfo != null && postageInfo.info != "快递 免运费")
+                {
+                    product.Postage = Convert.ToDouble(postageInfo.info.Replace("快递 <span class=\"wl-yen\">&yen;</span>", "") ?? "0");
+                    if (product.Postage > 0)
+                    {
+                        product.IsFreePostage = false;
+                    }
+                }
+            }
+            #endregion
+
+            #region 详情
+            var descUrl = (Regex.Split(thumModel.descUrl, "':'")[1] ?? "").Replace("'", "");
+            if (!descUrl.IsNullOrEmpty() && !descUrl.StartsWith("http"))
+            {
+                descUrl = "http:" + descUrl;
+            }
+            var descCtx = new NetClient().Create<string>(HttpMethod.Get, descUrl, refer: product.Url);
+            descCtx.Send();
+            if (!descCtx.IsValid())
+            {
+                throw new WlException(string.Format("未能提交请求,连接：{0}", descUrl));
+            }
+            HtmlDocument descDoc = new HtmlDocument();
+            descDoc.LoadHtml(descCtx.Result.Replace("var desc=|'|;", ""));
+            var descimgNodes = descDoc.DocumentNode.SelectNodes("//img");
+            foreach (HtmlNode node in descimgNodes)
+            {
+                product.AddDetailImgWithCheck(node.Attributes["src"].Value);
+            }
+            #endregion
+
+            #region SKU
+
+            #endregion
+
+            //评价数量接口 https://rate.taobao.com/detailCount.do?itemId=542469108642&&callback=
             #region 接口测试代码  勿动
             //appkey = 12574478   b.appKey || ("waptest" === c.subDomain ? "4272" : "12574478"),
 

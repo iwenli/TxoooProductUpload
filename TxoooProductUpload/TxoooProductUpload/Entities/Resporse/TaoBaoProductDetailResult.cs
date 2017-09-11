@@ -4,41 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TxoooProductUpload.Service.Crawl.ProductResult
+namespace TxoooProductUpload.Entities.Resporse
 {
     /// <summary>
-    /// 淘宝商品解析类
+    /// 淘宝商品详情解析类
     /// </summary>
-    public class TaoBaoProductResult
+    public class TaoBaoProductDetailResult
     {
-        public string shopName { set; get; }
-        public string sellerNick { set; get; }
+        public ResporseResultCode code { set; get; }
+        public TaoBaoProductDetailResultData data { set; get; }
+    }
 
-        public string sellerId { set; get; }
-
-        public string descUrl { set; get; }
-
-        public TaoBaoItemData idata { set; get; }
-
+    public class TaoBaoProductDetailResultData
+    {
+        public SoldQuantity soldQuantity { set; get; }
         public DeliveryFee deliveryFee { set; get; }
 
-        public Promotion pomotion { set; get; }
-
+        public Promotion promotion { set; get; }
     }
 
-    public class TaoBaoItemData
+    public class SoldQuantity
     {
-        public TaobaoItem item { set; get; }
-    }
-    public class TaobaoItem
-    {
-        public string title { set; get; }
         /// <summary>
-        /// 主图
+        /// 确认收货数量
         /// </summary>
-        public List<string> auctionImages { set; get; }
+        public int confirmGoodsCount { set; get; }
+        /// <summary>
+        /// 总销量
+        /// </summary>
+        public int soldTotalCount { set; get; }
     }
-
     public class DeliveryFee
     {
         public bool success { set; get; }

@@ -120,12 +120,13 @@
     <Compile Include="Common\Serialize.cs" />
     <Compile Include="Entities\Product\ProductSourceInfo.cs" />
     <Compile Include="Entities\Product\ProductSourceType.cs" />
+    <Compile Include="Entities\Resporse\ResporseResultCode.cs" />
+    <Compile Include="Entities\Resporse\TaoBaoProductDetailResult.cs" />
+    <Compile Include="Entities\Resporse\TaoBaoProductResult.cs" />
     <Compile Include="Entities\Resporse\TmallProductResult.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\Crawl\IHelper.cs" />
     <Compile Include="Service\Crawl\ProductHelper.cs" />
-    <Compile Include="Service\Crawl\ProductResult\TmallProductResult.cs" />
-    <Compile Include="Service\Crawl\ProductResult\TaoBaoProductResult.cs" />
     <Compile Include="Service\Crawl\TaobaoHelper.cs" />
     <Compile Include="Service\Crawl\TmallHepler.cs" />
     <Compile Include="Service\Entities\IpInfo.cs" />
