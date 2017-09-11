@@ -29,12 +29,14 @@ namespace TxoooProductUpload.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            JsonConvertSettings();
             Application.Run(new TestForm());
             //if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF() == 0)
             //{
             //    try
             //    {
             //        Context = Service.ServiceContext.Instance;
+            //          JsonConvertSettings();
             //        //TxoooProductUpload.UI.Main.MainForm()
             //        //LoginForm
             //        Application.Run(new CrawlProductsForm());
@@ -49,6 +51,27 @@ namespace TxoooProductUpload.UI
             //}
         }
 
+        /// <summary>
+        /// 全局序列化设置
+        /// </summary>
+        static void JsonConvertSettings()
+        {
+            Newtonsoft.Json.JsonSerializerSettings setting = new Newtonsoft.Json.JsonSerializerSettings();
+            Newtonsoft.Json.JsonConvert.DefaultSettings = new Func<Newtonsoft.Json.JsonSerializerSettings>(() =>
+            {
+                //日期类型默认格式化处理
+                setting.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
+                setting.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+
+                //空值处理
+                setting.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+
+                ////高级用法九中的Bool类型转换 设置
+                //setting.Converters.Add(new BoolConvert("是,否"));
+
+                return setting;
+            });
+        }
         /// <summary>
         /// 是否可以启动窗体
         /// 暂无运行的窗体  &&  没有需要更新的版本  && 网络

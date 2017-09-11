@@ -40,6 +40,7 @@ namespace TxoooProductUpload.Entities.Product
             Id = id;
             ThumImgList = new List<string>();
             DetailImgList = new List<string>();
+            SkuList = new List<ProductSKU>();
         }
         #endregion
 
@@ -65,10 +66,25 @@ namespace TxoooProductUpload.Entities.Product
         #endregion
 
         #region 公共属性
+        string _firstImg = string.Empty;
         /// <summary>
         /// 默认显示的第一张主图
         /// </summary>
-        public string FirstImg { set; get; }
+        public string FirstImg
+        {
+            set
+            {
+                _firstImg = value;
+            }
+            get
+            {
+                if (_firstImg.IsNullOrEmpty() && ThumImgList.Count > 0)
+                {
+                    _firstImg = ThumImgList[0];
+                }
+                return _firstImg;
+            }
+        }
 
         public bool _isFreePostage = true;
         /// <summary>
@@ -105,6 +121,21 @@ namespace TxoooProductUpload.Entities.Product
         /// 付款人数
         /// </summary>
         public int DealCnt { set; get; }
+
+        /// <summary>
+        /// 收藏量
+        /// </summary>
+        public int FavCnt { set; get; }
+
+        /// <summary>
+        /// 销量
+        /// </summary>
+        public int SellCnt { set; get; }
+
+        /// <summary>
+        /// 评价数量
+        /// </summary>
+        public int CommnetCnt { set; get; }
 
         /// <summary>
         /// 发货地
@@ -160,6 +191,19 @@ namespace TxoooProductUpload.Entities.Product
                 return ProductSource.GetFormatH5Url(SourceType).FormatWith(Id);
             }
         }
+
+        bool _isProcess = false;
+        /// <summary>
+        /// 是否处理过详细信息
+        /// </summary>
+        public bool IsProcess
+        {
+            set { _isProcess = value; }
+            get
+            {
+                return _isProcess;
+            }
+        }
         #endregion
 
 
@@ -172,7 +216,6 @@ namespace TxoooProductUpload.Entities.Product
         /// </summary>
         public string SubTitle { set; get; }
 
-
         /// <summary>
         /// 商品主图
         /// </summary>
@@ -181,15 +224,31 @@ namespace TxoooProductUpload.Entities.Product
         /// 商品详情图
         /// </summary>
         public List<string> DetailImgList { set; get; }
+        /// <summary>
+        /// Txooo格式的SKu集合
+        /// </summary>
+        public List<ProductSKU> SkuList { set; get; }
 
-
+        #region 公共方法
+        /// <summary>
+        /// 添加SKU
+        /// </summary>
+        /// <param name="sku"></param>
+        public void AddSku(ProductSKU sku)
+        {
+            if (!sku.Image.StartsWith("http"))
+            {
+                sku.Image = "http:" + sku.Image;
+            }
+            SkuList.Add(sku);
+        }
         /// <summary>
         /// 检查主图地址并添加到主图列表，如果存在则不添加
         /// </summary>
         /// <param name="imgUrl">图片地址</param>
         public void AddThumImgWithCheck(string imgUrl)
         {
-            if (imgUrl.IsNullOrEmpty())
+            if (!imgUrl.IsNullOrEmpty())
             {
                 if (!imgUrl.StartsWith("http"))
                 {
@@ -208,7 +267,7 @@ namespace TxoooProductUpload.Entities.Product
         /// <param name="imgUrl">图片地址</param>
         public void AddDetailImgWithCheck(string imgUrl)
         {
-            if (imgUrl.IsNullOrEmpty())
+            if (!imgUrl.IsNullOrEmpty())
             {
                 if (!imgUrl.StartsWith("http"))
                 {
@@ -220,5 +279,46 @@ namespace TxoooProductUpload.Entities.Product
                 }
             }
         }
+        #endregion
+    }
+
+    /// <summary>
+    /// Txooo格式的SKu
+    /// </summary>
+    public class ProductSKU
+    {
+        /// <summary>
+        /// 名称
+        /// </summary>
+        public string Name { set; get; }
+
+        string _image = string.Empty;
+        /// <summary>
+        /// 图片
+        /// </summary>
+        public string Image
+        {
+            set
+            {
+                _image = value;
+                if (_image.IsNullOrEmpty() && !_image.StartsWith("http"))
+                {
+                    _image = "http:" + _image;
+                }
+            }
+            get
+            {
+                return _image;
+            }
+        }
+        /// <summary>
+        /// 价格
+        /// </summary>
+        public double Price { set; get; }
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public int Quantity { set; get; }
+
     }
 }

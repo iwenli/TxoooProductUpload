@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TxoooProductUpload.Service.Crawl.ProductResult
 {
     /// <summary>
-    /// 天猫商品JSON-待测试类目
+    /// 天猫商品解析类
     /// </summary>
     public class TmallProductResult
     {

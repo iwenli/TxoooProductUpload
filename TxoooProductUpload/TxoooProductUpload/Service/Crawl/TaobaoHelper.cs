@@ -6,22 +6,67 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Network;
+using FSLib.Network.Http;
+using Newtonsoft.Json;
+using TxoooProductUpload.Service.Crawl.ProductResult;
+using System.Text.RegularExpressions;
 
 namespace TxoooProductUpload.Service.Crawl
-{
+{ 
     /// <summary>
     /// 淘宝相关处理
     /// </summary>
     public class TaobaoHelper : IHelper
     {
+        Regex _skuMapRegex = new Regex(@"skuMap     : ([\s\S]*?) ,propertyMemoMap");
+
         /// <summary>
-        /// 从淘宝详情抓取商品信息
+        /// 从淘宝PC详情抓取商品信息
         /// </summary>
         /// <param name="client">HTTP客户端</param>
         /// <param name="product">基本商品信息，必须包含Id,以及Type</param>
         /// <returns></returns>
-        public bool ProcessItem(NetClient client, ref ProductSourceInfo product)
+        public void ProcessItem(NetClient client, ref ProductSourceInfo product)
         {
+            var ctx = client.Create<string>(HttpMethod.Get, product.Url, allowAutoRedirect: true);
+            ctx.Send();
+            if (!ctx.IsValid())
+            {
+                throw new WlException(string.Format("未能提交请求,连接：{0}", product.H5Url));
+            }
+
+            HtmlDocument document = new HtmlDocument();
+            document.LoadHtml(ctx.Result);
+
+            #region 解析HTML 获取内容
+            var jsNodes = document.DocumentNode.SelectNodes(".//script");
+            string json = string.Empty, skuJson = string.Empty;
+            foreach (var item in jsNodes)
+            {
+                if (item.InnerHtml.IndexOf("g_config") > -1)
+                {
+                    json = item.InnerHtml.Substring(0, item.InnerHtml.IndexOf(";")).Replace(" ", "")
+                        .Replace("+newDate", "0").Replace("!true", "false")
+                        .Replace("location.protocol==='http:'?", "\"")
+                        .Replace(",\ncounterApi", "\",\ncounterApi").Replace("\nvarg_config=", "");
+                }
+                if (item.InnerHtml.IndexOf("Hub.config.set") > -1)
+                {
+                    if (_skuMapRegex.IsMatch(item.InnerHtml)) {
+                        skuJson = _skuMapRegex.Match(item.InnerHtml).Groups[1].Value;
+                    }
+                }
+                
+            }
+            if (json.IsNullOrEmpty())
+            {
+                throw new WlException("淘宝抓取异常，g_config为空");
+            }
+            #endregion
+
+            var thumModel = JsonConvert.DeserializeObject<TaoBaoProductResult>(json);
+
+            #region 接口测试代码  勿动
             //appkey = 12574478   b.appKey || ("waptest" === c.subDomain ? "4272" : "12574478"),
 
             //e = b.appKey || ("waptest" === c.subDomain ? "4272" : "12574478"),
@@ -64,9 +109,7 @@ namespace TxoooProductUpload.Service.Crawl
             http://acs.m.taobao.com/h5/mtop.taobao.baichuan.smb.detail.get/1.0/?appKey=12574478&t=1505035469578&sign=517860a0126c2e3f80090f61309245e9&api=mtop.taobao.baichuan.smb.detail.get&v=1.0&type=originaljson&dataType=json&timeout=20000&ua=098#E1hv5QvUvbpvUvCkvvvvvjiPP25vsjt8RFcU0j1VPmPWsj18PFFvsjDnRsL9tjnjiQhvCvvv9UUtvpvhvvvvvbyCvm9vvvvvphvvvvvv92Bvpv9mvvmvnhCvmvUvvUv6phvUv9vv92Bvpv9mkphvC99vvOC0BuyCvv9vvUvS8shbw9yCvhQWDG6vC0P6lWF9eCO0747B9Wma+oHoDO2h1C6tExjxAfev+ul1Bzc6D70O5C61yNoxfX9fjobh1nF95ClABJ2p+nezrmphQRAn3feAvphvC9vhvvCvpvGCvvpYjRIE&data={"itemId":"543348160168"}
 
              */
-            bool ret = false;
-
-            return ret;
+            #endregion
         }
 
         /// <summary>

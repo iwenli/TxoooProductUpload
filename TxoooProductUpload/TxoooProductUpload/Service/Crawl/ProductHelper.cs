@@ -32,7 +32,7 @@ namespace TxoooProductUpload.Service.Crawl
             }
             get { return _netClient; }
 
-        } 
+        }
         #endregion
 
         #region 构造函数
@@ -61,16 +61,18 @@ namespace TxoooProductUpload.Service.Crawl
         /// </summary>
         /// <param name="product">商品信息</param>
         /// <returns>是否处理成功</returns>
-        public bool ProcessItem(ref ProductSourceInfo product)
+        public void ProcessItem(ref ProductSourceInfo product)
         {
             switch (product.SourceType)
             {
                 case SourceType.Txooo:
                     break;
                 case SourceType.Tamll:
-                    return _tmallHelper.ProcessItem(_netClient, ref product);
+                    _tmallHelper.ProcessItem(_netClient, ref product);
+                    break;
                 case SourceType.Taobao:
-                    return _taobaoHelper.ProcessItem(_netClient, ref product);
+                    _taobaoHelper.ProcessItem(_netClient, ref product);
+                    break;
                 case SourceType.Alibaba:
                     break;
                 case SourceType.Jingdong:
@@ -78,7 +80,6 @@ namespace TxoooProductUpload.Service.Crawl
                 default:
                     break;
             }
-            return false;
         }
 
         /// <summary>

@@ -120,10 +120,12 @@
     <Compile Include="Common\Serialize.cs" />
     <Compile Include="Entities\Product\ProductSourceInfo.cs" />
     <Compile Include="Entities\Product\ProductSourceType.cs" />
+    <Compile Include="Entities\Resporse\TmallProductResult.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\Crawl\IHelper.cs" />
     <Compile Include="Service\Crawl\ProductHelper.cs" />
     <Compile Include="Service\Crawl\ProductResult\TmallProductResult.cs" />
+    <Compile Include="Service\Crawl\ProductResult\TaoBaoProductResult.cs" />
     <Compile Include="Service\Crawl\TaobaoHelper.cs" />
     <Compile Include="Service\Crawl\TmallHepler.cs" />
     <Compile Include="Service\Entities\IpInfo.cs" />
@@ -581,7 +583,6 @@
     <Compile Include="Service\Cache\HeadPicCache\HeadPicCache.cs" />
     <Compile Include="Service\Cache\HeadPicCache\HeadPicContext.cs" />
     <Compile Include="Service\ContextBase.cs" />
-    <Compile Include="Service\Entities\TmallProductResult.cs" />
     <Compile Include="Service\ImageDownload\ImageDownloadTask.cs" />
     <Compile Include="Common\Extended\ImageExtended.cs" />
     <Compile Include="Common\Parameters.cs" />

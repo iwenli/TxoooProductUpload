@@ -19,7 +19,7 @@ namespace TxoooProductUpload.Service.Crawl
         /// <param name="client">HTTP客户端</param>
         /// <param name="product">基本商品信息，必须包含Id,以及Type</param>
         /// <returns></returns>
-        bool ProcessItem(NetClient client, ref ProductSourceInfo product);
+        void ProcessItem(NetClient client, ref ProductSourceInfo product);
 
 
         /// <summary>

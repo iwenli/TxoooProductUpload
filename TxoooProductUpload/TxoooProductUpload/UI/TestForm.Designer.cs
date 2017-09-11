@@ -69,7 +69,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(342, 21);
             this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "https://detail.m.tmall.com/item.htm?id=536929636061&skuId=3205551032757";
+            this.textBox1.Text = "526191534419";
             // 
             // TestForm
             // 
