@@ -67,7 +67,7 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 case SourceType.Txooo:
                     break;
-                case SourceType.Tamll:
+                case SourceType.Tmall:
                     _tmallHelper.ProcessItem(_netClient, ref product);
                     break;
                 case SourceType.Taobao:
@@ -80,6 +80,7 @@ namespace TxoooProductUpload.Service.Crawl
                 default:
                     break;
             }
+            product.IsProcess = true;
         }
 
         /// <summary>
@@ -94,7 +95,7 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 case SourceType.Txooo:
                     break;
-                case SourceType.Tamll:
+                case SourceType.Tmall:
                     return _tmallHelper.GetProductListFormSearch(document);
                 case SourceType.Taobao:
                     return _taobaoHelper.GetProductListFormSearch(document);

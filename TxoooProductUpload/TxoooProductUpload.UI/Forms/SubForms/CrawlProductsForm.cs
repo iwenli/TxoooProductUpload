@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Service.Crawl;
@@ -21,6 +22,8 @@ namespace TxoooProductUpload.UI.Forms.SubForms
     /// </summary>
     public partial class CrawlProductsForm : Form
     {
+        UserControls.ProcessProduct _process1;
+        UserControls.ProcessProductResult _processResult;
 
         bool _isAuto = false;  //自动抓取全部列表
         ProductHelper _productHelper = new ProductHelper();
@@ -38,6 +41,16 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             InitializeComponent();
 
             Load += CrawlProductsForm_Load;
+
+            _process1 = new UserControls.ProcessProduct();
+            _process1.Dock = DockStyle.Fill;
+            _process1.Visible = false;
+            this.Controls.Add(_process1);
+
+            _processResult = new UserControls.ProcessProductResult();
+            _processResult.Dock = DockStyle.Fill;
+            _processResult.Visible = false;
+            this.Controls.Add(_processResult);
         }
 
         private void CrawlProductsForm_Load(object sender, EventArgs e)
@@ -115,8 +128,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             switch (current.Tag.ToString())
             {
                 case "prev":
+                    Previous();
                     break;
                 case "next":
+                    NextProcess();
                     break;
                 case "del":
                     DeleteRows();
@@ -126,6 +141,56 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// 上一步
+        /// </summary>
+        void Previous()
+        {
+            tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
+            _process1.Visible = tssBtnPrevious.Enabled = false;
+
+        }
+
+        /// <summary>
+        /// 下一步处理
+        /// </summary>
+        void NextProcess()
+        {
+            tssBtnNext.Enabled = skinSplitContainer1.Visible = false;
+            _process1.Visible = tssBtnPrevious.Enabled = true;
+            _process1.ProcessBar.Maximum = _productList.Count;
+            _process1.ProcessBar.Minimum = _productList.Where(m => m.IsProcess).Count();
+            _process1.LabelStateMessage.Text = "正在抓取商品详细信息，请稍等...";
+            Task.Run(() =>
+             {
+                 Parallel.For(0, _productList.Count, (index) =>
+                 {
+                     var product = _productList[index];
+                     try
+                     {
+                         _productHelper.ProcessItem(ref product);
+                     }
+                     catch (Exception ex)
+                     {
+                         Iwenli.LogHelper.LogError(this, "{0}商品{1}异常：{2}".FormatWith(product.SourceName, product.Id, ex.Message));
+                     }
+                     _productList[index] = product;
+                     Invoke(new Action(() =>
+                     {
+                         _process1.ProcessBar.Value += 1;
+                     }));
+                 });
+
+                 Invoke(new Action(() =>
+                 {
+                     _processResult.ProductBindSource.DataSource = _productList;
+                     _process1.Visible = false;
+                     _processResult.Visible = true;
+                 }));
+                
+             });
         }
 
         /// <summary>

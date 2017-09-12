@@ -26,9 +26,11 @@ namespace TxoooProductUpload.UI
             InitializeComponent();
             _context = new Service.ServiceContext();
             var _productHelper = new ProductHelper();
+            comboBox1.SelectedIndex = 0;
 
             button1.Click += async (s, e) =>
             {
+                var sourceType = comboBox1.Text == "天猫" ? SourceType.Tmall : SourceType.Taobao;
                 //541939796071
                 var id = textBox1.Text.Trim();
                 if (!id.IsNullOrEmpty())
@@ -36,7 +38,7 @@ namespace TxoooProductUpload.UI
                     button1.Enabled = false;
                     try
                     {
-                        ProductSourceInfo product = new ProductSourceInfo(Convert.ToInt64(id), SourceType.Taobao);
+                        ProductSourceInfo product = new ProductSourceInfo(Convert.ToInt64(id), sourceType);
                         _productHelper.ProcessItem(ref product);
                         await Task.Delay(10);
                     }

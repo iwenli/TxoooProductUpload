@@ -20,7 +20,7 @@ namespace TxoooProductUpload.Entities.Product
         {
             switch (type)
             {
-                case SourceType.Tamll:
+                case SourceType.Tmall:
                     return "天猫商城";
                 case SourceType.Taobao:
                     return "淘宝";
@@ -42,7 +42,7 @@ namespace TxoooProductUpload.Entities.Product
         {
             switch (type)
             {
-                case SourceType.Tamll:
+                case SourceType.Tmall:
                     return "https://detail.tmall.com/item.htm?id={0}";
                 case SourceType.Taobao:
                     return "https://item.taobao.com/item.htm?id={0}";
@@ -64,7 +64,7 @@ namespace TxoooProductUpload.Entities.Product
         {
             switch (type)
             {
-                case SourceType.Tamll:
+                case SourceType.Tmall:
                     return "https://detail.m.tmall.com/item.htm?id={0}";
                 case SourceType.Taobao:
                     return "http://h5.m.taobao.com/awp/core/detail.htm?id={0}";
@@ -90,7 +90,7 @@ namespace TxoooProductUpload.Entities.Product
         /// <summary>
         /// 天猫商城
         /// </summary>
-        Tamll,
+        Tmall,
         /// <summary>
         /// 淘宝
         /// </summary>

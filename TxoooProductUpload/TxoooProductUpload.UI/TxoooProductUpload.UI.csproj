@@ -165,6 +165,18 @@
     <Compile Include="Forms\SubForms\FrmExeManager.designer.cs">
       <DependentUpon>FrmExeManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UserControls\ProcessProduct.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControls\ProcessProduct.Designer.cs">
+      <DependentUpon>ProcessProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UserControls\ProcessProductResult.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Forms\UserControls\ProcessProductResult.Designer.cs">
+      <DependentUpon>ProcessProductResult.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -236,6 +248,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\FrmExeManager.resx">
       <DependentUpon>FrmExeManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserControls\ProcessProduct.resx">
+      <DependentUpon>ProcessProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UserControls\ProcessProductResult.resx">
+      <DependentUpon>ProcessProductResult.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

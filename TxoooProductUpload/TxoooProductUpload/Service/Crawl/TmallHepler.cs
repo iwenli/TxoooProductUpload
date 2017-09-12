@@ -94,7 +94,6 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 product.Brand = _brandRegex.Match(dataDetail).Groups[1].Value.Trim();
             }
-
             var detailModel = JsonConvert.DeserializeObject<TmallProductResult>(dataDetail);
             var mdSkipModel = JsonConvert.DeserializeObject<TmallProductResult>(dataMdskip);
 
@@ -115,26 +114,57 @@ namespace TxoooProductUpload.Service.Crawl
             #endregion
 
             #region 邮费 以及 包邮处理
-            if (mdSkipModel.delivery.postage.IndexOf("邮费") > -1)
+            if (mdSkipModel.delivery.postage.IndexOf("快递") > -1)
             {
                 product.Postage = Convert.ToDouble(mdSkipModel.delivery.postage.Split(':')[1] ?? "0");
                 if (product.Postage > 0)
                 {
                     product.IsFreePostage = false;
                 }
-            } 
+            }
             #endregion
 
-            //处理详情
-            var detailJson = detailModel.detailDesc.newWapDescJson.FirstOrDefault(m => m.moduleName == "商品图片");
-            if (detailJson == null || detailJson.data.Count == 0)
+            #region 处理详情
+            if (detailModel.detailDesc.newWapDescJson != null)
             {
-                throw new WlException("天猫抓取异常，商品详情获取失败");
+                var detailJson = detailModel.detailDesc.newWapDescJson.FirstOrDefault(m => m.moduleName == "商品图片");
+                if (detailJson == null || detailJson.data.Count == 0)
+                {
+                    throw new WlException("天猫抓取异常，商品详情获取失败");
+                }
+                foreach (var item in detailJson.data)
+                {
+                    product.AddDetailImgWithCheck(item.img);
+                }
             }
-            foreach (var item in detailJson.data)
+            else
             {
-                product.AddDetailImgWithCheck(item.img);
-            }
+                var descUrl = detailModel.jumpUrl.apis.httpsDescUrl;
+                if (!descUrl.StartsWith("http")) {
+                    descUrl = "http:" + descUrl;
+                }
+                var descCtx = new NetClient().Create<string>(HttpMethod.Get, descUrl, refer: product.Url);
+                descCtx.Send();
+                if (!descCtx.IsValid())
+                {
+                    throw new WlException(string.Format("未能提交请求,连接：{0}", descUrl));
+                }
+                HtmlDocument descDoc = new HtmlDocument();
+                descDoc.LoadHtml(descCtx.Result.Replace("var desc=|'|;", ""));
+                var descimgNodes = descDoc.DocumentNode.SelectNodes("//img");
+                if (descimgNodes != null)
+                {
+                    foreach (HtmlNode node in descimgNodes)
+                    {
+                        if (node.Attributes["src"] != null)
+                        {
+                            product.AddDetailImgWithCheck(node.Attributes["src"].Value);
+                        }
+                    }
+                }
+               
+            } 
+            #endregion
 
             //处理SKU
             switch (detailModel.skuBase.props.Count)
@@ -234,6 +264,8 @@ namespace TxoooProductUpload.Service.Crawl
                     }
                     #endregion
                     break;
+                default:
+                    throw new WlException("暂不支持天猫4级以上sku 请联系开发人员！");
             }
         }
     }

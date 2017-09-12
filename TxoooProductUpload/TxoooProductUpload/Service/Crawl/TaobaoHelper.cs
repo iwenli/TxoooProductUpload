@@ -16,7 +16,10 @@ namespace TxoooProductUpload.Service.Crawl
     /// </summary>
     public class TaobaoHelper : IHelper
     {
-        Regex _skuMapRegex = new Regex(@"skuMap     : ([\s\S]*?) ,propertyMemoMap");
+        Regex _skuMapRegex = new Regex(@"valItemInfo      : ([\s\S]*?),propertyMemoMap");
+        Regex _brandRegex = new Regex(@"品牌:&nbsp;([\s\S]*?)</li>");
+        Regex _skuImageRegex = new Regex(@"background:url\(([\s\S]+?)_30x30.jpg\) center no-repeat;");
+        int _defaultQuantity = 100;  //默认每个SKU的数量
 
         /// <summary>
         /// 从淘宝PC详情抓取商品信息
@@ -38,7 +41,7 @@ namespace TxoooProductUpload.Service.Crawl
 
             #region 解析HTML 获取内容
             var jsNodes = document.DocumentNode.SelectNodes(".//script");
-            string json = string.Empty;
+            string json = string.Empty, sourceSkuJson = string.Empty;
             foreach (var item in jsNodes)
             {
                 if (item.InnerHtml.IndexOf("var g_config = {") > -1)
@@ -47,6 +50,13 @@ namespace TxoooProductUpload.Service.Crawl
                         .Replace("+newDate", "0").Replace("!true", "false")
                         .Replace("location.protocol==='http:'?", "\"")
                         .Replace(",\ncounterApi", "\",\ncounterApi").Replace("\nvarg_config=", "");
+                }
+                if (item.InnerHtml.IndexOf("Hub = {};") > -1)
+                {
+                    sourceSkuJson = _skuMapRegex.Match(item.InnerHtml).Groups[1].Value;
+                }
+                if (!json.IsNullOrEmpty() && !sourceSkuJson.IsNullOrEmpty())
+                {
                     break;
                 }
             }
@@ -58,6 +68,7 @@ namespace TxoooProductUpload.Service.Crawl
 
             var thumModel = JsonConvert.DeserializeObject<TaoBaoProductResult>(json);
 
+
             var detailJsonUrl = @"https://detailskip.taobao.com/service/getData/1/p1/item/detail/sib.htm?itemId={0}&sellerId={1}&modules=delivery,soldQuantity,xmpPromotion&callback="
                                 .FormatWith(product.Id, thumModel.sellerId);
             var ctxJson = client.Create<string>(HttpMethod.Get, detailJsonUrl, refer: product.Url, allowAutoRedirect: true);
@@ -66,10 +77,32 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 throw new WlException(string.Format("未能提交请求,连接：{0}", detailJsonUrl));
             }
-            var detailModel = JsonConvert.DeserializeObject<TaoBaoProductDetailResult>(ctxJson.Result);
-            if (detailModel.code.code != 0)
+
+            TaoBaoProductDetailResult detailModel = null;
+            try
             {
-                throw new WlException("淘宝抓取异常，{0}请求失败！".FormatWith(detailJsonUrl));
+                detailModel = JsonConvert.DeserializeObject<TaoBaoProductDetailResult>(ctxJson.Result);
+                if (detailModel.code.code != 0)
+                {
+                    throw new WlException("淘宝抓取异常，{0}请求失败！".FormatWith(detailJsonUrl));
+                }
+            }
+            catch (Exception ex)
+            {
+                Iwenli.LogHelper.LogFatal(this, "当前请求{0}已被淘宝屏蔽，请使用收费接口！".FormatWith(detailJsonUrl));
+                //throw new WlException("当前请求{0}已被淘宝屏蔽，请使用收费接口！".FormatWith(detailJsonUrl), ex);
+            }
+
+
+            //显示的价格
+            if (product.ShowPrice == 0)
+            {
+                product.ShowPrice = Convert.ToDouble(document.GetElementbyId("J_StrPrice").InnerText.Replace("&yen;", "").Split('-')[0]);
+            }
+            //品牌
+            if (_brandRegex.IsMatch(ctx.Result))
+            {
+                product.Brand = _brandRegex.Match(ctx.Result).Groups[1].Value.Trim();
             }
 
             #region 基本信息 没有拿到子标题 收藏数 评价数
@@ -84,13 +117,18 @@ namespace TxoooProductUpload.Service.Crawl
                 product.AddThumImgWithCheck(url);
             }
             //product.FavCnt = detailModel.item.favcount;  //收藏没有拿到
-            //product.CommnetCnt = mdSkipModel.item.commentCount;  //评价没有拿到
-            product.SellCnt = detailModel.data.soldQuantity.soldTotalCount;
-            product.Location = product.Location ?? detailModel.data.deliveryFee.data.sendCity;
+            //product.CommnetCnt = mdSkipModel.item.commentCount;  //评价数量没有拿到
+            if (detailModel != null)
+            {
+                product.SellCnt = detailModel.data.soldQuantity.soldTotalCount;
+                product.Location = product.Location ?? detailModel.data.deliveryFee.data.sendCity;
+            }
+
             #endregion
 
             #region 邮费 以及 包邮处理
-            if (product.Postage == 0 && detailModel.data.deliveryFee.data.serviceInfo.list != null)
+            if (product.Postage == 0 && detailModel != null && detailModel.data.deliveryFee.data.serviceInfo != null
+                && detailModel.data.deliveryFee.data.serviceInfo.list != null)
             {
                 var postageInfo = detailModel.data.deliveryFee.data.serviceInfo.list.FirstOrDefault(m => m.isDefault == true);
                 if (postageInfo != null && postageInfo.info != "快递 免运费")
@@ -110,7 +148,7 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 descUrl = "http:" + descUrl;
             }
-            var descCtx = new NetClient().Create<string>(HttpMethod.Get, descUrl, refer: product.Url);
+            var descCtx = new NetClient().Create<string>(HttpMethod.Get, descUrl, refer: product.H5Url);
             descCtx.Send();
             if (!descCtx.IsValid())
             {
@@ -119,17 +157,296 @@ namespace TxoooProductUpload.Service.Crawl
             HtmlDocument descDoc = new HtmlDocument();
             descDoc.LoadHtml(descCtx.Result.Replace("var desc=|'|;", ""));
             var descimgNodes = descDoc.DocumentNode.SelectNodes("//img");
-            foreach (HtmlNode node in descimgNodes)
+            if (descimgNodes != null)
             {
-                product.AddDetailImgWithCheck(node.Attributes["src"].Value);
+                foreach (HtmlNode node in descimgNodes)
+                {
+                    if (node.Attributes["src"] != null)
+                    {
+                        product.AddDetailImgWithCheck(node.Attributes["src"].Value);
+                    }
+                }
             }
             #endregion
 
             #region SKU
+            var propNodes = document.DocumentNode.SelectNodes("//dl[starts-with(@class,'J_Prop')]"); //获取属性标签
+            if (propNodes == null)
+            {
+                //没有属性  生成一个
+                ProductSKU sku = new ProductSKU();
+                sku.Name = "默认规格";
+                sku.Quantity = _defaultQuantity;
+                product.AddSku(sku);
+            }
+            else
+            {
+                if (sourceSkuJson.IsNullOrEmpty())
+                {
+                    sourceSkuJson = "{}";
+                }
+                else
+                {
+                    sourceSkuJson = sourceSkuJson + "}";
+                }
+                var sourceSkuModel = JsonConvert.DeserializeObject<TaoBaoProductSoureSkuResult>(sourceSkuJson);
+                switch (propNodes.Count)
+                {
+                    case 1:
+                        #region 1级SKU
+                        foreach (var prop1 in propNodes[0].SelectNodes(".//li"))
+                        {
+                            //var prop1Name = prop1.ParentNode.Attributes["data-property"].Value;
+                            var prop1Id = prop1.Attributes["data-value"].Value;
+                            var prop1Value = prop1.SelectSingleNode(".//span").InnerText;
+                            var image = string.Empty;
+                            var styleHtml = prop1.SelectSingleNode(".//a").Attributes["style"];
+                            if (styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                            {
+                                image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                            }
 
+                            var skuPath = ";{0};".FormatWith(prop1Id);
+
+                            ProductSKU sku = new ProductSKU();
+                            sku.Name = "{0}".FormatWith(prop1Value);
+                            sku.Image = image ?? "";
+
+                            var skuSourceInfo = sourceSkuModel.skuMap.FirstOrDefault(m => m.Key == skuPath);
+                            if (detailModel != null)
+                            {
+                                var skuInfo = detailModel.data.promotion.promoData.FirstOrDefault(m => m.Key == skuPath);
+                                if (!skuInfo.Key.IsNullOrEmpty())
+                                {
+                                    //如果打折  显示打折价格
+                                    sku.Price = Convert.ToDouble(skuInfo.Value.First().price ?? "0");
+                                }
+                            }
+                            else if (!skuSourceInfo.Key.IsNullOrEmpty())
+                            {
+                                //如果不打折  显示原价
+                                sku.Price = Convert.ToDouble(skuSourceInfo.Value.price ?? "0");
+                            }
+                            else
+                            {
+                                sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                            }
+                            sku.Quantity = _defaultQuantity;
+                            product.AddSku(sku);
+                        }
+                        #endregion
+                        break;
+                    case 2:
+                        #region 2级SKU
+                        foreach (var prop1 in propNodes[0].SelectNodes(".//li"))
+                        {
+                            //var prop1Name = prop1.ParentNode.Attributes["data-property"].Value;
+                            var prop1Id = prop1.Attributes["data-value"].Value;
+                            var prop1Value = prop1.SelectSingleNode(".//span").InnerText;
+                            var image = string.Empty;
+                            var styleHtml = prop1.SelectSingleNode(".//a").Attributes["style"];
+                            if (styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                            {
+                                image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                            }
+
+                            foreach (var prop2 in propNodes[1].SelectNodes(".//li"))
+                            {
+                                //var prop2Name = prop2.ParentNode.Attributes["data-property"].Value;
+                                var prop2Id = prop2.Attributes["data-value"].Value;
+                                var prop2Value = prop2.SelectSingleNode(".//span").InnerText;
+
+                                styleHtml = prop2.SelectSingleNode(".//a").Attributes["style"];
+                                if (image.IsNullOrEmpty() && styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                                {
+                                    image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                                }
+
+                                var skuPath = ";{0};{1};".FormatWith(prop1Id, prop2Id);
+
+                                ProductSKU sku = new ProductSKU();
+                                sku.Name = "{0}-{1}".FormatWith(prop1Value, prop2Value);
+                                sku.Image = image ?? "";
+
+                                var skuSourceInfo = sourceSkuModel.skuMap.FirstOrDefault(m => m.Key == skuPath);
+                                if (detailModel != null)
+                                {
+                                    var skuInfo = detailModel.data.promotion.promoData.FirstOrDefault(m => m.Key == skuPath);
+                                    if (!skuInfo.Key.IsNullOrEmpty())
+                                    {
+                                        //如果打折  显示打折价格
+                                        sku.Price = Convert.ToDouble(skuInfo.Value.First().price ?? "0");
+                                    }
+                                }
+                                else if (!skuSourceInfo.Key.IsNullOrEmpty())
+                                {
+                                    //如果不打折  显示原价
+                                    sku.Price = Convert.ToDouble(skuSourceInfo.Value.price ?? "0");
+                                }
+                                else
+                                {
+                                    sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                                }
+                                sku.Quantity = _defaultQuantity;
+                                product.AddSku(sku);
+                            }
+                        }
+                        #endregion
+                        break;
+                    case 3:
+                        #region 3级SKU
+                        foreach (var prop1 in propNodes[0].SelectNodes(".//li"))
+                        {
+                            var prop1Id = prop1.Attributes["data-value"].Value;
+                            var prop1Value = prop1.SelectSingleNode(".//span").InnerText;
+                            var image = string.Empty;
+                            var styleHtml = prop1.SelectSingleNode(".//a").Attributes["style"];
+                            if (styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                            {
+                                image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                            }
+
+                            foreach (var prop2 in propNodes[1].SelectNodes(".//li"))
+                            {
+                                var prop2Id = prop2.Attributes["data-value"].Value;
+                                var prop2Value = prop2.SelectSingleNode(".//span").InnerText;
+
+                                styleHtml = prop2.SelectSingleNode(".//a").Attributes["style"];
+                                if (image.IsNullOrEmpty() && styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                                {
+                                    image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                                }
+
+                                foreach (var prop3 in propNodes[2].SelectNodes(".//li"))
+                                {
+                                    var prop3Id = prop3.Attributes["data-value"].Value;
+                                    var prop3Value = prop3.SelectSingleNode(".//span").InnerText;
+
+                                    styleHtml = prop3.SelectSingleNode(".//a").Attributes["style"];
+                                    if (image.IsNullOrEmpty() && styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                                    {
+                                        image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                                    }
+
+                                    var skuPath = ";{0};{1};{2};".FormatWith(prop1Id, prop2Id, prop3Id);
+
+                                    ProductSKU sku = new ProductSKU();
+                                    sku.Name = "{0}-{1}-{2}".FormatWith(prop1Value, prop2Value, prop3Value);
+                                    sku.Image = image ?? "";
+
+                                    var skuSourceInfo = sourceSkuModel.skuMap.FirstOrDefault(m => m.Key == skuPath);
+                                    if (detailModel != null)
+                                    {
+                                        var skuInfo = detailModel.data.promotion.promoData.FirstOrDefault(m => m.Key == skuPath);
+                                        if (!skuInfo.Key.IsNullOrEmpty())
+                                        {
+                                            //如果打折  显示打折价格
+                                            sku.Price = Convert.ToDouble(skuInfo.Value.First().price ?? "0");
+                                        }
+                                    }
+                                    else if (!skuSourceInfo.Key.IsNullOrEmpty())
+                                    {
+                                        //如果不打折  显示原价
+                                        sku.Price = Convert.ToDouble(skuSourceInfo.Value.price ?? "0");
+                                    }
+                                    else
+                                    {
+                                        sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                                    }
+                                    sku.Quantity = _defaultQuantity;
+                                    product.AddSku(sku);
+                                }
+                            }
+                        }
+                        #endregion
+                        break;
+                    case 4:
+                        #region 4级SKU
+                        foreach (var prop1 in propNodes[0].SelectNodes(".//li"))
+                        {
+                            var prop1Id = prop1.Attributes["data-value"].Value;
+                            var prop1Value = prop1.SelectSingleNode(".//span").InnerText;
+                            var image = string.Empty;
+                            var styleHtml = prop1.SelectSingleNode(".//a").Attributes["style"];
+                            if (styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                            {
+                                image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                            }
+
+                            foreach (var prop2 in propNodes[1].SelectNodes(".//li"))
+                            {
+                                var prop2Id = prop2.Attributes["data-value"].Value;
+                                var prop2Value = prop2.SelectSingleNode(".//span").InnerText;
+
+                                styleHtml = prop2.SelectSingleNode(".//a").Attributes["style"];
+                                if (image.IsNullOrEmpty() && styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                                {
+                                    image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                                }
+
+                                foreach (var prop3 in propNodes[2].SelectNodes(".//li"))
+                                {
+                                    var prop3Id = prop3.Attributes["data-value"].Value;
+                                    var prop3Value = prop3.SelectSingleNode(".//span").InnerText;
+
+                                    styleHtml = prop3.SelectSingleNode(".//a").Attributes["style"];
+                                    if (image.IsNullOrEmpty() && styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                                    {
+                                        image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                                    }
+
+                                    foreach (var prop4 in propNodes[3].SelectNodes(".//li"))
+                                    {
+                                        var prop4Id = prop4.Attributes["data-value"].Value;
+                                        var prop4Value = prop4.SelectSingleNode(".//span").InnerText;
+
+                                        styleHtml = prop4.SelectSingleNode(".//a").Attributes["style"];
+                                        if (image.IsNullOrEmpty() && styleHtml != null && _skuImageRegex.IsMatch(styleHtml.Value))
+                                        {
+                                            image = _skuImageRegex.Match(styleHtml.Value).Groups[1].Value;
+                                        }
+
+                                        var skuPath = ";{0};{1};{2};{3};".FormatWith(prop1Id, prop2Id, prop3Id, prop4Id);
+
+                                        ProductSKU sku = new ProductSKU();
+                                        sku.Name = "{0}-{1}-{2}-{3}".FormatWith(prop1Value, prop2Value, prop3Value, prop4Value);
+                                        sku.Image = image ?? "";
+
+                                        var skuSourceInfo = sourceSkuModel.skuMap.FirstOrDefault(m => m.Key == skuPath);
+                                        if (detailModel != null)
+                                        {
+                                            var skuInfo = detailModel.data.promotion.promoData.FirstOrDefault(m => m.Key == skuPath);
+                                            if (!skuInfo.Key.IsNullOrEmpty())
+                                            {
+                                                //如果打折  显示打折价格
+                                                sku.Price = Convert.ToDouble(skuInfo.Value.First().price ?? "0");
+                                            }
+                                        }
+                                        else if (!skuSourceInfo.Key.IsNullOrEmpty())
+                                        {
+                                            //如果不打折  显示原价
+                                            sku.Price = Convert.ToDouble(skuSourceInfo.Value.price ?? "0");
+                                        }
+                                        else
+                                        {
+                                            sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                                        }
+                                        sku.Quantity = _defaultQuantity;
+                                        product.AddSku(sku);
+                                    }
+                                }
+                            }
+                        }
+                        #endregion
+                        break;
+                    default:
+                        throw new WlException("暂不支持淘宝4级以上sku 请联系开发人员！");
+                }
+            }
             #endregion
 
             //评价数量接口 https://rate.taobao.com/detailCount.do?itemId=542469108642&&callback=
+
             #region 接口测试代码  勿动
             //appkey = 12574478   b.appKey || ("waptest" === c.subDomain ? "4272" : "12574478"),
 
@@ -199,8 +516,9 @@ namespace TxoooProductUpload.Service.Crawl
                         if (list.Exists(m => m.Id == id)) { continue; }
 
                         ProductSourceInfo product = new ProductSourceInfo(id);
-                        product.SourceType = temp.SelectSingleNode("//span[@class='icon-service-tianmao']") == null ?
-                         SourceType.Taobao : SourceType.Tamll;
+                        product.SourceType = temp.SelectSingleNode("//span[@class='icon-service-tianmao']") == null 
+                            && temp.SelectSingleNode("//span[@class='icon-service-tianmaoguoji']") == null ?
+                         SourceType.Taobao : SourceType.Tmall;
 
                         product.ShowPrice = Convert.ToDouble(picElement.Attributes["trace-price"].Value ?? "0");
                         product.FirstImg = picElement.SelectSingleNode("//img").Attributes["data-src"].Value;

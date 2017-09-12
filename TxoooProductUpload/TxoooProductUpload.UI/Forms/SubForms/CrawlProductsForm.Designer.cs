@@ -34,14 +34,14 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.miniToolStrip = new CCWin.SkinControl.SkinToolStrip();
             this.ss = new System.Windows.Forms.StatusStrip();
             this.tssLblSp1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,6 +54,7 @@
             this.tssBtnBatchEditClass = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssLblSp5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.skinSplitContainer1 = new CCWin.SkinControl.SkinSplitContainer();
+            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
             this.ts = new CCWin.SkinControl.SkinToolStrip();
             this.rslpsp1 = new System.Windows.Forms.ToolStripLabel();
             this.tsBtnLeft = new System.Windows.Forms.ToolStripButton();
@@ -72,6 +73,18 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.tsBtnAutoAll = new System.Windows.Forms.ToolStripButton();
             this.sdgvProduct = new CCWin.SkinControl.SkinDataGridView();
+            this.sourceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ShowPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ShowPhone = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.ShowPc = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.sourceTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.shopNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.h5UrlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bs = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -85,19 +98,6 @@
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
-            this.sourceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ShowPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ShowPhone = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.ShowPc = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.sourceTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.shopNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.urlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.h5UrlDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ss.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinSplitContainer1)).BeginInit();
             this.skinSplitContainer1.Panel1.SuspendLayout();
@@ -283,6 +283,16 @@
             this.skinSplitContainer1.Size = new System.Drawing.Size(992, 547);
             this.skinSplitContainer1.SplitterDistance = 351;
             this.skinSplitContainer1.TabIndex = 2;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.BrowserSettings = null;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.Location = new System.Drawing.Point(0, 31);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.Size = new System.Drawing.Size(992, 320);
+            this.webBrowser.StartUrl = "www.taobao.com";
+            this.webBrowser.TabIndex = 0;
             // 
             // ts
             // 
@@ -568,6 +578,116 @@
             this.sdgvProduct.TitleBackColorBegin = System.Drawing.Color.White;
             this.sdgvProduct.TitleBackColorEnd = System.Drawing.SystemColors.Control;
             // 
+            // sourceNameDataGridViewTextBoxColumn
+            // 
+            this.sourceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.sourceNameDataGridViewTextBoxColumn.DataPropertyName = "SourceName";
+            this.sourceNameDataGridViewTextBoxColumn.HeaderText = "所属平台";
+            this.sourceNameDataGridViewTextBoxColumn.Name = "sourceNameDataGridViewTextBoxColumn";
+            this.sourceNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.sourceNameDataGridViewTextBoxColumn.Width = 120;
+            // 
+            // productNameDataGridViewTextBoxColumn
+            // 
+            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
+            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
+            // 
+            // Location
+            // 
+            this.Location.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Location.DataPropertyName = "Location";
+            this.Location.HeaderText = "发货地";
+            this.Location.Name = "Location";
+            // 
+            // ShowPrice
+            // 
+            this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ShowPrice.DataPropertyName = "ShowPrice";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Format = "C2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ShowPrice.HeaderText = "售价";
+            this.ShowPrice.Name = "ShowPrice";
+            this.ShowPrice.Width = 70;
+            // 
+            // ShowPhone
+            // 
+            this.ShowPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ShowPhone.DefaultCellStyle = dataGridViewCellStyle4;
+            this.ShowPhone.HeaderText = "查看手机页面";
+            this.ShowPhone.Name = "ShowPhone";
+            this.ShowPhone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ShowPhone.Text = "查看";
+            this.ShowPhone.UseColumnTextForLinkValue = true;
+            this.ShowPhone.Width = 90;
+            // 
+            // ShowPc
+            // 
+            this.ShowPc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ShowPc.DefaultCellStyle = dataGridViewCellStyle5;
+            this.ShowPc.HeaderText = "查看PC页面";
+            this.ShowPc.Name = "ShowPc";
+            this.ShowPc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ShowPc.Text = "查看";
+            this.ShowPc.UseColumnTextForLinkValue = true;
+            this.ShowPc.Width = 80;
+            // 
+            // Delete
+            // 
+            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.Delete.DefaultCellStyle = dataGridViewCellStyle6;
+            this.Delete.HeaderText = "删除";
+            this.Delete.Name = "Delete";
+            this.Delete.Text = "删除";
+            this.Delete.UseColumnTextForButtonValue = true;
+            this.Delete.Width = 60;
+            // 
+            // sourceTypeDataGridViewTextBoxColumn
+            // 
+            this.sourceTypeDataGridViewTextBoxColumn.DataPropertyName = "SourceType";
+            this.sourceTypeDataGridViewTextBoxColumn.HeaderText = "SourceType";
+            this.sourceTypeDataGridViewTextBoxColumn.Name = "sourceTypeDataGridViewTextBoxColumn";
+            this.sourceTypeDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // shopNameDataGridViewTextBoxColumn
+            // 
+            this.shopNameDataGridViewTextBoxColumn.DataPropertyName = "ShopName";
+            this.shopNameDataGridViewTextBoxColumn.HeaderText = "ShopName";
+            this.shopNameDataGridViewTextBoxColumn.Name = "shopNameDataGridViewTextBoxColumn";
+            this.shopNameDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // urlDataGridViewTextBoxColumn
+            // 
+            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
+            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
+            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
+            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
+            this.urlDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // h5UrlDataGridViewTextBoxColumn
+            // 
+            this.h5UrlDataGridViewTextBoxColumn.DataPropertyName = "H5Url";
+            this.h5UrlDataGridViewTextBoxColumn.HeaderText = "H5Url";
+            this.h5UrlDataGridViewTextBoxColumn.Name = "h5UrlDataGridViewTextBoxColumn";
+            this.h5UrlDataGridViewTextBoxColumn.ReadOnly = true;
+            this.h5UrlDataGridViewTextBoxColumn.Visible = false;
+            // 
             // bs
             // 
             this.bs.DataSource = typeof(TxoooProductUpload.Entities.Product.ProductSourceInfo);
@@ -682,126 +802,6 @@
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             this.dataGridViewTextBoxColumn9.ReadOnly = true;
             this.dataGridViewTextBoxColumn9.Visible = false;
-            // 
-            // webBrowser
-            // 
-            this.webBrowser.BrowserSettings = null;
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 31);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(992, 320);
-            this.webBrowser.StartUrl = "www.taobao.com";
-            this.webBrowser.TabIndex = 0;
-            // 
-            // sourceNameDataGridViewTextBoxColumn
-            // 
-            this.sourceNameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.sourceNameDataGridViewTextBoxColumn.DataPropertyName = "SourceName";
-            this.sourceNameDataGridViewTextBoxColumn.HeaderText = "所属平台";
-            this.sourceNameDataGridViewTextBoxColumn.Name = "sourceNameDataGridViewTextBoxColumn";
-            this.sourceNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.sourceNameDataGridViewTextBoxColumn.Width = 120;
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
-            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            // 
-            // Location
-            // 
-            this.Location.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Location.DataPropertyName = "Location";
-            this.Location.HeaderText = "发货地";
-            this.Location.Name = "Location";
-            // 
-            // ShowPrice
-            // 
-            this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ShowPrice.DataPropertyName = "ShowPrice";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.Format = "C2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle3;
-            this.ShowPrice.HeaderText = "售价";
-            this.ShowPrice.Name = "ShowPrice";
-            this.ShowPrice.Width = 70;
-            // 
-            // ShowPhone
-            // 
-            this.ShowPhone.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ShowPhone.DefaultCellStyle = dataGridViewCellStyle4;
-            this.ShowPhone.HeaderText = "查看手机页面";
-            this.ShowPhone.Name = "ShowPhone";
-            this.ShowPhone.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ShowPhone.Text = "查看";
-            this.ShowPhone.UseColumnTextForLinkValue = true;
-            this.ShowPhone.Width = 90;
-            // 
-            // ShowPc
-            // 
-            this.ShowPc.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ShowPc.DefaultCellStyle = dataGridViewCellStyle5;
-            this.ShowPc.HeaderText = "查看PC页面";
-            this.ShowPc.Name = "ShowPc";
-            this.ShowPc.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ShowPc.Text = "查看";
-            this.ShowPc.UseColumnTextForLinkValue = true;
-            this.ShowPc.Width = 80;
-            // 
-            // Delete
-            // 
-            this.Delete.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.Delete.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Delete.HeaderText = "删除";
-            this.Delete.Name = "Delete";
-            this.Delete.Text = "删除";
-            this.Delete.UseColumnTextForButtonValue = true;
-            this.Delete.Width = 60;
-            // 
-            // sourceTypeDataGridViewTextBoxColumn
-            // 
-            this.sourceTypeDataGridViewTextBoxColumn.DataPropertyName = "SourceType";
-            this.sourceTypeDataGridViewTextBoxColumn.HeaderText = "SourceType";
-            this.sourceTypeDataGridViewTextBoxColumn.Name = "sourceTypeDataGridViewTextBoxColumn";
-            this.sourceTypeDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // shopNameDataGridViewTextBoxColumn
-            // 
-            this.shopNameDataGridViewTextBoxColumn.DataPropertyName = "ShopName";
-            this.shopNameDataGridViewTextBoxColumn.HeaderText = "ShopName";
-            this.shopNameDataGridViewTextBoxColumn.Name = "shopNameDataGridViewTextBoxColumn";
-            this.shopNameDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // urlDataGridViewTextBoxColumn
-            // 
-            this.urlDataGridViewTextBoxColumn.DataPropertyName = "Url";
-            this.urlDataGridViewTextBoxColumn.HeaderText = "Url";
-            this.urlDataGridViewTextBoxColumn.Name = "urlDataGridViewTextBoxColumn";
-            this.urlDataGridViewTextBoxColumn.ReadOnly = true;
-            this.urlDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // h5UrlDataGridViewTextBoxColumn
-            // 
-            this.h5UrlDataGridViewTextBoxColumn.DataPropertyName = "H5Url";
-            this.h5UrlDataGridViewTextBoxColumn.HeaderText = "H5Url";
-            this.h5UrlDataGridViewTextBoxColumn.Name = "h5UrlDataGridViewTextBoxColumn";
-            this.h5UrlDataGridViewTextBoxColumn.ReadOnly = true;
-            this.h5UrlDataGridViewTextBoxColumn.Visible = false;
             // 
             // CrawlProductsForm
             // 

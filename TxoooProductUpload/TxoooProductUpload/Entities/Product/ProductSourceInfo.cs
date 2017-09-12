@@ -44,6 +44,8 @@ namespace TxoooProductUpload.Entities.Product
         }
         #endregion
 
+
+
         #region  淘系独有
         /// <summary>
         /// 淘系用户昵称
@@ -206,6 +208,46 @@ namespace TxoooProductUpload.Entities.Product
         }
         #endregion
 
+        #region Txooo商品属性
+        bool _isNew = true;
+        /// <summary>
+        /// 是否新品
+        /// </summary>
+        public bool IsNew { get { return _isNew; } set { _isNew = value; } }
+
+        bool _isVirtual = false;
+        /// <summary>
+        /// 是否虚拟商品
+        /// </summary>
+        public bool IsVirtual { get { return _isVirtual; } set { _isVirtual = value; } }
+
+        bool _isRefund = true;
+        /// <summary>
+        /// 是否支持7天无理由
+        /// </summary>
+        public bool IsRefund { get { return _isRefund; } set { _isRefund = value; } }
+
+        /// <summary>
+        /// 商品分类id
+        /// </summary>
+        public long ClassId { set; get; }
+
+        /// <summary>
+        /// 发货地代码
+        /// </summary>
+        public long RegionCode { set; get; }
+
+        /// <summary>
+        /// 发货地名称
+        /// </summary>
+        public long RegionName { set; get; }
+
+        long _classType = 1;
+        /// <summary>
+        /// 商品分类类型 （1产品，2服务）
+        /// </summary>
+        public long ClassType { set; get; }
+        #endregion
 
         /// <summary>
         /// 商品品牌
@@ -219,15 +261,15 @@ namespace TxoooProductUpload.Entities.Product
         /// <summary>
         /// 商品主图
         /// </summary>
-        public List<string> ThumImgList { set; get; }
+        public List<string> ThumImgList { private set; get; }
         /// <summary>
         /// 商品详情图
         /// </summary>
-        public List<string> DetailImgList { set; get; }
+        public List<string> DetailImgList { private set; get; }
         /// <summary>
         /// Txooo格式的SKu集合
         /// </summary>
-        public List<ProductSKU> SkuList { set; get; }
+        public List<ProductSKU> SkuList { private set; get; }
 
         #region 公共方法
         /// <summary>
@@ -236,7 +278,7 @@ namespace TxoooProductUpload.Entities.Product
         /// <param name="sku"></param>
         public void AddSku(ProductSKU sku)
         {
-            if (!sku.Image.StartsWith("http"))
+            if (!sku.Image.IsNullOrEmpty() && !sku.Image.StartsWith("http"))
             {
                 sku.Image = "http:" + sku.Image;
             }
@@ -301,10 +343,6 @@ namespace TxoooProductUpload.Entities.Product
             set
             {
                 _image = value;
-                if (_image.IsNullOrEmpty() && !_image.StartsWith("http"))
-                {
-                    _image = "http:" + _image;
-                }
             }
             get
             {

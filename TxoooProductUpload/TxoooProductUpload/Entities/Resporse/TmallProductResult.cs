@@ -38,7 +38,21 @@ namespace TxoooProductUpload.Entities.Resporse
         /// </summary>
         public DetailDesc detailDesc { set; get; }
 
+        public JumpUrl jumpUrl { set; get; }
+
     }
+
+    public class JumpUrl
+    {
+        public bool enable { set; get; }
+        public TmallApis apis { set; get; }
+    }
+    public class TmallApis
+    {
+        public string descUrl { set; get; }
+        public string httpsDescUrl { set; get; }
+    }
+
     /// <summary>
     /// 商户信息
     /// </summary>

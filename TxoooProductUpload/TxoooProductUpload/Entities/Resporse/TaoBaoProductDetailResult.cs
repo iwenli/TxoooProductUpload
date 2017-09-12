@@ -15,6 +15,13 @@ namespace TxoooProductUpload.Entities.Resporse
         public TaoBaoProductDetailResultData data { set; get; }
     }
 
+    /// <summary>
+    /// 淘宝商品详情原价sku解析类
+    /// </summary>
+    public class TaoBaoProductSoureSkuResult {
+        public Dictionary<string, PromoDataItem> skuMap { set; get; }
+    }
+
     public class TaoBaoProductDetailResultData
     {
         public SoldQuantity soldQuantity { set; get; }
@@ -74,7 +81,7 @@ namespace TxoooProductUpload.Entities.Resporse
     }
     public class PromoDataItem
     {
-        public double price { set; get; }
+        public string price { set; get; }
         public string type { set; get; }
     }
 }
