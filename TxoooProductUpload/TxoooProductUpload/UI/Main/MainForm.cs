@@ -618,7 +618,7 @@ namespace TxoooProductUpload.UI.Main
                     }
                     foreach (var item in thumImg)
                     {
-                        var txImgUrl = await _context.ImageService.UploadImg(item, 1);
+                        var txImgUrl = await _context.ImageService.UploadImgAsync(item, 1);
                         imgList.Add(txImgUrl);
                         AppendLog(txtLog, "第[{0}]张主图上传完成，返回结果{1}...", index++, txImgUrl);
                     }
@@ -659,11 +659,11 @@ namespace TxoooProductUpload.UI.Main
                                     string colorImg = string.Empty;
                                     if (colorItem.image.IsNullOrEmpty())
                                     {
-                                        colorImg = await _context.ImageService.UploadImg(product.ThumImg.LastOrDefault(), 3);
+                                        colorImg = await _context.ImageService.UploadImgAsync(product.ThumImg.LastOrDefault(), 3);
                                     }
                                     else
                                     {
-                                        colorImg = await _context.ImageService.UploadImg(colorItem.image, 3);
+                                        colorImg = await _context.ImageService.UploadImgAsync(colorItem.image, 3);
                                     }
                                     var sizeList = product.SKU1688.Where(m => m.prop == "尺码").FirstOrDefault();
                                     if (sizeList != null)
@@ -684,7 +684,7 @@ namespace TxoooProductUpload.UI.Main
                             }
                             else
                             {
-                                var colorImg = await _context.ImageService.UploadImg(product.ThumImg.LastOrDefault(), 3);
+                                var colorImg = await _context.ImageService.UploadImgAsync(product.ThumImg.LastOrDefault(), 3);
                                 product.product_property += string.Format(propertyFormat, index++, name, product.ProductPrice, colorImg, _radio_num, "true");
                                 AppendLog(txtLog, "第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
                             }
@@ -698,11 +698,11 @@ namespace TxoooProductUpload.UI.Main
                                 string colorImg = string.Empty;
                                 if (colorItem.image.IsNullOrEmpty())
                                 {
-                                    colorImg = await _context.ImageService.UploadImg(product.ThumImg.LastOrDefault(), 3);
+                                    colorImg = await _context.ImageService.UploadImgAsync(product.ThumImg.LastOrDefault(), 3);
                                 }
                                 else
                                 {
-                                    colorImg = await _context.ImageService.UploadImg(colorItem.image, 3);
+                                    colorImg = await _context.ImageService.UploadImgAsync(colorItem.image, 3);
                                 }
                                 if (product.SKUJD.colorSizeTitle.sizeName != null && product.SKUJD.colorSizeTitle.colorName != null)
                                 {
@@ -738,7 +738,7 @@ namespace TxoooProductUpload.UI.Main
                                             {
                                                 colorImg = sku.image;
                                             }
-                                            colorImg = await _context.ImageService.UploadImg(colorImg, 3);
+                                            colorImg = await _context.ImageService.UploadImgAsync(colorImg, 3);
                                             name = string.Format("{0}:{1}", skuList[0].text, sku.text);
                                             product.product_property += string.Format(propertyFormat, index++, name, product.ProductPrice, colorImg, _radio_num, (index == 1).ToString().ToLower());
                                             AppendLog(txtLog, "第[{0}]个SKU=[{1}]处理完成...", index + 1, name);
@@ -751,7 +751,7 @@ namespace TxoooProductUpload.UI.Main
                                             {
                                                 colorImg = sku1.image;
                                             }
-                                            colorImg = await _context.ImageService.UploadImg(colorImg, 3);
+                                            colorImg = await _context.ImageService.UploadImgAsync(colorImg, 3);
                                             foreach (var sku0 in skuList[0].values)
                                             {
                                                 name = string.Format("{0}:{1} | {2}:{3}",
@@ -797,7 +797,7 @@ namespace TxoooProductUpload.UI.Main
                         foreach (var item in product.DetailImg)
                         {
                             detailList.Add(string.Format("<p></p><img src=\"{0}\" />",
-                                await _context.ImageService.UploadImg(item, 2)));
+                                await _context.ImageService.UploadImgAsync(item, 2)));
                             AppendLog(txtLog, "第[{0}]张详情图片护理完成...", index++);
                         }
                         product.product_details = detailList.Join("");

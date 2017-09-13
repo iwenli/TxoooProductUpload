@@ -2694,7 +2694,7 @@
             不做处理
             </summary>
         </member>
-        <member name="T:Iwenli.WlException">
+        <member name="T:Iwenli.Exception">
             <summary>
             异常基础类
             </summary>

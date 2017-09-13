@@ -177,7 +177,7 @@ namespace TxoooProductUpload.UI.Main
                                     for (int j = 0; j < imgList.Length; j++)
                                     {
                                         //AppendLog(txtLog, "开始处理第[{0}]个评价的第[{1}]张图片...", i + 1, j + 1);
-                                        updateImglist.Add(await _context.ImageService.UploadImg(imgList[j], 4));
+                                        updateImglist.Add(await _context.ImageService.UploadImgAsync(imgList[j], 4));
                                         AppendLog(txtLog, "第[{0}]个评价的第[{1}]张图片处理完成...", i + 1, j + 1);
                                     }
                                     _reviewList[i].ReviewImgs = string.Join(",", updateImglist);
@@ -258,7 +258,7 @@ namespace TxoooProductUpload.UI.Main
                 HeadPicContext.Instance.Init();
                 if (HeadPicContext.Instance.Data == null || HeadPicContext.Instance.Data.Count == 0)
                 {
-                    HeadPicContext.Instance.Data.AddRange(_context.ImageService.GetAllHeadPic());
+                    HeadPicContext.Instance.Data.AddRange(_context.ImageService.GetAllHeadPicList());
                     HeadPicContext.Instance.Save();
                 }
                 AppendLog(txtLog, "获取头像数据[完成]...");
@@ -288,14 +288,14 @@ namespace TxoooProductUpload.UI.Main
                     try
                     {
                         Image headPic = Image.FromFile(ofdImgHead.FileName).Thumbnail();
-                        _userHeadPic = await _context.ImageService.UploadImg(headPic);
+                        _userHeadPic = await _context.ImageService.UploadImgAsync(headPic);
                         pbHead.Image = headPic;
                         AppendLogWarning(txtLog, "头像更换[成功]...");
                     }
                     catch (Exception ex)
                     {
                         AppendLogWarning(txtLog, "头像更换[失败]...");
-                        Image headPic = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamByImgUrl(_userHeadPic)));
+                        Image headPic = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamAsync(_userHeadPic)));
                         AppendLogWarning(txtLog, "[异常发生在]:", ex);
                     }
                 }
@@ -314,7 +314,7 @@ namespace TxoooProductUpload.UI.Main
                     var wc = new WebClient();
                     var imageB = wc.DownloadData(url);
                     var headPic = Image.FromStream(new MemoryStream(imageB)).Thumbnail();
-                    _userHeadPic = await _context.ImageService.UploadImg(headPic);
+                    _userHeadPic = await _context.ImageService.UploadImgAsync(headPic);
                     pbHead.Image = headPic;
                     AppendLogWarning(txtLog, "头像更换[成功]...");
                     txtUpdateHeadPicUrl.Text = string.Empty;
@@ -322,7 +322,7 @@ namespace TxoooProductUpload.UI.Main
                 catch (Exception ex)
                 {
                     AppendLogWarning(txtLog, "头像更换[失败]...");
-                    Image headPic = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamByImgUrl(_userHeadPic)));
+                    Image headPic = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamAsync(_userHeadPic)));
                     AppendLogWarning(txtLog, "[异常发生在]:", ex);
                 }
             };
@@ -434,7 +434,7 @@ namespace TxoooProductUpload.UI.Main
                      //上传评价图片
                      for (int i = 0; i < _reviewImgPathList.Count; i++)
                      {
-                         reviewImageUrls.Add(await _context.ImageService.UploadImg(Image.FromFile(_reviewImgPathList[i])));
+                         reviewImageUrls.Add(await _context.ImageService.UploadImgAsync(Image.FromFile(_reviewImgPathList[i])));
                      }
                      _reviewInfo.ReviewImgs = string.Join(",", reviewImageUrls);
 
@@ -521,7 +521,7 @@ namespace TxoooProductUpload.UI.Main
             ilReviewImage.Images.Clear();
             lvReviewImage.Items.Clear();
             _userHeadPic = ConstParams.DEFAULT_HEAD_PIC;
-            pbHead.Image = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamByImgUrl(_userHeadPic)));
+            pbHead.Image = Image.FromStream(new MemoryStream(await _context.ImageService.GetImageStreamAsync(_userHeadPic)));
             dtpAddTime.MaxDate = DateTime.Now.AddSeconds(1);
             dtpAddTime.Value = DateTime.Now;
             btnAddReviewOne.Enabled = !(pbAddReviewImage.Enabled = true);

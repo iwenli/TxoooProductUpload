@@ -173,9 +173,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     ProcessProductDetailResult();
                 })); return;
             }
+            _processResult.ProductBindSource.DataSource =null;
             _processResult.ProductBindSource.DataSource = _productOkList;
             _processResult.MessageShowLable.Text = "共{0}个商品，执行成功{1}个商品".FormatWith(_productList.Count, _productOkList.Count);
-            _process1.Visible = false;
+            _process1.Visible = skinSplitContainer1.Visible = false;
             tssBtnNext.Enabled = tssBtnPrevious.Enabled = _processResult.Visible = true;
         }
 
@@ -194,7 +195,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         tssBtnNext.Enabled = skinSplitContainer1.Visible = false;
                         _process1.Visible = true;
                         _process1.ProcessBar.Maximum = waitProcessProductList.Count;
-                        _process1.ProcessBar.Minimum = 0;
+                        _process1.ProcessBar.Value = _process1.ProcessBar.Minimum = 0;
                     })); 
                     Parallel.For(0, waitProcessProductList.Count, (index) =>
                     {

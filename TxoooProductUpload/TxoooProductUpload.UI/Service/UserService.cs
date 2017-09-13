@@ -87,7 +87,7 @@ namespace TxoooProductUpload.UI.Service
                 {
                     var url = login.MchInfo.HeaPic.Insert(login.MchInfo.HeaPic.LastIndexOf("."), "_1_250_250_3");
                     //获取图像
-                    var imgBytes = await BaseContent.ImageService.GetImageStreamByImgUrl(login.MchInfo.HeaPic + ",1,200,200,3");
+                    var imgBytes = await BaseContent.ImageService.GetImageStreamAsync(login.MchInfo.HeaPic + ",1,200,200,3");
                     //写入文件
                     var targetFullPath = Path.Combine(_cachePath, login.UserName + ".jpg");
                     File.WriteAllBytes(targetFullPath, imgBytes);

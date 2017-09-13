@@ -78,7 +78,7 @@ namespace TxoooProductUpload.UI.Main
                         foreach (string img in openFileDialog1.FileNames)
                         {
                             Image image = Image.FromFile(img);
-                            var url = await _context.ImageService.UploadImg(image);
+                            var url = await _context.ImageService.UploadImgAsync(image);
                             if (!ImageList.Contains(url))
                             {
                                 ImageList.Add(url);

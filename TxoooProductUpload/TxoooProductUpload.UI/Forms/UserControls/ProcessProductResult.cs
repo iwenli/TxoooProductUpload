@@ -34,17 +34,22 @@ namespace TxoooProductUpload.UI.Forms.UserControls
 
         void UploadProductImage()
         {
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 var list = ProductBindSource.DataSource as List<ProductSourceInfo>;
-                var uploadEndList = await App.Context.ProductService.UploadProductImageSync(list);
-                await Task.Run(() =>
-                {
-                    Invoke(new Action(() =>
-                    {
-                        ProductBindSource.DataSource = uploadEndList;
-                    }));
+                Parallel.For(0, list.Count, (i) => {
+                    //ProductSourceInfo product = list[i];
+                    App.Context.ProductService.UploadProductImage(list[i]);
                 });
+                MessageBoxEx.Show("图片处理完成");
+                //var uploadEndList = await UploadProductImageSync(list);
+                //await Task.Run(() =>
+                //{
+                //    Invoke(new Action(() =>
+                //    {
+                //        ProductBindSource.DataSource = uploadEndList;
+                //    }));
+                //});
 
             });
         }

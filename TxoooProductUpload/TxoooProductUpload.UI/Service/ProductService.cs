@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Iwenli;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -35,48 +36,100 @@ namespace TxoooProductUpload.UI.Service
             }
         }
 
+        ///// <summary>
+        ///// 上传商品图片到Txooo服务器 并返回商品集合 并行
+        ///// </summary>
+        ///// <param name="productList"></param>
+        ///// <returns></returns>
+        //public async Task<List<ProductSourceInfo>> UploadProductImageSync(List<ProductSourceInfo> productList)
+        //{
+        //    List<ProductSourceInfo> list = new List<ProductSourceInfo>();
+        //    await Task.Delay(10);
+        //    Parallel.For(0, productList.Count, async (index) =>
+        //    {
+        //        var product = productList[index];
+        //        try
+        //        {
+        //            foreach (var url in product.ThumImgList)
+        //            {
+        //                product.TxoooThumImgList.Add(await BaseContent.ImageService.UploadImgAsync(url, 1));
+        //            }
+        //            foreach (var url in product.DetailImgList)
+        //            {
+        //                product.TxoooDetailImgList.Add(await BaseContent.ImageService.UploadImgAsync(url, 2));
+        //            }
+        //            foreach (var sku in product.SkuList)
+        //            {
+        //                //如果没有抓到详情图片  则用主图图片
+        //                if (sku.Image.IsNullOrEmpty())
+        //                {
+        //                    sku.TxoooImage = product.TxoooThumImgList[0];
+        //                }
+        //                else
+        //                {
+        //                    sku.TxoooImage = await BaseContent.ImageService.UploadImgAsync(sku.Image, 3);
+        //                }
+        //            }
+        //            list.Add(product);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Iwenli.LogHelper.LogError(this, "上传{0}商品{1}图片执行异常：{2}".FormatWith(product.SourceName, product.Id, ex.Message));
+        //        }
+        //    });
+        //    return list;
+        //}
+
         /// <summary>
-        /// 上传商品图片到Txooo服务器 并返回商品集合
+        /// 上传商品图片到Txooo服务器 并返回商品
         /// </summary>
         /// <param name="productList"></param>
         /// <returns></returns>
-        public async Task<List<ProductSourceInfo>> UploadProductImageSync(List<ProductSourceInfo> productList)
+        public void UploadProductImage(ProductSourceInfo product)
         {
-            List<ProductSourceInfo> list = new List<ProductSourceInfo>();
-            await Task.Delay(10);
-            Parallel.For(0, productList.Count, async (index) =>
+            foreach (var url in product.ThumImgList)
             {
-                var product = productList[index];
                 try
                 {
-                    foreach (var url in product.ThumImgList)
-                    {
-                        product.TxoooThumImgList.Add(await BaseContent.ImageService.UploadImg(url, 1));
-                    }
-                    foreach (var url in product.DetailImgList)
-                    {
-                        product.TxoooDetailImgList.Add(await BaseContent.ImageService.UploadImg(url, 2));
-                    }
-                    foreach (var sku in product.SkuList)
-                    {
-                        //如果没有抓到详情图片  则用主图图片
-                        if (sku.Image.IsNullOrEmpty())
-                        {
-                            sku.TxoooImage = product.TxoooThumImgList[0];
-                        }
-                        else
-                        {
-                            sku.TxoooImage = await BaseContent.ImageService.UploadImg(sku.Image, 3);
-                        }
-                    }
-                    list.Add(product);
+                    product.TxoooThumImgList.Add(BaseContent.ImageService.UploadImg(url));
                 }
                 catch (Exception ex)
                 {
-                    Iwenli.LogHelper.LogError(this, "上传{0}商品{1}图片执行异常：{2}".FormatWith(product.SourceName, product.Id, ex.Message));
+                    new Exception("上传{0}商品{1}主图{2}执行异常：{3}".FormatWith(product.SourceName, product.Id, url, ex.Message), ex);
                 }
-            });
-            return list;
+            }
+            foreach (var url in product.DetailImgList)
+            {
+                try
+                {
+                    product.TxoooDetailImgList.Add(BaseContent.ImageService.UploadImg(url));
+                }
+                catch (Exception ex)
+                {
+                    new Exception("上传{0}商品{1}详情图{2}执行异常：{3}".FormatWith(product.SourceName, product.Id, url, ex.Message), ex);
+                }
+
+            }
+            foreach (var sku in product.SkuList)
+            {
+                //如果没有抓到详情图片  则用主图图片
+                if (sku.Image.IsNullOrEmpty())
+                {
+                    sku.TxoooImage = product.TxoooThumImgList[0];
+                }
+                else
+                {
+                    try
+                    {
+                        sku.TxoooImage = BaseContent.ImageService.UploadImg(sku.Image);
+                    }
+                    catch (Exception ex)
+                    {
+                        new Exception("上传{0}商品{1}详情图{2}执行异常：{3}".FormatWith(product.SourceName, product.Id, sku.Image, ex.Message), ex);
+                    }
+
+                }
+            }
         }
 
         #region 测试代码

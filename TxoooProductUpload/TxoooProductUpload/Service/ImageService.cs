@@ -47,7 +47,7 @@ namespace TxoooProductUpload.Service
             stCtx.Send();
             if (!stCtx.IsValid())
             {
-                throw new WlException("下载图片{0}异常002[远程服务器未响应]，请重试！".FormatWith(url));
+                throw new Exception("下载图片{0}异常002[远程服务器未响应]，请重试！".FormatWith(url));
             }
             return Image.FromStream(new MemoryStream(stCtx.Result));
         }
@@ -57,7 +57,7 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="url">图片url</param>
         /// <returns></returns>
-        public async Task<byte[]> GetImageStreamByImgUrl(string url)
+        public async Task<byte[]> GetImageStreamAsync(string url)
         {
             var stCtx = ServiceContext.Session.NetClient
               .Create<byte[]>(HttpMethod.Get, url, allowAutoRedirect: true);
@@ -65,7 +65,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new WlException("下载图片{0}异常001[远程服务器未响应]，请重试！".FormatWith(url));
+                throw new Exception("下载图片{0}异常001[远程服务器未响应]，请重试！".FormatWith(url));
             }
             return stCtx.Result;
         }
@@ -76,15 +76,15 @@ namespace TxoooProductUpload.Service
         /// <param name="url">网络图片URL</param>
         /// <param name="uploadType">上传类型，0系统请求，1商品主图，2商品详情，3SKU图片，4商品评价图</param>
         /// <returns></returns>
-        public async Task<string> UploadImg(string url, int uploadType)
+        public async Task<string> UploadImgAsync(string url, int uploadType)
         {
             //如果已经是txooo的连接  不转换
             if (_txoooImgReg.IsMatch(url))
             {
                 return url;
             }
-            var imageStream = await GetImageStreamByImgUrl(url);
-            var imgUrl = await UploadFileForByte(imageStream);
+            var imageStream = await GetImageStreamAsync(url);
+            var imgUrl = await UploadFileForByteAsync(imageStream);
             if (imgUrl == "Error" || imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
             {
                 throw new Exception("图片上传到创业赚钱失败!");
@@ -126,9 +126,9 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="image">Image对象的图片</param>
         /// <returns></returns>
-        public async Task<string> UploadImg(Image image)
+        public async Task<string> UploadImgAsync(Image image)
         {
-            var imgUrl = await UploadFileForByte(image.ToBytes(), image.GetExtension());
+            var imgUrl = await UploadFileForByteAsync(image.ToBytes(), image.GetExtension());
             if (imgUrl == "Error" || imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
             {
                 throw new Exception("图片上传到创业赚钱失败!");
@@ -166,7 +166,7 @@ namespace TxoooProductUpload.Service
         /// 获取所有头像,如果有缓存数据，则从缓存中取值
         /// </summary>
         /// <returns></returns>
-        public List<string> GetAllHeadPic()
+        public List<string> GetAllHeadPicList()
         {
             DataSet ds = DbHelperOleDb.Query("SELECT * FROM iwenli_headPic");
             List<string> retList = new List<string>();
@@ -183,20 +183,122 @@ namespace TxoooProductUpload.Service
         /// <param name="file">文件流</param>
         /// <param name="fileExtension">文件类型</param>
         /// <returns>返回文件服务地址，错误返回：Error</returns>
-        private static async Task<string> UploadFileForByte(byte[] file, string fileExtension = "")
+        private static async Task<string> UploadFileForByteAsync(byte[] file, string fileExtension = "")
         {
-            await Task.Delay(10);
             if (fileExtension.IsNullOrEmpty())
             {
                 fileExtension = file.GetExtension();
             }
             NewWebClient myWebClient = new NewWebClient();
-            myWebClient.Timeout = 1000;  //设置超时时间
+            myWebClient.Timeout = 10000;  //设置超时时间
             myWebClient.Credentials = CredentialCache.DefaultCredentials;
             myWebClient.Headers.Add("TxoooUploadFileType", fileExtension);
             byte[] getArray = await myWebClient.UploadDataTaskAsync("http://file.txooo.cc/UpLoadForByte.ashx", file);
             string getstr = Encoding.Default.GetString(getArray);
             return getstr.Replace("http:", "https:");
         }
+
+        #region 同步方法
+        /// <summary>
+        /// 通过url上传图片到txooo服务器
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public string UploadImg(string url)
+        {
+            //如果已经是txooo的连接  不转换
+            if (_txoooImgReg.IsMatch(url))
+            {
+                return url;
+            }
+            var imageStream = GetImageStream(url);
+            var imgUrl = UploadFileForByte(imageStream);
+            if (imgUrl == "Error" || imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
+            {
+                throw new Exception("图片{0}上传到创业赚钱服务器失败!".FormatWith(url));
+            }
+            return imgUrl;
+        }
+
+        /// <summary>
+        /// 上传图片,成功返回url,失败返回空字符串
+        /// </summary>
+        /// <param name="url">网络图片URL</param>
+        /// <param name="uploadType">上传类型，0系统请求，1商品主图，2商品详情，3SKU图片，4商品评价图</param>
+        /// <returns></returns>
+        public string UploadImg(string url, int uploadType)
+        {
+            var imgUrl = UploadImg(url);
+            #region DB记录
+            //try
+            //{
+            //    string uploadTypeStr = string.Empty;
+            //    switch (uploadType)
+            //    {
+            //        case 0:
+            //            uploadTypeStr = "系统请求";
+            //            break;
+            //        case 1:
+            //            uploadTypeStr = "商品主图";
+            //            break;
+            //        case 2:
+            //            uploadTypeStr = "商品详情";
+            //            break;
+            //        case 3:
+            //            uploadTypeStr = "SKU图片";
+            //            break;
+            //        case 4:
+            //            uploadTypeStr = "商品评价图";
+            //            break;
+            //    }
+            //    DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertIMg, url, imgUrl, ServiceContext.Session.Token.userid, uploadTypeStr, string.Empty));
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception("CommonService.DowloadImage.DbHelperOleDb异常" + ex.Message);
+            //}
+            #endregion
+            return imgUrl;
+        }
+        /// <summary>
+        /// 通过url获取图片字节流
+        /// </summary>
+        /// <param name="url">图片url</param>
+        /// <returns></returns>
+        public byte[] GetImageStream(string url)
+        {
+            try
+            {
+                using (var webClient = new WebClient())
+                {
+                    return webClient.DownloadData(url);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("下载图片{0}异常001[远程服务器未响应]，请重试！".FormatWith(url), ex);
+            }
+        }
+        /// <summary>
+        /// 向文件服务器上传文件
+        /// </summary>
+        /// <param name="file">文件流</param>
+        /// <param name="fileExtension">文件类型</param>
+        /// <returns>返回文件服务地址，错误返回：Error</returns>
+        string UploadFileForByte(byte[] file, string fileExtension = "")
+        {
+            if (fileExtension.IsNullOrEmpty())
+            {
+                fileExtension = file.GetExtension();
+            }
+            NewWebClient myWebClient = new NewWebClient();
+            myWebClient.Timeout = 10000;  //设置超时时间
+            myWebClient.Credentials = CredentialCache.DefaultCredentials;
+            myWebClient.Headers.Add("TxoooUploadFileType", fileExtension);
+            byte[] getArray = myWebClient.UploadData("http://file.txooo.cc/UpLoadForByte.ashx", file);
+            string getstr = Encoding.Default.GetString(getArray);
+            return getstr.Replace("http:", "https:");
+        }
+        #endregion
     }
 }

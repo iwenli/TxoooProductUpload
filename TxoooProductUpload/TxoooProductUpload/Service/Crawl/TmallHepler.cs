@@ -34,7 +34,7 @@ namespace TxoooProductUpload.Service.Crawl
             }
             catch (Exception ex)
             {
-                throw new WlException("解析天猫搜索结果异常", ex);
+                throw new Exception("解析天猫搜索结果异常", ex);
             }
             return list;
         }
@@ -51,7 +51,7 @@ namespace TxoooProductUpload.Service.Crawl
             ctx.Send();
             if (!ctx.IsValid())
             {
-                throw new WlException(string.Format("未能提交请求,连接：{0}", product.H5Url));
+                throw new Exception(string.Format("未能提交请求,连接：{0}", product.H5Url));
             }
 
             HtmlDocument document = new HtmlDocument();
@@ -85,7 +85,7 @@ namespace TxoooProductUpload.Service.Crawl
             }
             if (dataDetail.IsNullOrEmpty() || dataMdskip.IsNullOrEmpty())
             {
-                throw new WlException("天猫抓取异常，_DATA_Mdskip或者_DATA_Detail为空");
+                throw new Exception("天猫抓取异常，_DATA_Mdskip或者_DATA_Detail为空");
             }
             #endregion
 
@@ -130,7 +130,7 @@ namespace TxoooProductUpload.Service.Crawl
                 var detailJson = detailModel.detailDesc.newWapDescJson.FirstOrDefault(m => m.moduleName == "商品图片");
                 if (detailJson == null || detailJson.data.Count == 0)
                 {
-                    throw new WlException("天猫抓取异常，商品详情获取失败");
+                    throw new Exception("天猫抓取异常，商品详情获取失败");
                 }
                 foreach (var item in detailJson.data)
                 {
@@ -147,7 +147,7 @@ namespace TxoooProductUpload.Service.Crawl
                 descCtx.Send();
                 if (!descCtx.IsValid())
                 {
-                    throw new WlException(string.Format("未能提交请求,连接：{0}", descUrl));
+                    throw new Exception(string.Format("未能提交请求,连接：{0}", descUrl));
                 }
                 HtmlDocument descDoc = new HtmlDocument();
                 descDoc.LoadHtml(descCtx.Result.Replace("var desc=|'|;", ""));
@@ -222,7 +222,7 @@ namespace TxoooProductUpload.Service.Crawl
                     break;
                 case 3:
                     //3级属性
-                    throw new WlException("暂不支持天猫3级sku 请联系开发人员！");
+                    throw new Exception("暂不支持天猫3级sku 请联系开发人员！");
                 case 4:
                     #region 4级属性
                     foreach (var prop1 in detailModel.skuBase.props[0].values)
@@ -265,7 +265,7 @@ namespace TxoooProductUpload.Service.Crawl
                     #endregion
                     break;
                 default:
-                    throw new WlException("暂不支持天猫4级以上sku 请联系开发人员！");
+                    throw new Exception("暂不支持天猫4级以上sku 请联系开发人员！");
             }
         }
     }

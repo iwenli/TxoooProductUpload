@@ -33,7 +33,7 @@ namespace TxoooProductUpload.Service.Crawl
             ctx.Send();
             if (!ctx.IsValid())
             {
-                throw new WlException(string.Format("未能提交请求,连接：{0}", product.H5Url));
+                throw new Exception(string.Format("未能提交请求,连接：{0}", product.H5Url));
             }
 
             HtmlDocument document = new HtmlDocument();
@@ -62,7 +62,7 @@ namespace TxoooProductUpload.Service.Crawl
             }
             if (json.IsNullOrEmpty())
             {
-                throw new WlException("淘宝抓取异常，g_config为空");
+                throw new Exception("淘宝抓取异常，g_config为空");
             }
             #endregion
 
@@ -75,7 +75,7 @@ namespace TxoooProductUpload.Service.Crawl
             ctxJson.Send();
             if (!ctxJson.IsValid())
             {
-                throw new WlException(string.Format("未能提交请求,连接：{0}", detailJsonUrl));
+                throw new Exception(string.Format("未能提交请求,连接：{0}", detailJsonUrl));
             }
 
             TaoBaoProductDetailResult detailModel = null;
@@ -84,13 +84,13 @@ namespace TxoooProductUpload.Service.Crawl
                 detailModel = JsonConvert.DeserializeObject<TaoBaoProductDetailResult>(ctxJson.Result);
                 if (detailModel.code.code != 0)
                 {
-                    throw new WlException("淘宝抓取异常，{0}请求失败！".FormatWith(detailJsonUrl));
+                    throw new Exception("淘宝抓取异常，{0}请求失败！".FormatWith(detailJsonUrl));
                 }
             }
             catch (Exception ex)
             {
                 Iwenli.LogHelper.LogFatal(this, "当前请求{0}已被淘宝屏蔽，请使用收费接口！".FormatWith(detailJsonUrl));
-                //throw new WlException("当前请求{0}已被淘宝屏蔽，请使用收费接口！".FormatWith(detailJsonUrl), ex);
+                //throw new Exception("当前请求{0}已被淘宝屏蔽，请使用收费接口！".FormatWith(detailJsonUrl), ex);
             }
 
 
@@ -152,7 +152,7 @@ namespace TxoooProductUpload.Service.Crawl
             descCtx.Send();
             if (!descCtx.IsValid())
             {
-                throw new WlException(string.Format("未能提交请求,连接：{0}", descUrl));
+                throw new Exception(string.Format("未能提交请求,连接：{0}", descUrl));
             }
             HtmlDocument descDoc = new HtmlDocument();
             descDoc.LoadHtml(descCtx.Result.Replace("var desc=|'|;", ""));
@@ -229,7 +229,7 @@ namespace TxoooProductUpload.Service.Crawl
                             }
                             else
                             {
-                                sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                                sku.Price = product.ShowPrice;// throw new Exception("抓取淘宝SKU价格异常！");
                             }
                             sku.Quantity = _defaultQuantity;
                             product.AddSku(sku);
@@ -285,7 +285,7 @@ namespace TxoooProductUpload.Service.Crawl
                                 }
                                 else
                                 {
-                                    sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                                    sku.Price = product.ShowPrice;// throw new Exception("抓取淘宝SKU价格异常！");
                                 }
                                 sku.Quantity = _defaultQuantity;
                                 product.AddSku(sku);
@@ -351,7 +351,7 @@ namespace TxoooProductUpload.Service.Crawl
                                     }
                                     else
                                     {
-                                        sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                                        sku.Price = product.ShowPrice;// throw new Exception("抓取淘宝SKU价格异常！");
                                     }
                                     sku.Quantity = _defaultQuantity;
                                     product.AddSku(sku);
@@ -429,7 +429,7 @@ namespace TxoooProductUpload.Service.Crawl
                                         }
                                         else
                                         {
-                                            sku.Price = product.ShowPrice;// throw new WlException("抓取淘宝SKU价格异常！");
+                                            sku.Price = product.ShowPrice;// throw new Exception("抓取淘宝SKU价格异常！");
                                         }
                                         sku.Quantity = _defaultQuantity;
                                         product.AddSku(sku);
@@ -440,7 +440,7 @@ namespace TxoooProductUpload.Service.Crawl
                         #endregion
                         break;
                     default:
-                        throw new WlException("暂不支持淘宝4级以上sku 请联系开发人员！");
+                        throw new Exception("暂不支持淘宝4级以上sku 请联系开发人员！");
                 }
             }
             #endregion
@@ -537,7 +537,7 @@ namespace TxoooProductUpload.Service.Crawl
             }
             catch (Exception ex)
             {
-                throw new WlException("解析淘宝搜索结果异常", ex);
+                throw new Exception("解析淘宝搜索结果异常", ex);
             }
             return list;
         }
