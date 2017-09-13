@@ -13,11 +13,17 @@ namespace TxoooProductUpload.UI.Service
     /// </summary>
     abstract class ServiceBase : SendMessageHandler
     {
+        /// <summary>
+        /// 服务层上下文
+        /// </summary>
+        public TxoooProductUpload.Service.ServiceContext BaseContent { private set; get; }
 
-        public ServiceBase()
+        #region 构造函数
+        public ServiceBase(TxoooProductUpload.Service.ServiceContext baseContent)
         {
-
-        }
+            BaseContent = baseContent;
+        } 
+        #endregion
 
         /// <summary>
         /// 获取相对于data目录下的子目录

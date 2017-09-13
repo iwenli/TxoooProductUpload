@@ -22,7 +22,7 @@ namespace TxoooProductUpload.Service.Entities
         public List<double> RadioNums { get; set; }
         public override string ToString()
         {
-            return ClassName + " | " + ClassId;
+            return string.Format("{0}[{1}]", ClassName, ClassId);
         }
     }
 }

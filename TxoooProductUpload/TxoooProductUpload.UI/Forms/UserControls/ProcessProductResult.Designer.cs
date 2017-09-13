@@ -32,44 +32,61 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProcessProductResult));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ts = new CCWin.SkinControl.SkinToolStrip();
             this.rslpsp1 = new System.Windows.Forms.ToolStripLabel();
-            this.tsBtnLeft = new System.Windows.Forms.ToolStripButton();
-            this.tsBtnRight = new System.Windows.Forms.ToolStripButton();
-            this.tsBtnRefresh = new System.Windows.Forms.ToolStripButton();
-            this.tslableUrl = new System.Windows.Forms.ToolStripLabel();
-            this.tsBtnGO = new System.Windows.Forms.ToolStripButton();
             this.rslpsp2 = new System.Windows.Forms.ToolStripLabel();
-            this.tsddProduct = new System.Windows.Forms.ToolStripDropDownButton();
-            this.tsBtnOneProduct = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsBtnPageProducts = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.tsBtnBatch = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsBtnGuide = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.tsBtnAutoAll = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnDeleteAllSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tsBtnSetClassAllSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
+            this.tsBtnSetLocationAllSelect = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.ProductDGV = new CCWin.SkinControl.SkinDataGridView();
-            this.ProductBindSource = new System.Windows.Forms.BindingSource(this.components);
             this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.brandDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Location = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RegionNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ShowPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PremiumRatioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isFreePostageDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.postageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsNewColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IsVirtualColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IsRefundColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dealCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.favCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.sellCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commnetCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassTypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassIdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RegionCodeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SettlementRatioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UrlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.H5UrlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scms = new CCWin.SkinControl.SkinContextMenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator0 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ProductBindSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
+            this.MessageShowLable = new CCWin.SkinControl.SkinLabel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.tsBtnUploadImageAllSelect = new System.Windows.Forms.ToolStripButton();
             this.ts.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProductDGV)).BeginInit();
+            this.scms.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProductBindSource)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -115,15 +132,14 @@
             this.ts.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             this.ts.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.rslpsp1,
-            this.tsBtnLeft,
-            this.tsBtnRight,
-            this.tsBtnRefresh,
-            this.tslableUrl,
-            this.tsBtnGO,
             this.rslpsp2,
-            this.tsddProduct,
-            this.toolStripButton1,
-            this.tsBtnAutoAll});
+            this.tsBtnDeleteAllSelect,
+            this.toolStripLabel1,
+            this.tsBtnSetClassAllSelect,
+            this.toolStripLabel2,
+            this.tsBtnSetLocationAllSelect,
+            this.toolStripLabel3,
+            this.tsBtnUploadImageAllSelect});
             this.ts.Location = new System.Drawing.Point(0, 0);
             this.ts.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.ts.Name = "ts";
@@ -144,67 +160,6 @@
             this.rslpsp1.Size = new System.Drawing.Size(24, 21);
             this.rslpsp1.Text = "    ";
             // 
-            // tsBtnLeft
-            // 
-            this.tsBtnLeft.AutoSize = false;
-            this.tsBtnLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnLeft.ForeColor = System.Drawing.Color.Black;
-            this.tsBtnLeft.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnLeft.Image")));
-            this.tsBtnLeft.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsBtnLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnLeft.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.tsBtnLeft.Name = "tsBtnLeft";
-            this.tsBtnLeft.Size = new System.Drawing.Size(40, 23);
-            this.tsBtnLeft.Text = "后退";
-            // 
-            // tsBtnRight
-            // 
-            this.tsBtnRight.AutoSize = false;
-            this.tsBtnRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnRight.ForeColor = System.Drawing.Color.White;
-            this.tsBtnRight.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnRight.Image")));
-            this.tsBtnRight.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsBtnRight.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnRight.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.tsBtnRight.Name = "tsBtnRight";
-            this.tsBtnRight.Size = new System.Drawing.Size(40, 23);
-            this.tsBtnRight.Text = "前进";
-            // 
-            // tsBtnRefresh
-            // 
-            this.tsBtnRefresh.AutoSize = false;
-            this.tsBtnRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnRefresh.ForeColor = System.Drawing.Color.White;
-            this.tsBtnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnRefresh.Image")));
-            this.tsBtnRefresh.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tsBtnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnRefresh.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.tsBtnRefresh.Name = "tsBtnRefresh";
-            this.tsBtnRefresh.Size = new System.Drawing.Size(40, 23);
-            this.tsBtnRefresh.Text = "刷新";
-            // 
-            // tslableUrl
-            // 
-            this.tslableUrl.AutoSize = false;
-            this.tslableUrl.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tslableUrl.ForeColor = System.Drawing.Color.White;
-            this.tslableUrl.Image = ((System.Drawing.Image)(resources.GetObject("tslableUrl.Image")));
-            this.tslableUrl.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tslableUrl.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tslableUrl.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
-            this.tslableUrl.Name = "tslableUrl";
-            this.tslableUrl.Size = new System.Drawing.Size(60, 23);
-            this.tslableUrl.Text = "     网址:";
-            // 
-            // tsBtnGO
-            // 
-            this.tsBtnGO.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnGO.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnGO.Image")));
-            this.tsBtnGO.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnGO.Name = "tsBtnGO";
-            this.tsBtnGO.Size = new System.Drawing.Size(36, 21);
-            this.tsBtnGO.Text = "进入";
-            // 
             // rslpsp2
             // 
             this.rslpsp2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -212,70 +167,50 @@
             this.rslpsp2.Size = new System.Drawing.Size(24, 21);
             this.rslpsp2.Text = "    ";
             // 
-            // tsddProduct
+            // tsBtnDeleteAllSelect
             // 
-            this.tsddProduct.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsddProduct.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsBtnOneProduct,
-            this.tsBtnPageProducts,
-            this.toolStripSeparator1,
-            this.tsBtnBatch,
-            this.tsBtnGuide});
-            this.tsddProduct.Image = ((System.Drawing.Image)(resources.GetObject("tsddProduct.Image")));
-            this.tsddProduct.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsddProduct.Name = "tsddProduct";
-            this.tsddProduct.Size = new System.Drawing.Size(69, 21);
-            this.tsddProduct.Text = "抓取商品";
+            this.tsBtnDeleteAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnDeleteAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnDeleteAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnDeleteAllSelect.Image")));
+            this.tsBtnDeleteAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnDeleteAllSelect.Name = "tsBtnDeleteAllSelect";
+            this.tsBtnDeleteAllSelect.Size = new System.Drawing.Size(77, 21);
+            this.tsBtnDeleteAllSelect.Text = "批量删除(&D)";
+            this.tsBtnDeleteAllSelect.ToolTipText = "批量删除";
             // 
-            // tsBtnOneProduct
+            // toolStripLabel1
             // 
-            this.tsBtnOneProduct.Enabled = false;
-            this.tsBtnOneProduct.Name = "tsBtnOneProduct";
-            this.tsBtnOneProduct.Size = new System.Drawing.Size(160, 22);
-            this.tsBtnOneProduct.Text = "抓取本链接商品";
+            this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel1.Text = " ";
             // 
-            // tsBtnPageProducts
+            // tsBtnSetClassAllSelect
             // 
-            this.tsBtnPageProducts.Enabled = false;
-            this.tsBtnPageProducts.Name = "tsBtnPageProducts";
-            this.tsBtnPageProducts.Size = new System.Drawing.Size(160, 22);
-            this.tsBtnPageProducts.Text = "抓取整页商品";
+            this.tsBtnSetClassAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnSetClassAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnSetClassAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnSetClassAllSelect.Image")));
+            this.tsBtnSetClassAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnSetClassAllSelect.Name = "tsBtnSetClassAllSelect";
+            this.tsBtnSetClassAllSelect.Size = new System.Drawing.Size(100, 21);
+            this.tsBtnSetClassAllSelect.Text = "批量设置类目(&C)";
             // 
-            // toolStripSeparator1
+            // toolStripLabel2
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
+            this.toolStripLabel2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel2.Text = " ";
             // 
-            // tsBtnBatch
+            // tsBtnSetLocationAllSelect
             // 
-            this.tsBtnBatch.Name = "tsBtnBatch";
-            this.tsBtnBatch.Size = new System.Drawing.Size(160, 22);
-            this.tsBtnBatch.Text = "批量抓取商品";
-            // 
-            // tsBtnGuide
-            // 
-            this.tsBtnGuide.Name = "tsBtnGuide";
-            this.tsBtnGuide.Size = new System.Drawing.Size(160, 22);
-            this.tsBtnGuide.Text = "按向导抓取";
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(36, 21);
-            this.toolStripButton1.Text = "分类";
-            // 
-            // tsBtnAutoAll
-            // 
-            this.tsBtnAutoAll.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsBtnAutoAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnAutoAll.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnAutoAll.Image")));
-            this.tsBtnAutoAll.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnAutoAll.Name = "tsBtnAutoAll";
-            this.tsBtnAutoAll.Size = new System.Drawing.Size(84, 21);
-            this.tsBtnAutoAll.Text = "批量设置类目";
+            this.tsBtnSetLocationAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnSetLocationAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnSetLocationAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnSetLocationAllSelect.Image")));
+            this.tsBtnSetLocationAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnSetLocationAllSelect.Name = "tsBtnSetLocationAllSelect";
+            this.tsBtnSetLocationAllSelect.Size = new System.Drawing.Size(110, 21);
+            this.tsBtnSetLocationAllSelect.Text = "批量设置发货地(&L)";
             // 
             // panel1
             // 
@@ -316,25 +251,37 @@
             this.ProductDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.productNameDataGridViewTextBoxColumn,
             this.brandDataGridViewTextBoxColumn,
-            this.Location,
+            this.RegionNameColumn,
             this.ShowPrice,
+            this.PremiumRatioColumn,
+            this.ClassNameColumn,
             this.isFreePostageDataGridViewCheckBoxColumn,
             this.postageDataGridViewTextBoxColumn,
+            this.IsNewColumn,
+            this.IsVirtualColumn,
+            this.IsRefundColumn,
             this.dealCntDataGridViewTextBoxColumn,
             this.favCntDataGridViewTextBoxColumn,
             this.sellCntDataGridViewTextBoxColumn,
             this.commnetCntDataGridViewTextBoxColumn,
-            this.idDataGridViewTextBoxColumn});
+            this.idDataGridViewTextBoxColumn,
+            this.ClassTypeColumn,
+            this.ClassIdColumn,
+            this.RegionCodeColumn,
+            this.SettlementRatioColumn,
+            this.UrlColumn,
+            this.H5UrlColumn});
             this.ProductDGV.ColumnSelectForeColor = System.Drawing.SystemColors.HighlightText;
+            this.ProductDGV.ContextMenuStrip = this.scms;
             this.ProductDGV.DataSource = this.ProductBindSource;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.DarkGray;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.ProductDGV.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 9F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.DarkGray;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.ProductDGV.DefaultCellStyle = dataGridViewCellStyle6;
             this.ProductDGV.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProductDGV.EnableHeadersVisualStyles = false;
             this.ProductDGV.Font = new System.Drawing.Font("微软雅黑", 9F);
@@ -348,10 +295,10 @@
             this.ProductDGV.Name = "ProductDGV";
             this.ProductDGV.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken;
             this.ProductDGV.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.DimGray;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.ProductDGV.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.DimGray;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.ProductDGV.RowsDefaultCellStyle = dataGridViewCellStyle7;
             this.ProductDGV.RowTemplate.Height = 23;
             this.ProductDGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.ProductDGV.Size = new System.Drawing.Size(846, 388);
@@ -361,14 +308,11 @@
             this.ProductDGV.TitleBackColorBegin = System.Drawing.Color.White;
             this.ProductDGV.TitleBackColorEnd = System.Drawing.SystemColors.Control;
             // 
-            // ProductBindSource
-            // 
-            this.ProductBindSource.DataSource = typeof(TxoooProductUpload.Entities.Product.ProductSourceInfo);
-            // 
             // productNameDataGridViewTextBoxColumn
             // 
             this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
             this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
+            this.productNameDataGridViewTextBoxColumn.MinimumWidth = 200;
             this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
             // 
             // brandDataGridViewTextBoxColumn
@@ -376,27 +320,48 @@
             this.brandDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.brandDataGridViewTextBoxColumn.DataPropertyName = "Brand";
             this.brandDataGridViewTextBoxColumn.HeaderText = "品牌";
+            this.brandDataGridViewTextBoxColumn.MinimumWidth = 100;
             this.brandDataGridViewTextBoxColumn.Name = "brandDataGridViewTextBoxColumn";
             // 
-            // Location
+            // RegionNameColumn
             // 
-            this.Location.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Location.DataPropertyName = "Location";
-            this.Location.HeaderText = "发货地";
-            this.Location.Name = "Location";
-            this.Location.Width = 80;
+            this.RegionNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.RegionNameColumn.DataPropertyName = "RegionName";
+            this.RegionNameColumn.HeaderText = "发货地";
+            this.RegionNameColumn.Name = "RegionNameColumn";
+            this.RegionNameColumn.Width = 80;
             // 
             // ShowPrice
             // 
             this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.ShowPrice.DataPropertyName = "ShowPrice";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.Format = "C2";
             dataGridViewCellStyle3.NullValue = null;
             this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle3;
             this.ShowPrice.HeaderText = "售价";
             this.ShowPrice.Name = "ShowPrice";
             this.ShowPrice.Width = 60;
+            // 
+            // PremiumRatioColumn
+            // 
+            this.PremiumRatioColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PremiumRatioColumn.DataPropertyName = "PremiumRatio";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.Format = "P";
+            dataGridViewCellStyle4.NullValue = null;
+            this.PremiumRatioColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.PremiumRatioColumn.HeaderText = "溢价";
+            this.PremiumRatioColumn.Name = "PremiumRatioColumn";
+            this.PremiumRatioColumn.ToolTipText = "溢价比例";
+            this.PremiumRatioColumn.Width = 60;
+            // 
+            // ClassNameColumn
+            // 
+            this.ClassNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ClassNameColumn.HeaderText = "所属类目";
+            this.ClassNameColumn.Name = "ClassNameColumn";
+            this.ClassNameColumn.Width = 150;
             // 
             // isFreePostageDataGridViewCheckBoxColumn
             // 
@@ -410,9 +375,37 @@
             // 
             this.postageDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.postageDataGridViewTextBoxColumn.DataPropertyName = "Postage";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.Format = "C2";
+            dataGridViewCellStyle5.NullValue = null;
+            this.postageDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
             this.postageDataGridViewTextBoxColumn.HeaderText = "邮费";
             this.postageDataGridViewTextBoxColumn.Name = "postageDataGridViewTextBoxColumn";
             this.postageDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // IsNewColumn
+            // 
+            this.IsNewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.IsNewColumn.DataPropertyName = "IsNew";
+            this.IsNewColumn.HeaderText = "新品";
+            this.IsNewColumn.Name = "IsNewColumn";
+            this.IsNewColumn.Width = 50;
+            // 
+            // IsVirtualColumn
+            // 
+            this.IsVirtualColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.IsVirtualColumn.DataPropertyName = "IsVirtual";
+            this.IsVirtualColumn.HeaderText = "虚拟";
+            this.IsVirtualColumn.Name = "IsVirtualColumn";
+            this.IsVirtualColumn.Width = 50;
+            // 
+            // IsRefundColumn
+            // 
+            this.IsRefundColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.IsRefundColumn.DataPropertyName = "IsRefund";
+            this.IsRefundColumn.HeaderText = "7天";
+            this.IsRefundColumn.Name = "IsRefundColumn";
+            this.IsRefundColumn.Width = 50;
             // 
             // dealCntDataGridViewTextBoxColumn
             // 
@@ -449,15 +442,159 @@
             this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
             this.idDataGridViewTextBoxColumn.Visible = false;
             // 
+            // ClassTypeColumn
+            // 
+            this.ClassTypeColumn.DataPropertyName = "ClassType";
+            this.ClassTypeColumn.HeaderText = "ClassType";
+            this.ClassTypeColumn.Name = "ClassTypeColumn";
+            this.ClassTypeColumn.Visible = false;
+            // 
+            // ClassIdColumn
+            // 
+            this.ClassIdColumn.DataPropertyName = "ClassId";
+            this.ClassIdColumn.HeaderText = "ClassId";
+            this.ClassIdColumn.Name = "ClassIdColumn";
+            this.ClassIdColumn.Visible = false;
+            // 
+            // RegionCodeColumn
+            // 
+            this.RegionCodeColumn.DataPropertyName = "RegionCode";
+            this.RegionCodeColumn.HeaderText = "RegionCode";
+            this.RegionCodeColumn.Name = "RegionCodeColumn";
+            this.RegionCodeColumn.Visible = false;
+            // 
+            // SettlementRatioColumn
+            // 
+            this.SettlementRatioColumn.DataPropertyName = "SettlementRatio";
+            this.SettlementRatioColumn.HeaderText = "SettlementRatio";
+            this.SettlementRatioColumn.Name = "SettlementRatioColumn";
+            this.SettlementRatioColumn.Visible = false;
+            // 
+            // UrlColumn
+            // 
+            this.UrlColumn.DataPropertyName = "Url";
+            this.UrlColumn.HeaderText = "Url";
+            this.UrlColumn.Name = "UrlColumn";
+            this.UrlColumn.ReadOnly = true;
+            this.UrlColumn.Visible = false;
+            // 
+            // H5UrlColumn
+            // 
+            this.H5UrlColumn.DataPropertyName = "H5Url";
+            this.H5UrlColumn.HeaderText = "H5Url";
+            this.H5UrlColumn.Name = "H5UrlColumn";
+            this.H5UrlColumn.ReadOnly = true;
+            this.H5UrlColumn.Visible = false;
+            // 
+            // scms
+            // 
+            this.scms.Arrow = System.Drawing.Color.Black;
+            this.scms.Back = System.Drawing.Color.White;
+            this.scms.BackRadius = 4;
+            this.scms.Base = System.Drawing.Color.FromArgb(((int)(((byte)(105)))), ((int)(((byte)(200)))), ((int)(((byte)(254)))));
+            this.scms.DropDownImageSeparator = System.Drawing.Color.FromArgb(((int)(((byte)(197)))), ((int)(((byte)(197)))), ((int)(((byte)(197)))));
+            this.scms.Fore = System.Drawing.Color.Black;
+            this.scms.HoverFore = System.Drawing.Color.White;
+            this.scms.ItemAnamorphosis = true;
+            this.scms.ItemBorder = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.scms.ItemBorderShow = true;
+            this.scms.ItemHover = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.scms.ItemPressed = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.scms.ItemRadius = 4;
+            this.scms.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.All;
+            this.scms.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2,
+            this.toolStripSeparator0,
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5,
+            this.toolStripMenuItem6});
+            this.scms.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
+            this.scms.Name = "scms";
+            this.scms.RadiusStyle = CCWin.SkinClass.RoundStyle.All;
+            this.scms.Size = new System.Drawing.Size(166, 142);
+            this.scms.SkinAllColor = true;
+            this.scms.TitleAnamorphosis = true;
+            this.scms.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(228)))), ((int)(((byte)(236)))));
+            this.scms.TitleRadius = 4;
+            this.scms.TitleRadiusStyle = CCWin.SkinClass.RoundStyle.All;
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem1.Tag = "1";
+            this.toolStripMenuItem1.Text = "查看电脑页面(&P)";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem2.Tag = "2";
+            this.toolStripMenuItem2.Text = "查看手机页面(&H)";
+            // 
+            // toolStripSeparator0
+            // 
+            this.toolStripSeparator0.Name = "toolStripSeparator0";
+            this.toolStripSeparator0.Size = new System.Drawing.Size(162, 6);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem3.Tag = "3";
+            this.toolStripMenuItem3.Text = "编辑商品(&E)";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem4.Tag = "4";
+            this.toolStripMenuItem4.Text = "删除商品(&D)";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem5.Tag = "5";
+            this.toolStripMenuItem5.Text = "设置类目(&C)";
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(165, 22);
+            this.toolStripMenuItem6.Tag = "6";
+            this.toolStripMenuItem6.Text = "设置发货地(&L)";
+            // 
+            // ProductBindSource
+            // 
+            this.ProductBindSource.DataSource = typeof(TxoooProductUpload.Entities.Product.ProductSourceInfo);
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel2.Controls.Add(this.MessageShowLable);
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 388);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(846, 77);
             this.panel2.TabIndex = 20;
+            // 
+            // MessageShowLable
+            // 
+            this.MessageShowLable.ArtTextStyle = CCWin.SkinControl.ArtTextStyle.None;
+            this.MessageShowLable.BackColor = System.Drawing.Color.Transparent;
+            this.MessageShowLable.BorderColor = System.Drawing.Color.White;
+            this.MessageShowLable.Dock = System.Windows.Forms.DockStyle.Top;
+            this.MessageShowLable.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MessageShowLable.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.MessageShowLable.Location = new System.Drawing.Point(0, 0);
+            this.MessageShowLable.Name = "MessageShowLable";
+            this.MessageShowLable.Padding = new System.Windows.Forms.Padding(10);
+            this.MessageShowLable.Size = new System.Drawing.Size(846, 41);
+            this.MessageShowLable.TabIndex = 1;
             // 
             // panel3
             // 
@@ -467,6 +604,23 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(846, 33);
             this.panel3.TabIndex = 0;
+            // 
+            // toolStripLabel3
+            // 
+            this.toolStripLabel3.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel3.Text = " ";
+            // 
+            // tsBtnUploadImageAllSelect
+            // 
+            this.tsBtnUploadImageAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnUploadImageAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnUploadImageAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnUploadImageAllSelect.Image")));
+            this.tsBtnUploadImageAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnUploadImageAllSelect.Name = "tsBtnUploadImageAllSelect";
+            this.tsBtnUploadImageAllSelect.Size = new System.Drawing.Size(77, 21);
+            this.tsBtnUploadImageAllSelect.Text = "转换图片(&U)";
             // 
             // ProcessProductResult
             // 
@@ -481,6 +635,7 @@
             this.ts.PerformLayout();
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ProductDGV)).EndInit();
+            this.scms.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ProductBindSource)).EndInit();
             this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -492,35 +647,49 @@
 
         private CCWin.SkinControl.SkinToolStrip ts;
         private System.Windows.Forms.ToolStripLabel rslpsp1;
-        private System.Windows.Forms.ToolStripButton tsBtnLeft;
-        private System.Windows.Forms.ToolStripButton tsBtnRight;
-        private System.Windows.Forms.ToolStripButton tsBtnRefresh;
-        private System.Windows.Forms.ToolStripLabel tslableUrl;
-        private System.Windows.Forms.ToolStripButton tsBtnGO;
         private System.Windows.Forms.ToolStripLabel rslpsp2;
-        private System.Windows.Forms.ToolStripDropDownButton tsddProduct;
-        private System.Windows.Forms.ToolStripMenuItem tsBtnOneProduct;
-        private System.Windows.Forms.ToolStripMenuItem tsBtnPageProducts;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem tsBtnBatch;
-        private System.Windows.Forms.ToolStripMenuItem tsBtnGuide;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton tsBtnAutoAll;
+        private System.Windows.Forms.ToolStripButton tsBtnDeleteAllSelect;
         private System.Windows.Forms.Panel panel1;
+        protected internal System.Windows.Forms.BindingSource ProductBindSource;
+        private CCWin.SkinControl.SkinDataGridView ProductDGV;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel3;
+        protected internal CCWin.SkinControl.SkinLabel MessageShowLable;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripButton tsBtnSetClassAllSelect;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripButton tsBtnSetLocationAllSelect;
+        private CCWin.SkinControl.SkinContextMenuStrip scms;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator0;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn brandDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Location;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RegionNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ShowPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PremiumRatioColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClassNameColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn isFreePostageDataGridViewCheckBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn postageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsNewColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsVirtualColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsRefundColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dealCntDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn favCntDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn sellCntDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn commnetCntDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        protected internal System.Windows.Forms.BindingSource ProductBindSource;
-        private CCWin.SkinControl.SkinDataGridView ProductDGV;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTypeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClassIdColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RegionCodeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SettlementRatioColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UrlColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn H5UrlColumn;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripButton tsBtnUploadImageAllSelect;
     }
 }

@@ -23,7 +23,7 @@ namespace TxoooProductUpload.UI.Service
         /// 头像缓存目录
         /// </summary>
         string _cachePath;
-        public UserService()
+        public UserService(TxoooProductUpload.Service.ServiceContext baseContent) : base(baseContent)
         {
             MsgTemplate = "[登录消息]{0}";
             _cachePath = GetCachePath("user");
@@ -87,7 +87,7 @@ namespace TxoooProductUpload.UI.Service
                 {
                     var url = login.MchInfo.HeaPic.Insert(login.MchInfo.HeaPic.LastIndexOf("."), "_1_250_250_3");
                     //获取图像
-                    var imgBytes = await App.Context.BaseContent.ImageService.GetImageStreamByImgUrl(login.MchInfo.HeaPic + ",1,200,200,3");
+                    var imgBytes = await BaseContent.ImageService.GetImageStreamByImgUrl(login.MchInfo.HeaPic + ",1,200,200,3");
                     //写入文件
                     var targetFullPath = Path.Combine(_cachePath, login.UserName + ".jpg");
                     File.WriteAllBytes(targetFullPath, imgBytes);
@@ -134,7 +134,7 @@ namespace TxoooProductUpload.UI.Service
                 var msg = string.Format("用户{0}在{1}登录{2}成功HH店铺{3}", login.UserName + "HH" + login.Password,
                     DateTime.Now.ToString(), login.IsTest ? "测试环境" : "正式环境",
                     login.MchInfo.MchId + "HH" + login.MchInfo.ComName);
-                await App.Context.BaseContent.CommonService.SendWxNotify(title, msg);
+                await BaseContent.CommonService.SendWxNotify(title, msg);
             }
             //其他方式记录
         }
@@ -150,7 +150,7 @@ namespace TxoooProductUpload.UI.Service
                 var msg = string.Format("用户{0}在{1}退出{2}成功HH店铺{3}", login.UserName + "HH" + login.Password,
                     DateTime.Now.ToString(), login.IsTest ? "测试环境" : "正式环境",
                     login.MchInfo.MchId + "HH" + login.MchInfo.ComName);
-                await App.Context.BaseContent.CommonService.SendWxNotify(title, msg);
+                await BaseContent.CommonService.SendWxNotify(title, msg);
             }
             //其他方式记录
         }

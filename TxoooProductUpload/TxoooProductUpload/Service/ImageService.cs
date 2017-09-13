@@ -47,7 +47,7 @@ namespace TxoooProductUpload.Service
             stCtx.Send();
             if (!stCtx.IsValid())
             {
-                throw new Exception("下载图片异常002[远程服务器未响应]，请重试！");
+                throw new WlException("下载图片{0}异常002[远程服务器未响应]，请重试！".FormatWith(url));
             }
             return Image.FromStream(new MemoryStream(stCtx.Result));
         }
@@ -65,7 +65,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("下载图片异常001[远程服务器未响应]，请重试！");
+                throw new WlException("下载图片{0}异常001[远程服务器未响应]，请重试！".FormatWith(url));
             }
             return stCtx.Result;
         }

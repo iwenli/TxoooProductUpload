@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TxoooProductUpload.Entities.Product
 {
     /// <summary>
-    /// 商品来源 初始信息
+    /// 商品信息
     /// </summary>
     public class ProductSourceInfo
     {
@@ -41,10 +41,10 @@ namespace TxoooProductUpload.Entities.Product
             ThumImgList = new List<string>();
             DetailImgList = new List<string>();
             SkuList = new List<ProductSKU>();
+            TxoooThumImgList = new List<string>();
+            TxoooDetailImgList = new List<string>();
         }
         #endregion
-
-
 
         #region  淘系独有
         /// <summary>
@@ -240,13 +240,32 @@ namespace TxoooProductUpload.Entities.Product
         /// <summary>
         /// 发货地名称
         /// </summary>
-        public long RegionName { set; get; }
+        public string RegionName { set; get; }
 
         long _classType = 1;
         /// <summary>
         /// 商品分类类型 （1产品，2服务）
         /// </summary>
         public long ClassType { set; get; }
+
+        /// <summary>
+        /// 结算比例
+        /// </summary>
+        public double SettlementRatio { set; get; }
+
+        /// <summary>
+        /// 溢价比例 比如抓取的价格100，溢价比例为0.3  则上传之后的价格为130
+        /// </summary>
+        public double PremiumRatio { set; get; }
+
+        /// <summary>
+        /// 商品主图
+        /// </summary>
+        public List<string> TxoooThumImgList { private set; get; }
+        /// <summary>
+        /// 商品详情图
+        /// </summary>
+        public List<string> TxoooDetailImgList { private set; get; }
         #endregion
 
         /// <summary>
@@ -257,6 +276,8 @@ namespace TxoooProductUpload.Entities.Product
         /// 子标题  推广语
         /// </summary>
         public string SubTitle { set; get; }
+
+
 
         /// <summary>
         /// 商品主图
@@ -270,6 +291,7 @@ namespace TxoooProductUpload.Entities.Product
         /// Txooo格式的SKu集合
         /// </summary>
         public List<ProductSKU> SkuList { private set; get; }
+
 
         #region 公共方法
         /// <summary>
@@ -357,6 +379,21 @@ namespace TxoooProductUpload.Entities.Product
         /// 数量
         /// </summary>
         public int Quantity { set; get; }
+
+        /// <summary>
+        /// Txooo服务器图片地址
+        /// </summary>
+        public string TxoooImage
+        {
+            set
+            {
+                _image = value;
+            }
+            get
+            {
+                return _image;
+            }
+        }
 
     }
 }

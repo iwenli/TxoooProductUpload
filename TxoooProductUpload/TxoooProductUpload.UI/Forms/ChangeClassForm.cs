@@ -19,6 +19,7 @@ namespace TxoooProductUpload.UI.Forms
         int _typeService = 1;  //产品分类类型
         long _classId = 0;  //分类id
         int _proportion = 0; //返现比例 
+        string _classNameShow = string.Empty;
         #endregion
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace TxoooProductUpload.UI.Forms
             {
                 case "btnOk":
                     DialogResult = DialogResult.Yes;
-                    ChangeClass(new ChangeClassEventArgs(_classId, _typeService, _proportion));
+                    ChangeClass(new ChangeClassEventArgs(_classId, _typeService, _proportion,_classNameShow));
                     break;
                 case "btnCancel":
                     break;
@@ -146,6 +147,7 @@ namespace TxoooProductUpload.UI.Forms
                 _classId = value;
             }
             _proportion = Convert.ToInt32(lbClass4.SelectedValue ?? "0");
+            _classNameShow = "{0} >> {1}".FormatWith(lbClass2.SelectedItem,lbClass3.SelectedItem);
             lblClass.Text = "{0} >> {1} >> {2} - 返现比例[{3}%]".FormatWith(
                 lbClass1.SelectedItem, lbClass2.SelectedItem,
                 lbClass3.SelectedItem, _proportion);
@@ -171,6 +173,8 @@ namespace TxoooProductUpload.UI.Forms
         /// </summary>
         public double Proportion { set; get; }
 
+        public string ClassNameShow { set; get; }
+
         /// <summary>
         /// 初始化一个 ChangeClassEventArgs 实例
         /// </summary>
@@ -185,7 +189,20 @@ namespace TxoooProductUpload.UI.Forms
         {
             ClassId = id;
             TypeService = type;
-            Proportion = propor / 100;
+            Proportion = propor / 100.00;
+        }
+
+        /// <summary>
+        ///  初始化一个 ChangeClassEventArgs 实例
+        /// </summary>
+        /// <param name="id">分类id</param>
+        /// <param name="type">产品分类类型</param>
+        /// <param name="propor">返现比例</param>
+        /// <param name="classNameShow">显示的类目 子类目>父类 格式</param>
+        public ChangeClassEventArgs(long id, int type, int propor,string classNameShow):
+            this(id,type,propor)
+        {
+            ClassNameShow = classNameShow;
         }
     }
 }

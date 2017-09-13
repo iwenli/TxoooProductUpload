@@ -1,6 +1,6 @@
 ﻿namespace TxoooProductUpload.UI.Forms
 {
-    partial class ChangeClassForm
+    partial class ChangeLocationForm
     {
         /// <summary>
         /// Required designer variable.
@@ -35,10 +35,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.skinPanel1 = new CCWin.SkinControl.SkinPanel();
             this.skinPanel4 = new CCWin.SkinControl.SkinPanel();
-            this.lbClass3 = new System.Windows.Forms.ListBox();
-            this.lbClass2 = new System.Windows.Forms.ListBox();
-            this.lbClass1 = new System.Windows.Forms.ListBox();
-            this.lbClass4 = new System.Windows.Forms.ListBox();
+            this.lbLocation2 = new System.Windows.Forms.ListBox();
+            this.lbLocation1 = new System.Windows.Forms.ListBox();
             this.skinPanel3 = new CCWin.SkinControl.SkinPanel();
             this.btnCancel = new CCWin.SkinControl.SkinButton();
             this.btnOk = new CCWin.SkinControl.SkinButton();
@@ -63,7 +61,7 @@
             this.skinPanel2.MouseBack = null;
             this.skinPanel2.Name = "skinPanel2";
             this.skinPanel2.NormlBack = null;
-            this.skinPanel2.Size = new System.Drawing.Size(802, 39);
+            this.skinPanel2.Size = new System.Drawing.Size(402, 39);
             this.skinPanel2.TabIndex = 0;
             // 
             // txtSearch
@@ -71,10 +69,10 @@
             this.txtSearch.BackColor = System.Drawing.Color.White;
             this.txtSearch.Location = new System.Drawing.Point(84, 11);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(305, 21);
+            this.txtSearch.Size = new System.Drawing.Size(230, 21);
             this.txtSearch.TabIndex = 4;
             this.txtSearch.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.txtSearch.WaterText = "在这里搜索类目";
+            this.txtSearch.WaterText = "输入关键词搜索";
             // 
             // btnSearch
             // 
@@ -82,7 +80,7 @@
             this.btnSearch.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.btnSearch.DownBack = null;
             this.btnSearch.Enabled = false;
-            this.btnSearch.Location = new System.Drawing.Point(402, 10);
+            this.btnSearch.Location = new System.Drawing.Point(320, 9);
             this.btnSearch.MouseBack = null;
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.NormlBack = null;
@@ -113,16 +111,14 @@
             this.skinPanel1.MouseBack = null;
             this.skinPanel1.Name = "skinPanel1";
             this.skinPanel1.NormlBack = null;
-            this.skinPanel1.Size = new System.Drawing.Size(802, 452);
+            this.skinPanel1.Size = new System.Drawing.Size(402, 452);
             this.skinPanel1.TabIndex = 1;
             // 
             // skinPanel4
             // 
             this.skinPanel4.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.skinPanel4.Controls.Add(this.lbClass3);
-            this.skinPanel4.Controls.Add(this.lbClass2);
-            this.skinPanel4.Controls.Add(this.lbClass1);
-            this.skinPanel4.Controls.Add(this.lbClass4);
+            this.skinPanel4.Controls.Add(this.lbLocation2);
+            this.skinPanel4.Controls.Add(this.lbLocation1);
             this.skinPanel4.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.skinPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinPanel4.DownBack = null;
@@ -130,48 +126,28 @@
             this.skinPanel4.MouseBack = null;
             this.skinPanel4.Name = "skinPanel4";
             this.skinPanel4.NormlBack = null;
-            this.skinPanel4.Size = new System.Drawing.Size(802, 343);
+            this.skinPanel4.Size = new System.Drawing.Size(402, 343);
             this.skinPanel4.TabIndex = 2;
             // 
-            // lbClass3
+            // lbLocation2
             // 
-            this.lbClass3.BackColor = System.Drawing.SystemColors.Info;
-            this.lbClass3.FormattingEnabled = true;
-            this.lbClass3.ItemHeight = 12;
-            this.lbClass3.Location = new System.Drawing.Point(404, 7);
-            this.lbClass3.Name = "lbClass3";
-            this.lbClass3.Size = new System.Drawing.Size(188, 328);
-            this.lbClass3.TabIndex = 1;
+            this.lbLocation2.BackColor = System.Drawing.SystemColors.Info;
+            this.lbLocation2.FormattingEnabled = true;
+            this.lbLocation2.ItemHeight = 12;
+            this.lbLocation2.Location = new System.Drawing.Point(207, 7);
+            this.lbLocation2.Name = "lbLocation2";
+            this.lbLocation2.Size = new System.Drawing.Size(188, 328);
+            this.lbLocation2.TabIndex = 1;
             // 
-            // lbClass2
+            // lbLocation1
             // 
-            this.lbClass2.BackColor = System.Drawing.SystemColors.Info;
-            this.lbClass2.FormattingEnabled = true;
-            this.lbClass2.ItemHeight = 12;
-            this.lbClass2.Location = new System.Drawing.Point(207, 7);
-            this.lbClass2.Name = "lbClass2";
-            this.lbClass2.Size = new System.Drawing.Size(188, 328);
-            this.lbClass2.TabIndex = 1;
-            // 
-            // lbClass1
-            // 
-            this.lbClass1.BackColor = System.Drawing.SystemColors.Info;
-            this.lbClass1.FormattingEnabled = true;
-            this.lbClass1.ItemHeight = 12;
-            this.lbClass1.Location = new System.Drawing.Point(10, 7);
-            this.lbClass1.Name = "lbClass1";
-            this.lbClass1.Size = new System.Drawing.Size(188, 328);
-            this.lbClass1.TabIndex = 1;
-            // 
-            // lbClass4
-            // 
-            this.lbClass4.BackColor = System.Drawing.SystemColors.Info;
-            this.lbClass4.FormattingEnabled = true;
-            this.lbClass4.ItemHeight = 12;
-            this.lbClass4.Location = new System.Drawing.Point(601, 7);
-            this.lbClass4.Name = "lbClass4";
-            this.lbClass4.Size = new System.Drawing.Size(188, 328);
-            this.lbClass4.TabIndex = 1;
+            this.lbLocation1.BackColor = System.Drawing.SystemColors.Info;
+            this.lbLocation1.FormattingEnabled = true;
+            this.lbLocation1.ItemHeight = 12;
+            this.lbLocation1.Location = new System.Drawing.Point(10, 7);
+            this.lbLocation1.Name = "lbLocation1";
+            this.lbLocation1.Size = new System.Drawing.Size(188, 328);
+            this.lbLocation1.TabIndex = 1;
             // 
             // skinPanel3
             // 
@@ -187,7 +163,7 @@
             this.skinPanel3.MouseBack = null;
             this.skinPanel3.Name = "skinPanel3";
             this.skinPanel3.NormlBack = null;
-            this.skinPanel3.Size = new System.Drawing.Size(802, 70);
+            this.skinPanel3.Size = new System.Drawing.Size(402, 70);
             this.skinPanel3.TabIndex = 1;
             // 
             // btnCancel
@@ -195,7 +171,7 @@
             this.btnCancel.BackColor = System.Drawing.Color.Transparent;
             this.btnCancel.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.btnCancel.DownBack = null;
-            this.btnCancel.Location = new System.Drawing.Point(707, 38);
+            this.btnCancel.Location = new System.Drawing.Point(315, 35);
             this.btnCancel.MouseBack = null;
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.NormlBack = null;
@@ -209,7 +185,7 @@
             this.btnOk.BackColor = System.Drawing.Color.Transparent;
             this.btnOk.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.btnOk.DownBack = null;
-            this.btnOk.Location = new System.Drawing.Point(611, 38);
+            this.btnOk.Location = new System.Drawing.Point(219, 35);
             this.btnOk.MouseBack = null;
             this.btnOk.Name = "btnOk";
             this.btnOk.NormlBack = null;
@@ -234,20 +210,20 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(13, 12);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 12);
+            this.label2.Size = new System.Drawing.Size(113, 12);
             this.label2.TabIndex = 0;
-            this.label2.Text = "您选择的分类是：";
+            this.label2.Text = "您选择的发货地是：";
             // 
-            // ChangeClassForm
+            // ChangeLocationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 484);
+            this.ClientSize = new System.Drawing.Size(410, 484);
             this.Controls.Add(this.skinPanel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "ChangeClassForm";
-            this.Text = "选择商品类目";
+            this.Name = "ChangeLocationForm";
+            this.Text = "选择商品发货地";
             this.skinPanel2.ResumeLayout(false);
             this.skinPanel2.PerformLayout();
             this.skinPanel1.ResumeLayout(false);
@@ -270,10 +246,8 @@
         private CCWin.SkinControl.SkinButton btnOk;
         private System.Windows.Forms.Label lblClass;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ListBox lbClass4;
-        private System.Windows.Forms.ListBox lbClass3;
-        private System.Windows.Forms.ListBox lbClass2;
-        private System.Windows.Forms.ListBox lbClass1;
+        private System.Windows.Forms.ListBox lbLocation2;
+        private System.Windows.Forms.ListBox lbLocation1;
         private CCWin.SkinControl.SkinWaterTextBox txtSearch;
     }
 }

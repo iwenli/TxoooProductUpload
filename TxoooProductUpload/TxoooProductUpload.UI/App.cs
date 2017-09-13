@@ -38,7 +38,7 @@ namespace TxoooProductUpload.UI
                     Context = Service.ServiceContext.Instance;
                     JsonConvertSettings();
                     //TxoooProductUpload.UI.Main.MainForm()
-                    //LoginForm
+                    //Application.Run(new LoginForm());
                     Application.Run(new CrawlProductsForm());
                 }
                 catch (Exception ex)

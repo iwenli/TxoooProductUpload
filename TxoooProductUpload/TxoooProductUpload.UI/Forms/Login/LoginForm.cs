@@ -520,8 +520,18 @@ namespace TxoooProductUpload.UI
                 notify.Text = notifyText.Length > 64 ? (notifyText.Substring(0, 60) + "...") : notifyText;
                 notify.Icon = Resources.__icon;
                 await App.Context.UserService.LoginLog(_loginUser);
-                Task.Run(() => {
-                    App.Context.BaseContent.CacheContext.Update();
+                await Task.Run(async () =>
+                {
+                    try
+                    {
+                        await App.Context.BaseContent.CacheContext.Update();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBoxEx.Show("更新缓存失败，请手动更新！");
+                        this.LogFatal(ex.Message, ex);
+                    }
+
                 });
             }
             else

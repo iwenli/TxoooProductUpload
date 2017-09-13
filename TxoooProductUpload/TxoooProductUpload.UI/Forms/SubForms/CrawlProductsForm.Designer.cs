@@ -49,9 +49,7 @@
             this.tssLblSp2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssBtnNext = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssLblSp3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tssBtnBatchDel = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssLblSp4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tssBtnBatchEditClass = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssLblSp5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.skinSplitContainer1 = new CCWin.SkinControl.SkinSplitContainer();
             this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
@@ -70,8 +68,10 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsBtnBatch = new System.Windows.Forms.ToolStripMenuItem();
             this.tsBtnGuide = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.tsBtnAutoAll = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.tssBtnBatchDel = new System.Windows.Forms.ToolStripButton();
             this.sdgvProduct = new CCWin.SkinControl.SkinDataGridView();
             this.sourceNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -169,9 +169,7 @@
             this.tssLblSp2,
             this.tssBtnNext,
             this.tssLblSp3,
-            this.tssBtnBatchDel,
             this.tssLblSp4,
-            this.tssBtnBatchEditClass,
             this.tssLblSp5});
             this.ss.Location = new System.Drawing.Point(0, 547);
             this.ss.Name = "ss";
@@ -185,11 +183,12 @@
             this.tssLblSp1.AutoSize = false;
             this.tssLblSp1.BackColor = System.Drawing.Color.Transparent;
             this.tssLblSp1.Name = "tssLblSp1";
-            this.tssLblSp1.Size = new System.Drawing.Size(301, 21);
+            this.tssLblSp1.Size = new System.Drawing.Size(354, 21);
             this.tssLblSp1.Spring = true;
             // 
             // tssBtnPrevious
             // 
+            this.tssBtnPrevious.BackColor = System.Drawing.Color.Transparent;
             this.tssBtnPrevious.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tssBtnPrevious.Enabled = false;
             this.tssBtnPrevious.Image = ((System.Drawing.Image)(resources.GetObject("tssBtnPrevious.Image")));
@@ -209,6 +208,7 @@
             // 
             // tssBtnNext
             // 
+            this.tssBtnNext.BackColor = System.Drawing.Color.Transparent;
             this.tssBtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tssBtnNext.Image = ((System.Drawing.Image)(resources.GetObject("tssBtnNext.Image")));
             this.tssBtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -225,17 +225,6 @@
             this.tssLblSp3.Name = "tssLblSp3";
             this.tssLblSp3.Size = new System.Drawing.Size(50, 21);
             // 
-            // tssBtnBatchDel
-            // 
-            this.tssBtnBatchDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tssBtnBatchDel.Image = ((System.Drawing.Image)(resources.GetObject("tssBtnBatchDel.Image")));
-            this.tssBtnBatchDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tssBtnBatchDel.IsLink = true;
-            this.tssBtnBatchDel.Name = "tssBtnBatchDel";
-            this.tssBtnBatchDel.Size = new System.Drawing.Size(56, 21);
-            this.tssBtnBatchDel.Tag = "del";
-            this.tssBtnBatchDel.Text = "批量删除";
-            // 
             // tssLblSp4
             // 
             this.tssLblSp4.AutoSize = false;
@@ -243,22 +232,11 @@
             this.tssLblSp4.Name = "tssLblSp4";
             this.tssLblSp4.Size = new System.Drawing.Size(50, 21);
             // 
-            // tssBtnBatchEditClass
-            // 
-            this.tssBtnBatchEditClass.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tssBtnBatchEditClass.Image = ((System.Drawing.Image)(resources.GetObject("tssBtnBatchEditClass.Image")));
-            this.tssBtnBatchEditClass.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tssBtnBatchEditClass.IsLink = true;
-            this.tssBtnBatchEditClass.Name = "tssBtnBatchEditClass";
-            this.tssBtnBatchEditClass.Size = new System.Drawing.Size(80, 21);
-            this.tssBtnBatchEditClass.Tag = "class";
-            this.tssBtnBatchEditClass.Text = "批量设置类目";
-            // 
             // tssLblSp5
             // 
             this.tssLblSp5.BackColor = System.Drawing.Color.Transparent;
             this.tssLblSp5.Name = "tssLblSp5";
-            this.tssLblSp5.Size = new System.Drawing.Size(301, 21);
+            this.tssLblSp5.Size = new System.Drawing.Size(354, 21);
             this.tssLblSp5.Spring = true;
             // 
             // skinSplitContainer1
@@ -343,8 +321,10 @@
             this.tsBtnGO,
             this.rslpsp2,
             this.tsddProduct,
-            this.toolStripButton1,
-            this.tsBtnAutoAll});
+            this.toolStripLabel2,
+            this.tsBtnAutoAll,
+            this.toolStripLabel1,
+            this.tssBtnBatchDel});
             this.ts.Location = new System.Drawing.Point(0, 0);
             this.ts.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.ts.Name = "ts";
@@ -421,7 +401,7 @@
             // 
             this.tsTxtUrl.Name = "tsTxtUrl";
             this.tsTxtUrl.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-            this.tsTxtUrl.Size = new System.Drawing.Size(500, 24);
+            this.tsTxtUrl.Size = new System.Drawing.Size(400, 24);
             // 
             // tsBtnGO
             // 
@@ -435,8 +415,8 @@
             // rslpsp2
             // 
             this.rslpsp2.Name = "rslpsp2";
-            this.rslpsp2.Size = new System.Drawing.Size(24, 21);
-            this.rslpsp2.Text = "    ";
+            this.rslpsp2.Size = new System.Drawing.Size(12, 21);
+            this.rslpsp2.Text = " ";
             // 
             // tsddProduct
             // 
@@ -484,15 +464,11 @@
             this.tsBtnGuide.Size = new System.Drawing.Size(160, 22);
             this.tsBtnGuide.Text = "按向导抓取";
             // 
-            // toolStripButton1
+            // toolStripLabel2
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(36, 21);
-            this.toolStripButton1.Text = "分类";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripLabel2.Name = "toolStripLabel2";
+            this.toolStripLabel2.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel2.Text = " ";
             // 
             // tsBtnAutoAll
             // 
@@ -500,8 +476,24 @@
             this.tsBtnAutoAll.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnAutoAll.Image")));
             this.tsBtnAutoAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnAutoAll.Name = "tsBtnAutoAll";
-            this.tsBtnAutoAll.Size = new System.Drawing.Size(36, 21);
-            this.tsBtnAutoAll.Text = "自动";
+            this.tsBtnAutoAll.Size = new System.Drawing.Size(52, 21);
+            this.tsBtnAutoAll.Text = "自动(&A)";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel1.Text = " ";
+            // 
+            // tssBtnBatchDel
+            // 
+            this.tssBtnBatchDel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tssBtnBatchDel.Image = ((System.Drawing.Image)(resources.GetObject("tssBtnBatchDel.Image")));
+            this.tssBtnBatchDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tssBtnBatchDel.Name = "tssBtnBatchDel";
+            this.tssBtnBatchDel.Size = new System.Drawing.Size(77, 21);
+            this.tssBtnBatchDel.Tag = "del";
+            this.tssBtnBatchDel.Text = "批量删除(&D)";
             // 
             // sdgvProduct
             // 
@@ -854,13 +846,10 @@
         private System.Windows.Forms.ToolStripStatusLabel tssLblSp1;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnPrevious;
         private System.Windows.Forms.ToolStripStatusLabel tssLblSp2;
-        private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchDel;
         private System.Windows.Forms.ToolStripStatusLabel tssLblSp5;
         private System.Windows.Forms.ToolStripStatusLabel tssLblSp4;
-        private System.Windows.Forms.ToolStripStatusLabel tssBtnBatchEditClass;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnNext;
         private System.Windows.Forms.ToolStripStatusLabel tssLblSp3;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton tsBtnAutoAll;
         private System.Windows.Forms.DataGridViewTextBoxColumn sourceNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
@@ -886,5 +875,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel2;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripButton tssBtnBatchDel;
     }
 }

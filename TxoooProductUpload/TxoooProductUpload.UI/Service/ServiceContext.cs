@@ -44,8 +44,9 @@ namespace TxoooProductUpload.UI.Service
         /// </summary>
         ServiceContext()
         {
-            UserService = new UserService();
             BaseContent = new TxoooProductUpload.Service.ServiceContext();
+            UserService = new UserService(BaseContent);
+            ProductService = new ProductService(BaseContent);
         } 
         #endregion
 
@@ -53,10 +54,16 @@ namespace TxoooProductUpload.UI.Service
         /// 登录相关
         /// </summary>
         public UserService UserService { private set; get; }
+        /// <summary>
+        /// 商品相关
+        /// </summary>
+        public ProductService ProductService { private set; get; }
 
         /// <summary>
         /// 业务逻辑服务
         /// </summary>
         public TxoooProductUpload.Service.ServiceContext BaseContent { private set; get; }
+
+     
     }
 }

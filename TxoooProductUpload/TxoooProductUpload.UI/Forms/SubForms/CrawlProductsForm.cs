@@ -1,4 +1,5 @@
 using CCWin;
+using CCWin.SkinControl;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,9 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         bool _isAuto = false;  //自动抓取全部列表
         ProductHelper _productHelper = new ProductHelper();
 
-        List<ProductSourceInfo> _productList = new List<ProductSourceInfo>();
+        List<ProductSourceInfo> _productList = new List<ProductSourceInfo>();  //第一步抓取商品的信息
+        List<ProductSourceInfo> _productOkList = new List<ProductSourceInfo>();   //详情抓取成功的商品信息
+
         CrawlType _crawlType = CrawlType.None;
         ///// <summary>
         ///// 当前页面的html
@@ -59,26 +62,26 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             InitDgv();
             InitControlBtnEvent();
 
-            tsTxtUrl.TextChanged += TsTxtUrl_TextChanged;
-
             bs.DataSource = _productList;
 
             tsBtnAutoAll.Click += TsBtnAutoAll_Click;
+            tssBtnBatchDel.Click += (_s, _e) => { DeleteRows(); };
+            tsTxtUrl.TextChanged += TsTxtUrl_TextChanged;
         }
 
         private void TsBtnAutoAll_Click(object sender, EventArgs e)
         {
             //NextPageList();
-            if (tsBtnAutoAll.Text == "自动")
+            if (tsBtnAutoAll.Text == "自动(&A)")
             {
                 _isAuto = true;
-                tsBtnAutoAll.Text = "暂停";
+                tsBtnAutoAll.Text = "暂停(&S)";
                 CrawProduct();
             }
             else
             {
                 _isAuto = false;
-                tsBtnAutoAll.Text = "自动";
+                tsBtnAutoAll.Text = "自动(&A)";
             }
         }
 
@@ -115,8 +118,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         #region 底部控制菜单相关
         void InitControlBtnEvent()
         {
-            tssBtnBatchDel.Click += ControlBtn_Click;
-            tssBtnBatchEditClass.Click += ControlBtn_Click;
             tssBtnNext.Click += ControlBtn_Click;
             tssBtnPrevious.Click += ControlBtn_Click;
         }
@@ -133,13 +134,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                 case "next":
                     NextProcess();
                     break;
-                case "del":
-                    DeleteRows();
-                    break;
-                case "class":
-                    break;
-                default:
-                    break;
             }
         }
 
@@ -150,7 +144,39 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
             _process1.Visible = tssBtnPrevious.Enabled = false;
+        }
 
+        /// <summary>
+        /// 处理商品详情
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        void ProcessProductDetail(List<ProductSourceInfo> list)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() =>
+                {
+                    ProcessProductDetail(list);
+                }));
+                return;
+            }
+
+        }
+
+        void ProcessProductDetailResult()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() =>
+                {
+                    ProcessProductDetailResult();
+                })); return;
+            }
+            _processResult.ProductBindSource.DataSource = _productOkList;
+            _processResult.MessageShowLable.Text = "共{0}个商品，执行成功{1}个商品".FormatWith(_productList.Count, _productOkList.Count);
+            _process1.Visible = false;
+            tssBtnNext.Enabled = tssBtnPrevious.Enabled = _processResult.Visible = true;
         }
 
         /// <summary>
@@ -158,39 +184,44 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// </summary>
         void NextProcess()
         {
-            tssBtnNext.Enabled = skinSplitContainer1.Visible = false;
-            _process1.Visible = tssBtnPrevious.Enabled = true;
-            _process1.ProcessBar.Maximum = _productList.Count;
-            _process1.ProcessBar.Minimum = _productList.Where(m => m.IsProcess).Count();
-            _process1.LabelStateMessage.Text = "正在抓取商品详细信息，请稍等...";
             Task.Run(() =>
-             {
-                 Parallel.For(0, _productList.Count, (index) =>
-                 {
-                     var product = _productList[index];
-                     try
-                     {
-                         _productHelper.ProcessItem(ref product);
-                     }
-                     catch (Exception ex)
-                     {
-                         Iwenli.LogHelper.LogError(this, "{0}商品{1}异常：{2}".FormatWith(product.SourceName, product.Id, ex.Message));
-                     }
-                     _productList[index] = product;
-                     Invoke(new Action(() =>
-                     {
-                         _process1.ProcessBar.Value += 1;
-                     }));
-                 });
-
-                 Invoke(new Action(() =>
-                 {
-                     _processResult.ProductBindSource.DataSource = _productList;
-                     _process1.Visible = false;
-                     _processResult.Visible = true;
-                 }));
-                
-             });
+            {
+                var waitProcessProductList = _productList.Where(m => m.IsProcess == false).ToList();
+                if (waitProcessProductList.Count > 0)
+                {
+                    Invoke(new Action(() =>
+                    {
+                        tssBtnNext.Enabled = skinSplitContainer1.Visible = false;
+                        _process1.Visible = true;
+                        _process1.ProcessBar.Maximum = waitProcessProductList.Count;
+                        _process1.ProcessBar.Minimum = 0;
+                    })); 
+                    Parallel.For(0, waitProcessProductList.Count, (index) =>
+                    {
+                        var product = waitProcessProductList[index];
+                        if (product.IsProcess) return;
+                        try
+                        {
+                            _productHelper.ProcessItem(ref product);
+                            App.Context.ProductService.DiscernLcation(ref product);
+                            _productOkList.Add(product);
+                        }
+                        catch (Exception ex)
+                        {
+                            Iwenli.LogHelper.LogError(this, "{0}商品{1}异常：{2}".FormatWith(product.SourceName, product.Id, ex.Message));
+                        }
+                        Invoke(new Action(() =>
+                        {
+                            _process1.ProcessBar.Value += 1;
+                        }));
+                    });
+                    ProcessProductDetailResult();
+                }
+                else
+                {
+                    ProcessProductDetailResult();
+                }
+            });
         }
 
         /// <summary>
@@ -230,6 +261,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             InitDgvAllSelect();
             sdgvProduct.CellContentClick += SdgvProduct_CellContentClick;
+            sdgvProduct.DataError += (s, e) => { };  //重写DataError事件
+            sdgvProduct.SelectionChanged += (_s, _e) =>
+            {
+                tssBtnNext.Enabled = sdgvProduct.Rows.Count > 0;
+            };
         }
         /// <summary>
         /// 单元格单击
@@ -367,17 +403,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         }
         #endregion
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            ChangeClassForm changeClassForm = new ChangeClassForm();
-
-            changeClassForm.OnChangeClass += (s, eventArgs) =>
-           {
-               MessageBoxEx.Show("修改为了" + eventArgs.ClassId);
-           };
-            changeClassForm.ShowDialog(this);
-        }
-
         #region 抓取商品
         /// <summary>
         /// 抓取商品
@@ -387,36 +412,36 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             HtmlChange(Html =>
             {
                 BeginInvoke(new Action(() =>
-                             {
-                                 HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
-                                 document.LoadHtml(Html);
+                {
+                    HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
+                    document.LoadHtml(Html);
 
-                                 var list = _productHelper.GetProductListFormSearch(document, SourceType.Taobao);
-                                 foreach (var item in list)
-                                 {
-                                     if (_productList.Exists(m => m.Id == item.Id)) { continue; }
-                                     bs.Add(item);
-                                 }
+                    var list = _productHelper.GetProductListFormSearch(document, SourceType.Taobao);
+                    foreach (var item in list)
+                    {
+                        if (_productList.Exists(m => m.Id == item.Id)) { continue; }
+                        bs.Add(item);
+                    }
 
-                                 sdgvProduct.FirstDisplayedScrollingRowIndex = sdgvProduct.Rows.Count - 1;
-                                 if (_isAuto)
-                                 {
-                                     //循环到最后一页  退出循环
-                                     if (document.DocumentNode.SelectNodes("//span[@class='icon icon-btn-next-2-disable']") != null)
-                                     {
-                                         _isAuto = false;
-                                         MessageBoxEx.Show("抓取完毕，共抓取商品{0}条".FormatWith(sdgvProduct.Rows.Count));
-                                         return;
-                                     }
-                                     NextPageList();
-                                 }
-                             }));
+                    sdgvProduct.FirstDisplayedScrollingRowIndex = sdgvProduct.Rows.Count - 1;
+                    if (_isAuto)
+                    {
+                        //循环到最后一页  退出循环
+                        if (document.DocumentNode.SelectNodes("//span[@class='icon icon-btn-next-2-disable']") != null)
+                        {
+                            _isAuto = false;
+                            MessageBoxEx.Show("抓取完毕，共抓取商品{0}条".FormatWith(sdgvProduct.Rows.Count));
+                            return;
+                        }
+                        NextPageList();
+                    }
+                }));
             });
         }
         #endregion
 
         /// <summary>
-        /// 下一页
+        /// 搜索结果下一页
         /// </summary>
         void NextPageList()
         {

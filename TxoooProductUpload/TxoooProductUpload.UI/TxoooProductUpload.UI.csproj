@@ -117,6 +117,12 @@
     <Compile Include="Common\Const\AppInfo.cs" />
     <Compile Include="Common\Extended\Winform\DataGridViewCheckBoxHeaderCell.cs" />
     <Compile Include="Common\Utils.cs" />
+    <Compile Include="Forms\ChangeLocationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangeLocationForm.Designer.cs">
+      <DependentUpon>ChangeLocationForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChangeClassForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,6 +224,9 @@
     <Compile Include="test\test.cs" />
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeLocationForm.resx">
+      <DependentUpon>ChangeLocationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeClassForm.resx">
       <DependentUpon>ChangeClassForm.cs</DependentUpon>

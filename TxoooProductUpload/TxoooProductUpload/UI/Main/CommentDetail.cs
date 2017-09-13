@@ -72,7 +72,7 @@ namespace TxoooProductUpload.UI.Main
             this.Close();
         }
         /// <summary>
-        /// 关闭窗体 处罚回调事件
+        /// 关闭窗体 触发回调事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
