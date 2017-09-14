@@ -508,6 +508,7 @@ namespace TxoooProductUpload.UI
             if (InvokeRequired)
             {
                 Invoke(new Action(async () => { await LoginedChanged(); }));
+                return;
             }
             tsLogout.Enabled = App.Context.BaseContent.Session.IsLogined;
             if (App.Context.BaseContent.Session.IsLogined)

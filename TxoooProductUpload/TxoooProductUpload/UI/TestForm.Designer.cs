@@ -30,9 +30,9 @@
         {
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +56,17 @@
             this.panel1.Size = new System.Drawing.Size(543, 65);
             this.panel1.TabIndex = 3;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "天猫",
+            "淘宝"});
+            this.comboBox1.Location = new System.Drawing.Point(318, 22);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 20);
+            this.comboBox1.TabIndex = 4;
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(456, 21);
@@ -72,17 +83,6 @@
             this.textBox1.Size = new System.Drawing.Size(296, 21);
             this.textBox1.TabIndex = 2;
             this.textBox1.Text = "542469108642";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "天猫",
-            "淘宝"});
-            this.comboBox1.Location = new System.Drawing.Point(318, 22);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 20);
-            this.comboBox1.TabIndex = 4;
             // 
             // TestForm
             // 

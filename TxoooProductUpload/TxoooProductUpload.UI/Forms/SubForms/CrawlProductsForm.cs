@@ -188,7 +188,8 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             _processResult.MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已经追加到集合中"
                 .FormatWith(allCount, successCount);
             _process1.Visible = skinSplitContainer1.Visible = false;
-            tssBtnNext.Enabled = tssBtnPrevious.Enabled = _processResult.Visible = true;
+            _processResult.Visible = true;
+            //tssBtnNext.Enabled = tssBtnPrevious.Enabled = 
 
             ProductCacheContext.Instance.Save();
         }
@@ -468,7 +469,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             try
             {
-                ProductHelper productHelper = new ProductHelper();
+                ProductHelper productHelper = new ProductHelper(App.Context.BaseContent.ImageService);
 
                 ProductSourceInfo task;
                 while (!token.IsCancellationRequested)

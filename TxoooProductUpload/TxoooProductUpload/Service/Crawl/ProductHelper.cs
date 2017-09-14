@@ -40,14 +40,13 @@ namespace TxoooProductUpload.Service.Crawl
         /// <summary>
         /// 初始化一个 ProductHelper 实例
         /// </summary>
-        public ProductHelper()
+        /// <param name="netClient"></param>
+        private ProductHelper()
         {
             _netClient = new NetClient();
             _tmallHelper = new TmallHepler();
             _taobaoHelper = new TaobaoHelper();
-            _imageService = new ImageService(new ServiceContext());
         }
-
         /// <summary>
         /// 初始化一个 ProductHelper 实例
         /// </summary>

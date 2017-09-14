@@ -42,8 +42,7 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public Image GetImageByUrl(string url)
         {
-            var stCtx = ServiceContext.Session.NetClient
-              .Create<byte[]>(HttpMethod.Get, url);
+            var stCtx = NetClient.Create<byte[]>(HttpMethod.Get, url);
             stCtx.Send();
             if (!stCtx.IsValid())
             {
@@ -59,8 +58,7 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<byte[]> GetImageStreamAsync(string url)
         {
-            var stCtx = ServiceContext.Session.NetClient
-              .Create<byte[]>(HttpMethod.Get, url, allowAutoRedirect: true);
+            var stCtx = NetClient.Create<byte[]>(HttpMethod.Get, url, allowAutoRedirect: true);
 
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
@@ -149,8 +147,7 @@ namespace TxoooProductUpload.Service
                 file = new HttpVirtualBytePostFile(Guid.NewGuid().ToString("N") + ".jpg", imageStream)
             };
 
-            var stCtx = ServiceContext.Session.NetClient
-                .Create<WebResponseResult<string>>(HttpMethod.Post, ApiList.UpdateImgFile, data: data);
+            var stCtx = NetClient.Create<WebResponseResult<string>>(HttpMethod.Post, ApiList.UpdateImgFile, data: data);
             stCtx.Request.Timeout = 1000;
 
             await stCtx.SendAsync();

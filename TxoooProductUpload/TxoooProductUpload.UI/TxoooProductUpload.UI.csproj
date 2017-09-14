@@ -129,6 +129,12 @@
     <Compile Include="Forms\ChangeClassForm.Designer.cs">
       <DependentUpon>ChangeClassForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LoadingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LoadingForm.Designer.cs">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MinForms\PhoneBorwser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +177,12 @@
     <Compile Include="Forms\SubForms\FrmExeManager.designer.cs">
       <DependentUpon>FrmExeManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SubForms\ProductUploadLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\ProductUploadLoading.Designer.cs">
+      <DependentUpon>ProductUploadLoading.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UserControls\ProcessProduct.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -207,23 +219,29 @@
     <Compile Include="Service\Entities\CrawlType.cs" />
     <Compile Include="Service\Entities\LoginListInfo.cs" />
     <Compile Include="Service\ServiceContext.cs" />
-    <Compile Include="test\Msgtest.cs">
+    <Compile Include="Test\Msgtest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="test\Msgtest.Designer.cs">
+    <Compile Include="Test\Msgtest.Designer.cs">
       <DependentUpon>Msgtest.cs</DependentUpon>
     </Compile>
     <Compile Include="Service\UserService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\ServiceBase.cs" />
-    <Compile Include="test\CefTest.cs">
+    <Compile Include="Test\CefTest.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="test\CefTest.Designer.cs">
+    <Compile Include="Test\CefTest.Designer.cs">
       <DependentUpon>CefTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="test\test.cs" />
+    <Compile Include="Test\test.cs" />
+    <Compile Include="Test\TestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Test\TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,6 +250,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeClassForm.resx">
       <DependentUpon>ChangeClassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LoadingForm.resx">
+      <DependentUpon>LoadingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MinForms\PhoneBorwser.resx">
       <DependentUpon>PhoneBorwser.cs</DependentUpon>
@@ -260,6 +281,9 @@
     <EmbeddedResource Include="Forms\SubForms\FrmExeManager.resx">
       <DependentUpon>FrmExeManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\ProductUploadLoading.resx">
+      <DependentUpon>ProductUploadLoading.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UserControls\ProcessProduct.resx">
       <DependentUpon>ProcessProduct.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,10 +293,10 @@
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="test\Msgtest.resx">
+    <EmbeddedResource Include="Test\Msgtest.resx">
       <DependentUpon>Msgtest.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="test\CefTest.resx">
+    <EmbeddedResource Include="Test\CefTest.resx">
       <DependentUpon>CefTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -285,6 +309,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Test\TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="wl.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -397,6 +424,7 @@
     <None Include="Resources\right_round.png" />
     <None Include="Resources\Refresh_round.png" />
     <Content Include="lib\Iwenli.XML" />
+    <None Include="Resources\Rainbow.gif" />
     <Content Include="Skin\copyright_bg2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

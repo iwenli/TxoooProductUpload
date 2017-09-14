@@ -26,17 +26,23 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<List<AreaInfo>> LoadAreaDatasAsync(long id = 1)
         {
-            var param = new { userid = ServiceContext.Session.Token.userid, token = ServiceContext.Session.Token.token, parentId = id };
-            var stCtx = ServiceContext.Session.NetClient
-                .Create<WebResponseResult<AreaInfo>>(HttpMethod.Get, ApiList.GetArea, data: param);
-
-            await stCtx.SendAsync();
-            if (!stCtx.IsValid())
+            try
             {
-                new Exception("AreaDataService未能提交请求");
+                var param = new { userid = Session.Token.userid, token = Session.Token.token, parentId = id };
+                var stCtx = NetClient.Create<WebResponseResult<AreaInfo>>(HttpMethod.Get, ApiList.GetArea, data: param);
+
+                await stCtx.SendAsync();
+                if (!stCtx.IsValid())
+                {
+                    new Exception("AreaDataService未能提交请求");
+                }
+                var areaResult = stCtx.Result;
+                return areaResult.Data.ToList();
             }
-            var areaResult = stCtx.Result;
-            return areaResult.Data.ToList();
+            catch (Exception ex)
+            {
+                throw new Exception("加载地域数据异常", ex);
+            }
         }
     }
 }

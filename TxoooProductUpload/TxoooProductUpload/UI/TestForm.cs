@@ -25,7 +25,7 @@ namespace TxoooProductUpload.UI
         {
             InitializeComponent();
             _context = new Service.ServiceContext();
-            var _productHelper = new ProductHelper();
+            var _productHelper = new ProductHelper(_context.ImageService);
             comboBox1.SelectedIndex = 0;
 
             button1.Click += async (s, e) =>

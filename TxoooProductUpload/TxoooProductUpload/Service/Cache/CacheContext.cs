@@ -40,10 +40,6 @@ namespace TxoooProductUpload.Service
                         {
                             _instance = new CacheContext();
                             _instance.Init();
-                            //Task.Run(() =>
-                            //{
-                            //    _instance.Update();
-                            //});
                         }
                     }
                 }
@@ -104,23 +100,19 @@ namespace TxoooProductUpload.Service
                 Data.ProductClassList.AddRange(await context.ClassDataService.GetAllProductClass());
                 Data.AreaList.AddRange(await context.AreaDataService.LoadAreaDatasAsync(1));
                 var list = Data.AreaList.ToList();
-                try
+                for (int i = 0; i < list.Count; i++)
                 {
-                    foreach (var item in list)
+                    if (!new int[] { 110000, 120000, 310000, 500000 }.Contains(list[i].region_code))
                     {
-                        if (new int[] { 110000, 120000, 310000, 500000 }.Contains(item.region_code))
+                        try
                         {
-                            continue;
+                            Data.AreaList.AddRange(await ServiceContext.AreaDataService.LoadAreaDatasAsync(list[i].region_id));
                         }
-                        var childList = await context.AreaDataService.LoadAreaDatasAsync(item.region_id);
-                        Data.AreaList.AddRange(childList);
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
                     }
-                    Data.LastUpdateTime = DateTime.Now;
-                    Data.IsLine = !ApiList.IsTest;
-                }
-                catch (Exception EX)
-                {
-                    MessageBox.Show(EX.Message);
                 }
             }
             Save();
@@ -141,24 +133,24 @@ namespace TxoooProductUpload.Service
                 Data.ProductClassList.AddRange(await ServiceContext.ClassDataService.GetAllProductClass());
                 Data.AreaList.AddRange(await ServiceContext.AreaDataService.LoadAreaDatasAsync(1));
                 var list = Data.AreaList.ToList();
-                try
+                //Parallel.For(0, list.Count, async (i) =>
+                for (int i = 0; i < list.Count; i++)
                 {
-                    foreach (var item in list)
+                    if (!new int[] { 110000, 120000, 310000, 500000 }.Contains(list[i].region_code))
                     {
-                        if (new int[] { 110000, 120000, 310000, 500000 }.Contains(item.region_code))
+                        try
                         {
-                            continue;
+                            Data.AreaList.AddRange(await ServiceContext.AreaDataService.LoadAreaDatasAsync(list[i].region_id));
                         }
-                        var childList = await ServiceContext.AreaDataService.LoadAreaDatasAsync(item.region_id);
-                        Data.AreaList.AddRange(childList);
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
                     }
-                    Data.LastUpdateTime = DateTime.Now;
-                    Data.IsLine = !ApiList.IsTest;
                 }
-                catch (Exception EX)
-                {
-                    MessageBox.Show(EX.Message);
-                }
+                Data.LastUpdateTime = DateTime.Now;
+                Data.IsLine = !ApiList.IsTest; 
             }
             Save();
         }

@@ -220,7 +220,7 @@ namespace TxoooProductUpload.Service
             //这里失败了我们就随便起个名字，嗯。
             if (LoginInfo.DisplayName.IsNullOrEmpty())
                 LoginInfo.DisplayName = "路人甲";
-            
+
             IsLogined = true;
             ApiList.Token = _token;
             return LoginInfo;

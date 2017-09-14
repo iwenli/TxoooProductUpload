@@ -1,0 +1,281 @@
+﻿using CCWin;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using TxoooProductUpload.Entities.Product;
+using TxoooProductUpload.Service;
+using TxoooProductUpload.UI.Service.Cache.ProductCache;
+
+namespace TxoooProductUpload.UI.Forms.SubForms
+{
+    public partial class ProductUploadLoading : LoadingForm
+    {
+        #region 变量
+        int _threadCount = 5;   //处理任务线程数 
+        List<ProductSourceInfo> _waitUploadImageList;
+        int _processType = -1;
+        #endregion
+
+        #region 属性
+        /// <summary>
+        /// 商品缓存
+        /// </summary>
+        ProductCacheData ProductCache { set; get; }
+        #endregion
+
+        #region 构造函数
+        /// <summary>
+        /// 任务显示等待的名称，任务类型0上传图片  1上传商品
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="processType"></param>
+        public ProductUploadLoading(string title, int processType) : base(title)
+        {
+            InitializeComponent();
+            Text = "";
+            _processType = processType;
+            Load += ProductUploadLoading_Load;
+        }
+
+        private ProductUploadLoading() { }
+        #endregion
+
+        async void ProductUploadLoading_Load(object sender, EventArgs e)
+        {
+            App.Context.ProductService.OnSendMessage += Event_OnSendMessage;
+            ProductCache = ProductCacheContext.Instance.Data;
+            await RunTask();
+        }
+
+        async Task RunTask()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(async () =>
+                {
+                    await RunTask();
+                }));
+                return;
+            }
+            if (_processType == 0)
+            {
+                UploadImage();
+            }
+            else if (_processType == 1)
+            {
+                UploadProduct();
+            }
+        }
+
+        #region 上传商品图片
+        /// <summary>
+        /// 批量上传商品图片
+        /// </summary>
+        void UploadImage()
+        {
+            AppendLogWarning("[全局]开始上传图片到图片创业赚钱服务器...");
+            AppendLogWarning("[全局]上传线程{0}个...", _threadCount);
+            _waitUploadImageList = new List<ProductSourceInfo>();
+            _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);
+            var cts = new CancellationTokenSource();
+            var tasks = new Task[_threadCount];
+            for (int i = 0; i < _threadCount; i++)
+            {
+                tasks[i] = new Task(() => UploadImageTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
+                tasks[i].Start();
+                AppendLogWarning("[全局]线程{0}启动...", i + 1);
+            }
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    var allCount = ProductCache.WaitUploadImageList.Count;
+                    if (allCount == ProductCache.WaitUploadList.Count + ProductCache.UploadImageFailList.Count)
+                    {
+                        CloseWithResult("图片处理完成...");
+                        break;
+                    }
+                    await Task.Delay(1000);
+                }
+            });
+        }
+
+        /// <summary>
+        /// 上传商品图片任务
+        /// </summary>
+        async void UploadImageTask(CancellationToken token)
+        {
+            try
+            {
+                ProductSourceInfo task;
+                while (!token.IsCancellationRequested)
+                {
+                    task = null;
+                    lock (_waitUploadImageList)
+                    {
+                        if (_waitUploadImageList.Count > 0)
+                        {
+                            task = _waitUploadImageList[0];
+                            _waitUploadImageList.Remove(task);
+                        }
+                    }
+                    //没有则退出
+                    if (task == null)
+                    {
+                        break;
+                    }
+                    try
+                    {
+                        await App.Context.ProductService.UploadProductImage(task);
+                        lock (ProductCache.WaitUploadList)
+                        {
+                            ProductCache.WaitUploadList.Add(task);
+                            AppendLogError("[上传图片]{0}商品{1}上传完成...", task.SourceName, task.Id);
+                            if (ProductCache.WaitUploadList.Count > 0 && ProductCache.WaitUploadList.Count % 20 == 0)
+                            {
+                                //每成功20个手动释放一下内存
+                                GC.Collect();
+                                //保存任务数据，防止什么时候宕机了任务进度回滚太多
+                                ProductCacheContext.Instance.Save();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        lock (ProductCache.UploadImageFailList)
+                        {
+                            ProductCache.UploadImageFailList.Add(task);
+                        }
+                        AppendLogError("[上传图片]{0}商品{1}异常：{2}", task.SourceName, task.Id, ex.Message);
+                        Iwenli.LogHelper.LogError(this,
+                            "[上传图片]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
+                    }
+                    //等待一分钟 在执行下一个
+                    await Task.Delay(1000, token);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        #endregion
+
+
+        #region 上传商品
+        /// <summary>
+        /// 上传商品入口
+        /// </summary>
+        void UploadProduct()
+        {
+            var cts = new CancellationTokenSource();
+            var tasks = new Task[_threadCount];
+            for (int i = 0; i < _threadCount; i++)
+            {
+                tasks[i] = new Task(() => UploadTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
+                tasks[i].Start();
+            }
+            Task.Run(async () =>
+            {
+                while (true)
+                {
+                    var allCount = ProductCache.WaitUploadList.Count;
+                    if (allCount == ProductCache.UploadFailList.Count + ProductCache.UploadSuccessList.Count)
+                    {
+                        CloseWithResult("商品上传完成...");
+                        break;
+                    }
+                    await Task.Delay(1000);
+                }
+            });
+        }
+        /// <summary>
+        /// 上传商品任务
+        /// </summary>
+        async void UploadTask(CancellationToken token)
+        {
+            try
+            {
+                ProductSourceInfo task;
+                while (!token.IsCancellationRequested)
+                {
+                    task = null;
+                    lock (ProductCache)
+                    {
+                        if (ProductCache.WaitUploadList.Count > 0)
+                        {
+                            task = ProductCache.WaitUploadList[0];
+                            ProductCache.WaitUploadList.Remove(task);
+                        }
+                    }
+                    //没有则退出
+                    if (task == null)
+                    {
+                        break;
+                    }
+                    try
+                    {
+                        await App.Context.ProductService.UploadProduct(task);
+                        lock (ProductCache.UploadSuccessList)
+                        {
+                            ProductCache.UploadSuccessList.Add(task);
+
+                            if (ProductCache.UploadSuccessList.Count > 0 && ProductCache.UploadSuccessList.Count % 20 == 0)
+                            {
+                                //每成功20个手动释放一下内存
+                                GC.Collect();
+                                //保存任务数据，防止什么时候宕机了任务进度回滚太多
+                                ProductCacheContext.Instance.Save();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        lock (ProductCache.UploadFailList)
+                        {
+                            ProductCache.UploadFailList.Add(task);
+                        }
+                        Iwenli.LogHelper.LogError(this,
+                            "[上传商品]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
+                    }
+                    //等待一分钟 在执行下一个
+                    await Task.Delay(1000, token);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        #endregion
+
+        /// <summary>
+        /// 全局退出处理
+        /// </summary>
+        /// <param name="msg"></param>
+        async void CloseWithResult(string msg)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() =>
+                {
+                    CloseWithResult(msg);
+                }));
+                return;
+            }
+            AppendLogWarning("[全局]{0}", msg);
+            await Task.Delay(2000);
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+    }
+}

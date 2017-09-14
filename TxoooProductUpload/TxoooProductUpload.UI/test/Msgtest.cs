@@ -13,13 +13,12 @@ namespace TxoooProductUpload.UI
 {
     public partial class Msgtest : BaseForm
     {
-        ProductService productService = new ProductService(App.Context.BaseContent);
+        ProductService productService = App.Context.ProductService;
         UserService loginService = new UserService(App.Context.BaseContent);
 
         public Msgtest()
         {
             InitializeComponent();
-
             SendMessageHandler = productService;
             LogControl = richTextBox1;
             SendMessageHandler.OnSendMessage += Event_OnSendMessage;
@@ -28,7 +27,7 @@ namespace TxoooProductUpload.UI
             btnOK.Click += async (s, e) =>
             {
                 btnOK.Enabled = false;
-                //await productService.Run(50);
+                await productService.Run(50);
                 //var task = Task.Run(() => { productService.Run(); });
                 //Task.WaitAll(task);
                 btnOK.Enabled = true;
