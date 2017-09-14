@@ -39,7 +39,7 @@ namespace TxoooProductUpload.UI
                     try
                     {
                         ProductSourceInfo product = new ProductSourceInfo(Convert.ToInt64(id), sourceType);
-                        _productHelper.ProcessItem(ref product);
+                        _productHelper.ProcessItem(product);
                         await Task.Delay(10);
                     }
                     catch (Exception ex)

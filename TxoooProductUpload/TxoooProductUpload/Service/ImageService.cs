@@ -203,8 +203,9 @@ namespace TxoooProductUpload.Service
         /// 通过url上传图片到txooo服务器
         /// </summary>
         /// <param name="url"></param>
+        /// <param name="timeOut">超时时间 默认30s</param>
         /// <returns></returns>
-        public string UploadImg(string url)
+        public string UploadImg(string url,int timeOut = 30000)
         {
             //如果已经是txooo的连接  不转换
             if (_txoooImgReg.IsMatch(url))
@@ -225,8 +226,9 @@ namespace TxoooProductUpload.Service
         /// </summary>
         /// <param name="url">网络图片URL</param>
         /// <param name="uploadType">上传类型，0系统请求，1商品主图，2商品详情，3SKU图片，4商品评价图</param>
+        /// <param name="timeOut">超时时间 默认30s</param>
         /// <returns></returns>
-        public string UploadImg(string url, int uploadType)
+        public string UploadImg(string url, int uploadType, int timeOut = 30000)
         {
             var imgUrl = UploadImg(url);
             #region DB记录
@@ -279,25 +281,36 @@ namespace TxoooProductUpload.Service
                 throw new Exception("下载图片{0}异常001[远程服务器未响应]，请重试！".FormatWith(url), ex);
             }
         }
+
         /// <summary>
         /// 向文件服务器上传文件
         /// </summary>
         /// <param name="file">文件流</param>
         /// <param name="fileExtension">文件类型</param>
+        /// <param name="timeOut">超时时间  默认10秒</param>
         /// <returns>返回文件服务地址，错误返回：Error</returns>
-        string UploadFileForByte(byte[] file, string fileExtension = "")
+        string UploadFileForByte(byte[] file, string fileExtension = "",int timeOut = 10000)
         {
             if (fileExtension.IsNullOrEmpty())
             {
                 fileExtension = file.GetExtension();
             }
             NewWebClient myWebClient = new NewWebClient();
-            myWebClient.Timeout = 10000;  //设置超时时间
+            myWebClient.Timeout = timeOut;  //设置超时时间
             myWebClient.Credentials = CredentialCache.DefaultCredentials;
             myWebClient.Headers.Add("TxoooUploadFileType", fileExtension);
-            byte[] getArray = myWebClient.UploadData("http://file.txooo.cc/UpLoadForByte.ashx", file);
-            string getstr = Encoding.Default.GetString(getArray);
-            return getstr.Replace("http:", "https:");
+            string resporseStr = string.Empty;
+            try
+            {
+                byte[] getArray = myWebClient.UploadData("http://file.txooo.cc/UpLoadForByte.ashx", file);
+                resporseStr = Encoding.Default.GetString(getArray);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("上传到图片服务底层接口异常，{0}".FormatWith(ex.Message));
+            }
+           
+            return resporseStr.Replace("http:", "https:");
         }
         #endregion
     }

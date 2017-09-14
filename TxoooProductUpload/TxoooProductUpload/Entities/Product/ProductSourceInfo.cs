@@ -246,7 +246,7 @@ namespace TxoooProductUpload.Entities.Product
         /// <summary>
         /// 商品分类类型 （1产品，2服务）
         /// </summary>
-        public long ClassType { set; get; }
+        public long ClassType { set { _classType = value; } get { return _classType; } }
 
         /// <summary>
         /// 结算比例
@@ -303,6 +303,9 @@ namespace TxoooProductUpload.Entities.Product
             if (!sku.Image.IsNullOrEmpty() && !sku.Image.StartsWith("http"))
             {
                 sku.Image = "http:" + sku.Image;
+            }
+            if (sku.Price == 0) {
+                sku.Price = ShowPrice;
             }
             SkuList.Add(sku);
         }
@@ -380,6 +383,7 @@ namespace TxoooProductUpload.Entities.Product
         /// </summary>
         public int Quantity { set; get; }
 
+        string _txoooImage = string.Empty;
         /// <summary>
         /// Txooo服务器图片地址
         /// </summary>
@@ -387,11 +391,11 @@ namespace TxoooProductUpload.Entities.Product
         {
             set
             {
-                _image = value;
+                _txoooImage = value;
             }
             get
             {
-                return _image;
+                return _txoooImage;
             }
         }
 

@@ -17,10 +17,10 @@ namespace TxoooProductUpload.Service.Crawl
         /// 从详情抓取商品信息
         /// </summary>
         /// <param name="client">HTTP客户端</param>
+        /// <param name="imageService"></param>
         /// <param name="product">基本商品信息，必须包含Id,以及Type</param>
         /// <returns></returns>
-        void ProcessItem(NetClient client, ref ProductSourceInfo product);
-
+        void ProcessItem(NetClient client, ImageService imageService, ProductSourceInfo product);
 
         /// <summary>
         /// 从搜索结果页面提取商品基本信息集合

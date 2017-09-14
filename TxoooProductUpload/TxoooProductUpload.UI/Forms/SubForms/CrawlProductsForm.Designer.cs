@@ -183,7 +183,7 @@
             this.tssLblSp1.AutoSize = false;
             this.tssLblSp1.BackColor = System.Drawing.Color.Transparent;
             this.tssLblSp1.Name = "tssLblSp1";
-            this.tssLblSp1.Size = new System.Drawing.Size(354, 21);
+            this.tssLblSp1.Size = new System.Drawing.Size(369, 21);
             this.tssLblSp1.Spring = true;
             // 
             // tssBtnPrevious
@@ -210,6 +210,7 @@
             // 
             this.tssBtnNext.BackColor = System.Drawing.Color.Transparent;
             this.tssBtnNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tssBtnNext.Enabled = false;
             this.tssBtnNext.Image = ((System.Drawing.Image)(resources.GetObject("tssBtnNext.Image")));
             this.tssBtnNext.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tssBtnNext.IsLink = true;
@@ -236,7 +237,7 @@
             // 
             this.tssLblSp5.BackColor = System.Drawing.Color.Transparent;
             this.tssLblSp5.Name = "tssLblSp5";
-            this.tssLblSp5.Size = new System.Drawing.Size(354, 21);
+            this.tssLblSp5.Size = new System.Drawing.Size(369, 21);
             this.tssLblSp5.Spring = true;
             // 
             // skinSplitContainer1
@@ -454,12 +455,14 @@
             // 
             // tsBtnBatch
             // 
+            this.tsBtnBatch.Enabled = false;
             this.tsBtnBatch.Name = "tsBtnBatch";
             this.tsBtnBatch.Size = new System.Drawing.Size(160, 22);
             this.tsBtnBatch.Text = "批量抓取商品";
             // 
             // tsBtnGuide
             // 
+            this.tsBtnGuide.Enabled = false;
             this.tsBtnGuide.Name = "tsBtnGuide";
             this.tsBtnGuide.Size = new System.Drawing.Size(160, 22);
             this.tsBtnGuide.Text = "按向导抓取";

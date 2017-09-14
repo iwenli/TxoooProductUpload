@@ -30,7 +30,7 @@ namespace TxoooProductUpload.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             JsonConvertSettings();
-            //Application.Run(new TestForm());
+            // Application.Run(new TestForm());
             if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF() == 0)
             {
                 try
@@ -38,8 +38,8 @@ namespace TxoooProductUpload.UI
                     Context = Service.ServiceContext.Instance;
                     JsonConvertSettings();
                     //TxoooProductUpload.UI.Main.MainForm()
-                    //Application.Run(new LoginForm());
-                    Application.Run(new CrawlProductsForm());
+                   Application.Run(new LoginForm());
+                    //Application.Run(new CrawlProductsForm());
                 }
                 catch (Exception ex)
                 {

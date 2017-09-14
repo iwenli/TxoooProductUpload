@@ -2,6 +2,7 @@ using CCWin;
 using CCWin.SkinControl;
 using HtmlAgilityPack;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,6 +14,7 @@ using TxoooProductUpload.UI.CefGlue.Browser;
 using TxoooProductUpload.UI.Common;
 using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.UI.Common.Extended.Winform;
+using TxoooProductUpload.UI.Service.Cache.ProductCache;
 using TxoooProductUpload.UI.Service.Entities;
 
 namespace TxoooProductUpload.UI.Forms.SubForms
@@ -23,28 +25,32 @@ namespace TxoooProductUpload.UI.Forms.SubForms
     /// </summary>
     public partial class CrawlProductsForm : Form
     {
+        #region 变量
         UserControls.ProcessProduct _process1;
         UserControls.ProcessProductResult _processResult;
 
+        int _threadCount = 5;   //处理任务线程数 
         bool _isAuto = false;  //自动抓取全部列表
-        ProductHelper _productHelper = new ProductHelper();
-
-        List<ProductSourceInfo> _productList = new List<ProductSourceInfo>();  //第一步抓取商品的信息
-        List<ProductSourceInfo> _productOkList = new List<ProductSourceInfo>();   //详情抓取成功的商品信息
-
+        ProductHelper _productHelper = new ProductHelper(App.Context.BaseContent.ImageService);
         CrawlType _crawlType = CrawlType.None;
-        ///// <summary>
-        ///// 当前页面的html
-        ///// </summary>
-        //public string Html { set; get; }
+        #endregion
 
+        #region 属性
+        /// <summary>
+        /// 商品缓存
+        /// </summary>
+        ProductCacheData ProductCache { set; get; } 
+        #endregion
 
         public CrawlProductsForm()
         {
             InitializeComponent();
+            ProductCacheContext.Instance.Init();
+            ProductCache = ProductCacheContext.Instance.Data;
 
             Load += CrawlProductsForm_Load;
 
+            #region 后续处理界面
             _process1 = new UserControls.ProcessProduct();
             _process1.Dock = DockStyle.Fill;
             _process1.Visible = false;
@@ -54,6 +60,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             _processResult.Dock = DockStyle.Fill;
             _processResult.Visible = false;
             this.Controls.Add(_processResult);
+            #endregion
         }
 
         private void CrawlProductsForm_Load(object sender, EventArgs e)
@@ -62,7 +69,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             InitDgv();
             InitControlBtnEvent();
 
-            bs.DataSource = _productList;
+            bs.DataSource = ProductCache.WaitProcessList;
 
             tsBtnAutoAll.Click += TsBtnAutoAll_Click;
             tssBtnBatchDel.Click += (_s, _e) => { DeleteRows(); };
@@ -76,7 +83,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             {
                 _isAuto = true;
                 tsBtnAutoAll.Text = "暂停(&S)";
-                CrawProduct();
+                CrawProductBase();
             }
             else
             {
@@ -142,6 +149,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// </summary>
         void Previous()
         {
+            ProductCache.WaitProcessList.AddRange(ProductCache.ProcessFailList);
+            ProductCache.ProcessFailList.Clear();
+            bs.DataSource = null;
+            bs.DataSource = ProductCache.WaitProcessList;
             tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
             _process1.Visible = tssBtnPrevious.Enabled = false;
         }
@@ -161,23 +172,25 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                 }));
                 return;
             }
-
         }
 
-        void ProcessProductDetailResult()
+        void ProcessProductDetailResult(int allCount, int successCount)
         {
             if (InvokeRequired)
             {
                 Invoke(new Action(() =>
                 {
-                    ProcessProductDetailResult();
+                    ProcessProductDetailResult(allCount, successCount);
                 })); return;
             }
-            _processResult.ProductBindSource.DataSource =null;
-            _processResult.ProductBindSource.DataSource = _productOkList;
-            _processResult.MessageShowLable.Text = "共{0}个商品，执行成功{1}个商品".FormatWith(_productList.Count, _productOkList.Count);
+            _processResult.ProductBindSource.DataSource = null;
+            _processResult.ProductBindSource.DataSource = ProductCache.WaitUploadImageList;
+            _processResult.MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已经追加到集合中"
+                .FormatWith(allCount, successCount);
             _process1.Visible = skinSplitContainer1.Visible = false;
             tssBtnNext.Enabled = tssBtnPrevious.Enabled = _processResult.Visible = true;
+
+            ProductCacheContext.Instance.Save();
         }
 
         /// <summary>
@@ -186,43 +199,45 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         void NextProcess()
         {
             Task.Run(() =>
-            {
-                var waitProcessProductList = _productList.Where(m => m.IsProcess == false).ToList();
-                if (waitProcessProductList.Count > 0)
-                {
-                    Invoke(new Action(() =>
-                    {
-                        tssBtnNext.Enabled = skinSplitContainer1.Visible = false;
-                        _process1.Visible = true;
-                        _process1.ProcessBar.Maximum = waitProcessProductList.Count;
-                        _process1.ProcessBar.Value = _process1.ProcessBar.Minimum = 0;
-                    })); 
-                    Parallel.For(0, waitProcessProductList.Count, (index) =>
-                    {
-                        var product = waitProcessProductList[index];
-                        if (product.IsProcess) return;
-                        try
-                        {
-                            _productHelper.ProcessItem(ref product);
-                            App.Context.ProductService.DiscernLcation(ref product);
-                            _productOkList.Add(product);
-                        }
-                        catch (Exception ex)
-                        {
-                            Iwenli.LogHelper.LogError(this, "{0}商品{1}异常：{2}".FormatWith(product.SourceName, product.Id, ex.Message));
-                        }
-                        Invoke(new Action(() =>
-                        {
-                            _process1.ProcessBar.Value += 1;
-                        }));
-                    });
-                    ProcessProductDetailResult();
-                }
-                else
-                {
-                    ProcessProductDetailResult();
-                }
-            });
+           {
+               var allCount = ProductCache.WaitProcessList.Count;
+               if (allCount > 0)
+               {
+                   Invoke(new Action(() =>
+                   {
+                       tssBtnNext.Enabled = skinSplitContainer1.Visible = false;
+                       _process1.Visible = true;
+                       _process1.ProcessBar.Maximum = ProductCache.WaitProcessList.Count;
+                       _process1.ProcessBar.Value = _process1.ProcessBar.Minimum = 0;
+                   }));
+                   var cts = new CancellationTokenSource();
+                   var tasks = new Task[_threadCount];
+                   for (int i = 0; i < _threadCount; i++)
+                   {
+                       tasks[i] = new Task(() => GrabDetailTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
+                       tasks[i].Start();
+                   }
+                   Task.Run(async () =>
+                   {
+                       while (true)
+                       {
+                           lock (ProductCache.WaitProcessList)
+                           {
+                               if (allCount == ProductCache.WaitUploadImageList.Count + ProductCache.ProcessFailList.Count)
+                               {
+                                   ProcessProductDetailResult(allCount, ProductCache.WaitUploadImageList.Count);
+                                   break;
+                               }
+                           }
+                           await Task.Delay(1000);
+                       }
+                   });
+               }
+               else
+               {
+                   ProcessProductDetailResult(0, 0);
+               }
+           });
         }
 
         /// <summary>
@@ -343,7 +358,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             if (_isAuto)
             {
                 Thread.Sleep(1000);
-                CrawProduct();
+                CrawProductBase();
             }
         }
 
@@ -363,7 +378,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
 
         void TsBtnTest_Click(object sender, EventArgs e)
         {
-            CrawProduct();
+            CrawProductBase();
         }
 
         void TsBtnRefresh_Click(object sender, EventArgs e)
@@ -405,10 +420,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         #endregion
 
         #region 抓取商品
+        #region 抓取商品基本信息
         /// <summary>
-        /// 抓取商品
+        /// 抓取商品基本信息
         /// </summary>
-        void CrawProduct()
+        void CrawProductBase()
         {
             HtmlChange(Html =>
             {
@@ -420,11 +436,13 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     var list = _productHelper.GetProductListFormSearch(document, SourceType.Taobao);
                     foreach (var item in list)
                     {
-                        if (_productList.Exists(m => m.Id == item.Id)) { continue; }
+                        if (IsEsists(item)) { continue; }
                         bs.Add(item);
                     }
-
-                    sdgvProduct.FirstDisplayedScrollingRowIndex = sdgvProduct.Rows.Count - 1;
+                    if (sdgvProduct.Rows.Count > 8)
+                    {
+                        sdgvProduct.FirstDisplayedScrollingRowIndex = sdgvProduct.Rows.Count - 1;
+                    }
                     if (_isAuto)
                     {
                         //循环到最后一页  退出循环
@@ -434,19 +452,106 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                             MessageBoxEx.Show("抓取完毕，共抓取商品{0}条".FormatWith(sdgvProduct.Rows.Count));
                             return;
                         }
-                        NextPageList();
+                        //下一页
+                        webBrowser.Browser.GetMainFrame().ExecuteJavaScript("document.getElementsByClassName('icon-btn-next-2')[0].click()", "", 0);
                     }
                 }));
             });
         }
         #endregion
 
+        #region 抓取详细信息
         /// <summary>
-        /// 搜索结果下一页
+        /// 开始抓取详情页
         /// </summary>
-        void NextPageList()
+        async void GrabDetailTask(CancellationToken token)
         {
-            webBrowser.Browser.GetMainFrame().ExecuteJavaScript("document.getElementsByClassName('icon-btn-next-2')[0].click()", "", 0);
+            try
+            {
+                ProductHelper productHelper = new ProductHelper();
+
+                ProductSourceInfo task;
+                while (!token.IsCancellationRequested)
+                {
+                    task = null;
+                    lock (ProductCache.WaitProcessList)
+                    {
+                        if (ProductCache.WaitProcessList.Count > 0)
+                        {
+                            task = ProductCache.WaitProcessList[0];
+                            ProductCache.WaitProcessList.Remove(task);
+                        }
+                    }
+                    //没有则退出
+                    if (task == null)
+                    {
+                        break;
+                    }
+                    try
+                    {
+                        productHelper.ProcessItem(task);
+                        App.Context.ProductService.DiscernLcation(task);
+                    }
+                    catch (Exception ex)
+                    {
+                        Iwenli.LogHelper.LogError(this,
+                            "[详情]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
+                    }
+                    if (task.IsProcess)
+                    {
+                        lock (ProductCache.ProcessFailList)
+                        {
+                            ProductCache.WaitUploadImageList.Add(task);
+
+                            if (ProductCache.ProcessFailList.Count > 0 && ProductCache.ProcessFailList.Count % 20 == 0)
+                            {
+                                //每成功20个手动释放一下内存
+                                GC.Collect();
+                                //保存任务数据，防止什么时候宕机了任务进度回滚太多
+                                ProductCacheContext.Instance.Save();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        lock (ProductCache.ProcessFailList)
+                        {
+                            ProductCache.ProcessFailList.Add(task);
+                        }
+                    }
+
+                    Invoke(new Action(() =>
+                    {
+                        var value = _process1.ProcessBar.Value + 1;
+                        //Iwenli.LogHelper.LogDebug(this, value.ToString());
+                        _process1.ProcessBar.Value = value;
+                    }));
+                    //等待一分钟 在执行下一个
+                    await Task.Delay(1000, token);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
+        #endregion
+
+        /// <summary>
+        /// 判断商品是否抓取过
+        /// </summary>
+        /// <returns></returns>
+        bool IsEsists(ProductSourceInfo product)
+        {
+            //现在只从当前集合判断  后期增加从数据库判断
+            if (ProductCache.WaitProcessList.FirstOrDefault(m => m.Id == product.Id) != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        #endregion
+
     }
 }

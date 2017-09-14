@@ -12,20 +12,35 @@ using CCWin;
 using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.UI.Common;
 using TxoooProductUpload.Entities.Product;
+using System.Threading;
+using TxoooProductUpload.UI.Service.Cache.ProductCache;
 
 namespace TxoooProductUpload.UI.Forms.UserControls
 {
     public partial class ProcessProductResult : UserControl
     {
+        #region 变量
+        int _threadCount = 5;   //处理任务线程数 
+        List<ProductSourceInfo> _waitUploadImageList;
+        #endregion
+
+        #region 属性
+        /// <summary>
+        /// 商品缓存
+        /// </summary>
+        ProductCacheData ProductCache { set; get; }
+        #endregion
+
         public ProcessProductResult()
         {
             InitializeComponent();
-
+            ProductCache = ProductCacheContext.Instance.Data;
             Load += ProcessProductResult_Load;
         }
 
         void ProcessProductResult_Load(object sender, EventArgs e)
         {
+            ProductDGV.DataError += (_s, _e) => { };  //重写DataError事件
             InitDgvAllSelect(); //全选相关
             InitTsBtnEvent();  //批量操作相关
             InitContextMenuEvent();  //右键菜单相关
@@ -36,21 +51,47 @@ namespace TxoooProductUpload.UI.Forms.UserControls
         {
             Task.Run(() =>
             {
-                var list = ProductBindSource.DataSource as List<ProductSourceInfo>;
-                Parallel.For(0, list.Count, (i) => {
-                    //ProductSourceInfo product = list[i];
-                    App.Context.ProductService.UploadProductImage(list[i]);
-                });
-                MessageBoxEx.Show("图片处理完成");
-                //var uploadEndList = await UploadProductImageSync(list);
-                //await Task.Run(() =>
-                //{
-                //    Invoke(new Action(() =>
-                //    {
-                //        ProductBindSource.DataSource = uploadEndList;
-                //    }));
+                //var list = ProductBindSource.DataSource as List<ProductSourceInfo>;
+                //Parallel.For(0, list.Count, (i) => {
+                //    //ProductSourceInfo product = list[i];
+                //    App.Context.ProductService.UploadProductImage(list[i]);
                 //});
-
+                //MessageBoxEx.Show("图片处理完成");
+                _waitUploadImageList = new List<ProductSourceInfo>();
+                _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);
+                Invoke(new Action(() =>
+                {
+                    tsBtnUploadImageAllSelect.Enabled = false;
+                }));
+                
+                var cts = new CancellationTokenSource();
+                var tasks = new Task[_threadCount];
+                for (int i = 0; i < _threadCount; i++)
+                {
+                    tasks[i] = new Task(() => UploadImageTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
+                    tasks[i].Start();
+                }
+                Task.Run(async () =>
+                {
+                    while (true)
+                    {
+                        var allCount = ProductCache.WaitUploadImageList.Count;
+                        if (allCount == ProductCache.WaitUploadList.Count + ProductCache.UploadImageFailList.Count)
+                        {
+                            MessageBoxEx.Show("图片处理完成");
+                            Invoke(new Action(() =>
+                            {
+                                ProductBindSource.DataSource = null;
+                                ProductBindSource.DataSource = ProductCache.WaitUploadList;
+                                ProductCache.WaitUploadImageList.Clear();
+                                MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已更新"
+                                    .FormatWith(allCount, ProductCache.WaitUploadList.Count);
+                            }));
+                            break;
+                        }
+                        await Task.Delay(1000);
+                    }
+                });
             });
         }
 
@@ -230,6 +271,68 @@ namespace TxoooProductUpload.UI.Forms.UserControls
         {
             ProductDGV.EndEdit();
             ProductDGV.Rows.OfType<DataGridViewRow>().ToList().ForEach(t => t.Cells[0].Value = e.CheckedState);
+        }
+        #endregion
+
+        #region 上传商品图片
+        /// <summary>
+        /// 上传商品图片
+        /// </summary>
+        async void UploadImageTask(CancellationToken token)
+        {
+            try
+            {
+                ProductSourceInfo task;
+                while (!token.IsCancellationRequested)
+                {
+                    task = null;
+                    lock (_waitUploadImageList)
+                    {
+                        if (_waitUploadImageList.Count > 0)
+                        {
+                            task = _waitUploadImageList[0];
+                            _waitUploadImageList.Remove(task);
+                        }
+                    }
+                    //没有则退出
+                    if (task == null)
+                    {
+                        break;
+                    }
+                    try
+                    {
+                        await App.Context.ProductService.UploadProductImage(task);
+                        lock (ProductCache.WaitUploadList)
+                        {
+                            ProductCache.WaitUploadList.Add(task);
+
+                            if (ProductCache.WaitUploadList.Count > 0 && ProductCache.WaitUploadList.Count % 20 == 0)
+                            {
+                                //每成功20个手动释放一下内存
+                                GC.Collect();
+                                //保存任务数据，防止什么时候宕机了任务进度回滚太多
+                                ProductCacheContext.Instance.Save();
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        lock (ProductCache.UploadImageFailList)
+                        {
+                            ProductCache.UploadImageFailList.Add(task);
+                        }
+                        Iwenli.LogHelper.LogError(this,
+                            "[上传图片]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
+                    }
+                    //等待一分钟 在执行下一个
+                    await Task.Delay(1000, token);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
         }
         #endregion
     }

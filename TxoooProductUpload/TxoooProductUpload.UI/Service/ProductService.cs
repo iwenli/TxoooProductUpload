@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using TxoooProductUpload.Entities.Product;
@@ -21,7 +22,7 @@ namespace TxoooProductUpload.UI.Service
         /// 识别发货地
         /// </summary>
         /// <returns></returns>
-        public void DiscernLcation(ref ProductSourceInfo product)
+        public void DiscernLcation(ProductSourceInfo product)
         {
             var p = product;
             if (!product.Location.IsNullOrEmpty())
@@ -85,31 +86,35 @@ namespace TxoooProductUpload.UI.Service
         /// </summary>
         /// <param name="productList"></param>
         /// <returns></returns>
-        public void UploadProductImage(ProductSourceInfo product)
+        public async Task UploadProductImage(ProductSourceInfo product)
         {
             foreach (var url in product.ThumImgList)
             {
                 try
                 {
+                    await Task.Delay(100);
                     product.TxoooThumImgList.Add(BaseContent.ImageService.UploadImg(url));
                 }
                 catch (Exception ex)
                 {
-                    new Exception("上传{0}商品{1}主图{2}执行异常：{3}".FormatWith(product.SourceName, product.Id, url, ex.Message), ex);
+                    new Exception("上传{0}商品{1} 主图 {2} 执行异常：{3}".FormatWith(product.SourceName, product.Id, url, ex.Message), ex);
                 }
             }
             foreach (var url in product.DetailImgList)
             {
                 try
                 {
+                    await Task.Delay(100);
                     product.TxoooDetailImgList.Add(BaseContent.ImageService.UploadImg(url));
                 }
                 catch (Exception ex)
                 {
-                    new Exception("上传{0}商品{1}详情图{2}执行异常：{3}".FormatWith(product.SourceName, product.Id, url, ex.Message), ex);
+                    new Exception("上传{0}商品{1} 详情图 {2} 执行异常：{3}".FormatWith(product.SourceName, product.Id, url, ex.Message), ex);
                 }
 
             }
+            //这里使用缓存变量  缓存sku图片字典
+            Dictionary<string, string> skuImageDic = new Dictionary<string, string>();
             foreach (var sku in product.SkuList)
             {
                 //如果没有抓到详情图片  则用主图图片
@@ -121,13 +126,24 @@ namespace TxoooProductUpload.UI.Service
                 {
                     try
                     {
-                        sku.TxoooImage = BaseContent.ImageService.UploadImg(sku.Image);
+                        if (!new Regex("img.txooo.com").IsMatch(sku.TxoooImage))
+                        {
+                            if (skuImageDic.ContainsKey(sku.Image))
+                            {
+                                sku.TxoooImage = skuImageDic[sku.Image];
+                            }
+                            else
+                            {
+                                await Task.Delay(100);
+                                sku.TxoooImage = BaseContent.ImageService.UploadImg(sku.Image);
+                                skuImageDic.Add(sku.Image, sku.TxoooImage);
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
-                        new Exception("上传{0}商品{1}详情图{2}执行异常：{3}".FormatWith(product.SourceName, product.Id, sku.Image, ex.Message), ex);
+                        new Exception("上传{0}商品{1} SKU图 {2} 执行异常：{3}".FormatWith(product.SourceName, product.Id, sku.Image, ex.Message), ex);
                     }
-
                 }
             }
         }

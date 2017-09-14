@@ -15,6 +15,7 @@ namespace TxoooProductUpload.Service.Crawl
     /// </summary>
     public class ProductHelper
     {
+        ImageService _imageService;
         NetClient _netClient;
         IHelper _tmallHelper;
         IHelper _taobaoHelper;
@@ -44,6 +45,7 @@ namespace TxoooProductUpload.Service.Crawl
             _netClient = new NetClient();
             _tmallHelper = new TmallHepler();
             _taobaoHelper = new TaobaoHelper();
+            _imageService = new ImageService(new ServiceContext());
         }
 
         /// <summary>
@@ -54,6 +56,14 @@ namespace TxoooProductUpload.Service.Crawl
         {
             _netClient = netClient;
         }
+        /// <summary>
+        /// 初始化一个 ProductHelper 实例
+        /// </summary>
+        /// <param name="netClient"></param>
+        public ProductHelper(ImageService imageService) : this()
+        {
+            _imageService = imageService;
+        }
         #endregion
 
         /// <summary>
@@ -61,17 +71,17 @@ namespace TxoooProductUpload.Service.Crawl
         /// </summary>
         /// <param name="product">商品信息</param>
         /// <returns>是否处理成功</returns>
-        public void ProcessItem(ref ProductSourceInfo product)
+        public void ProcessItem(ProductSourceInfo product)
         {
             switch (product.SourceType)
             {
                 case SourceType.Txooo:
                     break;
                 case SourceType.Tmall:
-                    _tmallHelper.ProcessItem(_netClient, ref product);
+                    _tmallHelper.ProcessItem(_netClient, _imageService, product);
                     break;
                 case SourceType.Taobao:
-                    _taobaoHelper.ProcessItem(_netClient, ref product);
+                    _taobaoHelper.ProcessItem(_netClient, _imageService, product);
                     break;
                 case SourceType.Alibaba:
                     break;
