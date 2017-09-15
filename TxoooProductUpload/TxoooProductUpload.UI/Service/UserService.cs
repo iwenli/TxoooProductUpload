@@ -107,7 +107,7 @@ namespace TxoooProductUpload.UI.Service
         {
             Task.Run(() =>
             {
-                Utils.OpenUrl(AppConfigInfo.RegisterUrl);
+                Utils.OpenUrl(AppConfigInfo.RegisterUrl, true);
             });
         }
         /// <summary>
@@ -118,7 +118,7 @@ namespace TxoooProductUpload.UI.Service
         {
             Task.Run(() =>
             {
-                Utils.OpenUrl(AppConfigInfo.FindPassWordUrl);
+                Utils.OpenUrl(AppConfigInfo.FindPassWordUrl, true);
             });
         }
 

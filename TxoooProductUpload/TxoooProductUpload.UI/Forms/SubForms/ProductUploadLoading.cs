@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TxoooProductUpload.Common;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Service;
 using TxoooProductUpload.UI.Service.Cache.ProductCache;
@@ -39,7 +40,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         public ProductUploadLoading(string title, int processType) : base(title)
         {
             InitializeComponent();
-            Text = "";
             _processType = processType;
             Load += ProductUploadLoading_Load;
         }
@@ -51,9 +51,14 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             App.Context.ProductService.OnSendMessage += Event_OnSendMessage;
             ProductCache = ProductCacheContext.Instance.Data;
+            await Task.Delay(1000);
             await RunTask();
         }
 
+        /// <summary>
+        /// 启动任务
+        /// </summary>
+        /// <returns></returns>
         async Task RunTask()
         {
             if (InvokeRequired)
@@ -66,12 +71,15 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             }
             if (_processType == 0)
             {
+                MaxTaskCount = ProductCache.WaitUploadImageList.Count;
                 UploadImage();
             }
             else if (_processType == 1)
             {
+                MaxTaskCount = ProductCache.WaitUploadList.Count;
                 UploadProduct();
             }
+            UploadProgressSatate();
         }
 
         #region 上传商品图片
@@ -92,12 +100,13 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                 tasks[i].Start();
                 AppendLogWarning("[全局]线程{0}启动...", i + 1);
             }
+
+            var allCount = ProductCache.WaitUploadImageList.Count;
             Task.Run(async () =>
             {
                 while (true)
                 {
-                    var allCount = ProductCache.WaitUploadImageList.Count;
-                    if (allCount == ProductCache.WaitUploadList.Count + ProductCache.UploadImageFailList.Count)
+                    if (allCount > 0 && allCount == ProductCache.WaitUploadList.Count + ProductCache.UploadImageFailList.Count)
                     {
                         CloseWithResult("图片处理完成...");
                         break;
@@ -137,7 +146,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         lock (ProductCache.WaitUploadList)
                         {
                             ProductCache.WaitUploadList.Add(task);
-                            AppendLogError("[上传图片]{0}商品{1}上传完成...", task.SourceName, task.Id);
+                            AppendLog("{0} 商品 [{1}] 上传图片完成...", task.SourceName, task.Id);
                             if (ProductCache.WaitUploadList.Count > 0 && ProductCache.WaitUploadList.Count % 20 == 0)
                             {
                                 //每成功20个手动释放一下内存
@@ -153,22 +162,22 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         {
                             ProductCache.UploadImageFailList.Add(task);
                         }
-                        AppendLogError("[上传图片]{0}商品{1}异常：{2}", task.SourceName, task.Id, ex.Message);
+                        AppendLogError("{0} 商品 [{1}] 上传图片异常：{2}", task.SourceName, task.Id, ex.Message);
                         Iwenli.LogHelper.LogError(this,
-                            "[上传图片]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
+                            "[上传图片]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message), ex);
                     }
+                    TaskIndex++;
+                    UploadProgressSatate();
                     //等待一分钟 在执行下一个
                     await Task.Delay(1000, token);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Iwenli.LogHelper.LogError(this, "[上传图片]任务异常：{0}".FormatWith(ex.Message), ex);
             }
-
         }
         #endregion
-
 
         #region 上传商品
         /// <summary>
@@ -176,24 +185,30 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// </summary>
         void UploadProduct()
         {
+            AppendLogWarning("[全局]开始上传商品...");
+            AppendLogWarning("[全局]上传线程共{0}个...", _threadCount);
+            _waitUploadImageList = new List<ProductSourceInfo>();
+            _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);
             var cts = new CancellationTokenSource();
             var tasks = new Task[_threadCount];
             for (int i = 0; i < _threadCount; i++)
             {
                 tasks[i] = new Task(() => UploadTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
                 tasks[i].Start();
+                AppendLogWarning("[全局]线程{0}启动...", i + 1);
             }
+
+            var allCount = ProductCache.WaitUploadList.Count;
             Task.Run(async () =>
             {
                 while (true)
                 {
-                    var allCount = ProductCache.WaitUploadList.Count;
-                    if (allCount == ProductCache.UploadFailList.Count + ProductCache.UploadSuccessList.Count)
+                    if (ProductCache.WaitUploadList.Count == 0 && allCount == ProductCache.UploadFailList.Count + ProductCache.UploadSuccessList.Count)
                     {
                         CloseWithResult("商品上传完成...");
                         break;
                     }
-                    await Task.Delay(1000);
+                    await Task.Delay(1500);
                 }
             });
         }
@@ -227,7 +242,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         lock (ProductCache.UploadSuccessList)
                         {
                             ProductCache.UploadSuccessList.Add(task);
-
+                            AppendLog("{0} 商品 {1} 上传成功,新商品链接：{2}...", task.SourceName, task.Id, task.GetTxoooUrl(ApiList.IsTest));
                             if (ProductCache.UploadSuccessList.Count > 0 && ProductCache.UploadSuccessList.Count % 20 == 0)
                             {
                                 //每成功20个手动释放一下内存
@@ -243,16 +258,19 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         {
                             ProductCache.UploadFailList.Add(task);
                         }
+                        AppendLogError("{0} 商品 [{1}] 上传异常：{2}", task.SourceName, task.Id, ex.Message);
                         Iwenli.LogHelper.LogError(this,
                             "[上传商品]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
                     }
+                    TaskIndex++;
+                    UploadProgressSatate();
                     //等待一分钟 在执行下一个
                     await Task.Delay(1000, token);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                Iwenli.LogHelper.LogError(this, "[上传商品]任务异常：{0}".FormatWith(ex.Message), ex);
             }
 
         }
@@ -277,5 +295,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             DialogResult = DialogResult.OK;
             Close();
         }
+
+
     }
 }

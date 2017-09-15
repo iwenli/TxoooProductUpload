@@ -9,11 +9,21 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using TxoooProductUpload.Entities.Product;
+using TxoooProductUpload.Entities.Request;
 
 namespace TxoooProductUpload.UI.Service
 {
     class ProductService : ServiceBase
     {
+        /// <summary>
+        /// 上传商品SKU格式化字符串
+        /// </summary>
+        string skuFormat = @"&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}={6}&property_map_img_{0}={3}&radio_num_{0}={4}&is_default_{0}={5}";
+        /// <summary>
+        /// 详情格式化字符串
+        /// </summary>
+        string detialFormat = @"<p>{0}</p><img src='{1}' />";
+
         public ProductService(TxoooProductUpload.Service.ServiceContext baseContent) : base(baseContent)
         {
             MsgTemplate = "[商品消息]{0}";
@@ -82,7 +92,7 @@ namespace TxoooProductUpload.UI.Service
         //}
 
 
-        #region MyRegion
+        #region 上传商品
         /// <summary>
         /// 上传商品
         /// </summary>
@@ -90,9 +100,88 @@ namespace TxoooProductUpload.UI.Service
         /// <returns></returns>
         public async Task UploadProduct(ProductSourceInfo product)
         {
+            #region 验证
+            if (product.TxoooThumImgList.Count == 0)
+            {
+                string formatMsg = "{0}商品 {1} 主图为空，跳过上传.";
+                new Exception(formatMsg.FormatWith(product.SourceName, product.Id));
+                //await ErrorMessage(formatMsg, product.SourceName, product.Id);
+            }
+            if (product.SkuList.Count == 0)
+            {
+                string formatMsg = "{0}商品 {1} SKU为空，跳过上传.";
+                new Exception(formatMsg.FormatWith(product.SourceName, product.Id));
+                //await ErrorMessage(formatMsg, product.SourceName, product.Id);
+            }
+            if (!product.IsVirtual && !product.IsFreePostage && product.Postage == 0)
+            {
+                string formatMsg = "{0}商品 {1} 不是虚拟商品 并且不包邮 但是邮费为0，跳过上传.";
+                new Exception(formatMsg.FormatWith(product.SourceName, product.Id));
+                //await ErrorMessage(formatMsg, product.SourceName, product.Id);
+            }
+            #endregion
+
+            ProductRequest productRequest = new ProductRequest();
+            #region 转换对象为上传参数对象
+            #region 主图
+            if (product.TxoooThumImgList.Count > 5)
+            {
+                productRequest.ThumImages = product.TxoooThumImgList.Take(5).Join(",");
+            }
+            else
+            {
+                productRequest.ThumImages = product.TxoooThumImgList.Join(",");
+            }
+            #endregion
+
+            #region SKu
+            StringBuilder skuJson = new StringBuilder();
+            for (int i = 0; i < product.SkuList.Count; i++)
+            {
+                productRequest.SkuJsons.AppendFormat(skuFormat, i, product.SkuList[i].Name,
+                    product.SkuList[i].Price * (1 + product.PremiumRatio), product.SkuList[i].TxoooImage, product.SettlementRatio * 100,
+                    (i == 1).ToString().ToLower(), product.SkuList[i].Quantity);
+            }
+            #endregion
+
+            #region 描述
+            for (int i = 0; i < product.TxoooDetailImgList.Count; i++)
+            {
+                productRequest.Details.AppendFormat(detialFormat, string.Empty, product.TxoooDetailImgList[i]);
+            }
+            #endregion
+
+            #region 基本参数
+            productRequest.ClassId = product.ClassId;
+            productRequest.ProductName = product.ProductName;
+            productRequest.RegionCode = product.RegionCode;
+            productRequest.RegionName = product.RegionName;
+            productRequest.NewOld = product.IsNew ? 1 : 2;
+            productRequest.IsVirtual = product.IsVirtual;
+
+            productRequest.IsFreePostage = product.IsFreePostage;
+            productRequest.Refund = product.IsRefund;
+            productRequest.Postage = product.Postage;
+            productRequest.Append = product.Append;
+            productRequest.Limit = product.Limit;
+            productRequest.TypeService = product.ClassType;
+            productRequest.Brand = product.Brand.Trim();
+            productRequest.Shares = product.SubTitle;
+            #endregion 
+            #endregion
             await Task.Delay(1000);
-            await InfoMessage("{0}-商品[{1}]上传成功.", product.SourceName, product.Id);
-        } 
+            var result = await BaseContent.ProductService.UploadProduct(productRequest);
+            if (result.success)
+            {
+                product.Id = Convert.ToInt32(result.msg);
+            }
+            else
+            {
+                string formatMsg = "{0}商品 {1} 上传失败,服务器结果：{2}";
+                new Exception(formatMsg.FormatWith(product.SourceName, product.Id, result.msg));
+            }
+        }
+
         #endregion
 
 
@@ -162,7 +251,7 @@ namespace TxoooProductUpload.UI.Service
                     }
                 }
             }
-        } 
+        }
         #endregion
 
         #region 测试代码

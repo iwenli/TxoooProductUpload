@@ -40,7 +40,7 @@ namespace TxoooProductUpload.Entities.Product
             Id = id;
             ThumImgList = new List<string>();
             DetailImgList = new List<string>();
-            SkuList = new List<ProductSKU>();
+            SkuList = new List<TxoooProductSKU>();
             TxoooThumImgList = new List<string>();
             TxoooDetailImgList = new List<string>();
         }
@@ -113,7 +113,14 @@ namespace TxoooProductUpload.Entities.Product
             }
             get { return _postage; }
         }
-
+        /// <summary>
+        /// 每增加一件增加的邮费
+        /// </summary>
+        public double Append { set; get; }
+        /// <summary>
+        /// 满足包邮的件数
+        /// </summary>
+        public int Limit { set; get; }
         /// <summary>
         /// 显示的价格
         /// </summary>
@@ -209,6 +216,11 @@ namespace TxoooProductUpload.Entities.Product
         #endregion
 
         #region Txooo商品属性
+        /// <summary>
+        /// 上传到txooo商品id
+        /// </summary>
+        public long TxoooId { set; get; }
+
         bool _isNew = true;
         /// <summary>
         /// 是否新品
@@ -242,11 +254,11 @@ namespace TxoooProductUpload.Entities.Product
         /// </summary>
         public string RegionName { set; get; }
 
-        long _classType = 1;
+        int _classType = 1;
         /// <summary>
         /// 商品分类类型 （1产品，2服务）
         /// </summary>
-        public long ClassType { set { _classType = value; } get { return _classType; } }
+        public int ClassType { set { _classType = value; } get { return _classType; } }
 
         /// <summary>
         /// 结算比例
@@ -290,7 +302,7 @@ namespace TxoooProductUpload.Entities.Product
         /// <summary>
         /// Txooo格式的SKu集合
         /// </summary>
-        public List<ProductSKU> SkuList { private set; get; }
+        public List<TxoooProductSKU> SkuList { private set; get; }
 
 
         #region 公共方法
@@ -298,13 +310,14 @@ namespace TxoooProductUpload.Entities.Product
         /// 添加SKU
         /// </summary>
         /// <param name="sku"></param>
-        public void AddSku(ProductSKU sku)
+        public void AddSku(TxoooProductSKU sku)
         {
             if (!sku.Image.IsNullOrEmpty() && !sku.Image.StartsWith("http"))
             {
                 sku.Image = "http:" + sku.Image;
             }
-            if (sku.Price == 0) {
+            if (sku.Price == 0)
+            {
                 sku.Price = ShowPrice;
             }
             SkuList.Add(sku);
@@ -346,58 +359,23 @@ namespace TxoooProductUpload.Entities.Product
                 }
             }
         }
+
+        /// <summary>
+        /// 获取txooo商品链接
+        /// </summary>
+        /// <param name="isTest"></param>
+        /// <returns></returns>
+        public string GetTxoooUrl(bool isTest)
+        {
+            if (TxoooId == 0)
+            {
+                return "";
+            }
+            else
+            {
+                return "https://0.{0}.7518.cn/shop.html?id={1}".FormatWith(isTest ? "t" : "u", TxoooId);
+            }
+        }
         #endregion
-    }
-
-    /// <summary>
-    /// Txooo格式的SKu
-    /// </summary>
-    public class ProductSKU
-    {
-        /// <summary>
-        /// 名称
-        /// </summary>
-        public string Name { set; get; }
-
-        string _image = string.Empty;
-        /// <summary>
-        /// 图片
-        /// </summary>
-        public string Image
-        {
-            set
-            {
-                _image = value;
-            }
-            get
-            {
-                return _image;
-            }
-        }
-        /// <summary>
-        /// 价格
-        /// </summary>
-        public double Price { set; get; }
-        /// <summary>
-        /// 数量
-        /// </summary>
-        public int Quantity { set; get; }
-
-        string _txoooImage = string.Empty;
-        /// <summary>
-        /// Txooo服务器图片地址
-        /// </summary>
-        public string TxoooImage
-        {
-            set
-            {
-                _txoooImage = value;
-            }
-            get
-            {
-                return _txoooImage;
-            }
-        }
-
     }
 }

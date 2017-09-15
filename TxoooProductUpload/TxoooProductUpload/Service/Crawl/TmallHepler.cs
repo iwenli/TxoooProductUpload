@@ -179,7 +179,7 @@ namespace TxoooProductUpload.Service.Crawl
                         var skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
                         var skuId = skuBase.skuId;
 
-                        ProductSKU sku = new ProductSKU();
+                        TxoooProductSKU sku = new TxoooProductSKU();
                         sku.Name = prop1.name;
                         sku.Image = prop1.image ?? "";
                         #region SKU图片直接上传到Txooo中
@@ -270,7 +270,7 @@ namespace TxoooProductUpload.Service.Crawl
                                 #endregion
                             }
 
-                            ProductSKU sku = new ProductSKU();
+                            TxoooProductSKU sku = new TxoooProductSKU();
                             sku.Name = "{0}-{1}".FormatWith(prop0.name, prop1.name);
                             sku.Image = image;
                             sku.TxoooImage = txoooImage;
@@ -398,7 +398,7 @@ namespace TxoooProductUpload.Service.Crawl
                                         #endregion
                                     }
 
-                                    ProductSKU sku = new ProductSKU();
+                                    TxoooProductSKU sku = new TxoooProductSKU();
                                     sku.Name = "{0}-{1}-{2}-{3}".FormatWith(prop0.name, prop1.name, prop2.name, prop3.name);
                                     sku.Image = image;
                                     sku.TxoooImage = txoooImage;

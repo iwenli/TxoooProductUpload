@@ -120,6 +120,8 @@
     <Compile Include="Common\Serialize.cs" />
     <Compile Include="Entities\Product\ProductSourceInfo.cs" />
     <Compile Include="Entities\Product\ProductSourceType.cs" />
+    <Compile Include="Entities\Product\TxoooProductSKU.cs" />
+    <Compile Include="Entities\Request\ProductRequest.cs" />
     <Compile Include="Entities\Resporse\ResporseResultCode.cs" />
     <Compile Include="Entities\Resporse\TaoBaoProductDetailResult.cs" />
     <Compile Include="Entities\Resporse\TaoBaoProductResult.cs" />

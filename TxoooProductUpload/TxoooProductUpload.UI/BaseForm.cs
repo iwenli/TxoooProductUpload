@@ -63,9 +63,9 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         protected void AppendLogWarning(string message, params object[] args)
         {
-            if (LogControl.InvokeRequired)
+            if (InvokeRequired)
             {
-                LogControl.Invoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     AppendLog(Color.Violet, message, args);
                 }));
@@ -80,9 +80,9 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         protected void AppendLogError(string message, params object[] args)
         {
-            if (LogControl.InvokeRequired)
+            if (InvokeRequired)
             {
-                LogControl.Invoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     AppendLog(Color.Red, message, args);
                 }));
@@ -98,9 +98,9 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         protected void AppendLog(Color fontColor, string message, params object[] args)
         {
-            if (LogControl.InvokeRequired)
+            if (InvokeRequired)
             {
-                LogControl.Invoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     AppendLog(fontColor, message, args);
                 }));
@@ -116,9 +116,9 @@ namespace TxoooProductUpload.UI
         /// <param name="args"></param>
         protected void AppendLog(string message, params object[] args)
         {
-            if (LogControl.InvokeRequired)
+            if (InvokeRequired)
             {
-                LogControl.Invoke(new Action(() =>
+                Invoke(new Action(() =>
                 {
                     AppendLog(message, args);
                 }));

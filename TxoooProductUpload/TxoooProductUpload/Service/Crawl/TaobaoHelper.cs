@@ -175,7 +175,7 @@ namespace TxoooProductUpload.Service.Crawl
             if (propNodes == null)
             {
                 //没有属性  生成一个
-                ProductSKU sku = new ProductSKU();
+                TxoooProductSKU sku = new TxoooProductSKU();
                 sku.Name = "默认规格";
                 sku.Quantity = _defaultQuantity;
                 product.AddSku(sku);
@@ -228,7 +228,7 @@ namespace TxoooProductUpload.Service.Crawl
 
                             var skuPath = ";{0};".FormatWith(prop0Id);
 
-                            ProductSKU sku = new ProductSKU();
+                            TxoooProductSKU sku = new TxoooProductSKU();
                             sku.Name = "{0}".FormatWith(prop0Value);
                             sku.Image = image ?? "";
                             sku.TxoooImage = txoooImage;
@@ -325,7 +325,7 @@ namespace TxoooProductUpload.Service.Crawl
 
                                 var skuPath = ";{0};{1};".FormatWith(prop0Id, prop1Id);
 
-                                ProductSKU sku = new ProductSKU();
+                                TxoooProductSKU sku = new TxoooProductSKU();
                                 sku.Name = "{0}-{1}".FormatWith(prop0Value, prop1Value);
                                 sku.Image = image ?? "";
                                 sku.TxoooImage = txoooImage;
@@ -446,7 +446,7 @@ namespace TxoooProductUpload.Service.Crawl
 
                                     var skuPath = ";{0};{1};{2};".FormatWith(prop0Id, prop1Id, prop2Id);
 
-                                    ProductSKU sku = new ProductSKU();
+                                    TxoooProductSKU sku = new TxoooProductSKU();
                                     sku.Name = "{0}-{1}-{2}".FormatWith(prop0Value, prop1Value, prop2Value);
                                     sku.Image = image ?? "";
 
@@ -579,7 +579,7 @@ namespace TxoooProductUpload.Service.Crawl
 
                                         var skuPath = ";{0};{1};{2};{3};".FormatWith(prop0Id, prop1Id, prop2Id, prop3Id);
 
-                                        ProductSKU sku = new ProductSKU();
+                                        TxoooProductSKU sku = new TxoooProductSKU();
                                         sku.Name = "{0}-{1}-{2}-{3}".FormatWith(prop0Value, prop1Value, prop2Value, prop3Value);
                                         sku.Image = image ?? "";
 

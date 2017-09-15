@@ -75,9 +75,9 @@ namespace TxoooProductUpload.UI.CefGlue
                 a();
         }
 
-        protected virtual WlCefClient CreateWebClient()
+        protected virtual WebCefClient CreateWebClient()
         {
-            return new WlCefClient(this);
+            return new WebCefClient(this);
         }
 
         protected override void OnHandleCreated(EventArgs e)

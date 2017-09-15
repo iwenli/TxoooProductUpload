@@ -95,7 +95,7 @@
             this.LoadMessage.Name = "LoadMessage";
             this.LoadMessage.Size = new System.Drawing.Size(467, 38);
             this.LoadMessage.TabIndex = 3;
-            this.LoadMessage.Text = "正在执行操作,请稍等...";
+            this.LoadMessage.Text = "当前任务进度：0/0";
             this.LoadMessage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // gifBox1
@@ -126,7 +126,9 @@
             this.ShowDrawIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "";
+            this.Text = "正在执行操作,请稍等...";
+            this.TitleCenter = true;
+            this.TitleOffset = new System.Drawing.Point(56, 0);
             this.skinPanel1.ResumeLayout(false);
             this.skinPanel2.ResumeLayout(false);
             this.ResumeLayout(false);

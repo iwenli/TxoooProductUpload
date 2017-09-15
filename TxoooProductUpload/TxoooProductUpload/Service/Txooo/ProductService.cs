@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TxoooProductUpload.Common;
+using TxoooProductUpload.Entities.Request;
 using TxoooProductUpload.Service.Entities;
 using TxoooProductUpload.Service.Entities.Commnet;
 using TxoooProductUpload.Service.Entities.Web;
@@ -101,22 +102,43 @@ namespace TxoooProductUpload.Service
             }
              
             product.product_id = Convert.ToInt32(stCtx.Result.msg);
-            try
-            {
-                DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertProduct, product.ProductName.Replace("'", "\""), product.Source, product.SourceUrl, product.ShopName.Replace("'", "\""),
-                 product.DetailHtml.Replace("'", "\""), product.ProductPrice, product.product_property, product.Location, product.SalesCount == null ? "0" : product.SalesCount, product.RateTotals == null ? "0" : product.RateTotals, product.product_id,
-                 product.product_imgs, product.product_details.Replace("'", "\""), product.product_brand.Replace("'", "\""), ServiceContext.Session.Token.userid));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(string.Format("商品信息入库失败，但是已经上传成功，商品ID是：{0}{1}[异常]{2}",
-                    stCtx.Result.msg, Environment.NewLine, ex.Message));
-            }
+            //try
+            //{
+            //    DbHelperOleDb.ExecuteSql(string.Format(_sqlFormatInsertProduct, product.ProductName.Replace("'", "\""), product.Source, product.SourceUrl, product.ShopName.Replace("'", "\""),
+            //     product.DetailHtml.Replace("'", "\""), product.ProductPrice, product.product_property, product.Location, product.SalesCount == null ? "0" : product.SalesCount, product.RateTotals == null ? "0" : product.RateTotals, product.product_id,
+            //     product.product_imgs, product.product_details.Replace("'", "\""), product.product_brand.Replace("'", "\""), ServiceContext.Session.Token.userid));
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new Exception(string.Format("商品信息入库失败，但是已经上传成功，商品ID是：{0}{1}[异常]{2}",
+            //        stCtx.Result.msg, Environment.NewLine, ex.Message));
+            //}
 
+            return stCtx.Result;
+        }
+
+        /// <summary>
+        /// 上传商品
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public async Task<WebResponseResult<string>> UploadProduct(ProductRequest product)
+        {
+            var stCtx = NetClient.Create<WebResponseResult<string>>(HttpMethod.Post, ApiList.AddProduct4, data: product.ToString());
+            await stCtx.SendAsync();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接");
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            product.Id = Convert.ToInt32(stCtx.Result.msg);
             return stCtx.Result;
         }
         #endregion
 
-        
+
     }
 }

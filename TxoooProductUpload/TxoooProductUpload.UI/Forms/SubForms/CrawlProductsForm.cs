@@ -39,7 +39,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// <summary>
         /// 商品缓存
         /// </summary>
-        ProductCacheData ProductCache { set; get; } 
+        ProductCacheData ProductCache { set; get; }
         #endregion
 
         public CrawlProductsForm()
@@ -127,6 +127,9 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             tssBtnNext.Click += ControlBtn_Click;
             tssBtnPrevious.Click += ControlBtn_Click;
+            tssBtnNew.Click += ControlBtn_Click;
+            tssBtnBack.Click += ControlBtn_Click;
+            tssBtnRevert.Click += ControlBtn_Click;
         }
 
 
@@ -141,7 +144,29 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                 case "next":
                     NextProcess();
                     break;
+                case "new":
+                    Init();
+                    break;
+                case "back":
+                case "revert":
+                    MessageBoxEx.Show("暂不支持此功能...");
+                    break;
             }
+        }
+
+        /// <summary>
+        /// 重新开始
+        /// </summary>
+        void Init()
+        {
+            ProductCacheContext.Instance.Save();
+            ProductCacheContext.Instance.Init();
+            bs.DataSource = null;
+            ProductCache = ProductCacheContext.Instance.Data;
+            bs.DataSource = ProductCache.WaitProcessList;
+            tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
+            _processResult.Visible = _process1.Visible = tssBtnPrevious.Enabled = false;
+            OpenNewUrl("www.taobao.com");
         }
 
         /// <summary>
@@ -190,7 +215,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             _process1.Visible = skinSplitContainer1.Visible = false;
             _processResult.Visible = true;
             //tssBtnNext.Enabled = tssBtnPrevious.Enabled = 
-
             ProductCacheContext.Instance.Save();
         }
 
@@ -416,7 +440,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// <param name="url"></param>
         void OpenNewUrl(string url)
         {
-            webBrowser.Browser.GetMainFrame().LoadUrl(tsTxtUrl.Text);
+            webBrowser.Browser.GetMainFrame().LoadUrl(url);
         }
         #endregion
 

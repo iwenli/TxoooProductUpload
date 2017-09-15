@@ -328,6 +328,7 @@ namespace TxoooProductUpload.UI
         {
             if (_main != null)
             {
+                CefGlue.WlCefGlueLoader.ShutDownCEF();
                 _main.Dispose();
                 _main.Close();
             }
@@ -336,7 +337,6 @@ namespace TxoooProductUpload.UI
                 this.Dispose();
                 this.Close();
             }
-            TxoooProductUpload.UI.CefGlue.WlCefGlueLoader.ShutDownCEF();
             Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
             Application.ExitThread();//释放所有线程　
         }
