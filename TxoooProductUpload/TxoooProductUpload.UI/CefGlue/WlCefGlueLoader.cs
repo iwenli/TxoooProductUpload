@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Xilium.CefGlue;
 
 namespace TxoooProductUpload.UI.CefGlue
@@ -29,8 +31,8 @@ namespace TxoooProductUpload.UI.CefGlue
 
         #endregion
 
-        public static int InitCEF()
-        {
+        public static int InitCEF(string[] args)
+        { 
             try
             {
                 //此行代码用于加载CEF的运行时
@@ -49,10 +51,7 @@ namespace TxoooProductUpload.UI.CefGlue
                 return 3;
             }
 
-            //此行代码可以收集命令行参数，用于传递给CEF浏览器
-            string[] args = new string[0];
             var mainArgs = new CefMainArgs(args);
-
             var app = new WlCefApp();
 
             //用于启动第二个进程，至于用第二个进程做什么，我没有深入研究过（可以是浏览器的第二个进程、也可以是一个可执行文件的）
@@ -63,6 +62,11 @@ namespace TxoooProductUpload.UI.CefGlue
             {
                 return exitCode;
             }
+
+            var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+            var localFolder = Path.GetDirectoryName(new Uri(codeBase).LocalPath);
+            var browserProcessPath = CombinePaths(localFolder, "..", "..", "..",
+                "CefGlue.Demo.WinForms", "bin", "Release", "Xilium.CefGlue.Demo.WinForms.exe");
 
             var settings = new CefSettings
             {
@@ -79,12 +83,12 @@ namespace TxoooProductUpload.UI.CefGlue
                 //UserAgent= "Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Mobile Safari/537.36",
                 //UserAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1",
                 LogSeverity = CefLogSeverity.Disable,
-                LogFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"log\CefGlue.log"),
+                LogFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"log\CefGlue.log"), 
+                CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"cache"),
 
-                //CachePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"cache"),
                 //CommandLineArgsDisabled = true,
-                Locale = "zh_CN",
-                LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"locales"),
+                //Locale = "zh_CN",
+                //LocalesDirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"locales"),
                 //RemoteDebuggingPort = 7789,
 
             };
@@ -103,11 +107,6 @@ namespace TxoooProductUpload.UI.CefGlue
             return 0;
         }
 
-        private static string GetPath(string v)
-        {
-            return Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, v));
-        }
-
         public static void ShutDownCEF()
         {
             try
@@ -115,9 +114,19 @@ namespace TxoooProductUpload.UI.CefGlue
                 //主进程结束时，要释放CEF的资源，并结束浏览器的进程。
                 CefRuntime.Shutdown();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
             }
+        }
+
+        public static string CombinePaths(params string[] paths)
+        {
+            if (paths == null)
+            {
+                throw new ArgumentNullException("paths");
+            }
+            return paths.Aggregate(Path.Combine);
         }
     }
 }

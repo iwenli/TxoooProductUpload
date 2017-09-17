@@ -12,6 +12,7 @@ namespace TxoooProductUpload.UI.Common
     /// </summary>
     public class Utils
     {
+        static Random _random = new Random();
 
         /// <summary>
         /// 打开网址
@@ -39,6 +40,17 @@ namespace TxoooProductUpload.UI.Common
                 Iwenli.LogHelper.GetLogger("Utils").Error(ex.Message, ex);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 获取随机数据
+        /// </summary>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
+        public static int RandomInt(int minValue = 1000, int maxValue = 5000)
+        {
+            return _random.Next(minValue, maxValue);
         }
     }
 }

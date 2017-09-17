@@ -139,7 +139,7 @@ namespace TxoooProductUpload.UI.Service
             for (int i = 0; i < product.SkuList.Count; i++)
             {
                 productRequest.SkuJsons.AppendFormat(skuFormat, i, product.SkuList[i].Name,
-                    product.SkuList[i].Price * (1 + product.PremiumRatio), product.SkuList[i].TxoooImage, product.SettlementRatio * 100,
+                    product.SkuList[i].Price / (1 - product.PremiumRatio), product.SkuList[i].TxoooImage, product.SettlementRatio * 100,
                     (i == 1).ToString().ToLower(), product.SkuList[i].Quantity);
             }
             #endregion
@@ -171,14 +171,14 @@ namespace TxoooProductUpload.UI.Service
             #endregion
             await Task.Delay(1000);
             var result = await BaseContent.ProductService.UploadProduct(productRequest);
-            if (result.success)
-            {
-                product.Id = Convert.ToInt32(result.msg);
-            }
-            else
+            if (!result.success)
             {
                 string formatMsg = "{0}商品 {1} 上传失败,服务器结果：{2}";
                 new Exception(formatMsg.FormatWith(product.SourceName, product.Id, result.msg));
+            }
+            else
+            {
+                product.TxoooId = Convert.ToInt64(result.msg);
             }
         }
 

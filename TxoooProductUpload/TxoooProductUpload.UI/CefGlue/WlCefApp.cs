@@ -14,15 +14,15 @@ namespace TxoooProductUpload.UI.CefGlue
     /// </summary>
     internal sealed class WlCefApp : CefApp
     {
-        /// <summary>
-        /// Browser进程处理类
-        /// </summary>
-        private CefBrowserProcessHandler _browserProcessHandler = new WlCefBrowserProcessHandler();
+        ///// <summary>
+        ///// Browser进程处理类
+        ///// </summary>
+        //private CefBrowserProcessHandler _browserProcessHandler = new WlCefBrowserProcessHandler();
 
-        /// <summary>
-        /// Render进程处理类
-        /// </summary>
-        private CefRenderProcessHandler _renderProcessHandler = new WlCefRenderProcessHandler();
+        ///// <summary>
+        ///// Render进程处理类
+        ///// </summary>
+        //private CefRenderProcessHandler _renderProcessHandler = new WlCefRenderProcessHandler();
 
         //OnBeforeCommandLineProcessing 函数在你的程序启动 CEF 和 Chromium 之前给你提供了修改命令行参数的机会；
         protected override void OnBeforeCommandLineProcessing(string processType, CefCommandLine commandLine)
@@ -43,24 +43,24 @@ namespace TxoooProductUpload.UI.CefGlue
             // incorrectly (relative to main module instead of libcef.so module).
             // Once issue http://code.google.com/p/chromiumembedded/issues/detail?id=668 will be resolved
             // this code can be removed.
-            if (CefRuntime.Platform == CefRuntimePlatform.Linux)
-            {
-                var path = new Uri(Assembly.GetEntryAssembly().CodeBase).LocalPath;
-                path = Path.GetDirectoryName(path);
+            //if (CefRuntime.Platform == CefRuntimePlatform.Linux)
+            //{
+            //    var path = new Uri(Assembly.GetEntryAssembly().CodeBase).LocalPath;
+            //    path = Path.GetDirectoryName(path);
 
-                commandLine.AppendSwitch("resources-dir-path", path);
-                commandLine.AppendSwitch("locales-dir-path", Path.Combine(path, "locales"));
-            }
+            //    commandLine.AppendSwitch("resources-dir-path", path);
+            //    commandLine.AppendSwitch("locales-dir-path", Path.Combine(path, "locales"));
+            //}
         }
 
-        protected override CefBrowserProcessHandler GetBrowserProcessHandler()
-        {
-            return _browserProcessHandler;
-        }
+        //protected override CefBrowserProcessHandler GetBrowserProcessHandler()
+        //{
+        //    return _browserProcessHandler;
+        //}
 
-        protected override CefRenderProcessHandler GetRenderProcessHandler()
-        {
-            return _renderProcessHandler;
-        }
+        //protected override CefRenderProcessHandler GetRenderProcessHandler()
+        //{
+        //    return _renderProcessHandler;
+        //}
     }
 }

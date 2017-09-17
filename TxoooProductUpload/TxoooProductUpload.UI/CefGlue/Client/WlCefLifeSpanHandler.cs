@@ -19,26 +19,26 @@ namespace TxoooProductUpload.UI.CefGlue
             _core = core;
         }
 
-        protected override void OnAfterCreated(CefBrowser browser)
-        {
-            base.OnAfterCreated(browser);
+  //      protected override void OnAfterCreated(CefBrowser browser)
+  //      {
+  //          base.OnAfterCreated(browser);
 
-        	_core.InvokeIfRequired(() => _core.OnBrowserAfterCreated(browser));
-        }
+  //      	_core.InvokeIfRequired(() => _core.OnBrowserAfterCreated(browser));
+  //      }
 
-        protected override bool DoClose(CefBrowser browser)
-        {
-            // TODO: ... dispose core
-            return false;
-        }
+  //      protected override bool DoClose(CefBrowser browser)
+  //      {
+  //          // TODO: ... dispose core
+  //          return false;
+  //      }
 
-		protected override void OnBeforeClose(CefBrowser browser)
-		{
-			if (_core.InvokeRequired)
-				_core.BeginInvoke((Action)_core.OnBeforeClose);
-			else
-				_core.OnBeforeClose();
-		}
+		//protected override void OnBeforeClose(CefBrowser browser)
+		//{
+		//	if (_core.InvokeRequired)
+		//		_core.BeginInvoke((Action)_core.OnBeforeClose);
+		//	else
+		//		_core.OnBeforeClose();
+		//}
 
         protected override bool OnBeforePopup(CefBrowser browser, CefFrame frame, string targetUrl, string targetFrameName, CefWindowOpenDisposition targetDisposition, bool userGesture, CefPopupFeatures popupFeatures, CefWindowInfo windowInfo, ref CefClient client, CefBrowserSettings settings, ref bool noJavascriptAccess)
 		{

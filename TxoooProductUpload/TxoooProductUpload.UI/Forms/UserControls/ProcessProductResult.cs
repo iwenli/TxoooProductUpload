@@ -56,11 +56,10 @@ namespace TxoooProductUpload.UI.Forms.UserControls
                 ProductBindSource.DataSource = null;
                 ProductBindSource.DataSource = ProductCache.UploadFailList;
                 ProductCache.WaitUploadList.Clear();
-                MessageBox.Show("本次上传商品{1}个{0},成功{2}个{0},失败{3}个.".
+                MessageBoxEx.Show("本次上传商品{1}个{0},成功{2}个{0},失败{3}个.".
                     FormatWith("", allCount, ProductCache.UploadSuccessList.Count,
                     ProductCache.UploadFailList.Count));
             }
-            loadForm.ShowDialog(this);
         }
 
         /// <summary>

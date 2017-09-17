@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PhoneBorwser));
             this.paLweb = new System.Windows.Forms.Panel();
-            this.webBrowser = new TxoooProductUpload.UI.CefGlue.CefWebBrowser();
+            this.webBrowser = new Xilium.CefGlue.WindowsForms.CefWebBrowser();
             this.cms = new CCWin.SkinControl.SkinContextMenuStrip();
             this.cmsGo = new System.Windows.Forms.ToolStripMenuItem();
             this.cmsIn = new System.Windows.Forms.ToolStripMenuItem();
@@ -149,7 +149,7 @@
         private System.Windows.Forms.Panel paLweb;
         private CCWin.SkinControl.SkinContextMenuStrip cms;
         private System.Windows.Forms.ToolStripMenuItem cmsGo;
-        private TxoooProductUpload.UI.CefGlue.CefWebBrowser webBrowser;
+        private Xilium.CefGlue.WindowsForms.CefWebBrowser webBrowser;
         private System.Windows.Forms.ToolStripMenuItem cmsIn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem cmsClose;

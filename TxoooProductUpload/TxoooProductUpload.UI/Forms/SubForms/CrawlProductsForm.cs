@@ -164,7 +164,8 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             bs.DataSource = null;
             ProductCache = ProductCacheContext.Instance.Data;
             bs.DataSource = ProductCache.WaitProcessList;
-            tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
+            _processResult.tsBtnUpload.Enabled = _processResult.tsBtnUploadImageAllSelect.Enabled
+            = tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
             _processResult.Visible = _process1.Visible = tssBtnPrevious.Enabled = false;
             OpenNewUrl("www.taobao.com");
         }
@@ -364,7 +365,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             webBrowser.AddressChanged += WebBrowser_AddressChanged;
 
             webBrowser.LoadEnd += WebBrowser_LoadEnd;
-
             tsBtnPageProducts.Click += TsBtnTest_Click;
         }
 
@@ -552,7 +552,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         _process1.ProcessBar.Value = value;
                     }));
                     //等待一分钟 在执行下一个
-                    await Task.Delay(1000, token);
+                    await Task.Delay(Utils.RandomInt(), token);
                 }
             }
             catch (Exception ex)

@@ -188,6 +188,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             AppendLogWarning("[全局]开始上传商品...");
             AppendLogWarning("[全局]上传线程共{0}个...", _threadCount);
             _waitUploadImageList = new List<ProductSourceInfo>();
+            var allCount = ProductCache.WaitUploadList.Count;
             _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);
             var cts = new CancellationTokenSource();
             var tasks = new Task[_threadCount];
@@ -196,9 +197,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                 tasks[i] = new Task(() => UploadTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
                 tasks[i].Start();
                 AppendLogWarning("[全局]线程{0}启动...", i + 1);
-            }
-
-            var allCount = ProductCache.WaitUploadList.Count;
+            } 
             Task.Run(async () =>
             {
                 while (true)

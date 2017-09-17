@@ -326,19 +326,26 @@ namespace TxoooProductUpload.UI
         }
         void Exit()
         {
-            if (_main != null)
+            try
+            {
+                if (_main != null)
+                {
+                    _main.Dispose();
+                    _main.Close();
+                }
+                else
+                {
+                    this.Dispose();
+                    this.Close();
+                }
+            }
+            catch (Exception ex)
             {
                 CefGlue.WlCefGlueLoader.ShutDownCEF();
-                _main.Dispose();
-                _main.Close();
+                Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
+                Application.ExitThread();//释放所有线程
             }
-            else
-            {
-                this.Dispose();
-                this.Close();
-            }
-            Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
-            Application.ExitThread();//释放所有线程　
+            　
         }
         #endregion
 

@@ -92,24 +92,6 @@
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CefGlue\Browser\SourceVisitor.cs" />
-    <Compile Include="CefGlue\CefWebBrowser.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CefGlue\Client\WlCefClient.cs" />
-    <Compile Include="CefGlue\Client\WlCefDisplayHandler.cs" />
-    <Compile Include="CefGlue\Client\WlCefLifeSpanHandler.cs" />
-    <Compile Include="CefGlue\Client\WlCefLoadHandler.cs" />
-    <Compile Include="CefGlue\Client\WlCefRequestHandler.cs" />
-    <Compile Include="CefGlue\Browser\WlCefBrowserProcessHandler.cs" />
-    <Compile Include="CefGlue\Render\WlCefRenderProcessHandler.cs" />
-    <Compile Include="CefGlue\V8\Code\BindingHandler.cs" />
-    <Compile Include="CefGlue\V8\Code\CefRuntimeEx.cs" />
-    <Compile Include="CefGlue\V8\Code\PropertyAccessor.cs" />
-    <Compile Include="CefGlue\V8\Code\StringUtil.cs" />
-    <Compile Include="CefGlue\V8\Code\TypeUtil.cs" />
-    <Compile Include="CefGlue\V8\Code\UnmanagedWrapper.cs" />
-    <Compile Include="CefGlue\V8\ExampleObject.cs" />
-    <Compile Include="CefGlue\V8\TxCallJSEvent.cs" />
     <Compile Include="CefGlue\WlCefApp.cs" />
     <Compile Include="CefGlue\WlCefGlueLoader.cs" />
     <Compile Include="Common\AppConfigInfo.cs" />
@@ -135,12 +117,6 @@
     <Compile Include="Forms\LoadingForm.Designer.cs">
       <DependentUpon>LoadingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MinForms\PhoneBorwser.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MinForms\PhoneBorwser.Designer.cs">
-      <DependentUpon>PhoneBorwser.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\Login\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,6 +140,12 @@
     </Compile>
     <Compile Include="Forms\MinForms\MsgBox.designer.cs">
       <DependentUpon>MsgBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MinForms\PhoneBorwser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MinForms\PhoneBorwser.Designer.cs">
+      <DependentUpon>PhoneBorwser.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SubForms\CrawlProductsForm.cs">
       <SubType>Form</SubType>
@@ -219,6 +201,12 @@
     <Compile Include="Service\Entities\CrawlType.cs" />
     <Compile Include="Service\Entities\LoginListInfo.cs" />
     <Compile Include="Service\ServiceContext.cs" />
+    <Compile Include="Test\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Test\MainForm.designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Test\Msgtest.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,6 +230,9 @@
     <Compile Include="Test\TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Test\ToolStripSpringTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -253,9 +244,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MinForms\PhoneBorwser.resx">
-      <DependentUpon>PhoneBorwser.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Login\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -275,6 +263,9 @@
     <EmbeddedResource Include="Forms\MinForms\MsgBox.resx">
       <DependentUpon>MsgBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MinForms\PhoneBorwser.resx">
+      <DependentUpon>PhoneBorwser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\CrawlProductsForm.resx">
       <DependentUpon>CrawlProductsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -291,6 +282,9 @@
       <DependentUpon>ProcessProductResult.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Test\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Test\Msgtest.resx">
@@ -394,15 +388,17 @@
       <Project>{2dc377b9-a78d-4ed1-ac1e-a61bdd040853}</Project>
       <Name>TxoooProductUpload</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Xilium.CefGlue\CefGlue.WindowsForms\CefGlue.WindowsForms.csproj">
+      <Project>{679af14d-8ff5-4608-bff8-ec1a7ded04a4}</Project>
+      <Name>CefGlue.WindowsForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Xilium.CefGlue\CefGlue\CefGlue.csproj">
+      <Project>{703ff300-34b9-48d4-a5d6-e741f48d5f95}</Project>
+      <Name>CefGlue</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="bin\Debug\Wave.dll" />
-    <Content Include="CefGlue\V8\ExampleObject.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="CefGlue\V8\TxCallJSEvent.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="icon.ico" />
     <Content Include="lib\cef\d3dcompiler_43.dll" />
     <Content Include="lib\cef\d3dcompiler_47.dll" />

@@ -25,7 +25,7 @@ namespace TxoooProductUpload.UI
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -35,12 +35,11 @@ namespace TxoooProductUpload.UI
             ////Application.Run(new Msgtest());
             //Application.Run(new Test.TestForm());
 
-            if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF() == 0)
+            if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF(args) == 0)
             {
                 try
                 {
                     Context = Service.ServiceContext.Instance;
-                    JsonConvertSettings();
                     //TxoooProductUpload.UI.Main.MainForm()
                     Application.Run(new LoginForm());
                     //Application.Run(new CrawlProductsForm());
@@ -48,10 +47,11 @@ namespace TxoooProductUpload.UI
                 catch (Exception ex)
                 {
                     LogHelper.GetLogger("App").LogError(ex.Message, ex);
-                    CefGlue.WlCefGlueLoader.ShutDownCEF();
-                    Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
-                    Application.ExitThread();//释放所有线程　
                 }
+
+                CefGlue.WlCefGlueLoader.ShutDownCEF();
+                Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
+                Application.ExitThread();//释放所有线程　
             }
         }
 
