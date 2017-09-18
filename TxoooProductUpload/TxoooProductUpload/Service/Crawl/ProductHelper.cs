@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TxoooProductUpload.Entities;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Network;
 
@@ -72,47 +73,61 @@ namespace TxoooProductUpload.Service.Crawl
         /// <returns>是否处理成功</returns>
         public void ProcessItem(ProductSourceInfo product)
         {
-            switch (product.SourceType)
+            try
             {
-                case SourceType.Txooo:
-                    break;
-                case SourceType.Tmall:
-                    _tmallHelper.ProcessItem(_netClient, _imageService, product);
-                    break;
-                case SourceType.Taobao:
-                    _taobaoHelper.ProcessItem(_netClient, _imageService, product);
-                    break;
-                case SourceType.Alibaba:
-                    break;
-                case SourceType.Jingdong:
-                    break;
-                default:
-                    break;
+                switch (product.SourceType)
+                {
+                    case SourceType.Txooo:
+                        break;
+                    case SourceType.Tmall:
+                        _tmallHelper.ProcessItem(_netClient, _imageService, product);
+                        break;
+                    case SourceType.Taobao:
+                        _taobaoHelper.ProcessItem(_netClient, _imageService, product);
+                        break;
+                    case SourceType.Alibaba:
+                        break;
+                    case SourceType.Jingdong:
+                        break;
+                    default:
+                        break;
+                }
+                product.IsProcess = true;
             }
-            product.IsProcess = true;
-        }
+            catch (Exception ex)
+            {
+                Iwenli.LogHelper.LogError(this,
+                        "[详情]{0}商品{1}异常：{2}".FormatWith(product.SourceName, product.Id, ex.Message));
+            } 
+       } 
 
         /// <summary>
-        /// 从搜索结果页面提取商品基本信息集合
+        /// 从页面提取商品信息
         /// </summary>
-        /// <param name="document">当前搜素结果dom对象</param>
-        /// <param name="type">当前搜素来源类型</param>
+        /// <param name="document">当前页面dom对象</param>
+        /// <param name="type">当前页面类型</param>
         /// <returns></returns>
-        public List<ProductSourceInfo> GetProductListFormSearch(HtmlDocument document, SourceType type)
+        public List<ProductSourceInfo> GetProductsRromDocument(HtmlDocument document, CrawlType type)
         {
-            switch (type)
+            try
             {
-                case SourceType.Txooo:
-                    break;
-                case SourceType.Tmall:
-                    return _tmallHelper.GetProductListFormSearch(document);
-                case SourceType.Taobao:
-                    return _taobaoHelper.GetProductListFormSearch(document);
-                case SourceType.Alibaba:
-                    break;
-                case SourceType.Jingdong:
-                    break;
+                switch (type)
+                {
+                    case CrawlType.TaoBaoSearch:
+                        return _taobaoHelper.GetProductListFormSearch(document);
+                    case CrawlType.TaoBaoItem:
+                        return _taobaoHelper.GetProductbyHtml(document);
+                    case CrawlType.TmallItem:
+                        return _tmallHelper.GetProductbyHtml(document);
+                }
             }
+            catch (Exception ex)
+            {
+
+                Iwenli.LogHelper.LogError(this,
+                        "从{0}页面提取商品信息异常,页面来源：{1}".FormatWith(type, document.ToString()), ex);
+            }
+           
             return new List<ProductSourceInfo>();
         }
     }

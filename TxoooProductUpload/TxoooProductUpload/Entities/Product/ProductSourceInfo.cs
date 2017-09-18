@@ -35,9 +35,15 @@ namespace TxoooProductUpload.Entities.Product
         /// 初始化一个 ProductSourceInfo 对象
         /// </summary>
         /// <param name="id"></param>
-        public ProductSourceInfo(long id)
+        public ProductSourceInfo(long id) : this()
         {
             Id = id;
+        }
+        /// <summary>
+        /// 初始化一个 ProductSourceInfo 对象
+        /// </summary>
+        public ProductSourceInfo()
+        {
             ThumImgList = new List<string>();
             DetailImgList = new List<string>();
             SkuList = new List<TxoooProductSKU>();

@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\Serialize.cs" />
+    <Compile Include="Entities\CrawlType.cs" />
     <Compile Include="Entities\Product\ProductSourceInfo.cs" />
     <Compile Include="Entities\Product\ProductSourceType.cs" />
     <Compile Include="Entities\Product\TxoooProductSKU.cs" />

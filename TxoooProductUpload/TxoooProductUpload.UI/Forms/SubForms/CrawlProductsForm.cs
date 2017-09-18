@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TxoooProductUpload.Entities;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Service.Crawl;
 using TxoooProductUpload.UI.CefGlue.Browser;
@@ -16,6 +17,7 @@ using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.UI.Common.Extended.Winform;
 using TxoooProductUpload.UI.Service.Cache.ProductCache;
 using TxoooProductUpload.UI.Service.Entities;
+using Xilium.CefGlue.WindowsForms;
 
 namespace TxoooProductUpload.UI.Forms.SubForms
 {
@@ -26,6 +28,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
     public partial class CrawlProductsForm : Form
     {
         #region 变量
+        CefWebBrowser _webBrowser;
         UserControls.ProcessProduct _process1;
         UserControls.ProcessProductResult _processResult;
 
@@ -50,21 +53,17 @@ namespace TxoooProductUpload.UI.Forms.SubForms
 
             Load += CrawlProductsForm_Load;
 
-            #region 后续处理界面
-            _process1 = new UserControls.ProcessProduct();
-            _process1.Dock = DockStyle.Fill;
-            _process1.Visible = false;
-            this.Controls.Add(_process1);
 
-            _processResult = new UserControls.ProcessProductResult();
-            _processResult.Dock = DockStyle.Fill;
-            _processResult.Visible = false;
-            this.Controls.Add(_processResult);
-            #endregion
         }
 
+        /// <summary>
+        /// 页面加载时发生
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CrawlProductsForm_Load(object sender, EventArgs e)
         {
+            InitUI();
             InitMenuEvent();
             InitDgv();
             InitControlBtnEvent();
@@ -76,20 +75,33 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             tsTxtUrl.TextChanged += TsTxtUrl_TextChanged;
         }
 
-        private void TsBtnAutoAll_Click(object sender, EventArgs e)
+        /// <summary>
+        /// 初始化页面控件
+        /// </summary>
+        void InitUI()
         {
-            //NextPageList();
-            if (tsBtnAutoAll.Text == "自动(&A)")
-            {
-                _isAuto = true;
-                tsBtnAutoAll.Text = "暂停(&S)";
-                CrawProductBase();
-            }
-            else
-            {
-                _isAuto = false;
-                tsBtnAutoAll.Text = "自动(&A)";
-            }
+            #region 浏览器
+            _webBrowser = new CefWebBrowser();
+            _webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            //webBrowser.Location = new System.Drawing.Point(0, 31);
+            //webBrowser.Name = "webBrowser";
+            //webBrowser.Size = new System.Drawing.Size(992, 320);
+            _webBrowser.StartUrl = "www.taobao.com";
+            //webBrowser.TabIndex = 127;
+            skinSplitContainer1.Panel1.Controls.Add(_webBrowser);
+
+            #endregion
+            #region 后续处理界面
+            _process1 = new UserControls.ProcessProduct();
+            _process1.Dock = DockStyle.Fill;
+            _process1.Visible = false;
+            this.Controls.Add(_process1);
+
+            _processResult = new UserControls.ProcessProductResult();
+            _processResult.Dock = DockStyle.Fill;
+            _processResult.Visible = false;
+            this.Controls.Add(_processResult);
+            #endregion
         }
 
         #region 页面变更时发生
@@ -104,16 +116,19 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             {
                 _crawlType = CrawlType.TaoBaoItem;
             }
-
-            switch (_crawlType)
+            else if (url.IndexOf("detail.tmall.com") > 1)
             {
-                case CrawlType.None:
-                    tsBtnAutoAll.Enabled = tsBtnOneProduct.Enabled = tsBtnPageProducts.Enabled = false;
-                    break;
+                _crawlType = CrawlType.TmallItem;
+            }
+
+            tsBtnAutoAll.Enabled = tsBtnOneProduct.Enabled = tsBtnPageProducts.Enabled = false;
+            switch (_crawlType)
+            { 
                 case CrawlType.TaoBaoSearch:
                     tsBtnAutoAll.Enabled = tsBtnPageProducts.Enabled = true;
                     break;
                 case CrawlType.TaoBaoItem:
+                case CrawlType.TmallItem:
                     tsBtnOneProduct.Enabled = true;
                     break;
                 default:
@@ -123,6 +138,9 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         #endregion
 
         #region 底部控制菜单相关
+        /// <summary>
+        /// 底部控制菜单事件绑定
+        /// </summary>
         void InitControlBtnEvent()
         {
             tssBtnNext.Click += ControlBtn_Click;
@@ -132,7 +150,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             tssBtnRevert.Click += ControlBtn_Click;
         }
 
-
+        /// <summary>
+        /// 底部控制菜单事件入口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ControlBtn_Click(object sender, EventArgs e)
         {
             ToolStripStatusLabel current = sender as ToolStripStatusLabel;
@@ -184,42 +206,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         }
 
         /// <summary>
-        /// 处理商品详情
-        /// </summary>
-        /// <param name="list"></param>
-        /// <returns></returns>
-        void ProcessProductDetail(List<ProductSourceInfo> list)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() =>
-                {
-                    ProcessProductDetail(list);
-                }));
-                return;
-            }
-        }
-
-        void ProcessProductDetailResult(int allCount, int successCount)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() =>
-                {
-                    ProcessProductDetailResult(allCount, successCount);
-                })); return;
-            }
-            _processResult.ProductBindSource.DataSource = null;
-            _processResult.ProductBindSource.DataSource = ProductCache.WaitUploadImageList;
-            _processResult.MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已经追加到集合中"
-                .FormatWith(allCount, successCount);
-            _process1.Visible = skinSplitContainer1.Visible = false;
-            _processResult.Visible = true;
-            //tssBtnNext.Enabled = tssBtnPrevious.Enabled = 
-            ProductCacheContext.Instance.Save();
-        }
-
-        /// <summary>
         /// 下一步处理
         /// </summary>
         void NextProcess()
@@ -267,6 +253,25 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         }
 
         /// <summary>
+        /// 自动抓取 和 暂停
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void TsBtnAutoAll_Click(object sender, EventArgs e)
+        {
+            if (tsBtnAutoAll.Text == "自动(&A)")
+            {
+                _isAuto = true;
+                tsBtnAutoAll.Text = "暂停(&S)";
+                CrawProductBase();
+            }
+            else
+            {
+                _isAuto = false;
+                tsBtnAutoAll.Text = "自动(&A)";
+            }
+        }
+        /// <summary>
         /// 删除选中行
         /// </summary>
         void DeleteRows()
@@ -298,7 +303,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         }
         #endregion
 
-        #region 商品展示表格相关  第一步用的
+        #region 商品展示表格相关
         void InitDgv()
         {
             InitDgvAllSelect();
@@ -354,7 +359,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         }
         #endregion
 
-        #region 控制菜单相关事件
+        #region 浏览器控制菜单相关事件
         void InitMenuEvent()
         {
             tsBtnGO.Click += TsBtnGO_Click;
@@ -362,10 +367,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             tsBtnRight.Click += TsBtnRight_Click;
             tsBtnRefresh.Click += TsBtnRefresh_Click;
             tsTxtUrl.KeyUp += TsTxtUrl_KeyUp;
-            webBrowser.AddressChanged += WebBrowser_AddressChanged;
+            _webBrowser.AddressChanged += WebBrowser_AddressChanged;
 
-            webBrowser.LoadEnd += WebBrowser_LoadEnd;
+            _webBrowser.LoadEnd += WebBrowser_LoadEnd;
             tsBtnPageProducts.Click += TsBtnTest_Click;
+            tsBtnOneProduct.Click += TsBtnTest_Click;
         }
 
 
@@ -377,9 +383,9 @@ namespace TxoooProductUpload.UI.Forms.SubForms
 
         void WebBrowser_AddressChanged(object sender, Xilium.CefGlue.WindowsForms.AddressChangedEventArgs e)
         {
-            tsTxtUrl.Text = webBrowser.Browser.GetMainFrame().Url;
-            tsBtnLeft.Enabled = webBrowser.Browser.CanGoBack;
-            tsBtnRight.Enabled = webBrowser.Browser.CanGoForward;
+            tsTxtUrl.Text = _webBrowser.Browser.GetMainFrame().Url;
+            tsBtnLeft.Enabled = _webBrowser.Browser.CanGoBack;
+            tsBtnRight.Enabled = _webBrowser.Browser.CanGoForward;
             if (_isAuto)
             {
                 Thread.Sleep(1000);
@@ -394,13 +400,17 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// <param name="callBack"></param>
         void HtmlChange(Action<string> callBack)
         {
-            if (webBrowser.Browser.GetMainFrame().IsMain)
+            if (_webBrowser.Browser.GetMainFrame().IsMain)
             {
                 var visitor = new SourceVisitor(callBack);
-                webBrowser.Browser.GetMainFrame().GetSource(visitor);
+                _webBrowser.Browser.GetMainFrame().GetSource(visitor);
             }
         }
-
+        /// <summary>
+        /// 抓取商品按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void TsBtnTest_Click(object sender, EventArgs e)
         {
             CrawProductBase();
@@ -408,17 +418,17 @@ namespace TxoooProductUpload.UI.Forms.SubForms
 
         void TsBtnRefresh_Click(object sender, EventArgs e)
         {
-            webBrowser.Browser.Reload();
+            _webBrowser.Browser.Reload();
         }
 
         void TsBtnRight_Click(object sender, EventArgs e)
         {
-            webBrowser.Browser.GoForward();
+            _webBrowser.Browser.GoForward();
         }
 
         void TsBtnLeft_Click(object sender, EventArgs e)
         {
-            webBrowser.Browser.GoBack();
+            _webBrowser.Browser.GoBack();
         }
 
         void TsTxtUrl_KeyUp(object sender, KeyEventArgs e)
@@ -440,7 +450,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// <param name="url"></param>
         void OpenNewUrl(string url)
         {
-            webBrowser.Browser.GetMainFrame().LoadUrl(url);
+            _webBrowser.Browser.GetMainFrame().LoadUrl(url);
         }
         #endregion
 
@@ -458,7 +468,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
                     document.LoadHtml(Html);
 
-                    var list = _productHelper.GetProductListFormSearch(document, SourceType.Taobao);
+                    var list = _productHelper.GetProductsRromDocument(document, _crawlType);
                     foreach (var item in list)
                     {
                         if (IsEsists(item)) { continue; }
@@ -468,20 +478,34 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     {
                         sdgvProduct.FirstDisplayedScrollingRowIndex = sdgvProduct.Rows.Count - 1;
                     }
+
                     if (_isAuto)
                     {
-                        //循环到最后一页  退出循环
-                        if (document.DocumentNode.SelectNodes("//span[@class='icon icon-btn-next-2-disable']") != null)
-                        {
-                            _isAuto = false;
-                            MessageBoxEx.Show("抓取完毕，共抓取商品{0}条".FormatWith(sdgvProduct.Rows.Count));
-                            return;
-                        }
-                        //下一页
-                        webBrowser.Browser.GetMainFrame().ExecuteJavaScript("document.getElementsByClassName('icon-btn-next-2')[0].click()", "", 0);
+                        AuthCraw(document);
                     }
                 }));
             });
+        }
+        /// <summary>
+        /// 自动抓取
+        /// </summary>
+        /// <param name="document"></param>
+        void AuthCraw(HtmlAgilityPack.HtmlDocument document)
+        {
+            switch (_crawlType)
+            {
+                case CrawlType.TaoBaoSearch:
+                    //循环到最后一页  退出循环
+                    if (document.DocumentNode.SelectNodes("//span[@class='icon icon-btn-next-2-disable']") != null)
+                    {
+                        _isAuto = false;
+                        MessageBoxEx.Show("抓取完毕，共抓取商品{0}条".FormatWith(sdgvProduct.Rows.Count));
+                        return;
+                    }
+                    //下一页
+                    _webBrowser.Browser.GetMainFrame().ExecuteJavaScript("document.getElementsByClassName('icon-btn-next-2')[0].click()", "", 0);
+                    break;
+            }
         }
         #endregion
 
@@ -512,16 +536,8 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     {
                         break;
                     }
-                    try
-                    {
-                        productHelper.ProcessItem(task);
-                        App.Context.ProductService.DiscernLcation(task);
-                    }
-                    catch (Exception ex)
-                    {
-                        Iwenli.LogHelper.LogError(this,
-                            "[详情]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
-                    }
+                    productHelper.ProcessItem(task);
+                    App.Context.ProductService.DiscernLcation(task); 
                     if (task.IsProcess)
                     {
                         lock (ProductCache.ProcessFailList)
@@ -562,6 +578,30 @@ namespace TxoooProductUpload.UI.Forms.SubForms
 
         }
         #endregion
+
+        /// <summary>
+        /// 商品处理回调
+        /// </summary>
+        /// <param name="allCount"></param>
+        /// <param name="successCount"></param>
+        void ProcessProductDetailResult(int allCount, int successCount)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() =>
+                {
+                    ProcessProductDetailResult(allCount, successCount);
+                })); return;
+            }
+            _processResult.ProductBindSource.DataSource = null;
+            _processResult.ProductBindSource.DataSource = ProductCache.WaitUploadImageList;
+            _processResult.MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已经追加到集合中"
+                .FormatWith(allCount, successCount);
+            _process1.Visible = skinSplitContainer1.Visible = false;
+            _processResult.Visible = true;
+            //tssBtnNext.Enabled = tssBtnPrevious.Enabled = 
+            ProductCacheContext.Instance.Save();
+        }
 
         /// <summary>
         /// 判断商品是否抓取过

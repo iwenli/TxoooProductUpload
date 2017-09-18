@@ -101,8 +101,7 @@
             this.tssBtnRevert = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssBtnBack = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.webBrowser = new Xilium.CefGlue.WindowsForms.CefWebBrowser();
+            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel(); 
             this.ss.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.skinSplitContainer1)).BeginInit();
             this.skinSplitContainer1.Panel1.SuspendLayout();
@@ -263,7 +262,6 @@
             // 
             // skinSplitContainer1.Panel1
             // 
-            this.skinSplitContainer1.Panel1.Controls.Add(this.webBrowser);
             this.skinSplitContainer1.Panel1.Controls.Add(this.ts);
             // 
             // skinSplitContainer1.Panel2
@@ -848,16 +846,6 @@
             this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
             this.toolStripStatusLabel5.Size = new System.Drawing.Size(50, 21);
             // 
-            // webBrowser
-            // 
-            this.webBrowser.BrowserSettings = null;
-            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webBrowser.Location = new System.Drawing.Point(0, 31);
-            this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(992, 320);
-            this.webBrowser.StartUrl = "www.taobao.com";
-            this.webBrowser.TabIndex = 127;
-            // 
             // CrawlProductsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -945,6 +933,5 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         private System.Windows.Forms.ToolStripStatusLabel tssBtnRevert;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        private Xilium.CefGlue.WindowsForms.CefWebBrowser webBrowser;
     }
 }

@@ -198,7 +198,6 @@
     </Compile>
     <Compile Include="Service\Cache\ProductCache\ProductCacheContext.cs" />
     <Compile Include="Service\Cache\ProductCache\ProductCacheData.cs" />
-    <Compile Include="Service\Entities\CrawlType.cs" />
     <Compile Include="Service\Entities\LoginListInfo.cs" />
     <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="Test\MainForm.cs">

@@ -337,7 +337,7 @@ namespace TxoooProductUpload.Service.Crawl
                                 }
                                 #endregion
                             }
-                            
+
                             foreach (var prop2 in detailModel.skuBase.props[2].values)
                             {
                                 var skuPath2 = "{0}:{1}".FormatWith(detailModel.skuBase.props[2].pid, prop2.vid);
@@ -415,6 +415,45 @@ namespace TxoooProductUpload.Service.Crawl
                 default:
                     throw new Exception("暂不支持天猫4级以上sku 请联系开发人员！");
             }
+        }
+
+        /// <summary>
+        /// 从天猫商品展示中获取商品信息
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public List<ProductSourceInfo> GetProductbyHtml(HtmlDocument document)
+        {
+            var list = new List<ProductSourceInfo>();
+            var product = new ProductSourceInfo();
+            product.IsProcess = true;
+            product.SourceType = SourceType.Tmall;
+
+            product.Id = Convert.ToInt64(document.GetElementbyId("side-shop-info").SelectSingleNode(".//div/h3/div/span").Attributes["data-item"].Value);
+            product.ShopName = product.UserNick = document.GetElementbyId("side-shop-info").SelectSingleNode(".//div/h3/div/a").InnerText.Trim();
+            product.ShowPrice = Convert.ToDouble(document.GetElementbyId("J_PromoPrice").SelectSingleNode(".//dd/div/span").InnerText.Trim());
+            product.Location = document.GetElementbyId("J_deliveryAdd").InnerText.Trim();
+            product.ProductName = document.GetElementbyId("J_DetailMeta").SelectSingleNode(".//div[1]/div[1]/div/div[1]/h1").InnerText.Trim();
+            product.SubTitle = document.GetElementbyId("J_DetailMeta").SelectSingleNode(".//div[1]/div[1]/div/div[1]/p").InnerText.Trim();
+            var postage = document.GetElementbyId("J_PostageToggleCont");
+            if (postage != null)
+            {
+                if (postage.InnerText.Trim().IndexOf("包邮") == -1 && postage.InnerText.Trim().Split(':').Length == 2)
+                {
+                    product.Postage = Convert.ToDouble(postage.InnerText.Trim().Split(':')[1] ?? "0");
+                    if (product.Postage > 0)
+                    {
+                        product.IsFreePostage = false;
+                    }
+                }
+            }
+            product.FavCnt = Convert.ToInt16(new Regex("（|）|人气", RegexOptions.IgnoreCase).Replace(document.GetElementbyId("J_CollectCount").InnerText, ""));
+            product.SellCnt = Convert.ToInt32(document.GetElementbyId("J_DetailMeta").SelectSingleNode(".//div[1]/div[1]/div/ul/li[1]/div/span[2]").InnerText.Trim());
+            product.CommnetCnt = Convert.ToInt32(document.GetElementbyId("J_ItemRates").SelectSingleNode(".//div/span[2]").InnerText.Trim());
+            product.Brand = document.GetElementbyId("J_BrandAttr").SelectSingleNode(".//div/a").InnerText.Trim();
+
+            list.Add(product);
+            return list;
         }
     }
 }

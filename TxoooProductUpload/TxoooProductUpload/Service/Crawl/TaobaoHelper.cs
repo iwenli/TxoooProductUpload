@@ -676,33 +676,40 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 var productNodeList = document.GetElementbyId("mainsrp-itemlist").SelectNodes("//div[starts-with(@class,'item J_MouserOnverReq')]");
                 HtmlNode temp = null;
-                foreach (HtmlNode categoryNode in productNodeList)
+                if (productNodeList != null)
                 {
-                    temp = HtmlNode.CreateNode(categoryNode.OuterHtml);
-                    var picElement = temp.SelectSingleNode("//a[starts-with(@class,'pic-link')]");
-                    var idStr = picElement.Attributes["trace-nid"].Value;
-                    if (!string.IsNullOrEmpty(idStr))
+                    foreach (HtmlNode categoryNode in productNodeList)
                     {
-                        var id = Convert.ToInt64(idStr);
-                        if (list.Exists(m => m.Id == id)) { continue; }
+                        temp = HtmlNode.CreateNode(categoryNode.OuterHtml);
+                        var picElement = temp.SelectSingleNode("//a[starts-with(@class,'pic-link')]");
+                        var idStr = picElement.Attributes["trace-nid"].Value;
+                        if (!string.IsNullOrEmpty(idStr))
+                        {
+                            var id = Convert.ToInt64(idStr);
+                            if (list.Exists(m => m.Id == id)) { continue; }
 
-                        ProductSourceInfo product = new ProductSourceInfo(id);
-                        product.SourceType = temp.SelectSingleNode("//span[@class='icon-service-tianmao']") == null
-                            && temp.SelectSingleNode("//span[@class='icon-service-tianmaoguoji']") == null ?
-                         SourceType.Taobao : SourceType.Tmall;
+                            ProductSourceInfo product = new ProductSourceInfo(id);
+                            product.SourceType = temp.SelectSingleNode("//span[@class='icon-service-tianmao']") == null
+                                && temp.SelectSingleNode("//span[@class='icon-service-tianmaoguoji']") == null ?
+                             SourceType.Taobao : SourceType.Tmall;
 
-                        product.ShowPrice = Convert.ToDouble(picElement.Attributes["trace-price"].Value ?? "0");
-                        product.FirstImg = picElement.SelectSingleNode("//img").Attributes["data-src"].Value;
+                            product.ShowPrice = Convert.ToDouble(picElement.Attributes["trace-price"].Value ?? "0");
+                            product.FirstImg = picElement.SelectSingleNode("//img").Attributes["data-src"].Value;
 
-                        product.IsFreePostage = temp.SelectSingleNode("//div[@class='ship icon-service-free']") != null;
-                        product.ProductName = temp.SelectSingleNode("//a[@class='J_ClickStat']").InnerText.Trim();
+                            product.IsFreePostage = temp.SelectSingleNode("//div[@class='ship icon-service-free']") != null;
+                            product.ProductName = temp.SelectSingleNode("//a[@class='J_ClickStat']").InnerText.Trim();
 
-                        product.DealCnt = Convert.ToInt32(temp.SelectSingleNode("//div[@class='deal-cnt']").InnerText.Trim().Replace("人付款", ""));
-                        product.UserNick = temp.SelectSingleNode("//a[@class='shopname J_MouseEneterLeave J_ShopInfo']").InnerText;
-                        product.UserId = Convert.ToInt64(temp.SelectSingleNode("//a[@class='shopname J_MouseEneterLeave J_ShopInfo']").Attributes["data-userid"].Value);
-                        product.Location = temp.SelectSingleNode("//div[@class='location']").InnerText.Trim();
+                            var dealCnt = temp.SelectSingleNode("//div[@class='deal-cnt']");
+                            if (dealCnt != null)
+                            {
+                                product.DealCnt = Convert.ToInt32(dealCnt.InnerText.Trim().Replace("人付款", ""));
+                            }
+                            product.UserNick = temp.SelectSingleNode("//a[@class='shopname J_MouseEneterLeave J_ShopInfo']").InnerText;
+                            product.UserId = Convert.ToInt64(temp.SelectSingleNode("//a[@class='shopname J_MouseEneterLeave J_ShopInfo']").Attributes["data-userid"].Value);
+                            product.Location = temp.SelectSingleNode("//div[@class='location']").InnerText.Trim();
 
-                        list.Add(product);
+                            list.Add(product);
+                        }
                     }
                 }
             }
@@ -710,6 +717,21 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 throw new Exception("解析淘宝搜索结果异常", ex);
             }
+            return list;
+        }
+
+        /// <summary>
+        /// 从淘宝商品展示中获取商品信息
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public List<ProductSourceInfo> GetProductbyHtml(HtmlDocument document)
+        {
+            var list = new List<ProductSourceInfo>();
+            var product = new ProductSourceInfo();
+            product.IsProcess = true;
+            product.SourceType = SourceType.Taobao;
+
             return list;
         }
     }

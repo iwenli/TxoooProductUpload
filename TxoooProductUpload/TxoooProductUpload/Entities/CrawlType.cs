@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TxoooProductUpload.UI.Service.Entities
+namespace TxoooProductUpload.Entities
 {
     /// <summary>
     /// 抓取类型
@@ -22,6 +22,10 @@ namespace TxoooProductUpload.UI.Service.Entities
         /// <summary>
         /// 淘宝商品
         /// </summary>
-        TaoBaoItem
+        TaoBaoItem,
+        /// <summary>
+        /// 天猫商品
+        /// </summary>
+        TmallItem
     }
 }

@@ -41,8 +41,8 @@ namespace TxoooProductUpload.UI
                 {
                     Context = Service.ServiceContext.Instance;
                     //TxoooProductUpload.UI.Main.MainForm()
-                    Application.Run(new LoginForm());
-                    //Application.Run(new CrawlProductsForm());
+                    //Application.Run(new LoginForm());
+                    Application.Run(new CrawlProductsForm());
                 }
                 catch (Exception ex)
                 {
