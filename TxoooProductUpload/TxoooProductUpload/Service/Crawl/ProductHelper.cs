@@ -42,27 +42,11 @@ namespace TxoooProductUpload.Service.Crawl
         /// 初始化一个 ProductHelper 实例
         /// </summary>
         /// <param name="netClient"></param>
-        private ProductHelper()
+        public ProductHelper()
         {
             _netClient = new NetClient();
             _tmallHelper = new TmallHepler();
             _taobaoHelper = new TaobaoHelper();
-        }
-        /// <summary>
-        /// 初始化一个 ProductHelper 实例
-        /// </summary>
-        /// <param name="netClient"></param>
-        public ProductHelper(NetClient netClient) : this()
-        {
-            _netClient = netClient;
-        }
-        /// <summary>
-        /// 初始化一个 ProductHelper 实例
-        /// </summary>
-        /// <param name="netClient"></param>
-        public ProductHelper(ImageService imageService) : this()
-        {
-            _imageService = imageService;
         }
         #endregion
 
@@ -80,10 +64,10 @@ namespace TxoooProductUpload.Service.Crawl
                     case SourceType.Txooo:
                         break;
                     case SourceType.Tmall:
-                        _tmallHelper.ProcessItem(_netClient, _imageService, product);
+                        _tmallHelper.ProcessItem(_netClient, product);
                         break;
                     case SourceType.Taobao:
-                        _taobaoHelper.ProcessItem(_netClient, _imageService, product);
+                        _taobaoHelper.ProcessItem(_netClient, product);
                         break;
                     case SourceType.Alibaba:
                         break;

@@ -25,13 +25,12 @@ namespace TxoooProductUpload.UI
         {
             InitializeComponent();
             _context = new Service.ServiceContext();
-            var _productHelper = new ProductHelper(_context.ImageService);
+            var _productHelper = new ProductHelper();
             comboBox1.SelectedIndex = 0;
 
             button1.Click += async (s, e) =>
             {
                 var sourceType = comboBox1.Text == "天猫" ? SourceType.Tmall : SourceType.Taobao;
-                //541939796071
                 var id = textBox1.Text.Trim();
                 if (!id.IsNullOrEmpty())
                 {

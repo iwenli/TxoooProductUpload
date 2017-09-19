@@ -34,7 +34,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
 
         int _threadCount = 5;   //处理任务线程数 
         bool _isAuto = false;  //自动抓取全部列表
-        ProductHelper _productHelper = new ProductHelper(App.Context.BaseContent.ImageService);
+        ProductHelper _productHelper = new ProductHelper();
         CrawlType _crawlType = CrawlType.None;
         #endregion
 
@@ -517,7 +517,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             try
             {
-                ProductHelper productHelper = new ProductHelper(App.Context.BaseContent.ImageService);
+                ProductHelper productHelper = new ProductHelper();
 
                 ProductSourceInfo task;
                 while (!token.IsCancellationRequested)

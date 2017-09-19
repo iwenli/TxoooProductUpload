@@ -33,7 +33,6 @@ namespace TxoooProductUpload.UI
 
             //App.Context = Service.ServiceContext.Instance;
             ////Application.Run(new Msgtest());
-            //Application.Run(new Test.TestForm());
 
             if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF(args) == 0)
             {
