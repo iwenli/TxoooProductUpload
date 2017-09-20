@@ -467,7 +467,13 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 product.UserId = Convert.ToInt64(_userIdRegex.Match(document.DocumentNode.InnerHtml).Groups[1].Value);
             }
-            product.Id = Convert.ToInt64(document.GetElementbyId("side-shop-info").SelectSingleNode(".//div/h3/div/span").Attributes["data-item"].Value);
+            if (document.GetElementbyId("side-shop-info") != null){
+                product.Id = Convert.ToInt64(document.GetElementbyId("side-shop-info").SelectSingleNode(".//div/h3/div/span").Attributes["data-item"].Value);
+            }
+            else
+            {
+                product.Id = Convert.ToInt64(document.GetElementbyId("LineZing").SelectSingleNode(".//div/h3/div/span").Attributes["data-item"].Value);
+            }
             product.ShopName = product.UserNick = document.GetElementbyId("side-shop-info").SelectSingleNode(".//div/h3/div/a").InnerText.Trim();
             #region 显示的价格
             var priceText = document.GetElementbyId("J_PromoPrice").SelectSingleNode(".//dd/div/span").InnerText.Trim();
@@ -528,9 +534,13 @@ namespace TxoooProductUpload.Service.Crawl
             }
             catch (Exception ex)
             {
-                throw;
+                Iwenli.LogHelper.LogError(this, "解析{0}商品{1}SKU异常,生成自定义属性".FormatWith(product.SourceName, product.Id), ex);
+                goto CreateSKUDefult;
             }
-            
+            CreateSKUDefult:
+            {
+            }
+
             #endregion
             list.Add(product);
             return list;
