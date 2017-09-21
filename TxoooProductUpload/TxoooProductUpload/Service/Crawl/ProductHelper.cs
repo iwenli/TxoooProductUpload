@@ -16,6 +16,8 @@ namespace TxoooProductUpload.Service.Crawl
     /// </summary>
     public class ProductHelper
     {
+        int _defaultQuantity = 100;  //默认每个SKU的数量
+
         ImageService _imageService;
         NetClient _netClient;
         IHelper _tmallHelper;
@@ -75,6 +77,15 @@ namespace TxoooProductUpload.Service.Crawl
                         break;
                     default:
                         break;
+                }
+                if (product.SkuList.Count == 0)
+                {
+                    //没有属性  生成一个
+                    TxoooProductSKU sku = new TxoooProductSKU();
+                    sku.Name = "默认规格";
+                    sku.Price = product.ShowPrice;
+                    sku.Quantity = _defaultQuantity;
+                    product.AddSku(sku);
                 }
                 product.IsProcess = true;
             }

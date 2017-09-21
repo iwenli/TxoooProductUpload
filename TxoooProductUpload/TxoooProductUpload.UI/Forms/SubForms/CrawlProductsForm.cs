@@ -120,10 +120,14 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             {
                 _crawlType = CrawlType.TmallItem;
             }
+            else
+            {
+                _crawlType = CrawlType.None;
+            }
 
             tsBtnAutoAll.Enabled = tsBtnOneProduct.Enabled = tsBtnPageProducts.Enabled = false;
             switch (_crawlType)
-            { 
+            {
                 case CrawlType.TaoBaoSearch:
                     tsBtnAutoAll.Enabled = tsBtnPageProducts.Enabled = true;
                     break;
@@ -223,8 +227,13 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                        _process1.ProcessBar.Value = _process1.ProcessBar.Minimum = 0;
                    }));
                    var cts = new CancellationTokenSource();
-                   var tasks = new Task[_threadCount];
-                   for (int i = 0; i < _threadCount; i++)
+                   var taskCount = _threadCount;
+                   if (taskCount > allCount)
+                   {
+                       taskCount = taskCount > allCount ? allCount : taskCount;
+                   }
+                   var tasks = new Task[taskCount];
+                   for (int i = 0; i < taskCount; i++)
                    {
                        tasks[i] = new Task(() => GrabDetailTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
                        tasks[i].Start();
@@ -536,8 +545,12 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     {
                         break;
                     }
-                    productHelper.ProcessItem(task);
-                    App.Context.ProductService.DiscernLcation(task); 
+
+                    App.Context.ProductService.DiscernLcation(task);
+                    if (!task.IsProcess)
+                    {
+                        productHelper.ProcessItem(task);
+                    }
                     if (task.IsProcess)
                     {
                         lock (ProductCache.ProcessFailList)

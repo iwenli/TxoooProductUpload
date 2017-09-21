@@ -171,15 +171,7 @@ namespace TxoooProductUpload.Service.Crawl
 
             #region SKU
             var propNodes = document.DocumentNode.SelectNodes("//dl[starts-with(@class,'J_Prop')]"); //获取属性标签
-            if (propNodes == null)
-            {
-                //没有属性  生成一个
-                TxoooProductSKU sku = new TxoooProductSKU();
-                sku.Name = "默认规格";
-                sku.Quantity = _defaultQuantity;
-                product.AddSku(sku);
-            }
-            else
+            if (propNodes != null)
             {
                 if (sourceSkuJson.IsNullOrEmpty())
                 {
@@ -615,7 +607,7 @@ namespace TxoooProductUpload.Service.Crawl
                     default:
                         throw new Exception("暂不支持淘宝4级以上sku 请联系开发人员！");
                 }
-            }
+            } 
             #endregion
 
             //评价数量接口 https://rate.taobao.com/detailCount.do?itemId=542469108642&&callback=

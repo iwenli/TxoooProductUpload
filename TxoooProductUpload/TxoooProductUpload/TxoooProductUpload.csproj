@@ -127,6 +127,7 @@
     <Compile Include="Entities\Resporse\TaoBaoProductDetailResult.cs" />
     <Compile Include="Entities\Resporse\TaoBaoProductResult.cs" />
     <Compile Include="Entities\Resporse\TmallProductResult.cs" />
+    <Compile Include="Entities\Resporse\TmallPcProductResult.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\Crawl\IHelper.cs" />
     <Compile Include="Service\Crawl\ProductHelper.cs" />

@@ -12,7 +12,7 @@ namespace TxoooProductUpload.Service.Crawl
     /// 商品抓取接口
     /// </summary>
     public interface IHelper
-    {
+    { 
         /// <summary>
         /// 从详情抓取商品信息
         /// </summary>

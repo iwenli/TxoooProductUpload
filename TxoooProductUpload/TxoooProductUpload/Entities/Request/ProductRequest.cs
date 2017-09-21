@@ -166,15 +166,15 @@ namespace TxoooProductUpload.Entities.Request
                 parameters.Add("product_postage", "{" + string.Format("\"postage\":\"{0}\",\"append\":\"{1}\",\"limit\":\"{2}\"", Postage, Append, Limit) + "}");
             }
             #region 推广语
-            if (!Shares.IsNullOrEmpty())
-            {
-                var shareList = Shares.Split('|');
-                for (int i = 0; i < shareList.Length; i++)
-                {
-                    parameters.Add("share_id_" + i, 0);
-                    parameters.Add("share_content_" + i, shareList[i]);
-                }
-            }
+            //if (!Shares.IsNullOrEmpty())
+            //{
+            //    var shareList = Shares.Split('|');
+            //    for (int i = 0; i < shareList.Length; i++)
+            //    {
+            //        parameters.Add("share_id_" + i, 0);
+            //        parameters.Add("share_content_" + i, shareList[i]);
+            //    }
+            //}
             #endregion
             return parameters.BuildQueryString(false) + SkuJsons.ToString();
         }
