@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Service.Entities;
 
 namespace TxoooProductUpload.Service
@@ -12,6 +13,10 @@ namespace TxoooProductUpload.Service
     /// </summary>
     public class CacheData
     {
+        /// <summary>
+        /// 商品来源集合
+        /// </summary>
+        public List<ProductSourceTxoooInfo> ProductSourceTxoooList { set; get; }
         /// <summary>
         /// 城市信息
         /// </summary>
@@ -37,6 +42,7 @@ namespace TxoooProductUpload.Service
         {
             AreaList = new List<AreaInfo>();
             ProductClassList = new List<ProductClassInfo>();
+            ProductSourceTxoooList = new List<ProductSourceTxoooInfo>();
         }
 
     }

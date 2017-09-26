@@ -23,12 +23,85 @@ namespace TxoooProductUpload.Entities.Resporse
         /// 商品信息
         /// </summary>
         public TmllPcProductResultItemDo itemDO { set; get; }
+
+
+        /// <summary>
+        /// 主要获取商品价格和库存
+        /// </summary>
+        public DefaultModel defaultModel { set; get; }
+
     }
+
+    /// <summary>
+    /// 主要获取商品价格和库存
+    /// </summary>
+    public class DefaultModel
+    {
+        /// <summary>
+        /// 商品库存
+        /// </summary>
+        public InventoryDO inventoryDO { set; get; }
+
+        /// <summary>
+        /// 商品价格
+        /// </summary>
+        public ItemPriceResultDO itemPriceResultDO { set; get; }
+    }
+    #region 商品SKU价格
+    public class ItemPriceResultDO
+    {
+        public bool success { set; get; }
+        public Dictionary<long, PriceInfoItem> priceInfo { set; get; }
+    }
+    public class PriceInfoItem
+    {
+        /// <summary>
+        /// 标价
+        /// </summary>
+        public double price { set; get; }
+        /// <summary>
+        /// 售价内容
+        /// </summary>
+        public List<TmallPcPromotion> promotionList { set; get; }
+    }
+    public class TmallPcPromotion
+    {
+        public long startTime { set; get; }
+        public long endTime { set; get; }
+        public int status { set; get; }
+        public string type { set; get; }
+        public double extraPromPrice { set; get; }
+    }
+    #endregion
+
+    #region 商品库存
+
+    /// <summary>
+    /// SKU库存
+    /// </summary>
+    public class InventoryDO
+    {
+        public bool success { set; get; }
+        public long totalQuantity { set; get; }
+        public int type { set; get; }
+        public Dictionary<long, TmllPcProductResultSkuQuantity> skuQuantity { set; get; }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public class TmllPcProductResultSkuQuantity
+    {
+        public int quantity { set; get; }
+        public int totalQuantity { set; get; }
+        public int type { set; get; }
+    }
+    #endregion
 
     /// <summary>
     /// 商品信息
     /// </summary>
-    public class TmllPcProductResultItemDo {
+    public class TmllPcProductResultItemDo
+    {
         public string brand { set; get; }
         public bool hasSku { set; get; }
         public long itemId { set; get; }

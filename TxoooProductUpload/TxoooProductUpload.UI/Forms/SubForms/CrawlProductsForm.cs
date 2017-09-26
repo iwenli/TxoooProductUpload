@@ -50,10 +50,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             InitializeComponent();
             ProductCacheContext.Instance.Init();
             ProductCache = ProductCacheContext.Instance.Data;
-
             Load += CrawlProductsForm_Load;
-
-
         }
 
         /// <summary>
@@ -477,7 +474,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     HtmlAgilityPack.HtmlDocument document = new HtmlAgilityPack.HtmlDocument();
                     document.LoadHtml(Html);
 
-                    var list = _productHelper.GetProductsRromDocument(document, _crawlType);
+                    var list = _productHelper.GetProductsFromDocument(document, _crawlType);
                     foreach (var item in list)
                     {
                         if (IsEsists(item)) { continue; }
@@ -606,6 +603,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     ProcessProductDetailResult(allCount, successCount);
                 })); return;
             }
+            _processResult.ProductCache = ProductCache;
             _processResult.ProductBindSource.DataSource = null;
             _processResult.ProductBindSource.DataSource = ProductCache.WaitUploadImageList;
             _processResult.MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已经追加到集合中"
@@ -622,8 +620,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// <returns></returns>
         bool IsEsists(ProductSourceInfo product)
         {
-            //现在只从当前集合判断  后期增加从数据库判断
-            if (ProductCache.WaitProcessList.FirstOrDefault(m => m.Id == product.Id) != null)
+            //当前集合中没有  并且已经上传商品缓存中没有
+            if (ProductCache.WaitProcessList.FirstOrDefault(m => m.Id == product.Id) != null ||
+               App.Context.BaseContent.CacheContext.Data.ProductSourceTxoooList.Exists
+               (m=>m.SourceId == product.Id.ToString()))
             {
                 return true;
             }

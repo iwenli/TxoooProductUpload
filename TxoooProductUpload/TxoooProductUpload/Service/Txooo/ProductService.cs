@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TxoooProductUpload.Common;
+using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Entities.Request;
 using TxoooProductUpload.Service.Entities;
 using TxoooProductUpload.Service.Entities.Commnet;
@@ -139,6 +140,42 @@ namespace TxoooProductUpload.Service
         }
         #endregion
 
+        /// <summary>
+        /// 存储商品来源
+        /// </summary>
+        /// <param name="json">商品来源json集合</param>
+        /// <returns></returns>
+        public async Task<bool> InsertProductsSourceAsync(string json)
+        {
+            var stCtx = NetClient.Create<WebResponseResult<string>>(HttpMethod.Post, ApiList.InsertProductsSource,
+               data:new { data = json });
+            await stCtx.SendAsync();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接");
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception("提交失败，原因:" + stCtx.Result.msg);
+            }
+            return stCtx.Result.success;
+        }
 
+        /// <summary>
+        /// 增量获取商品来源
+        /// </summary>
+        /// <param name="maxId"></param>
+        /// <returns></returns>
+        public async Task<List<ProductSourceTxoooInfo>> GetProductsSourceListAsync(long maxId)
+        {
+            var stCtx = NetClient.Create<List<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSourceList,
+               data: new { id = maxId });
+            await stCtx.SendAsync();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接");
+            } 
+            return stCtx.Result;
+        }
     }
 }

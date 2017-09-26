@@ -24,6 +24,7 @@ namespace TxoooProductUpload.Service.Crawl
         Regex _jsonRegex = new Regex(@"TShop.Setup\(([\s\S]+?)\);");
         Regex _skuImageRegex = new Regex(@"background:url\(([\s\S]+?)\)");
         Regex _filterSkuNameReg = new Regex(@"[\n\t|已选中]*");
+        Regex _initItemJsonRegex = new Regex(@"script src=""(//mdskip.taobao.com/core/initItemDetail.htm[\s\S]+?)""");
         int _defaultQuantity = 100;  //默认每个SKU的数量
 
         /// <summary>
@@ -73,8 +74,15 @@ namespace TxoooProductUpload.Service.Crawl
             {
                 if (item.InnerHtml.IndexOf("_DATA_Mdskip") > -1)
                 {
-                    dataMdskip = item.InnerHtml.Replace(";|<script>|</script>", "");
-                    dataMdskip = dataMdskip.Substring(dataMdskip.IndexOf("{"));
+                    if (item.InnerHtml.IndexOf("location.href") > -1)
+                    {
+                        new Exception("商品{0}需要登录才能继续，已跳过".FormatWith(product.Id));
+                    }
+                    else
+                    {
+                        dataMdskip = item.InnerHtml.Replace(";|<script>|</script>", "");
+                        dataMdskip = dataMdskip.Substring(dataMdskip.IndexOf("{"));
+                    }
                 }
                 if (item.InnerHtml.IndexOf("_DATA_Detail") > -1)
                 {
@@ -107,7 +115,7 @@ namespace TxoooProductUpload.Service.Crawl
                 product.AddThumImgWithCheck(url);
             }
             product.FavCnt = detailModel.item.favcount;
-            product.CommnetCnt = mdSkipModel.item.commentCount;
+            product.CommnetCnt = mdSkipModel.item.commentCount ?? 0;
             product.SellCnt = mdSkipModel.item.sellCount;
             product.Location = product.Location ?? mdSkipModel.delivery.from;
             #endregion
@@ -130,6 +138,10 @@ namespace TxoooProductUpload.Service.Crawl
             if (detailModel.detailDesc.newWapDescJson != null)
             {
                 var detailJson = detailModel.detailDesc.newWapDescJson.FirstOrDefault(m => m.moduleName == "商品图片");
+                if (detailJson == null)
+                {
+                    detailJson = detailModel.detailDesc.newWapDescJson.FirstOrDefault(m => m.moduleName == "自定义");
+                }
                 if (detailJson == null || detailJson.data.Count == 0)
                 {
                     throw new Exception("天猫抓取异常，商品详情获取失败");
@@ -168,214 +180,91 @@ namespace TxoooProductUpload.Service.Crawl
 
             }
             #endregion
-
-            //处理SKU  哪个层级的SKU携带图片就放到最外层去循环
-            switch (detailModel.skuBase.props.Count)
+            if (detailModel.skuBase.props != null)
             {
-                case 1:
-                    #region 1级属性
-                    foreach (var prop1 in detailModel.skuBase.props[0].values)
-                    {
-                        var skuPath = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop1.vid);
-                        var skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
-                        var skuId = skuBase.skuId;
-
-                        TxoooProductSKU sku = new TxoooProductSKU();
-                        sku.Name = prop1.name;
-                        sku.Image = prop1.image ?? "";
-                        //#region SKU图片直接上传到Txooo中
-                        //if (!sku.Image.IsNullOrEmpty())
-                        //{
-                        //    if (!sku.Image.StartsWith("http"))
-                        //    {
-                        //        sku.Image = "http:" + sku.Image;
-                        //    }
-                        //    try
-                        //    {
-                        //        sku.TxoooImage = imageService.UploadImg(sku.Image);
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-                        //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
-                        //            .FormatWith(product.SourceName, product.Id, sku.Image, ex.Message));
-                        //    }
-                        //}
-                        //#endregion
-
-                        var skuInfo = mdSkipModel.skuCore.sku2info.FirstOrDefault(m => m.Key == skuId);
-                        sku.Quantity = skuInfo.Value.quantity;
-                        sku.Price = skuInfo.Value.price.priceMoney / 100.00;
-                        product.AddSku(sku);
-                    }
-                    #endregion
-                    break;
-                case 2:
-                    #region 2级属性
-                    foreach (var prop1 in detailModel.skuBase.props[1].values)
-                    {
-                        var skuPath1 = "{0}:{1}".FormatWith(detailModel.skuBase.props[1].pid, prop1.vid);
-                        //var image1 = prop1.image;
-                        // var txoooImage = string.Empty;
-                        //#region SKU图片直接上传到Txooo中
-                        //if (!image.IsNullOrEmpty())
-                        //{
-                        //    if (!image.StartsWith("http"))
-                        //    {
-                        //        image = "http:" + image;
-                        //    }
-                        //    try
-                        //    {
-                        //        txoooImage = imageService.UploadImg(image);
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-                        //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
-                        //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
-                        //    }
-                        //}
-                        //#endregion
-
-                        foreach (var prop0 in detailModel.skuBase.props[0].values)
+                //处理SKU  哪个层级的SKU携带图片就放到最外层去循环
+                switch (detailModel.skuBase.props.Count)
+                {
+                    case 1:
+                        #region 1级属性
+                        foreach (var prop1 in detailModel.skuBase.props[0].values)
                         {
-                            var skuPath0 = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop0.vid);
-
-                            var skuPath = "{0};{1}".FormatWith(skuPath0, skuPath1);
+                            var skuPath = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop1.vid);
                             var skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
-                            if (skuBase == null)
-                            {
-                                skuPath = "{0}{1}".FormatWith(skuPath0, skuPath1);
-                                skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
-                            }
                             var skuId = skuBase.skuId;
 
-                            //var image0 = string.Empty;
-                            //if (!prop0.image.IsNullOrEmpty())
-                            //{
-                            //    image0 = prop0.image;
-                            //    //#region SKU图片直接上传到Txooo中
-                            //    //if (!image.IsNullOrEmpty())
-                            //    //{
-                            //    //    if (!image.StartsWith("http"))
-                            //    //    {
-                            //    //        image = "http:" + image;
-                            //    //    }
-                            //    //    try
-                            //    //    {
-                            //    //        txoooImage = imageService.UploadImg(image);
-                            //    //    }
-                            //    //    catch (Exception ex)
-                            //    //    {
-                            //    //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
-                            //    //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
-                            //    //    }
-                            //    //}
-                            //    //#endregion
-                            //}
-
                             TxoooProductSKU sku = new TxoooProductSKU();
-                            sku.Name = "{0}-{1}".FormatWith(prop0.name, prop1.name);
-                            sku.Image = prop0.image ?? prop1.image ?? "";
-                            //sku.TxoooImage = txoooImage;
+                            sku.Name = prop1.name;
+                            sku.Image = prop1.image ?? "";
+                            //#region SKU图片直接上传到Txooo中
+                            //if (!sku.Image.IsNullOrEmpty())
+                            //{
+                            //    if (!sku.Image.StartsWith("http"))
+                            //    {
+                            //        sku.Image = "http:" + sku.Image;
+                            //    }
+                            //    try
+                            //    {
+                            //        sku.TxoooImage = imageService.UploadImg(sku.Image);
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+                            //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
+                            //            .FormatWith(product.SourceName, product.Id, sku.Image, ex.Message));
+                            //    }
+                            //}
+                            //#endregion
 
                             var skuInfo = mdSkipModel.skuCore.sku2info.FirstOrDefault(m => m.Key == skuId);
                             sku.Quantity = skuInfo.Value.quantity;
                             sku.Price = skuInfo.Value.price.priceMoney / 100.00;
                             product.AddSku(sku);
                         }
-                    }
-                    #endregion
-                    break;
-                case 3:
-                    #region 3级属性
-                    foreach (var prop0 in detailModel.skuBase.props[0].values)
-                    {
-                        var skuPath0 = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop0.vid);
+                        #endregion
+                        break;
+                    case 2:
+                        #region 2级属性
                         foreach (var prop1 in detailModel.skuBase.props[1].values)
                         {
                             var skuPath1 = "{0}:{1}".FormatWith(detailModel.skuBase.props[1].pid, prop1.vid);
-                            foreach (var prop2 in detailModel.skuBase.props[2].values)
+                            //var image1 = prop1.image;
+                            // var txoooImage = string.Empty;
+                            //#region SKU图片直接上传到Txooo中
+                            //if (!image.IsNullOrEmpty())
+                            //{
+                            //    if (!image.StartsWith("http"))
+                            //    {
+                            //        image = "http:" + image;
+                            //    }
+                            //    try
+                            //    {
+                            //        txoooImage = imageService.UploadImg(image);
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+                            //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
+                            //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
+                            //    }
+                            //}
+                            //#endregion
+
+                            foreach (var prop0 in detailModel.skuBase.props[0].values)
                             {
-                                var skuPath2 = "{0}:{1}".FormatWith(detailModel.skuBase.props[2].pid, prop2.vid);
-                                var skuPath = "{0};{1};{2}".FormatWith(skuPath0, skuPath1, skuPath2);
+                                var skuPath0 = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop0.vid);
+
+                                var skuPath = "{0};{1}".FormatWith(skuPath0, skuPath1);
                                 var skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
                                 if (skuBase == null)
                                 {
-                                    skuPath = "{0}{1}{2}".FormatWith(skuPath0, skuPath1, skuPath2);
+                                    skuPath = "{0}{1}".FormatWith(skuPath0, skuPath1);
                                     skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
                                 }
                                 var skuId = skuBase.skuId;
-                                TxoooProductSKU sku = new TxoooProductSKU();
-                                sku.Name = "{0}-{1}-{2}".FormatWith(prop0.name, prop1.name, prop2.name);
-                                sku.Image = prop0.image ?? prop1.image ?? prop2.image ?? "";
-                                var skuInfo = mdSkipModel.skuCore.sku2info.FirstOrDefault(m => m.Key == skuId);
-                                sku.Quantity = skuInfo.Value.quantity;
-                                sku.Price = skuInfo.Value.price.priceMoney / 100.00;
-                                product.AddSku(sku);
-                            }
-                        }
-                    }
-                    #endregion
-                    break;
-                case 4:
-                    #region 4级属性
-                    foreach (var prop0 in detailModel.skuBase.props[0].values)
-                    {
-                        var skuPath0 = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop0.vid);
-                        //var image0 = prop0.image;
-                        //var txoooImage = string.Empty;
-                        //#region SKU图片直接上传到Txooo中
-                        //if (!image.IsNullOrEmpty())
-                        //{
-                        //    if (!image.StartsWith("http"))
-                        //    {
-                        //        image = "http:" + image;
-                        //    }
-                        //    try
-                        //    {
-                        //        txoooImage = imageService.UploadImg(image);
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-                        //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
-                        //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
-                        //    }
-                        //}
-                        //#endregion
 
-                        foreach (var prop1 in detailModel.skuBase.props[1].values)
-                        {
-                            var skuPath1 = "{0}:{1}".FormatWith(detailModel.skuBase.props[1].pid, prop1.vid);
-                            //var image1 = string.Empty;
-                            //if (!prop1.image.IsNullOrEmpty())
-                            //{
-                            //    image1 = prop1.image;
-                            //    //#region SKU图片直接上传到Txooo中
-                            //    //if (!image.IsNullOrEmpty())
-                            //    //{
-                            //    //    if (!image.StartsWith("http"))
-                            //    //    {
-                            //    //        image = "http:" + image;
-                            //    //    }
-                            //    //    try
-                            //    //    {
-                            //    //        txoooImage = imageService.UploadImg(image);
-                            //    //    }
-                            //    //    catch (Exception ex)
-                            //    //    {
-                            //    //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
-                            //    //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
-                            //    //    }
-                            //    //}
-                            //    //#endregion
-                            //}
-
-                            foreach (var prop2 in detailModel.skuBase.props[2].values)
-                            {
-                                var skuPath2 = "{0}:{1}".FormatWith(detailModel.skuBase.props[2].pid, prop2.vid);
-                                //var image2 = string.Empty;
-                                //if (!prop2.image.IsNullOrEmpty())
+                                //var image0 = string.Empty;
+                                //if (!prop0.image.IsNullOrEmpty())
                                 //{
-                                //    image2 = prop2.image;
+                                //    image0 = prop0.image;
                                 //    //#region SKU图片直接上传到Txooo中
                                 //    //if (!image.IsNullOrEmpty())
                                 //    //{
@@ -395,26 +284,111 @@ namespace TxoooProductUpload.Service.Crawl
                                 //    //}
                                 //    //#endregion
                                 //}
-                                foreach (var prop3 in detailModel.skuBase.props[3].values)
-                                {
-                                    var skuPath3 = "{0}:{1}".FormatWith(detailModel.skuBase.props[3].pid, prop3.vid);
 
-                                    var skuPath = "{0};{1};{2};{3}".FormatWith(skuPath0, skuPath1, skuPath2, skuPath3);
+                                TxoooProductSKU sku = new TxoooProductSKU();
+                                sku.Name = "{0}-{1}".FormatWith(prop0.name, prop1.name);
+                                sku.Image = prop0.image ?? prop1.image ?? "";
+                                //sku.TxoooImage = txoooImage;
+
+                                var skuInfo = mdSkipModel.skuCore.sku2info.FirstOrDefault(m => m.Key == skuId);
+                                sku.Quantity = skuInfo.Value.quantity;
+                                sku.Price = skuInfo.Value.price.priceMoney / 100.00;
+                                product.AddSku(sku);
+                            }
+                        }
+                        #endregion
+                        break;
+                    case 3:
+                        #region 3级属性
+                        foreach (var prop0 in detailModel.skuBase.props[0].values)
+                        {
+                            var skuPath0 = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop0.vid);
+                            foreach (var prop1 in detailModel.skuBase.props[1].values)
+                            {
+                                var skuPath1 = "{0}:{1}".FormatWith(detailModel.skuBase.props[1].pid, prop1.vid);
+                                foreach (var prop2 in detailModel.skuBase.props[2].values)
+                                {
+                                    var skuPath2 = "{0}:{1}".FormatWith(detailModel.skuBase.props[2].pid, prop2.vid);
+                                    var skuPath = "{0};{1};{2}".FormatWith(skuPath0, skuPath1, skuPath2);
                                     var skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
                                     if (skuBase == null)
                                     {
-                                        skuPath = "{0}{1}{2}{3}".FormatWith(skuPath0, skuPath1, skuPath2, skuPath3);
+                                        skuPath = "{0}{1}{2}".FormatWith(skuPath0, skuPath1, skuPath2);
                                         skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
                                     }
-                                    if (skuBase == null)
-                                    {
-                                        continue;
-                                    }
                                     var skuId = skuBase.skuId;
-                                    //var image3 = string.Empty;
-                                    //if (!prop3.image.IsNullOrEmpty())
+                                    TxoooProductSKU sku = new TxoooProductSKU();
+                                    sku.Name = "{0}-{1}-{2}".FormatWith(prop0.name, prop1.name, prop2.name);
+                                    sku.Image = prop0.image ?? prop1.image ?? prop2.image ?? "";
+                                    var skuInfo = mdSkipModel.skuCore.sku2info.FirstOrDefault(m => m.Key == skuId);
+                                    sku.Quantity = skuInfo.Value.quantity;
+                                    sku.Price = skuInfo.Value.price.priceMoney / 100.00;
+                                    product.AddSku(sku);
+                                }
+                            }
+                        }
+                        #endregion
+                        break;
+                    case 4:
+                        #region 4级属性
+                        foreach (var prop0 in detailModel.skuBase.props[0].values)
+                        {
+                            var skuPath0 = "{0}:{1}".FormatWith(detailModel.skuBase.props[0].pid, prop0.vid);
+                            //var image0 = prop0.image;
+                            //var txoooImage = string.Empty;
+                            //#region SKU图片直接上传到Txooo中
+                            //if (!image.IsNullOrEmpty())
+                            //{
+                            //    if (!image.StartsWith("http"))
+                            //    {
+                            //        image = "http:" + image;
+                            //    }
+                            //    try
+                            //    {
+                            //        txoooImage = imageService.UploadImg(image);
+                            //    }
+                            //    catch (Exception ex)
+                            //    {
+                            //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
+                            //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
+                            //    }
+                            //}
+                            //#endregion
+
+                            foreach (var prop1 in detailModel.skuBase.props[1].values)
+                            {
+                                var skuPath1 = "{0}:{1}".FormatWith(detailModel.skuBase.props[1].pid, prop1.vid);
+                                //var image1 = string.Empty;
+                                //if (!prop1.image.IsNullOrEmpty())
+                                //{
+                                //    image1 = prop1.image;
+                                //    //#region SKU图片直接上传到Txooo中
+                                //    //if (!image.IsNullOrEmpty())
+                                //    //{
+                                //    //    if (!image.StartsWith("http"))
+                                //    //    {
+                                //    //        image = "http:" + image;
+                                //    //    }
+                                //    //    try
+                                //    //    {
+                                //    //        txoooImage = imageService.UploadImg(image);
+                                //    //    }
+                                //    //    catch (Exception ex)
+                                //    //    {
+                                //    //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
+                                //    //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
+                                //    //    }
+                                //    //}
+                                //    //#endregion
+                                //}
+
+                                foreach (var prop2 in detailModel.skuBase.props[2].values)
+                                {
+                                    var skuPath2 = "{0}:{1}".FormatWith(detailModel.skuBase.props[2].pid, prop2.vid);
+                                    //var image2 = string.Empty;
+                                    //if (!prop2.image.IsNullOrEmpty())
                                     //{
-                                    //    image3 = prop3.image;
+                                    //    image2 = prop2.image;
                                     //    //#region SKU图片直接上传到Txooo中
                                     //    //if (!image.IsNullOrEmpty())
                                     //    //{
@@ -434,24 +408,64 @@ namespace TxoooProductUpload.Service.Crawl
                                     //    //}
                                     //    //#endregion
                                     //}
+                                    foreach (var prop3 in detailModel.skuBase.props[3].values)
+                                    {
+                                        var skuPath3 = "{0}:{1}".FormatWith(detailModel.skuBase.props[3].pid, prop3.vid);
 
-                                    TxoooProductSKU sku = new TxoooProductSKU();
-                                    sku.Name = "{0}-{1}-{2}-{3}".FormatWith(prop0.name, prop1.name, prop2.name, prop3.name);
-                                    sku.Image = prop0.image ?? prop1.image ?? prop2.image ?? prop3.image ?? "";
-                                    //sku.TxoooImage = txoooImage;
-                                    var skuInfo = mdSkipModel.skuCore.sku2info.FirstOrDefault(m => m.Key == skuId);
-                                    sku.Quantity = skuInfo.Value.quantity;
-                                    sku.Price = skuInfo.Value.price.priceMoney / 100.00;
-                                    product.AddSku(sku);
+                                        var skuPath = "{0};{1};{2};{3}".FormatWith(skuPath0, skuPath1, skuPath2, skuPath3);
+                                        var skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
+                                        if (skuBase == null)
+                                        {
+                                            skuPath = "{0}{1}{2}{3}".FormatWith(skuPath0, skuPath1, skuPath2, skuPath3);
+                                            skuBase = detailModel.skuBase.skus.FirstOrDefault(m => m.propPath == skuPath);
+                                        }
+                                        if (skuBase == null)
+                                        {
+                                            continue;
+                                        }
+                                        var skuId = skuBase.skuId;
+                                        //var image3 = string.Empty;
+                                        //if (!prop3.image.IsNullOrEmpty())
+                                        //{
+                                        //    image3 = prop3.image;
+                                        //    //#region SKU图片直接上传到Txooo中
+                                        //    //if (!image.IsNullOrEmpty())
+                                        //    //{
+                                        //    //    if (!image.StartsWith("http"))
+                                        //    //    {
+                                        //    //        image = "http:" + image;
+                                        //    //    }
+                                        //    //    try
+                                        //    //    {
+                                        //    //        txoooImage = imageService.UploadImg(image);
+                                        //    //    }
+                                        //    //    catch (Exception ex)
+                                        //    //    {
+                                        //    //        Iwenli.LogHelper.LogFatal(this, "{0}商品{1}上传SKU图片{2}异常{3}"
+                                        //    //            .FormatWith(product.SourceName, product.Id, image, ex.Message));
+                                        //    //    }
+                                        //    //}
+                                        //    //#endregion
+                                        //}
+
+                                        TxoooProductSKU sku = new TxoooProductSKU();
+                                        sku.Name = "{0}-{1}-{2}-{3}".FormatWith(prop0.name, prop1.name, prop2.name, prop3.name);
+                                        sku.Image = prop0.image ?? prop1.image ?? prop2.image ?? prop3.image ?? "";
+                                        //sku.TxoooImage = txoooImage;
+                                        var skuInfo = mdSkipModel.skuCore.sku2info.FirstOrDefault(m => m.Key == skuId);
+                                        sku.Quantity = skuInfo.Value.quantity;
+                                        sku.Price = skuInfo.Value.price.priceMoney / 100.00;
+                                        product.AddSku(sku);
+                                    }
                                 }
                             }
                         }
-                    }
-                    #endregion
-                    break;
-                case 0: break;
-                default:
-                    throw new Exception("暂不支持天猫4级以上sku 请联系开发人员！");
+                        #endregion
+                        break;
+                    case 0: break;
+                    default:
+                        throw new Exception("暂不支持天猫4级以上sku 请联系开发人员！");
+                }
             }
         }
 
@@ -468,15 +482,9 @@ namespace TxoooProductUpload.Service.Crawl
             product.IsProcess = true;
             product.SourceType = SourceType.Tmall;
             var json = _jsonRegex.Match(document.DocumentNode.InnerHtml).Groups[1].Value;
-            var productInfo = JsonConvert.DeserializeObject<TmallPcProductResult>(json);
+            TmallPcProductResult productInfo = JsonConvert.DeserializeObject<TmallPcProductResult>(json);
+            TmallPcProductResult skuInfoModel = null;
 
-            #region USER ID
-            //if (_userIdRegex.IsMatch(document.DocumentNode.InnerHtml))
-            //{
-            //    product.UserId = Convert.ToInt64(_userIdRegex.Match(document.DocumentNode.InnerHtml).Groups[1].Value);
-            //}
-            product.UserId = productInfo.itemDO.userId;
-            #endregion
             #region 商品id
             product.Id = productInfo.itemDO.itemId;
             //if (document.GetElementbyId("side-shop-info") != null)
@@ -488,6 +496,33 @@ namespace TxoooProductUpload.Service.Crawl
             //    product.Id = Convert.ToInt64(document.GetElementbyId("LineZing").SelectSingleNode(".//div/h3/div/span").Attributes["data-item"].Value);
             //} 
             #endregion
+            #region USER ID
+            //if (_userIdRegex.IsMatch(document.DocumentNode.InnerHtml))
+            //{
+            //    product.UserId = Convert.ToInt64(_userIdRegex.Match(document.DocumentNode.InnerHtml).Groups[1].Value);
+            //}
+            product.UserId = productInfo.itemDO.userId;
+            #endregion
+
+            var initItemJsonUrl = _initItemJsonRegex.Match(document.DocumentNode.InnerHtml).Groups[1].Value;
+            if (!initItemJsonUrl.IsNullOrEmpty())
+            {
+                //记录下initItemJsonUrl
+                this.LogInfo(initItemJsonUrl);
+                if (!initItemJsonUrl.StartsWith("http"))
+                {
+                    initItemJsonUrl = "http:" + initItemJsonUrl;
+                }
+                initItemJsonUrl = initItemJsonUrl.Replace("&amp;", "&").Replace("&callback=setMdskip", "");
+
+                var ctx = new NetClient().Create<string>(HttpMethod.Get, initItemJsonUrl, product.Url, allowAutoRedirect: true).Send();
+                if (!ctx.IsValid() || ctx.Result.IsNullOrEmpty())
+                {
+                    new Exception("请求{0}异常".FormatWith(initItemJsonUrl));
+                }
+                skuInfoModel = JsonConvert.DeserializeObject<TmallPcProductResult>(ctx.Result);
+            }
+
             #region 显示的价格
             var priceText = document.GetElementbyId("J_PromoPrice").SelectSingleNode(".//dd/div/span").InnerText.Trim();
             if (priceText.IndexOf("-") > -1)
@@ -541,7 +576,6 @@ namespace TxoooProductUpload.Service.Crawl
                 }
             }
             #endregion
-
             #region 描述
             var detailImgNodes = document.GetElementbyId("description").SelectNodes(".//img");
             if (detailImgNodes != null)
@@ -559,6 +593,7 @@ namespace TxoooProductUpload.Service.Crawl
             #endregion
 
             #region SKU
+            //https://mdskip.taobao.com/core/initItemDetail.htm?isApparel=true&sellerPreview=false&cachedTimestamp=1505936920757&service3C=false&addressLevel=2&isForbidBuyItem=false&isPurchaseMallPage=false&isUseInventoryCenter=false&queryMemberRight=true&tryBeforeBuy=false&cartEnable=true&isAreaSell=false&isRegionLevel=false&itemId=550554404001&isSecKill=false&offlineShop=false&showShopProm=false&tmallBuySupport=true&household=false&callback=setMdskip&timestamp=1505984125364&isg=AiUlGS1eBppwT2ASDT-IzAvytfpfbNkO&isg2=AurqQc9aR2buM8q8doAGPrq_O1BM82-FdJI6fHSjhz3Ip4phXOu-xTDXQeRB
             //https://mdskip.taobao.com/core/initItemDetail.htm?isApparel=true&sellerPreview=false&cachedTimestamp=1505936920757&service3C=false&addressLevel=2&isForbidBuyItem=false&isPurchaseMallPage=false&isUseInventoryCenter=false&queryMemberRight=true&tryBeforeBuy=false&cartEnable=true&isAreaSell=false&isRegionLevel=false&itemId=550554404001&isSecKill=false&offlineShop=false&showShopProm=false&tmallBuySupport=true&household=false&callback=setMdskip&timestamp=1505984125364&isg=AiUlGS1eBppwT2ASDT-IzAvytfpfbNkO&isg2=AurqQc9aR2buM8q8doAGPrq_O1BM82-FdJI6fHSjhz3Ip4phXOu-xTDXQeRB
             try
             {
@@ -589,8 +624,7 @@ namespace TxoooProductUpload.Service.Crawl
                                     var skuInfo = productInfo.valItemInfo.skuMap.FirstOrDefault(m => m.Key == path);
                                     if (skuInfo.Key != null)
                                     {
-                                        sku.Price = skuInfo.Value.price;
-                                        sku.Quantity = skuInfo.Value.stock;
+                                        sku.MapId = skuInfo.Value.skuId;
                                     }
                                     else
                                     {
@@ -633,8 +667,7 @@ namespace TxoooProductUpload.Service.Crawl
                                         var skuInfo = productInfo.valItemInfo.skuMap.FirstOrDefault(m => m.Key == path);
                                         if (skuInfo.Key != null)
                                         {
-                                            sku.Price = skuInfo.Value.price;
-                                            sku.Quantity = skuInfo.Value.stock;
+                                            sku.MapId = skuInfo.Value.skuId;
                                         }
                                         else
                                         {
@@ -687,8 +720,7 @@ namespace TxoooProductUpload.Service.Crawl
                                             var skuInfo = productInfo.valItemInfo.skuMap.FirstOrDefault(m => m.Key == path);
                                             if (skuInfo.Key != null)
                                             {
-                                                sku.Price = skuInfo.Value.price;
-                                                sku.Quantity = skuInfo.Value.stock;
+                                                sku.MapId = skuInfo.Value.skuId;
                                             }
                                             else
                                             {
@@ -751,8 +783,7 @@ namespace TxoooProductUpload.Service.Crawl
                                                 var skuInfo = productInfo.valItemInfo.skuMap.FirstOrDefault(m => m.Key == path);
                                                 if (skuInfo.Key != null)
                                                 {
-                                                    sku.Price = skuInfo.Value.price;
-                                                    sku.Quantity = skuInfo.Value.stock;
+                                                    sku.MapId = skuInfo.Value.skuId;
                                                 }
                                                 else
                                                 {
@@ -770,6 +801,12 @@ namespace TxoooProductUpload.Service.Crawl
                         case 0: break;
                         default:
                             throw new Exception("暂不支持天猫4级以上sku 请联系开发人员！");
+                    }
+                    //处理价格
+                    foreach (var sku in product.SkuList)
+                    {
+                        sku.Quantity = skuInfoModel.defaultModel.inventoryDO.skuQuantity[sku.MapId].quantity;
+                        sku.Price = skuInfoModel.defaultModel.itemPriceResultDO.priceInfo[sku.MapId].promotionList[0].extraPromPrice;
                     }
                 }
 

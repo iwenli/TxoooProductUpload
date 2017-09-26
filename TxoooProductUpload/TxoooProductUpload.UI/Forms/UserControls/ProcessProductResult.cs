@@ -25,7 +25,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
         /// <summary>
         /// 商品缓存
         /// </summary>
-        ProductCacheData ProductCache { set; get; }
+        public ProductCacheData ProductCache { set; get; }
         #endregion
 
         public ProcessProductResult()
@@ -72,7 +72,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
             var loadForm = new ProductUploadLoading("正在上传图片，请稍等...", 0);
             if (loadForm.ShowDialog(this) == DialogResult.OK)
             {
-                ProductBindSource.DataSource = null;
+                 ProductBindSource.DataSource = null;
                 ProductBindSource.DataSource = ProductCache.WaitUploadList;
                 ProductCache.WaitUploadImageList.Clear();
                 MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已更新"
@@ -250,6 +250,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
             DataGridViewCheckBoxColumn colCB = new DataGridViewCheckBoxColumn();
             DataGridViewCheckBoxHeaderCell cbHeader = new DataGridViewCheckBoxHeaderCell();
             colCB.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            colCB.Selected = false;
             colCB.HeaderText = "全选";
             colCB.Width = 30;
             colCB.HeaderCell = cbHeader;

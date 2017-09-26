@@ -209,5 +209,28 @@ namespace TxoooProductUpload.Common
             }
         }
 
+        /// <summary>
+        /// 保存商品来源和商品信息
+        /// 参数：data 商品信息json
+        /// </summary>
+        public static string InsertProductsSource
+        {
+            get
+            {
+                return HostApp + @"App/CrawlProduct.mch/InsertProductsSource" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 增量获取商品来源和商品信息
+        /// 参数：id 集合中最大的id
+        /// 
+        /// </summary>
+        public static string GetProductsSourceList
+        {
+            get
+            {
+                return HostApp + @"App/CrawlProduct.mch/GetProductsSourceList" + AppToken;
+            }
+        }
     }
 }

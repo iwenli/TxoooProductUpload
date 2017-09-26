@@ -11,6 +11,12 @@ namespace TxoooProductUpload.Entities.Product
     /// </summary>
     public class TxoooProductSKU
     {
+        public long _mapId = 0;
+        /// <summary>
+        /// 淘宝SKU mapId
+        /// </summary>
+        public long MapId { set { _mapId = value; } get { return _mapId; } }
+
         /// <summary>
         /// 名称
         /// </summary>

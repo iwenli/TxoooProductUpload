@@ -15,10 +15,19 @@ namespace TxoooProductUpload.UI
 {
     public partial class InformationFrm : CCSkinMain
     {
-        public InformationFrm(LoginInfo login,IpInfo ip):this()
+        public InformationFrm(LoginInfo login, IpInfo ip) : this()
         {
             Text = login.DisplayName;
             pnlHeadImg.BackgroundImage = App.Context.UserService.GetHeadPic(login.UserName.AESDecrypt());
+            if (ip == null)
+            {
+                ip = new IpInfo()
+                {
+                    Ip = "127.0.0.1",
+                    Address = "本地",
+                    Type = "未知"
+                };
+            }
             lblMsg.Text = string.Format("您好：{0}{1}当前登录IP:{2}{3}登录地点:{4}{5} {6}", login.MchInfo.NickName,
                Environment.NewLine, ip.Ip, Environment.NewLine, ip.Address, Environment.NewLine, ip.Type);
             lblState.Text = string.Format("上次：{0}", login.LastLoginTime.ToString("MM月dd日 HH:mm:ss"));

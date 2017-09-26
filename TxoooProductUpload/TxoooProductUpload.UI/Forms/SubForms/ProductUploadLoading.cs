@@ -13,6 +13,7 @@ using TxoooProductUpload.Common;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Service;
 using TxoooProductUpload.UI.Service.Cache.ProductCache;
+using Iwenli;
 
 namespace TxoooProductUpload.UI.Forms.SubForms
 {
@@ -197,13 +198,25 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                 tasks[i] = new Task(() => UploadTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
                 tasks[i].Start();
                 AppendLogWarning("[全局]线程{0}启动...", i + 1);
-            } 
+            }
             Task.Run(async () =>
             {
                 while (true)
                 {
                     if (ProductCache.WaitUploadList.Count == 0 && allCount == ProductCache.UploadFailList.Count + ProductCache.UploadSuccessList.Count)
                     {
+                        try
+                        {
+                            var result = await App.Context.ProductService.InsertProductsSourceAsync(ProductCache.UploadSuccessList);
+                            if (!result) {
+                                this.LogError("上传商品来源失败");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            this.LogError("上传商品来源异常：" + ex.Message, ex);
+                        }
+
                         CloseWithResult("商品上传完成...");
                         break;
                     }

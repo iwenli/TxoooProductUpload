@@ -111,7 +111,7 @@ namespace TxoooProductUpload.Entities.Resporse
         /// <summary>
         /// 评价数量
         /// </summary>
-        public int commentCount { set; get; }
+        public int? commentCount { set; get; }
 
         /// <summary>
         /// 销量

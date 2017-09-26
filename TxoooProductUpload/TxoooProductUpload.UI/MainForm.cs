@@ -13,6 +13,8 @@ using System.Diagnostics;
 using TxoooProductUpload.UI.Common;
 using TxoooProductUpload.Service.Entities;
 using Iwenli.Text;
+using System.Threading.Tasks;
+using Iwenli;
 
 namespace TxoooProductUpload.UI
 {
@@ -273,6 +275,32 @@ namespace TxoooProductUpload.UI
                 TopMost = true;
             }
         }
+        /// <summary>
+        /// 更新缓存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void stmUpdate_Click(object sender, EventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    if (await App.Context.BaseContent.CacheContext.UpdateAlways())
+                    {
+                        MessageBoxEx.Show("缓存更新完成！");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxEx.Show("更新缓存失败，请手动更新！");
+                    this.LogFatal(ex.Message, ex);
+                }
+
+            });
+        }
         #endregion
+
+
     }
 }

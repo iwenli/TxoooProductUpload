@@ -439,9 +439,6 @@ namespace TxoooProductUpload.UI
                 prbLoading.Value = value;
                 if (prbLoading.Value == 100)
                 {
-                    btnLogin.Enabled = true;
-                    prbLoading.Value = 0;
-                    prbLoading.Visible = false;
                     //弹窗显示信息
                     _loginUser.LastLoginTime = _lastLoginTime;
                     new InformationFrm(_loginUser, _loginIp).Show();
@@ -451,7 +448,9 @@ namespace TxoooProductUpload.UI
                     _main.ExitSystem += (s, e) => { Exit(); };  //主窗体退出事件
                     //登陆窗体隐藏
                     Hide();
-                    btnLogin.Enabled = true;
+                    prbLoading.Value = 0;
+                    prbLoading.Visible = false;
+                    btnLogin.Enabled = btnLogin.Enabled = true;
                 }
             }
 
@@ -504,7 +503,10 @@ namespace TxoooProductUpload.UI
             chkRemember.Checked = _loginUser.RememberPwd;
         }
         #endregion
+        /*
+         
 
+             */
         /// <summary>
         /// 登录状态变化
         /// </summary>
@@ -524,8 +526,8 @@ namespace TxoooProductUpload.UI
                          AppInfo.AssemblyTitle, Environment.NewLine, _loginUser.UserName,
                          Environment.NewLine, _loginUser.MchInfo.ComName, Environment.NewLine,
                          AppInfo.AssemblyVersion.ToString(), Environment.NewLine,
-                         ApiList.IsTest ? "正式环境" : "测试环境");
-                notify.Text = notifyText.Length > 64 ? (notifyText.Substring(0, 60) + "...") : notifyText;
+                         ApiList.IsTest ? "测试环境" : "正式环境");
+                notify.Text = notifyText.Length >= 64 ? (notifyText.Substring(0, 60) + "...") : notifyText;
                 notify.Icon = Resources.__icon;
                 await App.Context.UserService.LoginLog(_loginUser);
                 await Task.Run(async () =>
@@ -539,7 +541,6 @@ namespace TxoooProductUpload.UI
                         MessageBoxEx.Show("更新缓存失败，请手动更新！");
                         this.LogFatal(ex.Message, ex);
                     }
-
                 });
             }
             else

@@ -102,7 +102,7 @@ namespace TxoooProductUpload.Service.Crawl
         /// <param name="document">当前页面dom对象</param>
         /// <param name="type">当前页面类型</param>
         /// <returns></returns>
-        public List<ProductSourceInfo> GetProductsRromDocument(HtmlDocument document, CrawlType type)
+        public List<ProductSourceInfo> GetProductsFromDocument(HtmlDocument document, CrawlType type)
         {
             try
             {
@@ -122,7 +122,6 @@ namespace TxoooProductUpload.Service.Crawl
                 Iwenli.LogHelper.LogError(this,
                         "从{0}页面提取商品信息异常,页面来源：{1}".FormatWith(type, document.ToString()), ex);
             }
-           
             return new List<ProductSourceInfo>();
         }
     }

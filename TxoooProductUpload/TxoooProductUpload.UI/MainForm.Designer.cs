@@ -50,8 +50,8 @@ namespace TxoooProductUpload.UI
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            CCWin.CmSysButton cmSysButton1 = new CCWin.CmSysButton();
-            CCWin.CmSysButton cmSysButton2 = new CCWin.CmSysButton();
+            CCWin.CmSysButton cmSysButton3 = new CCWin.CmSysButton();
+            CCWin.CmSysButton cmSysButton4 = new CCWin.CmSysButton();
             this.tabShow = new CCWin.SkinControl.SkinTabControl();
             this.tabPage1 = new CCWin.SkinControl.SkinTabPage();
             this.palShow = new System.Windows.Forms.Panel();
@@ -90,6 +90,7 @@ namespace TxoooProductUpload.UI
             this.stStates = new System.Windows.Forms.ToolStripStatusLabel();
             this.stLoginInfo = new System.Windows.Forms.ToolStripStatusLabel();
             this.stCompany = new System.Windows.Forms.ToolStripStatusLabel();
+            this.stmUpdate = new System.Windows.Forms.ToolStripMenuItem();
             this.tabShow.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.palShow.SuspendLayout();
@@ -493,6 +494,7 @@ namespace TxoooProductUpload.UI
             this.SkinToolMenu.ItemRadiusStyle = CCWin.SkinClass.RoundStyle.None;
             this.SkinToolMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stmTop,
+            this.stmUpdate,
             this.stmSet,
             this.toolStripMenuItem6,
             this.stmAuthor,
@@ -503,7 +505,7 @@ namespace TxoooProductUpload.UI
             this.SkinToolMenu.ItemSplitter = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(148)))), ((int)(((byte)(212)))));
             this.SkinToolMenu.Name = "SkinToolMenu";
             this.SkinToolMenu.RadiusStyle = CCWin.SkinClass.RoundStyle.All;
-            this.SkinToolMenu.Size = new System.Drawing.Size(141, 148);
+            this.SkinToolMenu.Size = new System.Drawing.Size(153, 192);
             this.SkinToolMenu.SkinAllColor = true;
             this.SkinToolMenu.TitleAnamorphosis = false;
             this.SkinToolMenu.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(228)))), ((int)(((byte)(236)))));
@@ -513,7 +515,7 @@ namespace TxoooProductUpload.UI
             // stmTop
             // 
             this.stmTop.Name = "stmTop";
-            this.stmTop.Size = new System.Drawing.Size(140, 22);
+            this.stmTop.Size = new System.Drawing.Size(152, 22);
             this.stmTop.Text = "窗口置顶(&T)";
             this.stmTop.Click += new System.EventHandler(this.stmTop_Click);
             // 
@@ -521,20 +523,20 @@ namespace TxoooProductUpload.UI
             // 
             this.stmSet.Image = global::TxoooProductUpload.UI.Properties.Resources.set_icon;
             this.stmSet.Name = "stmSet";
-            this.stmSet.Size = new System.Drawing.Size(140, 22);
+            this.stmSet.Size = new System.Drawing.Size(152, 22);
             this.stmSet.Text = "软件设置(&S)";
             this.stmSet.Click += new System.EventHandler(this.stmSet_Click);
             // 
             // toolStripMenuItem6
             // 
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(137, 6);
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(149, 6);
             // 
             // stmAuthor
             // 
             this.stmAuthor.Image = global::TxoooProductUpload.UI.Properties.Resources.counseling_style_51;
             this.stmAuthor.Name = "stmAuthor";
-            this.stmAuthor.Size = new System.Drawing.Size(140, 22);
+            this.stmAuthor.Size = new System.Drawing.Size(152, 22);
             this.stmAuthor.Text = "联系作者(&P)";
             this.stmAuthor.Click += new System.EventHandler(this.stmAuthor_Click);
             // 
@@ -542,20 +544,20 @@ namespace TxoooProductUpload.UI
             // 
             this.stmAbout.Image = global::TxoooProductUpload.UI.Properties.Resources.info_16;
             this.stmAbout.Name = "stmAbout";
-            this.stmAbout.Size = new System.Drawing.Size(140, 22);
+            this.stmAbout.Size = new System.Drawing.Size(152, 22);
             this.stmAbout.Text = "关于系统(&A)";
             this.stmAbout.Click += new System.EventHandler(this.stmAbout_Click);
             // 
             // toolStripMenuItem7
             // 
             this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(137, 6);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(149, 6);
             // 
             // stmLogout
             // 
             this.stmLogout.Image = global::TxoooProductUpload.UI.Properties.Resources.left_16;
             this.stmLogout.Name = "stmLogout";
-            this.stmLogout.Size = new System.Drawing.Size(140, 22);
+            this.stmLogout.Size = new System.Drawing.Size(152, 22);
             this.stmLogout.Text = "注销(&L)";
             this.stmLogout.Click += new System.EventHandler(this.stmLogout_Click);
             // 
@@ -563,7 +565,7 @@ namespace TxoooProductUpload.UI
             // 
             this.stmExit.Image = global::TxoooProductUpload.UI.Properties.Resources.block_16;
             this.stmExit.Name = "stmExit";
-            this.stmExit.Size = new System.Drawing.Size(140, 22);
+            this.stmExit.Size = new System.Drawing.Size(152, 22);
             this.stmExit.Text = "退出(&E)";
             this.stmExit.Click += new System.EventHandler(this.stmExit_Click);
             // 
@@ -601,6 +603,13 @@ namespace TxoooProductUpload.UI
             this.stCompany.Name = "stCompany";
             this.stCompany.Size = new System.Drawing.Size(152, 20);
             this.stCompany.Text = "toolStripStatusLabel3";
+            // 
+            // stmUpdate
+            // 
+            this.stmUpdate.Name = "stmUpdate";
+            this.stmUpdate.Size = new System.Drawing.Size(152, 22);
+            this.stmUpdate.Text = "更新缓存(&U)";
+            this.stmUpdate.Click += new System.EventHandler(this.stmUpdate_Click);
             // 
             // MainForm
             // 
@@ -645,27 +654,27 @@ namespace TxoooProductUpload.UI
             this.ShadowPalace = ((System.Drawing.Image)(resources.GetObject("$this.ShadowPalace")));
             this.ShowSystemMenu = true;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            cmSysButton1.Bounds = new System.Drawing.Rectangle(877, -1, 28, 20);
-            cmSysButton1.BoxState = CCWin.ControlBoxState.Normal;
-            cmSysButton1.Location = new System.Drawing.Point(877, -1);
-            cmSysButton1.Name = "ToolSet";
-            cmSysButton1.OwnerForm = this;
-            cmSysButton1.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonDown")));
-            cmSysButton1.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonMouse")));
-            cmSysButton1.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonNorml")));
-            cmSysButton1.ToolTip = "设置";
-            cmSysButton2.Bounds = new System.Drawing.Rectangle(849, -1, 28, 20);
-            cmSysButton2.BoxState = CCWin.ControlBoxState.Normal;
-            cmSysButton2.Location = new System.Drawing.Point(849, -1);
-            cmSysButton2.Name = "ToolSkin";
-            cmSysButton2.OwnerForm = this;
-            cmSysButton2.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton2.SysButtonDown")));
-            cmSysButton2.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton2.SysButtonMouse")));
-            cmSysButton2.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton2.SysButtonNorml")));
-            cmSysButton2.ToolTip = "皮肤";
+            cmSysButton3.Bounds = new System.Drawing.Rectangle(877, -1, 28, 20);
+            cmSysButton3.BoxState = CCWin.ControlBoxState.Normal;
+            cmSysButton3.Location = new System.Drawing.Point(877, -1);
+            cmSysButton3.Name = "ToolSet";
+            cmSysButton3.OwnerForm = this;
+            cmSysButton3.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonDown")));
+            cmSysButton3.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonMouse")));
+            cmSysButton3.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonNorml")));
+            cmSysButton3.ToolTip = "设置";
+            cmSysButton4.Bounds = new System.Drawing.Rectangle(849, -1, 28, 20);
+            cmSysButton4.BoxState = CCWin.ControlBoxState.Normal;
+            cmSysButton4.Location = new System.Drawing.Point(849, -1);
+            cmSysButton4.Name = "ToolSkin";
+            cmSysButton4.OwnerForm = this;
+            cmSysButton4.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton4.SysButtonDown")));
+            cmSysButton4.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton4.SysButtonMouse")));
+            cmSysButton4.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton4.SysButtonNorml")));
+            cmSysButton4.ToolTip = "皮肤";
             this.SysButtonItems.AddRange(new CCWin.CmSysButton[] {
-            cmSysButton1,
-            cmSysButton2});
+            cmSysButton3,
+            cmSysButton4});
             this.Text = "";
             this.TitleCenter = true;
             this.TitleColor = System.Drawing.Color.White;
@@ -725,6 +734,7 @@ namespace TxoooProductUpload.UI
         private Xilium.CefGlue.WindowsForms.CefWebBrowser webBrowser;
         private System.Windows.Forms.Panel palShow;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ToolStripMenuItem stmUpdate;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using Iwenli;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -169,7 +170,7 @@ namespace TxoooProductUpload.UI.Service
             productRequest.Shares = product.SubTitle;
             #endregion 
             #endregion
-            await Task.Delay(1000);
+            await Task.Delay(200);
             var result = await BaseContent.ProductService.UploadProduct(productRequest);
             if (!result.success)
             {
@@ -184,6 +185,31 @@ namespace TxoooProductUpload.UI.Service
 
         #endregion
 
+        #region 上传商品来源
+        /// <summary>
+        /// 上传商品来源
+        /// </summary>
+        /// <param name="productList"></param>
+        /// <returns></returns>
+        public async Task<bool> InsertProductsSourceAsync(List<ProductSourceInfo> list)
+        {
+            if (list == null || list.Count == 0)
+            {
+                return true;
+            }
+            var txoooList = list.Select(m =>
+            new ProductSourceTxoooInfo()
+            {
+                TxoooId = m.TxoooId,
+                SourceId=m.Id.ToString(),
+                SourceType = (int)m.SourceType
+            });
+
+            var json = JsonConvert.SerializeObject(txoooList);
+            return await BaseContent.ProductService.InsertProductsSourceAsync(json);
+        }
+
+        #endregion
 
         #region  上传商品图片到Txooo服务器 并返回商品
         /// <summary>

@@ -114,6 +114,12 @@ namespace TxoooProductUpload.Service
                         }
                     }
                 }
+                //更新商品来源集合缓存
+                var maxId = 0L;
+                if (Data.ProductSourceTxoooList.Count > 0) {
+                    maxId = Data.ProductSourceTxoooList.Last().Id;
+                }
+                Data.ProductSourceTxoooList.AddRange(await context.ProductService.GetProductsSourceListAsync(maxId));
             }
             Save();
         }
@@ -154,6 +160,38 @@ namespace TxoooProductUpload.Service
             }
             Save();
         }
+        /// <summary>
+        /// 更新缓存
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateAlways()
+        {
+            Data.ProductClassList.Clear();
+            Data.AreaList.Clear();
+            Data.ProductClassList.AddRange(await ServiceContext.ClassDataService.GetAllProductClass());
+            Data.AreaList.AddRange(await ServiceContext.AreaDataService.LoadAreaDatasAsync(1));
+            var list = Data.AreaList.ToList();
+            //Parallel.For(0, list.Count, async (i) =>
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (!new int[] { 110000, 120000, 310000, 500000 }.Contains(list[i].region_code))
+                {
+                    try
+                    {
+                        Data.AreaList.AddRange(await ServiceContext.AreaDataService.LoadAreaDatasAsync(list[i].region_id));
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
 
+                }
+            }
+            Data.LastUpdateTime = DateTime.Now;
+            Data.IsLine = !ApiList.IsTest;
+            Save();
+            return true;
+        }
     }
 }
