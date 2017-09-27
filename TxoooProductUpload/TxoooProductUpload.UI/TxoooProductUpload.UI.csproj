@@ -172,6 +172,12 @@
     <Compile Include="Forms\SubForms\ProductEditForm.Designer.cs">
       <DependentUpon>ProductEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SubForms\ProductManageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\ProductManageForm.Designer.cs">
+      <DependentUpon>ProductManageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SubForms\ProductUploadLoading.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -289,6 +295,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\ProductEditForm.resx">
       <DependentUpon>ProductEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\ProductManageForm.resx">
+      <DependentUpon>ProductManageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\ProductUploadLoading.resx">
       <DependentUpon>ProductUploadLoading.cs</DependentUpon>
