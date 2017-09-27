@@ -34,5 +34,12 @@ namespace TxoooProductUpload.Service.Crawl
         /// <param name="document">当前商品结果dom对象</param>
         /// <returns></returns>
         List<ProductSourceInfo> GetProductbyHtml(HtmlAgilityPack.HtmlDocument document);
+
+        /// <summary>
+        /// 从店铺所有商品页面提取商品信息
+        /// </summary>
+        /// <param name="document">当前搜素结果dom对象</param>
+        /// <returns></returns>
+        List<ProductSourceInfo> GetProductListFormStore(HtmlAgilityPack.HtmlDocument document);
     }
 }

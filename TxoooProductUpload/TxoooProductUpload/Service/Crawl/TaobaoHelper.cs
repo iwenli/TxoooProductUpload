@@ -22,6 +22,25 @@ namespace TxoooProductUpload.Service.Crawl
         int _defaultQuantity = 100;  //默认每个SKU的数量
 
         /// <summary>
+        /// 从淘宝店铺所有商品页面提取商品信息
+        /// </summary>
+        /// <param name="document">当前淘宝店铺所有商品文档对象</param>
+        public List<ProductSourceInfo> GetProductListFormStore(HtmlDocument document)
+        {
+            List<ProductSourceInfo> list = new List<ProductSourceInfo>();
+            if (document == null) return list;
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("解析天猫搜索结果异常", ex);
+            }
+            return list;
+        }
+
+        /// <summary>
         /// 从淘宝PC详情抓取商品信息
         /// </summary>
         /// <param name="client">HTTP客户端</param>

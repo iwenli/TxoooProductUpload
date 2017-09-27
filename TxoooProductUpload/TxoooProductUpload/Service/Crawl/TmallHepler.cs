@@ -25,6 +25,8 @@ namespace TxoooProductUpload.Service.Crawl
         Regex _skuImageRegex = new Regex(@"background:url\(([\s\S]+?)\)");
         Regex _filterSkuNameReg = new Regex(@"[\n\t|已选中]*");
         Regex _initItemJsonRegex = new Regex(@"script src=""(//mdskip.taobao.com/core/initItemDetail.htm[\s\S]+?)""");
+        Regex _shopNameRegex = new Regex(@"<meta name=""keywords"" content=""([\s\S]+?)"">");
+        Regex _shopUserId = new Regex(@"""userId"": ""([\s\S]+?)""");
         int _defaultQuantity = 100;  //默认每个SKU的数量
 
         /// <summary>
@@ -45,7 +47,57 @@ namespace TxoooProductUpload.Service.Crawl
             }
             return list;
         }
+        /// <summary>
+        /// 从天猫店铺所有商品页面提取商品信息
+        /// </summary>
+        /// <param name="document">当前天猫店铺所有商品文档对象</param>
+        public List<ProductSourceInfo> GetProductListFormStore(HtmlDocument document)
+        {
 
+            List<ProductSourceInfo> list = new List<ProductSourceInfo>();
+            if (document == null) return list;
+            var shopName = _shopNameRegex.Match(document.DocumentNode.OuterHtml).Groups[1].Value;
+            var userId = _shopUserId.Match(document.DocumentNode.OuterHtml).Groups[1].Value;
+            try
+            {
+                var productNodeList = document.GetElementbyId("J_ShopSearchResult").SelectNodes(".//dl[starts-with(@class,'item')]");
+                var noCrawlNodes = document.GetElementbyId("J_ShopSearchResult").SelectSingleNode(".//div[starts-with(@class,'comboHd')]");
+                if (productNodeList != null)
+                {
+                    var count = productNodeList.Count;
+                    //移除店内推荐
+                    if (noCrawlNodes != null && noCrawlNodes.InnerText.Trim() == "本店内推荐")
+                    {
+                        count = count - 10;
+                    }
+                    foreach (HtmlNode categoryNode in productNodeList)
+                    {
+                        if (count-- == 0) break;
+                        var idStr = categoryNode.Attributes["data-id"].Value;
+                        if (!string.IsNullOrEmpty(idStr))
+                        {
+                            var id = Convert.ToInt64(idStr);
+                            if (list.Exists(m => m.Id == id)) { continue; }
+                            ProductSourceInfo product = new ProductSourceInfo(id);
+                            product.SourceType = SourceType.Tmall;
+                            product.FirstImg = categoryNode.SelectSingleNode(".//dt/a/img").Attributes["src"].Value;
+                            product.ShowPrice = Convert.ToDouble(
+                                categoryNode.SelectSingleNode(".//dd[2]/div/div[1]/span[2]").InnerText.Trim() ?? "0");
+                            product.ProductName = categoryNode.SelectSingleNode(".//dd[2]/a").InnerText.Trim();
+
+                            product.UserNick = product.ShopName = shopName;
+                            product.UserId = Convert.ToInt64(userId);
+                            list.Add(product);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("解析天猫店铺所有商品结果异常", ex);
+            }
+            return list;
+        }
         /// <summary>
         /// 从天猫无线详情抓取商品信息
         /// </summary>
@@ -105,6 +157,9 @@ namespace TxoooProductUpload.Service.Crawl
             var mdSkipModel = JsonConvert.DeserializeObject<TmallProductResult>(dataMdskip);
 
             #region 基本信息
+            if (product.Location.IsNullOrEmpty()) {
+                product.Location = mdSkipModel.delivery.from;
+            }
             product.UserNick = product.ShopName = detailModel.seller.shopName;
             product.UserId = detailModel.seller.userId;
 
@@ -117,7 +172,6 @@ namespace TxoooProductUpload.Service.Crawl
             product.FavCnt = detailModel.item.favcount;
             product.CommnetCnt = mdSkipModel.item.commentCount ?? 0;
             product.SellCnt = mdSkipModel.item.sellCount;
-            product.Location = product.Location ?? mdSkipModel.delivery.from;
             #endregion
 
             #region 邮费 以及 包邮处理

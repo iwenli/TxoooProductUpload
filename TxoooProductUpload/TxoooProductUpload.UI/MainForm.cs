@@ -255,7 +255,7 @@ namespace TxoooProductUpload.UI
         /// <param name="e"></param>
         void stmSet_Click(object sender, EventArgs e)
         {
-
+            new TxoooProductUpload.UI.Forms.MinForms.SettingForm().ShowDialog(this);
         }
         /// <summary>
         /// 置顶
@@ -300,7 +300,5 @@ namespace TxoooProductUpload.UI
             });
         }
         #endregion
-
-
     }
 }

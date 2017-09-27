@@ -101,7 +101,7 @@ namespace TxoooProductUpload.Service
             {
                 throw new Exception(stCtx.Result.msg);
             }
-             
+
             product.product_id = Convert.ToInt32(stCtx.Result.msg);
             //try
             //{
@@ -148,7 +148,7 @@ namespace TxoooProductUpload.Service
         public async Task<bool> InsertProductsSourceAsync(string json)
         {
             var stCtx = NetClient.Create<WebResponseResult<string>>(HttpMethod.Post, ApiList.InsertProductsSource,
-               data:new { data = json });
+               data: new { data = json });
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
@@ -168,14 +168,18 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public async Task<List<ProductSourceTxoooInfo>> GetProductsSourceListAsync(long maxId)
         {
-            var stCtx = NetClient.Create<List<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSourceList,
+            var stCtx = NetClient.Create<WebResponseResult<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSourceList,
                data: new { id = maxId });
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
                 throw new Exception("创业赚钱-商品服务器无法连接");
-            } 
-            return stCtx.Result;
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            return stCtx.Result.Data.ToList();
         }
     }
 }

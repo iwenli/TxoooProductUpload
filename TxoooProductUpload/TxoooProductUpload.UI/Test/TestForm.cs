@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Service.Crawl;
+using TxoooProductUpload.UI.Common;
 using TxoooProductUpload.UI.Forms;
 using TxoooProductUpload.UI.Forms.SubForms;
 
@@ -45,6 +46,11 @@ namespace TxoooProductUpload.UI.Test
                 }
                 button1.Enabled = true;
             };
+
+            for (int i = 0; i < 100; i++)
+            {
+                AppendLog(Utils.RandomInt(AppSetting.RandomMinValue,AppSetting.RandomMaxValue).ToString()); 
+            }
         }
 
         //private void button1_Click(object sender, EventArgs e)

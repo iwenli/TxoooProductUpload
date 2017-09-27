@@ -114,12 +114,6 @@ namespace TxoooProductUpload.Service
                         }
                     }
                 }
-                //更新商品来源集合缓存
-                var maxId = 0L;
-                if (Data.ProductSourceTxoooList.Count > 0) {
-                    maxId = Data.ProductSourceTxoooList.Last().Id;
-                }
-                Data.ProductSourceTxoooList.AddRange(await context.ProductService.GetProductsSourceListAsync(maxId));
             }
             Save();
         }
@@ -155,11 +149,18 @@ namespace TxoooProductUpload.Service
 
                     }
                 }
+                var maxId = 0L;
+                if (Data.ProductSourceTxoooList.Count > 0)
+                {
+                    maxId = Data.ProductSourceTxoooList.Last().Id;
+                }
+                Data.ProductSourceTxoooList.AddRange(await ServiceContext.ProductService.GetProductsSourceListAsync(maxId));
                 Data.LastUpdateTime = DateTime.Now;
                 Data.IsLine = !ApiList.IsTest; 
             }
             Save();
         }
+
         /// <summary>
         /// 更新缓存
         /// </summary>
@@ -188,6 +189,13 @@ namespace TxoooProductUpload.Service
 
                 }
             }
+            //更新商品来源集合缓存
+            var maxId = 0L;
+            if (Data.ProductSourceTxoooList.Count > 0)
+            {
+                maxId = Data.ProductSourceTxoooList.Last().Id;
+            }
+            Data.ProductSourceTxoooList.AddRange(await ServiceContext.ProductService.GetProductsSourceListAsync(maxId));
             Data.LastUpdateTime = DateTime.Now;
             Data.IsLine = !ApiList.IsTest;
             Save();

@@ -95,6 +95,7 @@
     <Compile Include="CefGlue\WlCefApp.cs" />
     <Compile Include="CefGlue\WlCefGlueLoader.cs" />
     <Compile Include="Common\AppConfigInfo.cs" />
+    <Compile Include="Common\AppSetting.cs" />
     <Compile Include="Common\AppUpdater.cs" />
     <Compile Include="Common\Const\AppInfo.cs" />
     <Compile Include="Common\Extended\Winform\DataGridViewCheckBoxHeaderCell.cs" />
@@ -147,6 +148,12 @@
     <Compile Include="Forms\MinForms\PhoneBorwser.Designer.cs">
       <DependentUpon>PhoneBorwser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MinForms\SettingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MinForms\SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\SubForms\CrawlProductsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +165,12 @@
     </Compile>
     <Compile Include="Forms\SubForms\FrmExeManager.designer.cs">
       <DependentUpon>FrmExeManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SubForms\ProductEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SubForms\ProductEditForm.Designer.cs">
+      <DependentUpon>ProductEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SubForms\ProductUploadLoading.cs">
       <SubType>Form</SubType>
@@ -265,11 +278,17 @@
     <EmbeddedResource Include="Forms\MinForms\PhoneBorwser.resx">
       <DependentUpon>PhoneBorwser.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MinForms\SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\CrawlProductsForm.resx">
       <DependentUpon>CrawlProductsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\FrmExeManager.resx">
       <DependentUpon>FrmExeManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SubForms\ProductEditForm.resx">
+      <DependentUpon>ProductEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\ProductUploadLoading.resx">
       <DependentUpon>ProductUploadLoading.cs</DependentUpon>

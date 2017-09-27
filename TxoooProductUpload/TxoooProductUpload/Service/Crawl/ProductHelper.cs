@@ -109,11 +109,13 @@ namespace TxoooProductUpload.Service.Crawl
                 switch (type)
                 {
                     case CrawlType.TaoBaoSearch:
-                        return _taobaoHelper.GetProductListFormSearch(document);
+                        return _taobaoHelper.GetProductListFormSearch(document); 
                     case CrawlType.TaoBaoItem:
                         return _taobaoHelper.GetProductbyHtml(document);
                     case CrawlType.TmallItem:
                         return _tmallHelper.GetProductbyHtml(document);
+                    case CrawlType.TmallStore:
+                        return _tmallHelper.GetProductListFormStore(document);
                 }
             }
             catch (Exception ex)

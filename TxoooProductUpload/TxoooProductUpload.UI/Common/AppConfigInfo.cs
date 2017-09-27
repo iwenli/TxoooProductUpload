@@ -19,7 +19,7 @@ namespace TxoooProductUpload.UI.Common
         {
             set
             {
-                AppConfig.ModifyItem("TxoooUserDefultHeadPic", value); ;
+                AppConfig.ModifyItem("TxoooUserDefultHeadPic", value);
             }
             get
             {
@@ -61,7 +61,7 @@ namespace TxoooProductUpload.UI.Common
         {
             set
             {
-                AppConfig.ModifyItem("FindPassWordUrl", value); ;
+                AppConfig.ModifyItem("FindPassWordUrl", value);
             }
             get
             {
@@ -76,7 +76,7 @@ namespace TxoooProductUpload.UI.Common
         {
             set
             {
-                AppConfig.ModifyItem("RegisterUrl", value); ;
+                AppConfig.ModifyItem("RegisterUrl", value);
             }
             get
             {
@@ -90,7 +90,7 @@ namespace TxoooProductUpload.UI.Common
         {
             set
             {
-                AppConfig.ModifyItem("ContactAuthorUrl", value); ;
+                AppConfig.ModifyItem("ContactAuthorUrl", value);
             }
             get
             {

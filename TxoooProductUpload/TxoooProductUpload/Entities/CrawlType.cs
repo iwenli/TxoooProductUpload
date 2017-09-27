@@ -24,8 +24,20 @@ namespace TxoooProductUpload.Entities
         /// </summary>
         TaoBaoItem,
         /// <summary>
+        /// 淘宝店铺
+        /// </summary>
+        TaoBaoStore,
+        /// <summary>
+        /// 天猫搜索
+        /// </summary>
+        TmallSearch,
+        /// <summary>
         /// 天猫商品
         /// </summary>
-        TmallItem
+        TmallItem,
+        /// <summary>
+        /// 天猫店铺
+        /// </summary>
+        TmallStore
     }
 }

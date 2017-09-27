@@ -61,7 +61,10 @@ namespace TxoooProductUpload.UI.Service
             var targetFullPath = Path.Combine(_cachePath, userName + ".jpg");
             if (File.Exists(targetFullPath))
             {
-                return Image.FromFile(targetFullPath);
+                var image = Image.FromFile(targetFullPath);
+                Image retImage = new Bitmap(image);
+                image.Dispose();
+                return retImage;
             }
             else
             {
@@ -76,7 +79,7 @@ namespace TxoooProductUpload.UI.Service
         public async Task SaveHeadPicAsync(LoginInfo login)
         {
             //如果不是默认头像才保持
-            if (login.MchInfo.HeaPic != TxoooProductUpload.UI.Common.AppConfigInfo.TxoooUserDefultHeadPic)
+            if (login.MchInfo.MchLogo != TxoooProductUpload.UI.Common.AppConfigInfo.TxoooUserDefultHeadPic)
             {
                 //如果文件夹不存在，则创建 
                 if (!Directory.Exists(_cachePath))
@@ -85,9 +88,8 @@ namespace TxoooProductUpload.UI.Service
                 }
                 try
                 {
-                    var url = login.MchInfo.HeaPic.Insert(login.MchInfo.HeaPic.LastIndexOf("."), "_1_250_250_3");
                     //获取图像
-                    var imgBytes = await BaseContent.ImageService.GetImageStreamAsync(login.MchInfo.HeaPic + ",1,200,200,3");
+                    var imgBytes = await BaseContent.ImageService.GetImageStreamAsync(login.MchInfo.MchLogo + ",1,200,200,3");
                     //写入文件
                     var targetFullPath = Path.Combine(_cachePath, login.UserName + ".jpg");
                     File.WriteAllBytes(targetFullPath, imgBytes);

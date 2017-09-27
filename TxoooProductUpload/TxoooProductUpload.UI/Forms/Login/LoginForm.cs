@@ -503,10 +503,7 @@ namespace TxoooProductUpload.UI
             chkRemember.Checked = _loginUser.RememberPwd;
         }
         #endregion
-        /*
-         
-
-             */
+        
         /// <summary>
         /// 登录状态变化
         /// </summary>

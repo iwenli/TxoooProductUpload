@@ -32,7 +32,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         UserControls.ProcessProduct _process1;
         UserControls.ProcessProductResult _processResult;
 
-        int _threadCount = 5;   //处理任务线程数 
         bool _isAuto = false;  //自动抓取全部列表
         ProductHelper _productHelper = new ProductHelper();
         CrawlType _crawlType = CrawlType.None;
@@ -117,6 +116,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             {
                 _crawlType = CrawlType.TmallItem;
             }
+            else if (url.IndexOf("tmall.com/search") > 1 || url.IndexOf("tmall.com/category") > 1)
+            {
+                _crawlType = CrawlType.TmallStore;
+            }
             else
             {
                 _crawlType = CrawlType.None;
@@ -126,6 +129,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             switch (_crawlType)
             {
                 case CrawlType.TaoBaoSearch:
+                case CrawlType.TmallStore:
                     tsBtnAutoAll.Enabled = tsBtnPageProducts.Enabled = true;
                     break;
                 case CrawlType.TaoBaoItem:
@@ -224,7 +228,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                        _process1.ProcessBar.Value = _process1.ProcessBar.Minimum = 0;
                    }));
                    var cts = new CancellationTokenSource();
-                   var taskCount = _threadCount;
+                   var taskCount = AppSetting.MaxThreadCount;
                    if (taskCount > allCount)
                    {
                        taskCount = taskCount > allCount ? allCount : taskCount;
@@ -511,6 +515,17 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     //下一页
                     _webBrowser.Browser.GetMainFrame().ExecuteJavaScript("document.getElementsByClassName('icon-btn-next-2')[0].click()", "", 0);
                     break;
+                case CrawlType.TmallStore:
+                    //循环到最后一页  退出循环
+                    if (document.DocumentNode.SelectNodes("//b[@class='ui-page-s-next']") != null)
+                    {
+                        _isAuto = false;
+                        MessageBoxEx.Show("抓取完毕，共抓取商品{0}条".FormatWith(sdgvProduct.Rows.Count));
+                        return;
+                    }
+                    //下一页
+                    _webBrowser.Browser.GetMainFrame().ExecuteJavaScript("document.getElementsByClassName('ui-page-s-next')[0].click()", "", 0);
+                    break;
             }
         }
         #endregion
@@ -543,11 +558,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         break;
                     }
 
-                    App.Context.ProductService.DiscernLcation(task);
                     if (!task.IsProcess)
                     {
                         productHelper.ProcessItem(task);
                     }
+                    App.Context.ProductService.DiscernLcation(task);
                     if (task.IsProcess)
                     {
                         lock (ProductCache.ProcessFailList)
@@ -570,14 +585,13 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                             ProductCache.ProcessFailList.Add(task);
                         }
                     }
-
                     Invoke(new Action(() =>
                     {
                         var value = _process1.ProcessBar.Value + 1;
                         //Iwenli.LogHelper.LogDebug(this, value.ToString());
                         _process1.ProcessBar.Value = value;
                     }));
-                    //等待一分钟 在执行下一个
+                    //等待一定时间  继续执行
                     await Task.Delay(Utils.RandomInt(), token);
                 }
             }

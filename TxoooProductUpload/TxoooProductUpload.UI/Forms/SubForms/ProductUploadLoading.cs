@@ -14,13 +14,13 @@ using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Service;
 using TxoooProductUpload.UI.Service.Cache.ProductCache;
 using Iwenli;
+using TxoooProductUpload.UI.Common;
 
 namespace TxoooProductUpload.UI.Forms.SubForms
 {
     public partial class ProductUploadLoading : LoadingForm
     {
         #region 变量
-        int _threadCount = 5;   //处理任务线程数 
         List<ProductSourceInfo> _waitUploadImageList;
         int _processType = -1;
         #endregion
@@ -89,20 +89,27 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// </summary>
         void UploadImage()
         {
+            var taskCount = AppSetting.MaxThreadCount;
+            var allCount = ProductCache.WaitUploadImageList.Count;
+            if (allCount <= 0) return;
+
             AppendLogWarning("[全局]开始上传图片到图片创业赚钱服务器...");
-            AppendLogWarning("[全局]上传线程{0}个...", _threadCount);
+            AppendLogWarning("[全局]上传线程{0}个...", taskCount);
             _waitUploadImageList = new List<ProductSourceInfo>();
             _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);
             var cts = new CancellationTokenSource();
-            var tasks = new Task[_threadCount];
-            for (int i = 0; i < _threadCount; i++)
+            if (taskCount > allCount)
+            {
+                taskCount = taskCount > allCount ? allCount : taskCount;
+            }
+            var tasks = new Task[taskCount];
+            for (int i = 0; i < taskCount; i++)
             {
                 tasks[i] = new Task(() => UploadImageTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
                 tasks[i].Start();
                 AppendLogWarning("[全局]线程{0}启动...", i + 1);
             }
 
-            var allCount = ProductCache.WaitUploadImageList.Count;
             Task.Run(async () =>
             {
                 while (true)
@@ -186,14 +193,26 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// </summary>
         void UploadProduct()
         {
-            AppendLogWarning("[全局]开始上传商品...");
-            AppendLogWarning("[全局]上传线程共{0}个...", _threadCount);
-            _waitUploadImageList = new List<ProductSourceInfo>();
+            var taskCount = AppSetting.MaxThreadCount;
+            //上传失败的继续上传
+            ProductCache.WaitProcessList.AddRange(ProductCache.UploadFailList);
+            ProductCache.UploadFailList.Clear();
+
             var allCount = ProductCache.WaitUploadList.Count;
+            if (allCount <= 0) return;
+
+            AppendLogWarning("[全局]开始上传商品...");
+            AppendLogWarning("[全局]上传线程共{0}个...", taskCount);
+            _waitUploadImageList = new List<ProductSourceInfo>();
+
             _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);
             var cts = new CancellationTokenSource();
-            var tasks = new Task[_threadCount];
-            for (int i = 0; i < _threadCount; i++)
+            if (taskCount > allCount)
+            {
+                taskCount = taskCount > allCount ? allCount : taskCount;
+            }
+            var tasks = new Task[taskCount];
+            for (int i = 0; i < taskCount; i++)
             {
                 tasks[i] = new Task(() => UploadTask(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
                 tasks[i].Start();
@@ -208,7 +227,8 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         try
                         {
                             var result = await App.Context.ProductService.InsertProductsSourceAsync(ProductCache.UploadSuccessList);
-                            if (!result) {
+                            if (!result)
+                            {
                                 this.LogError("上传商品来源失败");
                             }
                         }
