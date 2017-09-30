@@ -30,7 +30,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             InitializeComponent();
             ProductList = list;
-            SendMessage(lvThumImages.Handle, 0x1035, 0, 0x10000 * 10 + 10);
+            SendMessage(lvThumImages.Handle, 0x1035, 0, 0x10000 * 110 + 130);
             Load += ProductEditForm_Load;
         }
 

@@ -34,6 +34,8 @@
             this.skinTabControl1 = new CCWin.SkinControl.SkinTabControl();
             this.skinTabPage1 = new CCWin.SkinControl.SkinTabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lvThumImages = new System.Windows.Forms.ListView();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.gbSetting = new System.Windows.Forms.GroupBox();
             this.gbBase = new System.Windows.Forms.GroupBox();
             this.skinTextBox3 = new CCWin.SkinControl.SkinTextBox();
@@ -72,8 +74,6 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.lvThumImages = new System.Windows.Forms.ListView();
             this.panel1.SuspendLayout();
             this.skinTabControl1.SuspendLayout();
             this.skinTabPage1.SuspendLayout();
@@ -157,6 +157,24 @@
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "主图";
+            // 
+            // lvThumImages
+            // 
+            this.lvThumImages.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvThumImages.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvThumImages.LargeImageList = this.imageList1;
+            this.lvThumImages.Location = new System.Drawing.Point(3, 17);
+            this.lvThumImages.MultiSelect = false;
+            this.lvThumImages.Name = "lvThumImages";
+            this.lvThumImages.Size = new System.Drawing.Size(735, 212);
+            this.lvThumImages.TabIndex = 1;
+            this.lvThumImages.UseCompatibleStateImageBehavior = false;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(120, 120);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // gbSetting
             // 
@@ -698,26 +716,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1010, 24);
             this.panel2.TabIndex = 0;
-            // 
-            // imageList1
-            // 
-            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
-            this.imageList1.ImageSize = new System.Drawing.Size(120, 120);
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            // 
-            // lvThumImages
-            // 
-            this.lvThumImages.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lvThumImages.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvThumImages.LargeImageList = this.imageList1;
-            this.lvThumImages.Location = new System.Drawing.Point(3, 17);
-            this.lvThumImages.MultiSelect = false;
-            this.lvThumImages.Name = "lvThumImages";
-            this.lvThumImages.Scrollable = false;
-            this.lvThumImages.Size = new System.Drawing.Size(735, 212);
-            this.lvThumImages.StateImageList = this.imageList1;
-            this.lvThumImages.TabIndex = 1;
-            this.lvThumImages.UseCompatibleStateImageBehavior = false;
             // 
             // ProductEditForm
             // 
