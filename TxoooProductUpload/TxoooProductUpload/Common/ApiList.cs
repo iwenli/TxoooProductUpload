@@ -51,6 +51,7 @@ namespace TxoooProductUpload.Common
             }
             get { return _isHttps; }
         }
+
         /// <summary>
         /// 当前app-api的Host
         /// </summary>
@@ -60,7 +61,20 @@ namespace TxoooProductUpload.Common
             {
                 return
                     (_isHttps ? @"https://" : @"http://") +
-                    (_isTest ? @"apimchtest.7518.cn/" : @"api.7518.cn/");
+                    (_isTest ? @"apitest.7518.cn/" : @"api.7518.cn/");
+            }
+        }
+
+        /// <summary>
+        /// 当前app-api的Host
+        /// </summary>
+        public static string MchHostApp
+        {
+            get
+            {
+                return
+                    (_isHttps ? @"https://" : @"http://") +
+                    (_isTest ? @"apimchtest.7518.cn/" : @"apimch.7518.cn/");
             }
         }
 
@@ -108,7 +122,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return HostApp + @"App/MchInfo.mch/Login";
+                return MchHostApp + @"App/MchInfo.mch/Login";
             }
         }
         /// <summary>
@@ -128,7 +142,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return HostApp + @"App/Account.mch/GetMchStateInfo";
+                return MchHostApp + @"App/Account.mch/GetMchStateInfo";
             }
         }
 
@@ -139,7 +153,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return HostApp + @"App/Product.mch/GetArea";
+                return MchHostApp + @"App/Product.mch/GetArea";
             }
         }
 
@@ -183,7 +197,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return HostApp + @"App/Product.mch/AddProduct4" + AppToken;
+                return MchHostApp + @"App/Product.mch/AddProduct4" + AppToken;
             }
         }
 
@@ -209,6 +223,7 @@ namespace TxoooProductUpload.Common
             }
         }
 
+        #region 商品来源
         /// <summary>
         /// 保存商品来源和商品信息
         /// 参数：data 商品信息json
@@ -217,7 +232,7 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return HostApp + @"App/CrawlProduct.mch/InsertProductsSource" + AppToken;
+                return MchHostApp + @"App/CrawlProduct.mch/InsertProductsSource" + AppToken;
             }
         }
         /// <summary>
@@ -229,8 +244,66 @@ namespace TxoooProductUpload.Common
         {
             get
             {
-                return HostApp + @"App/CrawlProduct.mch/GetProductsSourceList" + AppToken;
+                return MchHostApp + @"App/CrawlProduct.mch/GetProductsSourceList" + AppToken;
             }
         }
+        #endregion
+
+        #region 商品上下架编辑等操作
+        /// <summary>
+        /// 获取商品列表
+        /// </summary>
+        public static string GetProductListForCrawl
+        {
+            get
+            {
+                return MchHostApp + @"App/Product.mch/GetProductListForCrawl" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 获取商品各个状态产品数量
+        /// </summary>
+        public static string GetProductStateCount
+        {
+            get
+            {
+                return MchHostApp + @"App/Product.mch/GetProductStateCount" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 获取商品基本信息
+        /// </summary>
+        public static string GetProductInfoForMch
+        {
+            get
+            {
+                return MchHostApp + @"App/Product.mch/GetProductInfo" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 删除商品
+        /// 参数：product_id
+        /// </summary>
+        public static string DelProduct
+        {
+            get
+            {
+                return MchHostApp + @"App/Product.mch/DelProduct" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 商品上下架
+        /// 参数：
+        /// product_ids  逗号分隔
+        /// is_show：1商家  0下架
+        /// </summary>
+        public static string UpProducts
+        {
+            get
+            {
+                return MchHostApp + @"App/Product.mch/UpProducts" + AppToken;
+            }
+        }
+        #endregion
     }
 }

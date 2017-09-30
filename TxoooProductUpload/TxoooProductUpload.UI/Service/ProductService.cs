@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Entities.Request;
+using TxoooProductUpload.UI.Common.Const;
 
 namespace TxoooProductUpload.UI.Service
 {
@@ -20,11 +21,7 @@ namespace TxoooProductUpload.UI.Service
         /// 上传商品SKU格式化字符串
         /// </summary>
         string skuFormat = @"&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}={6}&property_map_img_{0}={3}&radio_num_{0}={4}&is_default_{0}={5}";
-        /// <summary>
-        /// 详情格式化字符串
-        /// </summary>
-        string detialFormat = @"<p>{0}</p><img src='{1}' />";
-
+       
         public ProductService(TxoooProductUpload.Service.ServiceContext baseContent) : base(baseContent)
         {
             MsgTemplate = "[商品消息]{0}";
@@ -139,8 +136,11 @@ namespace TxoooProductUpload.UI.Service
             StringBuilder skuJson = new StringBuilder();
             for (int i = 0; i < product.SkuList.Count; i++)
             {
+                //价格处理
+                var price = product.SkuList[i].Price / (1 - product.PremiumRatio);
+                price = Math.Floor(price * 10 + 0.9) / 10;   //向上进位 保留一位小数
                 productRequest.SkuJsons.AppendFormat(skuFormat, i, product.SkuList[i].Name,
-                    product.SkuList[i].Price / (1 - product.PremiumRatio), product.SkuList[i].TxoooImage, product.SettlementRatio * 100,
+                  price, product.SkuList[i].TxoooImage, product.SettlementRatio * 100,
                     (i == 1).ToString().ToLower(), product.SkuList[i].Quantity);
             }
             #endregion
@@ -148,7 +148,7 @@ namespace TxoooProductUpload.UI.Service
             #region 描述
             for (int i = 0; i < product.TxoooDetailImgList.Count; i++)
             {
-                productRequest.Details.AppendFormat(detialFormat, string.Empty, product.TxoooDetailImgList[i]);
+                productRequest.Details.AppendFormat(CommonString.DetialFormat, string.Empty, product.TxoooDetailImgList[i]);
             }
             #endregion
 
@@ -170,11 +170,11 @@ namespace TxoooProductUpload.UI.Service
             productRequest.Shares = product.SubTitle;
             #endregion 
             #endregion
-            await Task.Delay(200);
+            await Task.Delay(Common.Utils.RandomInt(100, 1200));
             var result = await BaseContent.ProductService.UploadProduct(productRequest);
             if (!result.success)
             {
-                string formatMsg = "{0}商品 {1} 上传失败,服务器结果：{2}";
+                string formatMsg = "{0} 商品 {1} 上传失败,服务器结果：{2}";
                 new Exception(formatMsg.FormatWith(product.SourceName, product.Id, result.msg));
             }
             else
@@ -201,7 +201,7 @@ namespace TxoooProductUpload.UI.Service
             new ProductSourceTxoooInfo()
             {
                 TxoooId = m.TxoooId,
-                SourceId=m.Id.ToString(),
+                SourceId = m.Id.ToString(),
                 SourceType = (int)m.SourceType
             });
 

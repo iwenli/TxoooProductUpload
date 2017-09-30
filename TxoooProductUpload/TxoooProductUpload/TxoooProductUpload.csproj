@@ -129,6 +129,10 @@
     <Compile Include="Entities\Resporse\TaoBaoProductResult.cs" />
     <Compile Include="Entities\Resporse\TmallProductResult.cs" />
     <Compile Include="Entities\Resporse\TmallPcProductResult.cs" />
+    <Compile Include="Entities\Resporse\Txooo\MangeProductResult.cs" />
+    <Compile Include="Entities\Resporse\Txooo\ProductStateInfo.cs" />
+    <Compile Include="Entities\Resporse\Txooo\ManageProductInfo.cs" />
+    <Compile Include="Entities\Resporse\Txooo\ProductStateType.cs" />
     <Compile Include="Service\CommonService.cs" />
     <Compile Include="Service\Crawl\IHelper.cs" />
     <Compile Include="Service\Crawl\ProductHelper.cs" />

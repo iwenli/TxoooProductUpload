@@ -32,9 +32,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         UserControls.ProcessProduct _process1;
         UserControls.ProcessProductResult _processResult;
 
+        int _allTaskCount = 0;
         bool _isAuto = false;  //自动抓取全部列表
         ProductHelper _productHelper = new ProductHelper();
         CrawlType _crawlType = CrawlType.None;
+        static readonly object _lockObject = new object();
         #endregion
 
         #region 属性
@@ -175,8 +177,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     Init();
                     break;
                 case "back":
+                    BackUpTask();
+                    break;
                 case "revert":
-                    MessageBoxEx.Show("暂不支持此功能...");
+                    RevertTask();
                     break;
             }
         }
@@ -191,9 +195,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             bs.DataSource = null;
             ProductCache = ProductCacheContext.Instance.Data;
             bs.DataSource = ProductCache.WaitProcessList;
+            tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
             _processResult.tsBtnUpload.Enabled = _processResult.tsBtnUploadImageAllSelect.Enabled
-            = tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
-            _processResult.Visible = _process1.Visible = tssBtnPrevious.Enabled = false;
+                = _processResult.tsBtnEditAllSelect.Enabled
+            = _processResult.Visible = _process1.Visible = tssBtnPrevious.Enabled = false;
             OpenNewUrl("www.taobao.com");
         }
 
@@ -217,8 +222,10 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         {
             Task.Run(() =>
            {
-               var allCount = ProductCache.WaitProcessList.Count;
-               if (allCount > 0)
+               _allTaskCount = ProductCache.WaitProcessList.Count;
+               var showCount = _allTaskCount;
+               var existsCount = ProductCache.WaitUploadImageList.Count;
+               if (_allTaskCount > 0)
                {
                    Invoke(new Action(() =>
                    {
@@ -229,9 +236,9 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                    }));
                    var cts = new CancellationTokenSource();
                    var taskCount = AppSetting.MaxThreadCount;
-                   if (taskCount > allCount)
+                   if (taskCount > _allTaskCount)
                    {
-                       taskCount = taskCount > allCount ? allCount : taskCount;
+                       taskCount = taskCount > _allTaskCount ? _allTaskCount : taskCount;
                    }
                    var tasks = new Task[taskCount];
                    for (int i = 0; i < taskCount; i++)
@@ -245,9 +252,9 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                        {
                            lock (ProductCache.WaitProcessList)
                            {
-                               if (allCount == ProductCache.WaitUploadImageList.Count + ProductCache.ProcessFailList.Count)
+                               if (_allTaskCount == 0)
                                {
-                                   ProcessProductDetailResult(allCount, ProductCache.WaitUploadImageList.Count);
+                                   ProcessProductDetailResult(showCount, ProductCache.WaitUploadImageList.Count - existsCount);
                                    break;
                                }
                            }
@@ -296,6 +303,80 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             }
         }
 
+        /// <summary>
+        /// 备份任务
+        /// </summary>
+        void BackUpTask()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Application.StartupPath;
+            saveFileDialog.Filter = "任务文件 (*.dat)|*.dat";
+            saveFileDialog.FilterIndex = 2;
+            saveFileDialog.Title = "保存任务进度";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK && saveFileDialog.FileName.Length > 0)
+            {
+                ProductCacheContext.Instance.Save(saveFileDialog.FileName);
+                MessageBox.Show("存储任务进度成功！", "保存");
+            }
+        }
+        /// <summary>
+        /// 还原任务
+        /// </summary>
+        void RevertTask()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = Application.StartupPath;
+            openFileDialog.Filter = "任务文件 (*.dat)|*.dat";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.Title = "还原任务进度";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    ProductCacheContext.Instance.LoadData(openFileDialog.FileName);
+                    ProductCache = ProductCacheContext.Instance.Data;
+                    ProductCache.WaitProcessList.AddRange(ProductCache.ProcessFailList);
+                    ProductCache.ProcessFailList.Clear();
+                    ProductCache.WaitUploadImageList.AddRange(ProductCache.UploadImageFailList);
+                    ProductCache.UploadImageFailList.Clear();
+                    ProductCache.WaitUploadList.AddRange(ProductCache.UploadFailList);
+                    ProductCache.UploadFailList.Clear();
+                    if (ProductCache.WaitProcessList.Count == 0 &&
+                        ProductCache.WaitUploadImageList.Count == 0 &&
+                        ProductCache.WaitUploadList.Count == 0)
+                    {
+                        MessageBoxEx.Show("该任务意见完成,没有需要处理的商品了!");
+                    }
+                    else
+                    {
+                        MessageBoxEx.Show("还原任务成功,待完善详情{0}个,待上传图片{1}个,待上传商品{2}个.".
+                            FormatWith(ProductCache.WaitProcessList.Count, ProductCache.WaitUploadImageList.Count,
+                        ProductCache.WaitUploadList.Count));
+                        if (ProductCache.WaitProcessList.Count > 0)
+                        {
+                            bs.DataSource = null;
+                            bs.DataSource = ProductCache.WaitProcessList;
+                            _processResult.tsBtnUpload.Enabled = _processResult.tsBtnUploadImageAllSelect.Enabled
+                            = tssBtnNext.Enabled = skinSplitContainer1.Visible = true;
+                            _processResult.Visible = _process1.Visible = tssBtnPrevious.Enabled = false;
+                        }
+                        else
+                        {
+                            ProcessProductDetailResult(0,0);
+                            _processResult.MessageShowLable.Text = "还原成功,待上传图片商品{0}个,待上传商品{1}个."
+                            .FormatWith(ProductCache.WaitUploadImageList.Count, ProductCache.WaitUploadList.Count);
+                            if (ProductCache.WaitUploadImageList.Count == 0) {
+                                _processResult.tsBtnUploadImageAllSelect.Enabled = false;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("打开文件出错：" + ex.Message);
+                }
+            }
+        }
         /// <summary>
         /// 获取选中的行 无选中返回null
         /// </summary>
@@ -593,6 +674,11 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                     }));
                     //等待一定时间  继续执行
                     await Task.Delay(Utils.RandomInt(), token);
+                    lock (_lockObject)
+                    {
+                        _allTaskCount--;
+                    }
+                    
                 }
             }
             catch (Exception ex)
@@ -637,7 +723,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             //当前集合中没有  并且已经上传商品缓存中没有
             if (ProductCache.WaitProcessList.FirstOrDefault(m => m.Id == product.Id) != null ||
                App.Context.BaseContent.CacheContext.Data.ProductSourceTxoooList.Exists
-               (m=>m.SourceId == product.Id.ToString()))
+               (m => m.SourceId == product.Id.ToString()))
             {
                 return true;
             }

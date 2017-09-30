@@ -42,6 +42,7 @@ namespace TxoooProductUpload.UI.Forms
 
         void ChangeClassForm_Load(object sender, EventArgs e)
         {
+            lbLocation1.ItemHeight = lbLocation2.ItemHeight =  16;
             InitClassListBoxEvent();
             txtSearch.TextChanged += TxtSearch_TextChanged;
             btnSearch.Click += BtnSearch_Click;

@@ -295,7 +295,10 @@ namespace TxoooProductUpload.Entities.Product
         /// </summary>
         public string SubTitle { set; get; }
 
-
+        /// <summary>
+        /// 商品分类显示信息
+        /// </summary>
+        public string ClassNameShow { set; get; }
 
         /// <summary>
         /// 商品主图
@@ -336,6 +339,7 @@ namespace TxoooProductUpload.Entities.Product
         {
             if (!imgUrl.IsNullOrEmpty())
             {
+                if (ThumImgList.Count == 5) { return; }
                 if (!imgUrl.StartsWith("http"))
                 {
                     imgUrl = "http:" + imgUrl;
@@ -344,6 +348,7 @@ namespace TxoooProductUpload.Entities.Product
                 {
                     ThumImgList.Add(imgUrl);
                 }
+
             }
         }
 

@@ -193,10 +193,12 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         /// </summary>
         void UploadProduct()
         {
-            var taskCount = AppSetting.MaxThreadCount;
-            //上传失败的继续上传
-            ProductCache.WaitProcessList.AddRange(ProductCache.UploadFailList);
-            ProductCache.UploadFailList.Clear();
+            int taskCount = AppSetting.MaxThreadCount;
+            //商品上传线程减半
+            if (taskCount > 8)
+            {
+                taskCount = (int)Math.Truncate(taskCount / 2.0);
+            }
 
             var allCount = ProductCache.WaitUploadList.Count;
             if (allCount <= 0) return;

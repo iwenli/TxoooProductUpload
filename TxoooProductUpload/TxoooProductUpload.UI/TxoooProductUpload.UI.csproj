@@ -98,6 +98,7 @@
     <Compile Include="Common\AppSetting.cs" />
     <Compile Include="Common\AppUpdater.cs" />
     <Compile Include="Common\Const\AppInfo.cs" />
+    <Compile Include="Common\Const\CommonString.cs" />
     <Compile Include="Common\Extended\Winform\DataGridViewCheckBoxHeaderCell.cs" />
     <Compile Include="Common\Utils.cs" />
     <Compile Include="Forms\ChangeLocationForm.cs">
@@ -334,6 +335,7 @@
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Properties\DataSources\TxoooProductUpload.Entities.Resporse.Txooo.ManageProductInfo.datasource" />
     <None Include="wl.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -415,6 +417,10 @@
       <Project>{2dc377b9-a78d-4ed1-ac1e-a61bdd040853}</Project>
       <Name>TxoooProductUpload</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WinHtmlEditor\WinHtmlEditor.csproj">
+      <Project>{1d1ef0a4-1d49-4d42-9295-e3b28359389a}</Project>
+      <Name>WinHtmlEditor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Xilium.CefGlue\CefGlue.WindowsForms\CefGlue.WindowsForms.csproj">
       <Project>{679af14d-8ff5-4608-bff8-ec1a7ded04a4}</Project>
       <Name>CefGlue.WindowsForms</Name>
@@ -448,6 +454,7 @@
     <None Include="Resources\Refresh_round.png" />
     <Content Include="lib\Iwenli.XML" />
     <None Include="Resources\Rainbow.gif" />
+    <Content Include="lib\NetSpell.SpellChecker.dll" />
     <Content Include="Skin\copyright_bg2.bmp">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

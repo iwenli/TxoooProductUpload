@@ -33,7 +33,6 @@ namespace TxoooProductUpload.UI
 
             //App.Context = Service.ServiceContext.Instance;
             ////Application.Run(new Msgtest());
-
             if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF(args) == 0)
             {
                 try
@@ -41,6 +40,8 @@ namespace TxoooProductUpload.UI
                     Context = Service.ServiceContext.Instance;
                     //TxoooProductUpload.UI.Main.MainForm()
                     Application.Run(new LoginForm());
+                    //Application.Run(new ProductEditForm());
+                    // Application.Run(new ProductManageForm());
                     //Application.Run(new CrawlProductsForm());
                 }
                 catch (Exception ex)
@@ -71,7 +72,6 @@ namespace TxoooProductUpload.UI
 
                 ////高级用法九中的Bool类型转换 设置
                 //setting.Converters.Add(new BoolConvert("是,否"));
-
                 return setting;
             });
         }

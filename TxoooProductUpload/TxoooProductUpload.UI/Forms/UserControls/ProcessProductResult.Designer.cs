@@ -110,6 +110,9 @@
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tsBtnEditAllSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.ts.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProductDGV)).BeginInit();
@@ -168,7 +171,10 @@
             this.toolStripLabel2,
             this.tsBtnSetLocationAllSelect,
             this.toolStripLabel3,
-            this.tsBtnUploadImageAllSelect});
+            this.tsBtnUploadImageAllSelect,
+            this.toolStripLabel4,
+            this.toolStripLabel6,
+            this.tsBtnEditAllSelect});
             this.ts.Location = new System.Drawing.Point(0, 0);
             this.ts.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.ts.Name = "ts";
@@ -200,6 +206,7 @@
             // 
             this.tsBtnUpload.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsBtnUpload.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnUpload.Enabled = false;
             this.tsBtnUpload.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnUpload.Image")));
             this.tsBtnUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnUpload.Name = "tsBtnUpload";
@@ -264,6 +271,7 @@
             // 
             this.tsBtnUploadImageAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.tsBtnUploadImageAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnUploadImageAllSelect.Enabled = false;
             this.tsBtnUploadImageAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnUploadImageAllSelect.Image")));
             this.tsBtnUploadImageAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsBtnUploadImageAllSelect.Name = "tsBtnUploadImageAllSelect";
@@ -417,6 +425,7 @@
             // ClassNameColumn
             // 
             this.ClassNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ClassNameColumn.DataPropertyName = "ClassNameShow";
             this.ClassNameColumn.HeaderText = "所属类目";
             this.ClassNameColumn.Name = "ClassNameColumn";
             this.ClassNameColumn.Width = 150;
@@ -843,6 +852,31 @@
             this.dataGridViewTextBoxColumn18.ReadOnly = true;
             this.dataGridViewTextBoxColumn18.Visible = false;
             // 
+            // tsBtnEditAllSelect
+            // 
+            this.tsBtnEditAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnEditAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnEditAllSelect.Enabled = false;
+            this.tsBtnEditAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnEditAllSelect.Image")));
+            this.tsBtnEditAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnEditAllSelect.Name = "tsBtnEditAllSelect";
+            this.tsBtnEditAllSelect.Size = new System.Drawing.Size(101, 21);
+            this.tsBtnEditAllSelect.Text = "审核本页商品(&U)";
+            // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(24, 21);
+            this.toolStripLabel4.Text = "    ";
+            // 
+            // toolStripLabel6
+            // 
+            this.toolStripLabel6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel6.Text = " ";
+            // 
             // ProcessProductResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -888,28 +922,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn brandDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RegionNameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ShowPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PremiumRatioColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassNameColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn isFreePostageDataGridViewCheckBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn postageDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn IsNewColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn IsVirtualColumn;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn IsRefundColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dealCntDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn favCntDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sellCntDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn commnetCntDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTypeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ClassIdColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RegionCodeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SettlementRatioColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UrlColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn H5UrlColumn;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel5;
@@ -936,5 +948,30 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         protected internal System.Windows.Forms.ToolStripButton tsBtnUploadImageAllSelect;
         protected internal System.Windows.Forms.ToolStripButton tsBtnUpload;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn brandDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RegionNameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ShowPrice;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PremiumRatioColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClassNameColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn isFreePostageDataGridViewCheckBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn postageDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsNewColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsVirtualColumn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn IsRefundColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dealCntDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn favCntDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sellCntDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn commnetCntDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClassTypeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ClassIdColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RegionCodeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SettlementRatioColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UrlColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn H5UrlColumn;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
+        protected internal System.Windows.Forms.ToolStripButton tsBtnEditAllSelect;
     }
 }

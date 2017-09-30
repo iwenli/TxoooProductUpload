@@ -44,42 +44,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
             //ProductBindSource.DataSource
         }
 
-        /// <summary>
-        /// 上传商品
-        /// </summary>
-        void UploadProduct()
-        {
-            var allCount = ProductCache.WaitUploadList.Count;
-            var loadForm = new ProductUploadLoading("正在上传商品...", 1);
-            if (loadForm.ShowDialog(this) == DialogResult.OK)
-            {
-                ProductBindSource.DataSource = null;
-                ProductBindSource.DataSource = ProductCache.UploadFailList;
-                ProductCache.WaitUploadList.Clear();
-                MessageBoxEx.Show("本次上传商品{1}个{0},成功{2}个{0},失败{3}个.".
-                    FormatWith("", allCount, ProductCache.UploadSuccessList.Count,
-                    ProductCache.UploadFailList.Count));
-            }
-        }
 
-        /// <summary>
-        /// 批量上传商品图片
-        /// </summary>
-        void UploadProductImage()
-        {
-            tsBtnUploadImageAllSelect.Enabled = false;
-            var allCount = ProductCache.WaitUploadImageList.Count;
-            var loadForm = new ProductUploadLoading("正在上传图片，请稍等...", 0);
-            if (loadForm.ShowDialog(this) == DialogResult.OK)
-            {
-                 ProductBindSource.DataSource = null;
-                ProductBindSource.DataSource = ProductCache.WaitUploadList;
-                ProductCache.WaitUploadImageList.Clear();
-                MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已更新"
-                    .FormatWith(allCount, ProductCache.WaitUploadList.Count);
-                tsBtnUpload.Enabled = true;
-            }
-        }
 
         #region 右键菜单相关
         void InitContextMenuEvent()
@@ -108,7 +73,9 @@ namespace TxoooProductUpload.UI.Forms.UserControls
                         Utils.OpenUrl(ProductDGV.SelectedRows[0].Cells["H5UrlColumn"].Value.ToString(), true);
                         break;
                     case "3":  //编辑
-                        MessageBoxEx.Show("暂不支持编辑商品");
+                        var id = Convert.ToInt64(ProductDGV.SelectedRows[0].Cells["idDataGridViewTextBoxColumn"].Value.ToString());
+                        var prodcutList = ProductCache.WaitUploadImageList.Where(m => m.Id == id);
+                        new ProductEditForm(prodcutList).ShowDialog(this);
                         break;
                     case "4":  //删除
                         ProductDGV.Rows.Remove(row);
@@ -135,6 +102,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
             tsBtnSetLocationAllSelect.Click += TsBtnAllSelect_Click;
             tsBtnUploadImageAllSelect.Click += TsBtnAllSelect_Click;
             tsBtnUpload.Click += TsBtnAllSelect_Click;
+            tsBtnEditAllSelect.Click += TsBtnAllSelect_Click;
         }
 
         /// <summary>
@@ -162,9 +130,66 @@ namespace TxoooProductUpload.UI.Forms.UserControls
                 case "tsBtnUpload":  //上传商品
                     UploadProduct();
                     break;
+                case "tsBtnEditAllSelect":  //审核
+                    EditAllSelectProduct();
+                    break;
             }
         }
 
+        /// <summary>
+        /// 编辑商品
+        /// </summary>
+        void EditAllSelectProduct()
+        {
+            tsBtnUploadImageAllSelect.Enabled = true;
+            new ProductEditForm(ProductCache.WaitUploadImageList).ShowDialog(this);
+        }
+
+        /// <summary>
+        /// 上传商品
+        /// </summary>
+        void UploadProduct()
+        {
+            tsBtnUpload.Enabled = false;
+            var allCount = ProductCache.WaitUploadList.Count;
+            if (allCount < 1)
+            {
+                MessageBoxEx.Show("没有可以上传的商品.");
+                return;
+            }
+            var loadForm = new ProductUploadLoading("正在上传商品...", 1);
+            if (loadForm.ShowDialog(this) == DialogResult.OK)
+            {
+                ProductBindSource.DataSource = null;
+                //上传失败的继续上传
+                ProductCache.WaitUploadList.AddRange(ProductCache.UploadFailList);
+                ProductCache.UploadFailList.Clear();
+                ProductBindSource.DataSource = ProductCache.WaitUploadList;
+                MessageBoxEx.Show("本次上传商品{1}个{0},成功{2}个{0},失败{3}个.".
+                    FormatWith("", allCount, ProductCache.UploadSuccessList.Count,
+                    ProductCache.UploadFailList.Count));
+            }
+        }
+
+        /// <summary>
+        /// 批量上传商品图片
+        /// </summary>
+        void UploadProductImage()
+        {
+            tsBtnUploadImageAllSelect.Enabled = false;
+            tsBtnUpload.Enabled = true;
+            var allCount = ProductCache.WaitUploadImageList.Count;
+            var loadForm = new ProductUploadLoading("正在上传图片，请稍等...", 0);
+            if (loadForm.ShowDialog(this) == DialogResult.OK)
+            {
+                ProductBindSource.DataSource = null;
+                ProductBindSource.DataSource = ProductCache.WaitUploadList;
+                ProductCache.WaitUploadImageList.Clear();
+                MessageShowLable.Text = "本次共处理{0}个商品，处理成功{1}个商品，已更新"
+                    .FormatWith(allCount, ProductCache.WaitUploadList.Count);
+                tsBtnUpload.Enabled = true;
+            }
+        }
         /// <summary>
         /// 批量设置选中行的发货地
         /// </summary>
@@ -205,6 +230,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
                         row.Cells["ClassIdColumn"].Value = eventArgs.ClassId;
                         row.Cells["ClassNameColumn"].Value = eventArgs.ClassNameShow;
                     }
+                    tsBtnEditAllSelect.Enabled = true;
                 };
                 changeClassForm.ShowDialog(this);
             }

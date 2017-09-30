@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using TxoooProductUpload.Common;
 using TxoooProductUpload.Entities.Product;
 using TxoooProductUpload.Entities.Request;
+using TxoooProductUpload.Entities.Resporse.Txooo;
 using TxoooProductUpload.Service.Entities;
 using TxoooProductUpload.Service.Entities.Commnet;
 using TxoooProductUpload.Service.Entities.Web;
@@ -140,6 +141,7 @@ namespace TxoooProductUpload.Service
         }
         #endregion
 
+        #region 商品来源相关
         /// <summary>
         /// 存储商品来源
         /// </summary>
@@ -181,5 +183,101 @@ namespace TxoooProductUpload.Service
             }
             return stCtx.Result.Data.ToList();
         }
+        #endregion
+
+        #region 商品编辑相关
+        /// <summary>
+        /// 获取商品各个状态数量
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<ProductStateInfo>> GetProductStateCountAsync()
+        {
+            var stCtx = NetClient.Create<WebResponseResult<ProductStateInfo>>(HttpMethod.Get, ApiList.GetProductStateCount);
+            await stCtx.SendAsync();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception("提交失败，原因:" + stCtx.Result.msg);
+            }
+            return stCtx.Result.Data.ToList();
+        }
+
+        /// <summary>
+        /// 获取商品列表
+        /// </summary>
+        /// <param name="pIndex">页码</param>
+        /// <param name="pSize">页尺寸</param>
+        /// <param name="state">状态,默认全部</param>
+        /// <returns></returns>
+        public async Task<List<ManageProductInfo>> GetProductListForCrawl(int pIndex = 0, int pSize = 100, int state = -2)
+        {
+            var url = ApiList.GetProductListForCrawl + "&pageIndex={0}&pageSize={1}".FormatWith(pIndex, pSize);
+            if (state != -2)
+            {
+                url = url + "&r_state=" + state;
+            }
+            var stCtx = NetClient.Create<WebResponseResult<MangeProductResult>>(HttpMethod.Get, url);
+
+            await stCtx.SendAsync();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            return stCtx.Result.Data[0].list.ToList();
+        }
+
+
+        /// <summary>
+        /// 删除商品
+        /// </summary>
+        /// <param name="productId">商品id</param>
+        /// <returns></returns>
+        public bool DelProduct(long productId)
+        {
+            var url = ApiList.DelProduct + "&product_id=" + productId;
+            var stCtx = NetClient.Create<WebResponseResult>(HttpMethod.Get, url);
+
+            stCtx.Send();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            return stCtx.Result.success;
+        }
+
+        /// <summary>
+        /// 商品上下架
+        /// </summary>
+        /// <param name="productIds">商品id集合</param>
+        /// <param name="isShow">true表示上架</param>
+        /// <returns></returns>
+        public  bool UpProducts(List<long> productIds, bool isShow)
+        {
+            var stCtx = NetClient.Create<WebResponseResult>(HttpMethod.Get, ApiList.UpProducts,
+                data: new { product_ids = string.Join(",", productIds), is_show = Convert.ToInt32(isShow) });
+
+             stCtx.Send();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            return stCtx.Result.success;
+        }
+        #endregion
     }
 }

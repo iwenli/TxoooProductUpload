@@ -15,6 +15,7 @@ using TxoooProductUpload.Service.Entities;
 using Iwenli.Text;
 using System.Threading.Tasks;
 using Iwenli;
+using TxoooProductUpload.UI.Forms.SubForms;
 
 namespace TxoooProductUpload.UI
 {
@@ -207,7 +208,12 @@ namespace TxoooProductUpload.UI
         #region Tab切换时事件，用于子窗体更改了提示Lbl后的还原
         private void tabShow_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // lblTs.Text = lblTs.Tag.ToString();
+            var page = tabShow.SelectedTab;
+            if (page.Tag != null && page.Tag.ToString() == "ProductManageForm")
+            {
+                ProductManageForm form = page.Controls[0] as ProductManageForm;
+                form.Init();
+            }
         }
         #endregion
 

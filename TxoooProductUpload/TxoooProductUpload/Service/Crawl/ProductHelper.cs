@@ -120,7 +120,6 @@ namespace TxoooProductUpload.Service.Crawl
             }
             catch (Exception ex)
             {
-
                 Iwenli.LogHelper.LogError(this,
                         "从{0}页面提取商品信息异常,页面来源：{1}".FormatWith(type, document.ToString()), ex);
             }

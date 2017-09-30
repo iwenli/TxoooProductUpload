@@ -82,9 +82,9 @@ namespace TxoooProductUpload.Service.Crawl
                             product.SourceType = SourceType.Tmall;
                             product.FirstImg = categoryNode.SelectSingleNode(".//dt/a/img").Attributes["src"].Value;
                             product.ShowPrice = Convert.ToDouble(
-                                categoryNode.SelectSingleNode(".//dd[2]/div/div[1]/span[2]").InnerText.Trim() ?? "0");
-                            product.ProductName = categoryNode.SelectSingleNode(".//dd[2]/a").InnerText.Trim();
-
+                                categoryNode.SelectSingleNode(".//dd[@class='detail']/div/div[1]/span[2]").InnerText.Trim() ?? "0");
+                            product.ProductName = categoryNode.SelectSingleNode(".//dd[@class='detail']/a").InnerText.Trim();
+                            
                             product.UserNick = product.ShopName = shopName;
                             product.UserId = Convert.ToInt64(userId);
                             list.Add(product);

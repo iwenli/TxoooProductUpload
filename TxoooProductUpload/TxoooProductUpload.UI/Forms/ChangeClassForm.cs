@@ -43,6 +43,8 @@ namespace TxoooProductUpload.UI.Forms
 
         void ChangeClassForm_Load(object sender, EventArgs e)
         {
+            lbClass1.ItemHeight = lbClass2.ItemHeight = lbClass3.ItemHeight = lbClass4.ItemHeight = 16;
+
             InitClassListBoxEvent();
             txtSearch.TextChanged += TxtSearch_TextChanged;
             btnSearch.Click += BtnSearch_Click;
@@ -59,7 +61,7 @@ namespace TxoooProductUpload.UI.Forms
             {
                 case "btnOk":
                     DialogResult = DialogResult.Yes;
-                    ChangeClass(new ChangeClassEventArgs(_classId, _typeService, _proportion,_classNameShow));
+                    ChangeClass(new ChangeClassEventArgs(_classId, _typeService, _proportion, _classNameShow));
                     break;
                 case "btnCancel":
                     break;
@@ -106,7 +108,7 @@ namespace TxoooProductUpload.UI.Forms
                 return;
             }
             MessageBoxEx.Show("没有类目[{0}]".FormatWith(txtSearch.Text));
-        } 
+        }
 
         void TxtSearch_TextChanged(object sender, EventArgs e)
         {
@@ -147,7 +149,7 @@ namespace TxoooProductUpload.UI.Forms
                 _classId = value;
             }
             _proportion = Convert.ToInt32(lbClass4.SelectedValue ?? "0");
-            _classNameShow = "{0} >> {1}".FormatWith(lbClass2.SelectedItem,lbClass3.SelectedItem);
+            _classNameShow = "{0} >> {1}".FormatWith(lbClass2.SelectedItem, lbClass3.SelectedItem);
             lblClass.Text = "{0} >> {1} >> {2} - 返现比例[{3}%]".FormatWith(
                 lbClass1.SelectedItem, lbClass2.SelectedItem,
                 lbClass3.SelectedItem, _proportion);
@@ -185,7 +187,7 @@ namespace TxoooProductUpload.UI.Forms
         /// <param name="id">分类id</param>
         /// <param name="type">产品分类类型</param>
         /// <param name="propor">返现比例</param>
-        public ChangeClassEventArgs(long id,int type,int propor)
+        public ChangeClassEventArgs(long id, int type, int propor)
         {
             ClassId = id;
             TypeService = type;
@@ -199,8 +201,8 @@ namespace TxoooProductUpload.UI.Forms
         /// <param name="type">产品分类类型</param>
         /// <param name="propor">返现比例</param>
         /// <param name="classNameShow">显示的类目 子类目>父类 格式</param>
-        public ChangeClassEventArgs(long id, int type, int propor,string classNameShow):
-            this(id,type,propor)
+        public ChangeClassEventArgs(long id, int type, int propor, string classNameShow) :
+            this(id, type, propor)
         {
             ClassNameShow = classNameShow;
         }
