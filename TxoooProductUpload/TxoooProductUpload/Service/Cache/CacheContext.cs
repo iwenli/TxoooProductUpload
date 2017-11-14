@@ -149,16 +149,32 @@ namespace TxoooProductUpload.Service
 
                     }
                 }
+                //更新商品来源集合缓存
                 var maxId = 0L;
+                if (ApiList.IsTest == Data.IsLine) {
+                    Data.ProductSourceTxoooList.Clear();
+                }
                 if (Data.ProductSourceTxoooList.Count > 0)
                 {
                     maxId = Data.ProductSourceTxoooList.Last().Id;
                 }
+                try
+                {
+                    var productSourceList = ServiceContext.ProductService.GetProductsSourceList(maxId);
+                    if (productSourceList != null)
+                    {
+                        Data.ProductSourceTxoooList.AddRange(productSourceList);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
                 Data.ProductSourceTxoooList.AddRange(await ServiceContext.ProductService.GetProductsSourceListAsync(maxId));
                 Data.LastUpdateTime = DateTime.Now;
-                Data.IsLine = !ApiList.IsTest; 
+                Data.IsLine = !ApiList.IsTest;
+                Save();
             }
-            Save();
         }
 
         /// <summary>
@@ -195,7 +211,18 @@ namespace TxoooProductUpload.Service
             {
                 maxId = Data.ProductSourceTxoooList.Last().Id;
             }
-            Data.ProductSourceTxoooList.AddRange(await ServiceContext.ProductService.GetProductsSourceListAsync(maxId));
+            try
+            {
+                var productSourceList = ServiceContext.ProductService.GetProductsSourceList(maxId);
+                if (productSourceList != null)
+                {
+                    Data.ProductSourceTxoooList.AddRange(productSourceList);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
             Data.LastUpdateTime = DateTime.Now;
             Data.IsLine = !ApiList.IsTest;
             Save();

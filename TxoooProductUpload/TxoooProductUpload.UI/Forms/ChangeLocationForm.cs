@@ -43,6 +43,9 @@ namespace TxoooProductUpload.UI.Forms
         void ChangeClassForm_Load(object sender, EventArgs e)
         {
             lbLocation1.ItemHeight = lbLocation2.ItemHeight =  16;
+            lbLocation1.DrawItem += ListBox_DrawItem;
+            lbLocation2.DrawItem += ListBox_DrawItem;
+
             InitClassListBoxEvent();
             txtSearch.TextChanged += TxtSearch_TextChanged;
             btnSearch.Click += BtnSearch_Click;
@@ -53,6 +56,23 @@ namespace TxoooProductUpload.UI.Forms
 
             lbLocation1.DataSource = App.Context.BaseContent.CacheContext
                 .Data.AreaList.Where(m => m.parent_id == 1).ToList();
+        }
+
+        /// <summary>
+        /// 重绘ComboBox项间距
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var obj = sender as ListBox;
+            if (e.Index < 0)
+            {
+                return;
+            }
+            e.DrawBackground();
+            e.DrawFocusRectangle();
+            e.Graphics.DrawString(obj.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds.X, e.Bounds.Y + 3);
         }
 
         void BtnOkOrCancel_Click(object sender, EventArgs e)

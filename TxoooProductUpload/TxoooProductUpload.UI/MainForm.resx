@@ -1561,7 +1561,7 @@
         jISPAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="cmSysButton1.SysButtonDown" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton3.SysButtonDown" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAUCAYAAACeXl35AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAK2SURBVEhLY/j//z9dMQgoAbEc3bCkmXOd7Ip7/2U3
@@ -1579,7 +1579,7 @@
         +B0zAPLBX+c1pp0OAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="cmSysButton1.SysButtonMouse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton3.SysButtonMouse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAUCAYAAACeXl35AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAKbSURBVEhLvZRvSBNhHMePrO1uvSgoKgpEVlEUVARW
@@ -1596,7 +1596,7 @@
         cLnKFd6AhJXZRmabWwMLl6CXHMTSFHBOh9XT4d6xZ67GIZDzDwvMy8GRYzpfAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="cmSysButton1.SysButtonNorml" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton3.SysButtonNorml" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAUCAYAAACeXl35AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAIGSURBVEhLvZVNaxpRGIXtZ9K0scRQa2oyoZk2WBuJ
@@ -1611,7 +1611,7 @@
         97SWawIV+QfxjVSwsgLqoAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="cmSysButton2.SysButtonDown" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton4.SysButtonDown" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAUCAYAAACeXl35AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAANFSURBVEhLvZR5SJNxGMefUrPoj4KgWw2PiiCIwIL+
@@ -1631,7 +1631,7 @@
         rk7umbVbWTq21tzQmibX40CLVeXj1kvDuPU/LEyKhU09MsQAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="cmSysButton2.SysButtonMouse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton4.SysButtonMouse" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAUCAYAAACeXl35AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAMvSURBVEhLvZRrSFNhGMcPRNs5x6CgqCgwW4XdwAqs
@@ -1651,7 +1651,7 @@
         GGbY/wBD//NgN7NAZAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="cmSysButton2.SysButtonNorml" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="cmSysButton4.SysButtonNorml" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABwAAAAUCAYAAACeXl35AAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAKxSURBVEhLvZQ9aFphFIaT/qRpamyNSazXxtaWpiWp

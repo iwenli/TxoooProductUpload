@@ -9,6 +9,7 @@ using CCWin;
 using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.UI.Common;
 using TxoooProductUpload.UI.Forms.SubForms;
+using TxoooProductUpload.UI.Forms;
 
 namespace TxoooProductUpload.UI
 {
@@ -30,7 +31,6 @@ namespace TxoooProductUpload.UI
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             JsonConvertSettings();
-
             //App.Context = Service.ServiceContext.Instance;
             ////Application.Run(new Msgtest());
             if (CanRun() && CefGlue.WlCefGlueLoader.InitCEF(args) == 0)
@@ -39,8 +39,8 @@ namespace TxoooProductUpload.UI
                 {
                     Context = Service.ServiceContext.Instance;
                     //TxoooProductUpload.UI.Main.MainForm()
-                    Application.Run(new LoginForm());
-                    //Application.Run(new ProductEditForm());
+                    //Application.Run(new LoginForm());
+                    Application.Run(new ApplyForm());
                     // Application.Run(new ProductManageForm());
                     //Application.Run(new CrawlProductsForm());
                 }

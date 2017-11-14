@@ -30,6 +30,7 @@ namespace TxoooProductUpload.UI
                 Exit();
             };
         }
+
         #region 变量
         /// <summary>
         /// 主窗体
@@ -299,11 +300,11 @@ namespace TxoooProductUpload.UI
         {
             if (_main != null)
             {
+                _main.Show();
+
                 //_main.ShowInTaskbar = true;
                 //_main.WindowState = FormWindowState.Normal;
-                _main.Show();
                 ///_main.Activate();
-
             }
             else
             {
@@ -511,6 +512,7 @@ namespace TxoooProductUpload.UI
         /// <param name="e"></param>
         async Task LoginedChanged()
         {
+            
             if (InvokeRequired)
             {
                 Invoke(new Action(async () => { await LoginedChanged(); }));

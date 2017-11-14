@@ -305,6 +305,15 @@ namespace TxoooProductUpload.UI
 
             });
         }
+        /// <summary>
+        /// 商家入驻
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void stmApply_Click(object sender, EventArgs e)
+        {
+            new TxoooProductUpload.UI.Forms.ApplyForm().Show(this);
+        }
         #endregion
     }
 }

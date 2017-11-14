@@ -238,13 +238,26 @@ namespace TxoooProductUpload.Common
         /// <summary>
         /// 增量获取商品来源和商品信息
         /// 参数：id 集合中最大的id
-        /// 
         /// </summary>
         public static string GetProductsSourceList
         {
             get
             {
                 return MchHostApp + @"App/CrawlProduct.mch/GetProductsSourceList" + AppToken;
+            }
+        }
+
+        /// <summary>
+        /// 增量获取商品来源和商品信息
+        /// 参数：pid txooo商品id
+        ///     : sourceId 来源id
+        ///     : sourcrType 来源类型 天猫1 淘宝2 阿里巴巴3 京东4
+        /// </summary>
+        public static string GetProductsSource
+        {
+            get
+            {
+                return MchHostApp + @"App/CrawlProduct.mch/GetProductsSource" + AppToken;
             }
         }
         #endregion
@@ -304,6 +317,152 @@ namespace TxoooProductUpload.Common
                 return MchHostApp + @"App/Product.mch/UpProducts" + AppToken;
             }
         }
+        #endregion
+
+        #region 注册相关
+
+        #region 个人注册
+        /// <summary>
+        /// 验证用户名
+        /// 参数：
+        ///     regName：用户名（手机号）
+        /// </summary>
+        public static string CheckUserName
+        {
+            get
+            {
+                return HostApp + @"App/Passport.api/CheckUserName";
+            }
+        }
+
+        /// <summary>
+        /// 发送验证码
+        /// 参数：
+        ///     mobile
+        /// </summary>
+        public static string SendMobile
+        {
+            get
+            {
+                return HostApp + @"App/Passport.api/SendMobile";
+            }
+        }
+
+        /// <summary>
+        /// 校验验证码
+        /// 参数：
+        ///     mobilecode
+        /// </summary>
+        public static string CheckMobileCode
+        {
+            get
+            {
+                return HostApp + @"App/Passport.api/CheckMobileCode";
+            }
+        }
+
+        /// <summary>
+        /// 注册，Post
+        /// 参数：
+        ///     mobilecode
+        ///     mobile_verify
+        ///     passWord
+        ///     sharecode：207732|110166
+        ///     source：1                //用户来源（1个人推广，2产品推广）
+        ///     source_channel：5        //来源渠道（0浏览器，1微信，2QQ，3微博，4App）
+        ///     app_type：pc
+        ///     app_useragent:{}
+        /// </summary>
+        public static string RegistV2
+        {
+            get
+            {
+                return HostApp + @"App/Passport.api/RegistV2";
+            }
+        }
+        #endregion
+
+        #region 入驻商家
+        /// <summary>
+        /// 入驻信息检测
+        /// 返回值：
+        ///     申请状态 0未提交申请 1待审核 2审核通过 3审核不通过
+        /// </summary>
+        public static string CheckMchApply
+        {
+            get
+            {
+                return HostApp + @"App/StoreV2.api/CheckMchApply" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 上传资质图片	POST
+        /// 参数：
+        ///     type：字段类型
+        ///     img：base64图片
+        /// type类型:
+        ///     identiy_pro_img:身份证正面
+        ///     identiy_con_img:身份证反面
+        ///     business_license_img:营业执照
+        ///     service_license_img:服务许可证
+        ///     operator_license_img:法人授权书
+        ///     bank_pro_img:银行卡正面
+        ///     bank_con_img:银行卡反面
+        /// </summary>
+        public static string UploadApplyImg
+        {
+            get
+            {
+                return HostApp + @"App/StoreV2.api/UploadApplyImg" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 设置商户入驻第一步
+        /// 参数：
+        ///     operator_name：法人名称
+        ///     identiy_code：身份证号
+        ///     bank_name:银行名称
+        ///     bank_name_open:开户行地址名称
+        ///     bank_code:银行卡号
+        ///     mch_class:商户类型
+        ///     bank_account_type：银行账户类型（1个人，2企业）
+        ///     bank_com_name:开户企业名称
+        /// </summary>
+        public static string SetMchApply
+        {
+            get
+            {
+                return HostApp + @"App/StoreV2.api/SetMchApply" + AppToken;
+            }
+        }
+        /// <summary>
+        /// 设置商户入驻第二步
+        /// 参数：
+        ///     com_name：店铺名称
+        ///     region_code：地域代码
+        ///     region_name：省市区名称
+        ///     region_details：详细地区
+        ///     lat：纬度坐标
+        ///     lng：经度坐标
+        ///     range_number：经营范围米数
+        ///     business_time：经营时间
+        ///     business_phone：联系电话
+        ///     store_img：门头照
+        ///     other_img：内部照片
+        ///     mch_other_img：荣誉照片
+        ///     store_type：店铺招商类型
+        ///     store_type_name：店铺招商类型名称
+        ///     agent_id：代理id
+        /// </summary>
+        public static string SetMchApplyClass
+        {
+            get
+            {
+                return HostApp + @"App/StoreV2.api/SetMchApplyClass" + AppToken;
+            }
+        }
+        #endregion
+
         #endregion
     }
 }

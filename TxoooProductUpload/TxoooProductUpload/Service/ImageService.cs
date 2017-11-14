@@ -48,7 +48,12 @@ namespace TxoooProductUpload.Service
             {
                 throw new Exception("下载图片{0}异常002[远程服务器未响应]，请重试！".FormatWith(url));
             }
-            return Image.FromStream(new MemoryStream(stCtx.Result));
+            MemoryStream ms = new MemoryStream(stCtx.Result);
+            var image = System.Drawing.Image.FromStream(ms, true);
+            ms.Close();
+            ms.Dispose();  //释放占用资源
+            GC.Collect();   //垃圾回收
+            return image;   // Image.FromStream(new MemoryStream(stCtx.Result));
         }
 
         /// <summary>
@@ -202,15 +207,15 @@ namespace TxoooProductUpload.Service
         /// <param name="url"></param>
         /// <param name="timeOut">超时时间 默认30s</param>
         /// <returns></returns>
-        public string UploadImg(string url,int timeOut = 30000)
+        public string UploadImg(string url, int timeOut = 30000)
         {
             //如果已经是txooo的连接  不转换
             if (_txoooImgReg.IsMatch(url))
             {
                 return url;
             }
-            var imageStream = GetImageStream(url);
-            var imgUrl = UploadFileForByte(imageStream);
+            //var imageStream = GetImageStream(url);
+            var imgUrl = UploadFileForUrl(url);
             if (imgUrl == "Error" || imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
             {
                 throw new Exception("图片{0}上传到创业赚钱服务器失败!".FormatWith(url));
@@ -286,7 +291,7 @@ namespace TxoooProductUpload.Service
         /// <param name="fileExtension">文件类型</param>
         /// <param name="timeOut">超时时间  默认10秒</param>
         /// <returns>返回文件服务地址，错误返回：Error</returns>
-        string UploadFileForByte(byte[] file, string fileExtension = "",int timeOut = 10000)
+        string UploadFileForByte(byte[] file, string fileExtension = "", int timeOut = 10000)
         {
             if (fileExtension.IsNullOrEmpty())
             {
@@ -306,8 +311,35 @@ namespace TxoooProductUpload.Service
             {
                 throw new Exception("上传到图片服务底层接口异常，{0}".FormatWith(ex.Message));
             }
-           
+
             return resporseStr.Replace("http:", "https:");
+        }
+
+        /// <summary>
+        /// 通过url向文件服务器上传图片
+        /// </summary>
+        /// <param name="txDownUrl">图片文件路径</param>
+        /// <param name="timeOut">超时时间  默认10秒</param>
+        /// <returns>返回文件服务地址，错误返回：Error</returns>
+        string UploadFileForUrl(string txDownUrl, int timeOut = 10000)
+        {
+            using (NewWebClient myWebClient = new NewWebClient())
+            {
+
+                myWebClient.Timeout = timeOut;  //设置超时时间
+                myWebClient.Credentials = CredentialCache.DefaultCredentials;
+                string resporseStr = string.Empty;
+                try
+                {
+                    resporseStr = myWebClient.DownloadString("http://file.txooo.cc/UpLoadForByte.ashx?tx_down_url=" + txDownUrl);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("上传到图片服务底层接口异常，{0}".FormatWith(ex.Message));
+                }
+
+                return resporseStr.Replace("http:", "https:");
+            }
         }
         #endregion
     }

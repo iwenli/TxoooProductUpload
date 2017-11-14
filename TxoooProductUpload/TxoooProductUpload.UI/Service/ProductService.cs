@@ -21,7 +21,7 @@ namespace TxoooProductUpload.UI.Service
         /// 上传商品SKU格式化字符串
         /// </summary>
         string skuFormat = @"&map_id_{0}=0&json_info_{0}={1}&price_{0}={2}&market_price_{0}={2}&remain_inventory_{0}={6}&property_map_img_{0}={3}&radio_num_{0}={4}&is_default_{0}={5}";
-       
+
         public ProductService(TxoooProductUpload.Service.ServiceContext baseContent) : base(baseContent)
         {
             MsgTemplate = "[商品消息]{0}";
@@ -166,8 +166,9 @@ namespace TxoooProductUpload.UI.Service
             productRequest.Append = product.Append;
             productRequest.Limit = product.Limit;
             productRequest.TypeService = product.ClassType;
-            productRequest.Brand = product.Brand.Trim();
+            productRequest.Brand = product.Brand?.Trim();
             productRequest.Shares = product.SubTitle;
+            productRequest.SearchKeyWord = product.SearchKeyWord;
             #endregion 
             #endregion
             await Task.Delay(Common.Utils.RandomInt(100, 1200));
@@ -225,6 +226,7 @@ namespace TxoooProductUpload.UI.Service
                 {
                     await Task.Delay(100);
                     product.TxoooThumImgList.Add(BaseContent.ImageService.UploadImg(url));
+                    this.LogWarn("图片{0}上传成功".FormatWith(url));
                 }
                 catch (Exception ex)
                 {
@@ -279,6 +281,38 @@ namespace TxoooProductUpload.UI.Service
             }
         }
         #endregion
+
+        /// <summary>
+        /// 判断商品是否抓取过，从服务器端验证
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEsists(ProductSourceInfo product)
+        {
+            //当前集合中没有  并且已经上传商品缓存中没有
+            if (App.Context.BaseContent.CacheContext.Data.ProductSourceTxoooList.Exists
+               (m => m.SourceId == product.Id.ToString() && m.SourceType == (int)product.SourceType))
+            {
+                return true;
+            }
+            else
+            {
+                try
+                {
+                    var sourceObj = App.Context.BaseContent.ProductService.GetProductsSourceBySourceId(
+                                       product.Id, (int)product.SourceType);
+                    if (sourceObj != null)
+                    {
+                        App.Context.BaseContent.CacheContext.Data.ProductSourceTxoooList.Add(sourceObj);
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    this.LogError("通过来源类型和来源id获取来源信息异常，" + ex.Message, ex);
+                }
+            }
+            return false;
+        }
 
         #region 测试代码
         private static object o = new object();

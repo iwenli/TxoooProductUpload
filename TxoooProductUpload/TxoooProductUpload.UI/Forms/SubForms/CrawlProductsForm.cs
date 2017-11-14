@@ -368,6 +368,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                             if (ProductCache.WaitUploadImageList.Count == 0) {
                                 _processResult.tsBtnUploadImageAllSelect.Enabled = false;
                             }
+                            _processResult.tsBtnEditAllSelect.Enabled = true;
                         }
                     }
                 }
@@ -721,9 +722,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
         bool IsEsists(ProductSourceInfo product)
         {
             //当前集合中没有  并且已经上传商品缓存中没有
-            if (ProductCache.WaitProcessList.FirstOrDefault(m => m.Id == product.Id) != null ||
-               App.Context.BaseContent.CacheContext.Data.ProductSourceTxoooList.Exists
-               (m => m.SourceId == product.Id.ToString()))
+            if (ProductCache.WaitProcessList.FirstOrDefault(m => m.Id == product.Id) != null && App.Context.ProductService.IsEsists(product))
             {
                 return true;
             }

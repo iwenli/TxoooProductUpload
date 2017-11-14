@@ -17,6 +17,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CefGlue.Client", "Xilium.Ce
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinHtmlEditor", "WinHtmlEditor\WinHtmlEditor.csproj", "{1D1EF0A4-1D49-4D42-9295-E3B28359389A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{8C96E7FA-33C7-42D5-9ACE-DC4EF86CE65C}"
+	ProjectSection(SolutionItems) = preProject
+		..\files\mchapi.h = ..\files\mchapi.h
+		..\files\personalapi.h = ..\files\personalapi.h
+		..\files\updateList.md = ..\files\updateList.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxoooFileUpload", "TxoooFileUpload\TxoooFileUpload.csproj", "{106263FB-1AB9-48B1-AF5E-426800F2753C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -203,6 +212,34 @@ Global
 		{1D1EF0A4-1D49-4D42-9295-E3B28359389A}.SingleImage|Any CPU.Build.0 = Release_VS2010|Any CPU
 		{1D1EF0A4-1D49-4D42-9295-E3B28359389A}.SingleImage|x86.ActiveCfg = Release_VS2010|Any CPU
 		{1D1EF0A4-1D49-4D42-9295-E3B28359389A}.SingleImage|x86.Build.0 = Release_VS2010|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.CD_ROM|x86.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.CD_ROM|x86.Build.0 = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug_VS2010|Any CPU.ActiveCfg = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug_VS2010|Any CPU.Build.0 = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug_VS2010|x86.ActiveCfg = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug_VS2010|x86.Build.0 = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Debug|x86.Build.0 = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.DVD-5|x86.Build.0 = Debug|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release_VS2010|Any CPU.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release_VS2010|Any CPU.Build.0 = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release_VS2010|x86.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release_VS2010|x86.Build.0 = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release|x86.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.Release|x86.Build.0 = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.SingleImage|x86.ActiveCfg = Release|Any CPU
+		{106263FB-1AB9-48B1-AF5E-426800F2753C}.SingleImage|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

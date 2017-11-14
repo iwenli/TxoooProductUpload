@@ -71,6 +71,8 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="FSLib.Extension, Version=1.4.3.0, Culture=neutral, PublicKeyToken=61d6a007a0eb6994, processorArchitecture=MSIL">
       <HintPath>..\packages\extension.fishlee.net.1.4.3.0\lib\net45\FSLib.Extension.dll</HintPath>
@@ -117,6 +119,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\MchCache.cs" />
     <Compile Include="Common\Serialize.cs" />
     <Compile Include="Entities\CrawlType.cs" />
     <Compile Include="Entities\Product\ProductSourceInfo.cs" />
@@ -257,7 +260,6 @@
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="DataSource\TxoooProductUpload.Service.Entities.Commnet.ReviewDataSoruce.datasource" />
-    <None Include="updateList.md" />
     <None Include="Resources\msg.png" />
     <None Include="Resources\counseling_style_51.png" />
     <None Include="Resources\group.png" />

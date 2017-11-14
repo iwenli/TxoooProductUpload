@@ -102,6 +102,8 @@ namespace TxoooProductUpload.Service.ImageDownload
         public void Save()
         {
             SaveData(Data, CacheName);
+            Iwenli.LogHelper.LogInfo(this, "存储进度文件");
+            System.Diagnostics.Trace.WriteLine(string.Format("{0}=>{1}",DateTime.Now.ToShortTimeString(),"保存数据"));
         }
     }
 }

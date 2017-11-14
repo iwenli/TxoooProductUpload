@@ -20,6 +20,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
 {
     public partial class ProcessProductResult : UserControl
     {
+        int startrow = 0;
 
         #region 属性
         /// <summary>
@@ -103,6 +104,50 @@ namespace TxoooProductUpload.UI.Forms.UserControls
             tsBtnUploadImageAllSelect.Click += TsBtnAllSelect_Click;
             tsBtnUpload.Click += TsBtnAllSelect_Click;
             tsBtnEditAllSelect.Click += TsBtnAllSelect_Click;
+
+            tsmiChangeTitle.Click += TsmiChangeTitle_Click;
+            tsmiSetSearchKey.Click += TsmiSetSearchKey_Click;
+        }
+
+        /// <summary>
+        /// 批量设置搜索词
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+         void TsmiSetSearchKey_Click(object sender, EventArgs e)
+        {
+            SetSearchKeyForm setSearchKeyForm = new SetSearchKeyForm();
+
+            setSearchKeyForm.OnSetSearchKey += (s, keys) =>
+            {
+                var rows = GetSelectRow();
+                foreach (var row in rows)
+                {
+                    row.Cells["SearchKeyWordColumn"].Value = keys;
+                }
+            };
+            setSearchKeyForm.ShowDialog(this);
+        }
+
+        /// <summary>
+        /// 批量替换标题
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void TsmiChangeTitle_Click(object sender, EventArgs e)
+        {
+            ChangeTitleForm changeTitleForm = new ChangeTitleForm();
+
+            changeTitleForm.OnChangeTitle += (s, eventArgs) =>
+            {
+                var rows = GetSelectRow();
+                foreach (var row in rows)
+                {
+                    row.Cells["productNameDataGridViewTextBoxColumn"].Value =
+                    row.Cells["productNameDataGridViewTextBoxColumn"].Value.ToString().Replace(eventArgs.OriginalWord, eventArgs.NewWord);
+                }
+            };
+            changeTitleForm.ShowDialog(this);
         }
 
         /// <summary>
@@ -143,6 +188,8 @@ namespace TxoooProductUpload.UI.Forms.UserControls
         {
             tsBtnUploadImageAllSelect.Enabled = true;
             new ProductEditForm(ProductCache.WaitUploadImageList).ShowDialog(this);
+            ProductBindSource.DataSource = null;
+            ProductBindSource.DataSource = ProductCache.WaitUploadImageList;
         }
 
         /// <summary>
@@ -169,6 +216,7 @@ namespace TxoooProductUpload.UI.Forms.UserControls
                     FormatWith("", allCount, ProductCache.UploadSuccessList.Count,
                     ProductCache.UploadFailList.Count));
             }
+            tsBtnUpload.Enabled = true;
         }
 
         /// <summary>
@@ -282,8 +330,43 @@ namespace TxoooProductUpload.UI.Forms.UserControls
             colCB.HeaderCell = cbHeader;
             ProductDGV.Columns.Insert(0, colCB);
             cbHeader.OnCheckBoxClicked += CbHeader_OnCheckBoxClicked;
-        }
 
+            ProductDGV.KeyUp += dataGridView_KeyUp;
+            ProductDGV.MouseClick += dataGridView_MouseClick;
+        }
+        private void dataGridView_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (this.ProductDGV.SelectedCells.Count > 0 && e.KeyData == Keys.ShiftKey)
+            {
+                int endrow = this.ProductDGV.CurrentRow.Index;
+                if (startrow <= endrow)
+                {
+                    //正序选时
+                    for (int x = startrow; x <= endrow; x++)
+                    {
+                        this.ProductDGV.Rows[x].Cells[0].Value = true;
+                    }
+                }
+                else
+                {
+                    //倒序选时
+                    for (int x = endrow; x <= startrow; x++)
+                    {
+                        this.ProductDGV.Rows[x].Cells[0].Value = true;
+                    }
+                }
+            }
+        }
+        private void dataGridView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && !(Control.ModifierKeys == Keys.Shift))
+            {
+                if (ProductDGV.Focused && Convert.ToBoolean(ProductDGV.SelectedRows[0].Cells[0].Value) == false)
+                {
+                    startrow = ProductDGV.SelectedRows[0].Index;
+                }
+            }
+        }
         void CbHeader_OnCheckBoxClicked(object sender, datagridviewCheckboxHeaderEventArgs e)
         {
             ProductDGV.EndEdit();

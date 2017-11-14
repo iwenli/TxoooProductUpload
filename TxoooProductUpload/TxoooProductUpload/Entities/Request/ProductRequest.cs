@@ -136,6 +136,11 @@ namespace TxoooProductUpload.Entities.Request
         /// 推广语集合,多个通过|分隔
         /// </summary>
         public string Shares { set; get; }
+
+        /// <summary>
+        /// 搜索关键词 空格分隔
+        /// </summary>
+        public string SearchKeyWord { set; get; }
         #endregion
 
         /// <summary>
@@ -159,7 +164,8 @@ namespace TxoooProductUpload.Entities.Request
             parameters.Add("refund", Convert.ToInt16(Refund));
             parameters.Add("product_imgs", ThumImages);
             parameters.Add("product_details", Details.ToString());
-            parameters.Add("product_brand", Brand);//品牌
+            parameters.Add("product_brand", Brand??"");//品牌
+            parameters.Add("search_key_word", SearchKeyWord ?? "");//搜索关键词
 
             if (!IsFreePostage)   //如果不包邮设置邮费
             {

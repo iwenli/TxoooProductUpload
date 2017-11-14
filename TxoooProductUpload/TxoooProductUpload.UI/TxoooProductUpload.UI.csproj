@@ -101,6 +101,12 @@
     <Compile Include="Common\Const\CommonString.cs" />
     <Compile Include="Common\Extended\Winform\DataGridViewCheckBoxHeaderCell.cs" />
     <Compile Include="Common\Utils.cs" />
+    <Compile Include="Forms\ApplyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ApplyForm.Designer.cs">
+      <DependentUpon>ApplyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ChangeLocationForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,12 @@
     </Compile>
     <Compile Include="Forms\ChangeClassForm.Designer.cs">
       <DependentUpon>ChangeClassForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SetSearchKeyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SetSearchKeyForm.Designer.cs">
+      <DependentUpon>SetSearchKeyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoadingForm.cs">
       <SubType>Form</SubType>
@@ -154,6 +166,18 @@
     </Compile>
     <Compile Include="Forms\MinForms\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\OriginalImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OriginalImage.Designer.cs">
+      <DependentUpon>OriginalImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangeTitleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangeTitleForm.Designer.cs">
+      <DependentUpon>ChangeTitleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SubForms\CrawlProductsForm.cs">
       <SubType>Form</SubType>
@@ -255,11 +279,17 @@
     <EmbeddedResource Include="BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ApplyForm.resx">
+      <DependentUpon>ApplyForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeLocationForm.resx">
       <DependentUpon>ChangeLocationForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeClassForm.resx">
       <DependentUpon>ChangeClassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SetSearchKeyForm.resx">
+      <DependentUpon>SetSearchKeyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoadingForm.resx">
       <DependentUpon>LoadingForm.cs</DependentUpon>
@@ -287,6 +317,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MinForms\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OriginalImage.resx">
+      <DependentUpon>OriginalImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeTitleForm.resx">
+      <DependentUpon>ChangeTitleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SubForms\CrawlProductsForm.resx">
       <DependentUpon>CrawlProductsForm.cs</DependentUpon>
@@ -335,6 +371,7 @@
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="Properties\DataSources\TxoooProductUpload.Common.MchCache+MchType.datasource" />
     <None Include="Properties\DataSources\TxoooProductUpload.Entities.Resporse.Txooo.ManageProductInfo.datasource" />
     <None Include="wl.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

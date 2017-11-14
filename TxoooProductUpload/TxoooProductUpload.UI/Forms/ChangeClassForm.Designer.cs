@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.skinPanel2 = new CCWin.SkinControl.SkinPanel();
+            this.btnPrev = new CCWin.SkinControl.SkinButton();
+            this.btnNext = new CCWin.SkinControl.SkinButton();
             this.txtSearch = new CCWin.SkinControl.SkinWaterTextBox();
             this.btnSearch = new CCWin.SkinControl.SkinButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -53,6 +55,8 @@
             // skinPanel2
             // 
             this.skinPanel2.BackColor = System.Drawing.Color.Transparent;
+            this.skinPanel2.Controls.Add(this.btnPrev);
+            this.skinPanel2.Controls.Add(this.btnNext);
             this.skinPanel2.Controls.Add(this.txtSearch);
             this.skinPanel2.Controls.Add(this.btnSearch);
             this.skinPanel2.Controls.Add(this.label1);
@@ -65,6 +69,36 @@
             this.skinPanel2.NormlBack = null;
             this.skinPanel2.Size = new System.Drawing.Size(802, 39);
             this.skinPanel2.TabIndex = 0;
+            // 
+            // btnPrev
+            // 
+            this.btnPrev.BackColor = System.Drawing.Color.Transparent;
+            this.btnPrev.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.btnPrev.DownBack = null;
+            this.btnPrev.Enabled = false;
+            this.btnPrev.Location = new System.Drawing.Point(564, 9);
+            this.btnPrev.MouseBack = null;
+            this.btnPrev.Name = "btnPrev";
+            this.btnPrev.NormlBack = null;
+            this.btnPrev.Size = new System.Drawing.Size(75, 23);
+            this.btnPrev.TabIndex = 5;
+            this.btnPrev.Text = "上一个(&P)";
+            this.btnPrev.UseVisualStyleBackColor = false;
+            // 
+            // btnNext
+            // 
+            this.btnNext.BackColor = System.Drawing.Color.Transparent;
+            this.btnNext.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.btnNext.DownBack = null;
+            this.btnNext.Enabled = false;
+            this.btnNext.Location = new System.Drawing.Point(483, 9);
+            this.btnNext.MouseBack = null;
+            this.btnNext.Name = "btnNext";
+            this.btnNext.NormlBack = null;
+            this.btnNext.Size = new System.Drawing.Size(75, 23);
+            this.btnNext.TabIndex = 5;
+            this.btnNext.Text = "下一个(&N)";
+            this.btnNext.UseVisualStyleBackColor = false;
             // 
             // txtSearch
             // 
@@ -136,6 +170,7 @@
             // lbClass3
             // 
             this.lbClass3.BackColor = System.Drawing.SystemColors.Info;
+            this.lbClass3.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lbClass3.FormattingEnabled = true;
             this.lbClass3.ItemHeight = 12;
             this.lbClass3.Location = new System.Drawing.Point(404, 7);
@@ -146,6 +181,7 @@
             // lbClass2
             // 
             this.lbClass2.BackColor = System.Drawing.SystemColors.Info;
+            this.lbClass2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lbClass2.FormattingEnabled = true;
             this.lbClass2.ItemHeight = 12;
             this.lbClass2.Location = new System.Drawing.Point(207, 7);
@@ -156,6 +192,7 @@
             // lbClass1
             // 
             this.lbClass1.BackColor = System.Drawing.SystemColors.Info;
+            this.lbClass1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lbClass1.FormattingEnabled = true;
             this.lbClass1.ItemHeight = 12;
             this.lbClass1.Location = new System.Drawing.Point(10, 7);
@@ -166,6 +203,7 @@
             // lbClass4
             // 
             this.lbClass4.BackColor = System.Drawing.SystemColors.Info;
+            this.lbClass4.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lbClass4.FormattingEnabled = true;
             this.lbClass4.ItemHeight = 12;
             this.lbClass4.Location = new System.Drawing.Point(601, 7);
@@ -275,5 +313,7 @@
         private System.Windows.Forms.ListBox lbClass2;
         private System.Windows.Forms.ListBox lbClass1;
         private CCWin.SkinControl.SkinWaterTextBox txtSearch;
+        private CCWin.SkinControl.SkinButton btnPrev;
+        private CCWin.SkinControl.SkinButton btnNext;
     }
 }

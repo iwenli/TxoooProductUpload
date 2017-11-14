@@ -312,7 +312,10 @@ namespace TxoooProductUpload.Entities.Product
         /// Txooo格式的SKu集合
         /// </summary>
         public List<TxoooProductSKU> SkuList { private set; get; }
-
+        /// <summary>
+        /// 搜索关键词 空格分隔
+        /// </summary>
+        public string SearchKeyWord { set; get; }
 
         #region 公共方法
         /// <summary>

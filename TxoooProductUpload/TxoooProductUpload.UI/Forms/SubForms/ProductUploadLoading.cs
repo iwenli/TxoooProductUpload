@@ -205,9 +205,6 @@ namespace TxoooProductUpload.UI.Forms.SubForms
 
             AppendLogWarning("[全局]开始上传商品...");
             AppendLogWarning("[全局]上传线程共{0}个...", taskCount);
-            _waitUploadImageList = new List<ProductSourceInfo>();
-
-            _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);
             var cts = new CancellationTokenSource();
             if (taskCount > allCount)
             {
@@ -294,7 +291,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
                         }
                         AppendLogError("{0} 商品 [{1}] 上传异常：{2}", task.SourceName, task.Id, ex.Message);
                         Iwenli.LogHelper.LogError(this,
-                            "[上传商品]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message));
+                            "[上传商品]{0}商品{1}异常：{2}".FormatWith(task.SourceName, task.Id, ex.Message), ex);
                     }
                     TaskIndex++;
                     UploadProgressSatate();

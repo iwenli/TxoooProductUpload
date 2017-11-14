@@ -162,7 +162,34 @@ namespace TxoooProductUpload.Service
             }
             return stCtx.Result.success;
         }
+        /// <summary>
+        /// 增量获取商品来源
+        /// </summary>
+        /// <param name="maxId"></param>
+        /// <returns></returns>
+        public List<ProductSourceTxoooInfo> GetProductsSourceList(long maxId)
+        {
+            var stCtx = NetClient.Create<WebResponseResult<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSourceList,
+               data: new { id = maxId });
 
+            stCtx.Send();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接");
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            if (stCtx.Result.Data.Length > 0)
+            {
+                return stCtx.Result.Data.ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
         /// <summary>
         /// 增量获取商品来源
         /// </summary>
@@ -172,6 +199,7 @@ namespace TxoooProductUpload.Service
         {
             var stCtx = NetClient.Create<WebResponseResult<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSourceList,
                data: new { id = maxId });
+
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
@@ -181,7 +209,72 @@ namespace TxoooProductUpload.Service
             {
                 throw new Exception(stCtx.Result.msg);
             }
-            return stCtx.Result.Data.ToList();
+            if (stCtx.Result.Data.Length > 0)
+            {
+                return stCtx.Result.Data.ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 通过txooo商品id获取抓取记录
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <returns></returns>
+        public ProductSourceTxoooInfo GetProductsSourceByTxoooId(long pid)
+        {
+            var stCtx = NetClient.Create<WebResponseResult<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSource,
+               data: new { pid = pid });
+
+            stCtx.Send();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接");
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            if (stCtx.Result.Data.Length == 1)
+            {
+                return stCtx.Result.Data[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        /// <summary>
+        /// 通过来源id和来源类型获取抓取记录
+        /// </summary>
+        /// <param name="sourceId"></param>
+        /// <param name="sourceType"></param>
+        /// <returns></returns>
+        public ProductSourceTxoooInfo GetProductsSourceBySourceId(long sourceId,int sourceType)
+        {
+            var stCtx = NetClient.Create<WebResponseResult<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSource,
+               data: new { sourceId = sourceId, sourcrType= sourceType });
+
+            stCtx.Send();
+            if (!stCtx.IsValid())
+            {
+                throw new Exception("创业赚钱-商品服务器无法连接");
+            }
+            if (!stCtx.Result.success)
+            {
+                throw new Exception(stCtx.Result.msg);
+            }
+            if (stCtx.Result.Data.Length == 1)
+            {
+                return stCtx.Result.Data[0];
+            }
+            else
+            {
+                return null;
+            }
         }
         #endregion
 
@@ -262,12 +355,12 @@ namespace TxoooProductUpload.Service
         /// <param name="productIds">商品id集合</param>
         /// <param name="isShow">true表示上架</param>
         /// <returns></returns>
-        public  bool UpProducts(List<long> productIds, bool isShow)
+        public bool UpProducts(List<long> productIds, bool isShow)
         {
             var stCtx = NetClient.Create<WebResponseResult>(HttpMethod.Get, ApiList.UpProducts,
                 data: new { product_ids = string.Join(",", productIds), is_show = Convert.ToInt32(isShow) });
 
-             stCtx.Send();
+            stCtx.Send();
             if (!stCtx.IsValid())
             {
                 throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);

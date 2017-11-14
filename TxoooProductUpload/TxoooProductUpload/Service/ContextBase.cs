@@ -57,7 +57,16 @@ namespace TxoooProductUpload.Service
             }
             else
             {
-                File.WriteAllText(file, JsonConvert.SerializeObject(data));
+                try
+                {
+
+                    File.WriteAllText(file, JsonConvert.SerializeObject(data));
+                }
+                catch (Exception ex)
+                {
+
+                    Iwenli.LogHelper.LogFatal(this, ex.Message, ex);
+                }
             }
         }
     }

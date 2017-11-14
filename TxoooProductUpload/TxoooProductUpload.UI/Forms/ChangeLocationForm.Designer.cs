@@ -132,6 +132,7 @@
             // lbLocation2
             // 
             this.lbLocation2.BackColor = System.Drawing.SystemColors.Info;
+            this.lbLocation2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lbLocation2.FormattingEnabled = true;
             this.lbLocation2.ItemHeight = 12;
             this.lbLocation2.Location = new System.Drawing.Point(207, 7);
@@ -142,6 +143,7 @@
             // lbLocation1
             // 
             this.lbLocation1.BackColor = System.Drawing.SystemColors.Info;
+            this.lbLocation1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.lbLocation1.FormattingEnabled = true;
             this.lbLocation1.ItemHeight = 12;
             this.lbLocation1.Location = new System.Drawing.Point(10, 7);

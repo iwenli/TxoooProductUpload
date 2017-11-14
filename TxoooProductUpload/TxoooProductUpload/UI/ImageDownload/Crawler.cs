@@ -26,6 +26,8 @@ namespace TxoooProductUpload.UI.ImageDownload
     partial class Crawler : FormBase
     {
         #region 页面变量
+        static readonly object _lockObj = new object();
+        static int _cleanupcount = 0;
         /// <summary>
         /// 入库头像SQL Format
         /// </summary>
@@ -126,8 +128,15 @@ namespace TxoooProductUpload.UI.ImageDownload
             AppendLog(txtLog, "[全局] 详情页抓取任务已启动...");
 
             AppendLog(txtLog, "[全局] 启动图片下载任务...");
-            _imageTask = new Task(() => DownloadImageTaskEntry(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
-            _imageTask.Start();
+            Task[] _tasks = new Task[5];
+            for (int i = 0; i < _tasks.Length; i++)
+            {
+                AppendLogWarning(txtLog, "[全局] 启动图片下载任务[{0}]...", i + 1);
+                _tasks[i] = new Task(() => DownloadImageTaskEntry(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
+                _tasks[i].Start();
+            }
+            //_imageTask = new Task(() => DownloadImageTaskEntry(cts.Token), cts.Token, TaskCreationOptions.LongRunning);
+            //_imageTask.Start();
             AppendLog(txtLog, "[全局] 图片下载任务已启动...");
             UpdatePageDetailGrabStatus();
             UpdateImageDownloadStatus();
@@ -665,7 +674,7 @@ namespace TxoooProductUpload.UI.ImageDownload
             var client = new HttpClient();
             var data = Service.ImageDownload.TaskContext.Instance.Data;
             var random = new Random();
-            var cleanupcount = 0;
+            //var cleanupcount = 0;
 
             //这里创建了一个 CancellationTokenSource 的局部变量，主要是为了在循环中对请求也能进行中断
             CancellationTokenSource tcs = null;
@@ -695,37 +704,63 @@ namespace TxoooProductUpload.UI.ImageDownload
                 //开始下载
                 AppendLog(txtLog, "[图片下载] 正在下载自 {0} ...", task.Url);
 
-                using (var ctx = client.Create<byte[]>(HttpMethod.Get, task.Url))
+                #region 下载到本地 
+                //using (var ctx = client.Create<byte[]>(HttpMethod.Get, task.Url))
+                //{
+                //    //这里的token必须用新的，否则会导致内存短期内无法释放，内存暴涨
+                //    tcs = new CancellationTokenSource();
+                //    await ctx.SendAsync(tcs.Token);
+                //    tcs = null;
+
+                //    if (ctx.IsValid())
+                //    {
+                //        //成功，保存。优先取URL地址中的文件名作为保存的文件名
+                //        var targetFileName = new Uri(task.Url).Segments.LastOrDefault();
+
+                //        //如果文件名不合法，则重新生成随机的文件名
+                //        if (targetFileName.IsNullOrEmpty() || targetFileName.Length > 50 || Path.GetInvalidFileNameChars().Any(s => targetFileName.Contains(s)))
+                //        {
+                //            //包含无效的文件名，则重新生成随机的
+                //            targetFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(int.MaxValue) + ".jpg";
+                //        }
+                //        task.DownloadRoot = Service.ImageDownload.TaskContext.Instance.OutputRoot + "//" + task.DownloadRoot;
+                //        //如果文件夹不存在，则创建 
+                //        if (!Directory.Exists(task.DownloadRoot))
+                //            Directory.CreateDirectory(task.DownloadRoot);
+
+                //        //写入文件
+                //        var targetFullPath = PathUtility.Combine(task.DownloadRoot, targetFileName);
+                //        File.WriteAllBytes(targetFullPath, ctx.Result);
+                //        //添加到已完成队列
+                //        data.DownloadedImages.Add(task.Url, new ImageDownloadTaskInfo() { Location = targetFullPath });
+
+                //        //记录
+                //        AppendLog(txtLog, "[图片下载] 下载成功. ({0})", ctx.Result.Length.ToString());
+                //    }
+                //    else
+                //    {
+                //        lock (data.ImageDownloadTasks)
+                //        {
+                //            data.ImageDownloadTasks.Enqueue(task);
+                //        }
+                //        AppendLog(txtLog, "[图片下载] 下载失败。重新加入队列以便于重新下载");
+                //    }
+                //} 
+                #endregion
+
+                #region 保存到数据库
+                try
                 {
-                    //这里的token必须用新的，否则会导致内存短期内无法释放，内存暴涨
-                    tcs = new CancellationTokenSource();
-                    await ctx.SendAsync(tcs.Token);
-                    tcs = null;
-
-                    if (ctx.IsValid())
+                    var headPicUrl = _context.ImageService.UploadImg(task.Url);
+                    if (DbHelperOleDb.ExecuteSql(_insertSql.FormatWith(task.Url, headPicUrl)) == 1)
                     {
-                        //成功，保存。优先取URL地址中的文件名作为保存的文件名
-                        var targetFileName = new Uri(task.Url).Segments.LastOrDefault();
-
-                        //如果文件名不合法，则重新生成随机的文件名
-                        if (targetFileName.IsNullOrEmpty() || targetFileName.Length > 50 || Path.GetInvalidFileNameChars().Any(s => targetFileName.Contains(s)))
-                        {
-                            //包含无效的文件名，则重新生成随机的
-                            targetFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(int.MaxValue) + ".jpg";
-                        }
-                        task.DownloadRoot = Service.ImageDownload.TaskContext.Instance.OutputRoot + "//" + task.DownloadRoot;
-                        //如果文件夹不存在，则创建 
-                        if (!Directory.Exists(task.DownloadRoot))
-                            Directory.CreateDirectory(task.DownloadRoot);
-
-                        //写入文件
-                        var targetFullPath = PathUtility.Combine(task.DownloadRoot, targetFileName);
-                        File.WriteAllBytes(targetFullPath, ctx.Result);
+                        AppendLog(txtLog, "[图片下载] 下载成功 {0} ...", headPicUrl);
                         //添加到已完成队列
-                        data.DownloadedImages.Add(task.Url, new ImageDownloadTaskInfo() { Location = targetFullPath });
-
-                        //记录
-                        AppendLog(txtLog, "[图片下载] 下载成功. ({0})", ctx.Result.Length.ToString());
+                        lock (data.DownloadedImages)
+                        {
+                            data.DownloadedImages.Add(task.Url, new ImageDownloadTaskInfo() { Location = "txoooFileService" });
+                            //id = DbHelperOleDb.GetMaxID("ID", "iwenli_headPic") - 1;
+                        }
                     }
                     else
                     {
@@ -736,19 +771,44 @@ namespace TxoooProductUpload.UI.ImageDownload
                         AppendLog(txtLog, "[图片下载] 下载失败。重新加入队列以便于重新下载");
                     }
                 }
+                catch (Exception ex)
+                {
+                    lock (data.ImageDownloadTasks)
+                    {
+                        data.ImageDownloadTasks.Enqueue(task);
+                    }
+                    AppendLog(txtLog, "[图片下载] 下载失败。重新加入队列以便于重新下载");
+                    AppendLog(txtLog, "[图片下载异常] " + ex.Message);
+                }
+
+                #endregion
                 UpdateImageDownloadStatus();
 
                 //等待一秒再下下一个图片
-                await Task.Delay(1000, token);
+                await Task.Delay(200, token);
                 tcs = null;
-
-                if (cleanupcount++ > 20)
+                lock (_lockObj)
                 {
-                    //每下载20个图片后手动释放一下内存
-                    cleanupcount = 0;
-                    GC.Collect();
-                    //保存任务数据，防止什么时候宕机了任务进度回滚太多
-                    Service.ImageDownload.TaskContext.Instance.Save();
+                    if (_cleanupcount++ > 100)
+                    {
+                        //保存任务数据，防止什么时候宕机了任务进度回滚太多
+                        Service.ImageDownload.TaskContext.Instance.Save();
+
+                        //每下载20个图片后手动释放一下内存
+                        _cleanupcount = 0;
+                        GC.Collect();
+                    }
+                }
+                
+
+                //每十分钟清理一次日志
+                if (DateTime.Now.Minute % 10 == 0)
+                {
+                    Invoke(new Action(() =>
+                    {
+                        txtLog.Clear();
+                        Iwenli.LogHelper.LogInfo(this, "清理回显日志");
+                    }));
                 }
             }
         }

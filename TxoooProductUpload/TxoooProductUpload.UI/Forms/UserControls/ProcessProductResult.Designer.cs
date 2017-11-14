@@ -34,12 +34,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.ts = new CCWin.SkinControl.SkinToolStrip();
             this.rslpsp1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
@@ -52,30 +52,15 @@
             this.tsBtnSetLocationAllSelect = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.tsBtnUploadImageAllSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
+            this.tsBtnEditAllSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tsmiChangeTitle = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiSetSearchKey = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.ProductDGV = new CCWin.SkinControl.SkinDataGridView();
-            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.brandDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RegionNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ShowPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PremiumRatioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.isFreePostageDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.postageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IsNewColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.IsVirtualColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.IsRefundColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dealCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.favCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sellCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.commnetCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassTypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ClassIdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RegionCodeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SettlementRatioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UrlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.H5UrlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.scms = new CCWin.SkinControl.SkinContextMenuStrip();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,9 +95,29 @@
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tsBtnEditAllSelect = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
+            this.productNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SearchKeyWordColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.brandDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RegionNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ShowPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PremiumRatioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.isFreePostageDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.postageDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IsNewColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IsVirtualColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.IsRefundColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dealCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.favCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sellCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.commnetCntDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassTypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ClassIdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RegionCodeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SettlementRatioColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UrlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.H5UrlColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ts.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProductDGV)).BeginInit();
@@ -174,7 +179,9 @@
             this.tsBtnUploadImageAllSelect,
             this.toolStripLabel4,
             this.toolStripLabel6,
-            this.tsBtnEditAllSelect});
+            this.tsBtnEditAllSelect,
+            this.toolStripLabel7,
+            this.toolStripDropDownButton1});
             this.ts.Location = new System.Drawing.Point(0, 0);
             this.ts.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.ts.Name = "ts";
@@ -278,6 +285,61 @@
             this.tsBtnUploadImageAllSelect.Size = new System.Drawing.Size(77, 21);
             this.tsBtnUploadImageAllSelect.Text = "转换图片(&U)";
             // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(24, 21);
+            this.toolStripLabel4.Text = "    ";
+            // 
+            // toolStripLabel6
+            // 
+            this.toolStripLabel6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel6.Text = " ";
+            // 
+            // tsBtnEditAllSelect
+            // 
+            this.tsBtnEditAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnEditAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnEditAllSelect.Enabled = false;
+            this.tsBtnEditAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnEditAllSelect.Image")));
+            this.tsBtnEditAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnEditAllSelect.Name = "tsBtnEditAllSelect";
+            this.tsBtnEditAllSelect.Size = new System.Drawing.Size(101, 21);
+            this.tsBtnEditAllSelect.Text = "审核本页商品(&U)";
+            // 
+            // toolStripLabel7
+            // 
+            this.toolStripLabel7.Name = "toolStripLabel7";
+            this.toolStripLabel7.Size = new System.Drawing.Size(12, 21);
+            this.toolStripLabel7.Text = " ";
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiChangeTitle,
+            this.tsmiSetSearchKey});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(69, 21);
+            this.toolStripDropDownButton1.Text = "其他操作";
+            // 
+            // tsmiChangeTitle
+            // 
+            this.tsmiChangeTitle.Name = "tsmiChangeTitle";
+            this.tsmiChangeTitle.Size = new System.Drawing.Size(175, 22);
+            this.tsmiChangeTitle.Text = "批量替换标题(&E)";
+            // 
+            // tsmiSetSearchKey
+            // 
+            this.tsmiSetSearchKey.Name = "tsmiSetSearchKey";
+            this.tsmiSetSearchKey.Size = new System.Drawing.Size(175, 22);
+            this.tsmiSetSearchKey.Text = "批量设置搜索词(&S)";
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.ProductDGV);
@@ -316,6 +378,7 @@
             this.ProductDGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.ProductDGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.productNameDataGridViewTextBoxColumn,
+            this.SearchKeyWordColumn,
             this.brandDataGridViewTextBoxColumn,
             this.RegionNameColumn,
             this.ShowPrice,
@@ -373,185 +436,6 @@
             this.ProductDGV.TitleBack = null;
             this.ProductDGV.TitleBackColorBegin = System.Drawing.Color.White;
             this.ProductDGV.TitleBackColorEnd = System.Drawing.SystemColors.Control;
-            // 
-            // productNameDataGridViewTextBoxColumn
-            // 
-            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
-            this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
-            this.productNameDataGridViewTextBoxColumn.MinimumWidth = 200;
-            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
-            // 
-            // brandDataGridViewTextBoxColumn
-            // 
-            this.brandDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.brandDataGridViewTextBoxColumn.DataPropertyName = "Brand";
-            this.brandDataGridViewTextBoxColumn.HeaderText = "品牌";
-            this.brandDataGridViewTextBoxColumn.MinimumWidth = 100;
-            this.brandDataGridViewTextBoxColumn.Name = "brandDataGridViewTextBoxColumn";
-            // 
-            // RegionNameColumn
-            // 
-            this.RegionNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.RegionNameColumn.DataPropertyName = "RegionName";
-            this.RegionNameColumn.HeaderText = "发货地";
-            this.RegionNameColumn.Name = "RegionNameColumn";
-            this.RegionNameColumn.Width = 80;
-            // 
-            // ShowPrice
-            // 
-            this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ShowPrice.DataPropertyName = "ShowPrice";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.Format = "C2";
-            dataGridViewCellStyle3.NullValue = null;
-            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle3;
-            this.ShowPrice.HeaderText = "售价";
-            this.ShowPrice.Name = "ShowPrice";
-            this.ShowPrice.Width = 60;
-            // 
-            // PremiumRatioColumn
-            // 
-            this.PremiumRatioColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.PremiumRatioColumn.DataPropertyName = "PremiumRatio";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.Format = "P";
-            dataGridViewCellStyle4.NullValue = null;
-            this.PremiumRatioColumn.DefaultCellStyle = dataGridViewCellStyle4;
-            this.PremiumRatioColumn.HeaderText = "溢价";
-            this.PremiumRatioColumn.Name = "PremiumRatioColumn";
-            this.PremiumRatioColumn.ToolTipText = "溢价比例";
-            this.PremiumRatioColumn.Width = 60;
-            // 
-            // ClassNameColumn
-            // 
-            this.ClassNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ClassNameColumn.DataPropertyName = "ClassNameShow";
-            this.ClassNameColumn.HeaderText = "所属类目";
-            this.ClassNameColumn.Name = "ClassNameColumn";
-            this.ClassNameColumn.Width = 150;
-            // 
-            // isFreePostageDataGridViewCheckBoxColumn
-            // 
-            this.isFreePostageDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.isFreePostageDataGridViewCheckBoxColumn.DataPropertyName = "IsFreePostage";
-            this.isFreePostageDataGridViewCheckBoxColumn.HeaderText = "包邮";
-            this.isFreePostageDataGridViewCheckBoxColumn.Name = "isFreePostageDataGridViewCheckBoxColumn";
-            this.isFreePostageDataGridViewCheckBoxColumn.Width = 50;
-            // 
-            // postageDataGridViewTextBoxColumn
-            // 
-            this.postageDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.postageDataGridViewTextBoxColumn.DataPropertyName = "Postage";
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.Format = "C2";
-            dataGridViewCellStyle5.NullValue = null;
-            this.postageDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
-            this.postageDataGridViewTextBoxColumn.HeaderText = "邮费";
-            this.postageDataGridViewTextBoxColumn.Name = "postageDataGridViewTextBoxColumn";
-            this.postageDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // IsNewColumn
-            // 
-            this.IsNewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.IsNewColumn.DataPropertyName = "IsNew";
-            this.IsNewColumn.HeaderText = "新品";
-            this.IsNewColumn.Name = "IsNewColumn";
-            this.IsNewColumn.Width = 50;
-            // 
-            // IsVirtualColumn
-            // 
-            this.IsVirtualColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.IsVirtualColumn.DataPropertyName = "IsVirtual";
-            this.IsVirtualColumn.HeaderText = "虚拟";
-            this.IsVirtualColumn.Name = "IsVirtualColumn";
-            this.IsVirtualColumn.Width = 50;
-            // 
-            // IsRefundColumn
-            // 
-            this.IsRefundColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.IsRefundColumn.DataPropertyName = "IsRefund";
-            this.IsRefundColumn.HeaderText = "7天";
-            this.IsRefundColumn.Name = "IsRefundColumn";
-            this.IsRefundColumn.Width = 50;
-            // 
-            // dealCntDataGridViewTextBoxColumn
-            // 
-            this.dealCntDataGridViewTextBoxColumn.DataPropertyName = "DealCnt";
-            this.dealCntDataGridViewTextBoxColumn.HeaderText = "确认收货量";
-            this.dealCntDataGridViewTextBoxColumn.Name = "dealCntDataGridViewTextBoxColumn";
-            this.dealCntDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // favCntDataGridViewTextBoxColumn
-            // 
-            this.favCntDataGridViewTextBoxColumn.DataPropertyName = "FavCnt";
-            this.favCntDataGridViewTextBoxColumn.HeaderText = "收藏量";
-            this.favCntDataGridViewTextBoxColumn.Name = "favCntDataGridViewTextBoxColumn";
-            this.favCntDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // sellCntDataGridViewTextBoxColumn
-            // 
-            this.sellCntDataGridViewTextBoxColumn.DataPropertyName = "SellCnt";
-            this.sellCntDataGridViewTextBoxColumn.HeaderText = "总销量";
-            this.sellCntDataGridViewTextBoxColumn.Name = "sellCntDataGridViewTextBoxColumn";
-            this.sellCntDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // commnetCntDataGridViewTextBoxColumn
-            // 
-            this.commnetCntDataGridViewTextBoxColumn.DataPropertyName = "CommnetCnt";
-            this.commnetCntDataGridViewTextBoxColumn.HeaderText = "评价数";
-            this.commnetCntDataGridViewTextBoxColumn.Name = "commnetCntDataGridViewTextBoxColumn";
-            this.commnetCntDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // idDataGridViewTextBoxColumn
-            // 
-            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
-            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
-            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
-            this.idDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // ClassTypeColumn
-            // 
-            this.ClassTypeColumn.DataPropertyName = "ClassType";
-            this.ClassTypeColumn.HeaderText = "ClassType";
-            this.ClassTypeColumn.Name = "ClassTypeColumn";
-            this.ClassTypeColumn.Visible = false;
-            // 
-            // ClassIdColumn
-            // 
-            this.ClassIdColumn.DataPropertyName = "ClassId";
-            this.ClassIdColumn.HeaderText = "ClassId";
-            this.ClassIdColumn.Name = "ClassIdColumn";
-            this.ClassIdColumn.Visible = false;
-            // 
-            // RegionCodeColumn
-            // 
-            this.RegionCodeColumn.DataPropertyName = "RegionCode";
-            this.RegionCodeColumn.HeaderText = "RegionCode";
-            this.RegionCodeColumn.Name = "RegionCodeColumn";
-            this.RegionCodeColumn.Visible = false;
-            // 
-            // SettlementRatioColumn
-            // 
-            this.SettlementRatioColumn.DataPropertyName = "SettlementRatio";
-            this.SettlementRatioColumn.HeaderText = "SettlementRatio";
-            this.SettlementRatioColumn.Name = "SettlementRatioColumn";
-            this.SettlementRatioColumn.Visible = false;
-            // 
-            // UrlColumn
-            // 
-            this.UrlColumn.DataPropertyName = "Url";
-            this.UrlColumn.HeaderText = "Url";
-            this.UrlColumn.Name = "UrlColumn";
-            this.UrlColumn.ReadOnly = true;
-            this.UrlColumn.Visible = false;
-            // 
-            // H5UrlColumn
-            // 
-            this.H5UrlColumn.DataPropertyName = "H5Url";
-            this.H5UrlColumn.HeaderText = "H5Url";
-            this.H5UrlColumn.Name = "H5UrlColumn";
-            this.H5UrlColumn.ReadOnly = true;
-            this.H5UrlColumn.Visible = false;
             // 
             // scms
             // 
@@ -852,30 +736,192 @@
             this.dataGridViewTextBoxColumn18.ReadOnly = true;
             this.dataGridViewTextBoxColumn18.Visible = false;
             // 
-            // tsBtnEditAllSelect
+            // productNameDataGridViewTextBoxColumn
             // 
-            this.tsBtnEditAllSelect.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tsBtnEditAllSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsBtnEditAllSelect.Enabled = false;
-            this.tsBtnEditAllSelect.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnEditAllSelect.Image")));
-            this.tsBtnEditAllSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsBtnEditAllSelect.Name = "tsBtnEditAllSelect";
-            this.tsBtnEditAllSelect.Size = new System.Drawing.Size(101, 21);
-            this.tsBtnEditAllSelect.Text = "审核本页商品(&U)";
+            this.productNameDataGridViewTextBoxColumn.DataPropertyName = "ProductName";
+            this.productNameDataGridViewTextBoxColumn.HeaderText = "商品名称";
+            this.productNameDataGridViewTextBoxColumn.MinimumWidth = 200;
+            this.productNameDataGridViewTextBoxColumn.Name = "productNameDataGridViewTextBoxColumn";
             // 
-            // toolStripLabel4
+            // SearchKeyWordColumn
             // 
-            this.toolStripLabel4.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(24, 21);
-            this.toolStripLabel4.Text = "    ";
+            this.SearchKeyWordColumn.DataPropertyName = "SearchKeyWord";
+            this.SearchKeyWordColumn.HeaderText = "搜索词";
+            this.SearchKeyWordColumn.MinimumWidth = 100;
+            this.SearchKeyWordColumn.Name = "SearchKeyWordColumn";
+            this.SearchKeyWordColumn.ToolTipText = "搜索关键词，空格分开";
             // 
-            // toolStripLabel6
+            // brandDataGridViewTextBoxColumn
             // 
-            this.toolStripLabel6.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(12, 21);
-            this.toolStripLabel6.Text = " ";
+            this.brandDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.brandDataGridViewTextBoxColumn.DataPropertyName = "Brand";
+            this.brandDataGridViewTextBoxColumn.HeaderText = "品牌";
+            this.brandDataGridViewTextBoxColumn.MinimumWidth = 100;
+            this.brandDataGridViewTextBoxColumn.Name = "brandDataGridViewTextBoxColumn";
+            // 
+            // RegionNameColumn
+            // 
+            this.RegionNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.RegionNameColumn.DataPropertyName = "RegionName";
+            this.RegionNameColumn.HeaderText = "发货地";
+            this.RegionNameColumn.Name = "RegionNameColumn";
+            this.RegionNameColumn.Width = 80;
+            // 
+            // ShowPrice
+            // 
+            this.ShowPrice.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ShowPrice.DataPropertyName = "ShowPrice";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.Format = "C2";
+            dataGridViewCellStyle3.NullValue = null;
+            this.ShowPrice.DefaultCellStyle = dataGridViewCellStyle3;
+            this.ShowPrice.HeaderText = "售价";
+            this.ShowPrice.Name = "ShowPrice";
+            this.ShowPrice.Width = 60;
+            // 
+            // PremiumRatioColumn
+            // 
+            this.PremiumRatioColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PremiumRatioColumn.DataPropertyName = "PremiumRatio";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.Format = "P";
+            dataGridViewCellStyle4.NullValue = null;
+            this.PremiumRatioColumn.DefaultCellStyle = dataGridViewCellStyle4;
+            this.PremiumRatioColumn.HeaderText = "溢价";
+            this.PremiumRatioColumn.Name = "PremiumRatioColumn";
+            this.PremiumRatioColumn.ToolTipText = "溢价比例";
+            this.PremiumRatioColumn.Width = 60;
+            // 
+            // ClassNameColumn
+            // 
+            this.ClassNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ClassNameColumn.DataPropertyName = "ClassNameShow";
+            this.ClassNameColumn.HeaderText = "所属类目";
+            this.ClassNameColumn.Name = "ClassNameColumn";
+            this.ClassNameColumn.Width = 150;
+            // 
+            // isFreePostageDataGridViewCheckBoxColumn
+            // 
+            this.isFreePostageDataGridViewCheckBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.isFreePostageDataGridViewCheckBoxColumn.DataPropertyName = "IsFreePostage";
+            this.isFreePostageDataGridViewCheckBoxColumn.HeaderText = "包邮";
+            this.isFreePostageDataGridViewCheckBoxColumn.Name = "isFreePostageDataGridViewCheckBoxColumn";
+            this.isFreePostageDataGridViewCheckBoxColumn.Width = 50;
+            // 
+            // postageDataGridViewTextBoxColumn
+            // 
+            this.postageDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.postageDataGridViewTextBoxColumn.DataPropertyName = "Postage";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.Format = "C2";
+            dataGridViewCellStyle5.NullValue = null;
+            this.postageDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle5;
+            this.postageDataGridViewTextBoxColumn.HeaderText = "邮费";
+            this.postageDataGridViewTextBoxColumn.Name = "postageDataGridViewTextBoxColumn";
+            this.postageDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // IsNewColumn
+            // 
+            this.IsNewColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.IsNewColumn.DataPropertyName = "IsNew";
+            this.IsNewColumn.HeaderText = "新品";
+            this.IsNewColumn.Name = "IsNewColumn";
+            this.IsNewColumn.Width = 50;
+            // 
+            // IsVirtualColumn
+            // 
+            this.IsVirtualColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.IsVirtualColumn.DataPropertyName = "IsVirtual";
+            this.IsVirtualColumn.HeaderText = "虚拟";
+            this.IsVirtualColumn.Name = "IsVirtualColumn";
+            this.IsVirtualColumn.Width = 50;
+            // 
+            // IsRefundColumn
+            // 
+            this.IsRefundColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.IsRefundColumn.DataPropertyName = "IsRefund";
+            this.IsRefundColumn.HeaderText = "7天";
+            this.IsRefundColumn.Name = "IsRefundColumn";
+            this.IsRefundColumn.Width = 50;
+            // 
+            // dealCntDataGridViewTextBoxColumn
+            // 
+            this.dealCntDataGridViewTextBoxColumn.DataPropertyName = "DealCnt";
+            this.dealCntDataGridViewTextBoxColumn.HeaderText = "确认收货量";
+            this.dealCntDataGridViewTextBoxColumn.Name = "dealCntDataGridViewTextBoxColumn";
+            this.dealCntDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // favCntDataGridViewTextBoxColumn
+            // 
+            this.favCntDataGridViewTextBoxColumn.DataPropertyName = "FavCnt";
+            this.favCntDataGridViewTextBoxColumn.HeaderText = "收藏量";
+            this.favCntDataGridViewTextBoxColumn.Name = "favCntDataGridViewTextBoxColumn";
+            this.favCntDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // sellCntDataGridViewTextBoxColumn
+            // 
+            this.sellCntDataGridViewTextBoxColumn.DataPropertyName = "SellCnt";
+            this.sellCntDataGridViewTextBoxColumn.HeaderText = "总销量";
+            this.sellCntDataGridViewTextBoxColumn.Name = "sellCntDataGridViewTextBoxColumn";
+            this.sellCntDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // commnetCntDataGridViewTextBoxColumn
+            // 
+            this.commnetCntDataGridViewTextBoxColumn.DataPropertyName = "CommnetCnt";
+            this.commnetCntDataGridViewTextBoxColumn.HeaderText = "评价数";
+            this.commnetCntDataGridViewTextBoxColumn.Name = "commnetCntDataGridViewTextBoxColumn";
+            this.commnetCntDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // idDataGridViewTextBoxColumn
+            // 
+            this.idDataGridViewTextBoxColumn.DataPropertyName = "Id";
+            this.idDataGridViewTextBoxColumn.HeaderText = "Id";
+            this.idDataGridViewTextBoxColumn.Name = "idDataGridViewTextBoxColumn";
+            this.idDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // ClassTypeColumn
+            // 
+            this.ClassTypeColumn.DataPropertyName = "ClassType";
+            this.ClassTypeColumn.HeaderText = "ClassType";
+            this.ClassTypeColumn.Name = "ClassTypeColumn";
+            this.ClassTypeColumn.Visible = false;
+            // 
+            // ClassIdColumn
+            // 
+            this.ClassIdColumn.DataPropertyName = "ClassId";
+            this.ClassIdColumn.HeaderText = "ClassId";
+            this.ClassIdColumn.Name = "ClassIdColumn";
+            this.ClassIdColumn.Visible = false;
+            // 
+            // RegionCodeColumn
+            // 
+            this.RegionCodeColumn.DataPropertyName = "RegionCode";
+            this.RegionCodeColumn.HeaderText = "RegionCode";
+            this.RegionCodeColumn.Name = "RegionCodeColumn";
+            this.RegionCodeColumn.Visible = false;
+            // 
+            // SettlementRatioColumn
+            // 
+            this.SettlementRatioColumn.DataPropertyName = "SettlementRatio";
+            this.SettlementRatioColumn.HeaderText = "SettlementRatio";
+            this.SettlementRatioColumn.Name = "SettlementRatioColumn";
+            this.SettlementRatioColumn.Visible = false;
+            // 
+            // UrlColumn
+            // 
+            this.UrlColumn.DataPropertyName = "Url";
+            this.UrlColumn.HeaderText = "Url";
+            this.UrlColumn.Name = "UrlColumn";
+            this.UrlColumn.ReadOnly = true;
+            this.UrlColumn.Visible = false;
+            // 
+            // H5UrlColumn
+            // 
+            this.H5UrlColumn.DataPropertyName = "H5Url";
+            this.H5UrlColumn.HeaderText = "H5Url";
+            this.H5UrlColumn.Name = "H5UrlColumn";
+            this.H5UrlColumn.ReadOnly = true;
+            this.H5UrlColumn.Visible = false;
             // 
             // ProcessProductResult
             // 
@@ -948,7 +994,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn18;
         protected internal System.Windows.Forms.ToolStripButton tsBtnUploadImageAllSelect;
         protected internal System.Windows.Forms.ToolStripButton tsBtnUpload;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
+        protected internal System.Windows.Forms.ToolStripButton tsBtnEditAllSelect;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel7;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiChangeTitle;
+        private System.Windows.Forms.ToolStripMenuItem tsmiSetSearchKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn productNameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SearchKeyWordColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn brandDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn RegionNameColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn ShowPrice;
@@ -970,8 +1024,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SettlementRatioColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn UrlColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn H5UrlColumn;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
-        protected internal System.Windows.Forms.ToolStripButton tsBtnEditAllSelect;
     }
 }

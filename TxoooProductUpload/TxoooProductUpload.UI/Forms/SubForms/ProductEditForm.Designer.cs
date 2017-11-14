@@ -38,10 +38,10 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.gbSetting = new System.Windows.Forms.GroupBox();
             this.gbBase = new System.Windows.Forms.GroupBox();
-            this.skinTextBox3 = new CCWin.SkinControl.SkinTextBox();
-            this.skinTextBox2 = new CCWin.SkinControl.SkinTextBox();
+            this.txtPLoacation = new CCWin.SkinControl.SkinTextBox();
+            this.txtPClass = new CCWin.SkinControl.SkinTextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.skinTextBox1 = new CCWin.SkinControl.SkinTextBox();
+            this.txtPName = new CCWin.SkinControl.SkinTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.gbPostage = new System.Windows.Forms.GroupBox();
@@ -69,11 +69,17 @@
             this.rbTypeNew = new System.Windows.Forms.RadioButton();
             this.skinTabPage2 = new CCWin.SkinControl.SkinTabPage();
             this.skinTabPage3 = new CCWin.SkinControl.SkinTabPage();
-            this.htmlEditor1 = new WinHtmlEditor.HtmlEditor();
+            this.htmlEditorDetail = new WinHtmlEditor.HtmlEditor();
             this.skinTreeView = new CCWin.SkinControl.SkinTreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnSaveAndNext = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnSave = new System.Windows.Forms.ToolStripButton();
+            this.tsBtnDelete = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.cmsThumImage = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiDeleteImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsBtnOpenUploadFile = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.skinTabControl1.SuspendLayout();
             this.skinTabPage1.SuspendLayout();
@@ -93,6 +99,7 @@
             this.gbType.SuspendLayout();
             this.skinTabPage3.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.cmsThumImage.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -105,7 +112,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(4, 28);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1010, 568);
+            this.panel1.Size = new System.Drawing.Size(1107, 568);
             this.panel1.TabIndex = 0;
             // 
             // skinTabControl1
@@ -129,8 +136,8 @@
             this.skinTabControl1.PageHover = ((System.Drawing.Image)(resources.GetObject("skinTabControl1.PageHover")));
             this.skinTabControl1.PageImagePosition = CCWin.SkinControl.SkinTabControl.ePageImagePosition.Left;
             this.skinTabControl1.PageNorml = null;
-            this.skinTabControl1.SelectedIndex = 0;
-            this.skinTabControl1.Size = new System.Drawing.Size(741, 519);
+            this.skinTabControl1.SelectedIndex = 2;
+            this.skinTabControl1.Size = new System.Drawing.Size(838, 519);
             this.skinTabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.skinTabControl1.TabIndex = 4;
             // 
@@ -142,7 +149,7 @@
             this.skinTabPage1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTabPage1.Location = new System.Drawing.Point(0, 36);
             this.skinTabPage1.Name = "skinTabPage1";
-            this.skinTabPage1.Size = new System.Drawing.Size(741, 483);
+            this.skinTabPage1.Size = new System.Drawing.Size(838, 483);
             this.skinTabPage1.TabIndex = 0;
             this.skinTabPage1.TabItemImage = null;
             this.skinTabPage1.Text = "基本信息";
@@ -153,7 +160,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 251);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(741, 232);
+            this.groupBox3.Size = new System.Drawing.Size(838, 232);
             this.groupBox3.TabIndex = 14;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "主图";
@@ -166,7 +173,7 @@
             this.lvThumImages.Location = new System.Drawing.Point(3, 17);
             this.lvThumImages.MultiSelect = false;
             this.lvThumImages.Name = "lvThumImages";
-            this.lvThumImages.Size = new System.Drawing.Size(735, 212);
+            this.lvThumImages.Size = new System.Drawing.Size(832, 212);
             this.lvThumImages.TabIndex = 1;
             this.lvThumImages.UseCompatibleStateImageBehavior = false;
             // 
@@ -180,22 +187,23 @@
             // 
             this.gbSetting.Controls.Add(this.gbBase);
             this.gbSetting.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbSetting.Enabled = false;
             this.gbSetting.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.gbSetting.Location = new System.Drawing.Point(0, 0);
             this.gbSetting.Margin = new System.Windows.Forms.Padding(2);
             this.gbSetting.Name = "gbSetting";
             this.gbSetting.Padding = new System.Windows.Forms.Padding(2);
-            this.gbSetting.Size = new System.Drawing.Size(741, 251);
+            this.gbSetting.Size = new System.Drawing.Size(838, 251);
             this.gbSetting.TabIndex = 4;
             this.gbSetting.TabStop = false;
             this.gbSetting.Text = "商品信息";
             // 
             // gbBase
             // 
-            this.gbBase.Controls.Add(this.skinTextBox3);
-            this.gbBase.Controls.Add(this.skinTextBox2);
+            this.gbBase.Controls.Add(this.txtPLoacation);
+            this.gbBase.Controls.Add(this.txtPClass);
             this.gbBase.Controls.Add(this.label5);
-            this.gbBase.Controls.Add(this.skinTextBox1);
+            this.gbBase.Controls.Add(this.txtPName);
             this.gbBase.Controls.Add(this.label4);
             this.gbBase.Controls.Add(this.label3);
             this.gbBase.Controls.Add(this.gbPostage);
@@ -209,91 +217,91 @@
             this.gbBase.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.gbBase.Location = new System.Drawing.Point(2, 18);
             this.gbBase.Name = "gbBase";
-            this.gbBase.Size = new System.Drawing.Size(737, 231);
+            this.gbBase.Size = new System.Drawing.Size(834, 231);
             this.gbBase.TabIndex = 3;
             this.gbBase.TabStop = false;
             // 
-            // skinTextBox3
+            // txtPLoacation
             // 
-            this.skinTextBox3.BackColor = System.Drawing.Color.Transparent;
-            this.skinTextBox3.DownBack = null;
-            this.skinTextBox3.Icon = null;
-            this.skinTextBox3.IconIsButton = false;
-            this.skinTextBox3.IconMouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox3.IsPasswordChat = '\0';
-            this.skinTextBox3.IsSystemPasswordChar = false;
-            this.skinTextBox3.Lines = new string[0];
-            this.skinTextBox3.Location = new System.Drawing.Point(74, 99);
-            this.skinTextBox3.Margin = new System.Windows.Forms.Padding(0);
-            this.skinTextBox3.MaxLength = 32767;
-            this.skinTextBox3.MinimumSize = new System.Drawing.Size(28, 28);
-            this.skinTextBox3.MouseBack = null;
-            this.skinTextBox3.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox3.Multiline = false;
-            this.skinTextBox3.Name = "skinTextBox3";
-            this.skinTextBox3.NormlBack = null;
-            this.skinTextBox3.Padding = new System.Windows.Forms.Padding(5);
-            this.skinTextBox3.ReadOnly = false;
-            this.skinTextBox3.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox3.Size = new System.Drawing.Size(382, 28);
-            // 
-            // 
-            // 
-            this.skinTextBox3.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinTextBox3.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinTextBox3.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
-            this.skinTextBox3.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox3.SkinTxt.Name = "BaseText";
-            this.skinTextBox3.SkinTxt.Size = new System.Drawing.Size(372, 18);
-            this.skinTextBox3.SkinTxt.TabIndex = 0;
-            this.skinTextBox3.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox3.SkinTxt.WaterText = "";
-            this.skinTextBox3.TabIndex = 5;
-            this.skinTextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.skinTextBox3.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox3.WaterText = "";
-            this.skinTextBox3.WordWrap = true;
-            // 
-            // skinTextBox2
-            // 
-            this.skinTextBox2.BackColor = System.Drawing.Color.Transparent;
-            this.skinTextBox2.DownBack = null;
-            this.skinTextBox2.Icon = null;
-            this.skinTextBox2.IconIsButton = false;
-            this.skinTextBox2.IconMouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox2.IsPasswordChat = '\0';
-            this.skinTextBox2.IsSystemPasswordChar = false;
-            this.skinTextBox2.Lines = new string[0];
-            this.skinTextBox2.Location = new System.Drawing.Point(74, 56);
-            this.skinTextBox2.Margin = new System.Windows.Forms.Padding(0);
-            this.skinTextBox2.MaxLength = 32767;
-            this.skinTextBox2.MinimumSize = new System.Drawing.Size(28, 28);
-            this.skinTextBox2.MouseBack = null;
-            this.skinTextBox2.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox2.Multiline = false;
-            this.skinTextBox2.Name = "skinTextBox2";
-            this.skinTextBox2.NormlBack = null;
-            this.skinTextBox2.Padding = new System.Windows.Forms.Padding(5);
-            this.skinTextBox2.ReadOnly = false;
-            this.skinTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox2.Size = new System.Drawing.Size(382, 28);
+            this.txtPLoacation.BackColor = System.Drawing.Color.Transparent;
+            this.txtPLoacation.DownBack = null;
+            this.txtPLoacation.Icon = null;
+            this.txtPLoacation.IconIsButton = false;
+            this.txtPLoacation.IconMouseState = CCWin.SkinClass.ControlState.Normal;
+            this.txtPLoacation.IsPasswordChat = '\0';
+            this.txtPLoacation.IsSystemPasswordChar = false;
+            this.txtPLoacation.Lines = new string[0];
+            this.txtPLoacation.Location = new System.Drawing.Point(74, 99);
+            this.txtPLoacation.Margin = new System.Windows.Forms.Padding(0);
+            this.txtPLoacation.MaxLength = 32767;
+            this.txtPLoacation.MinimumSize = new System.Drawing.Size(28, 28);
+            this.txtPLoacation.MouseBack = null;
+            this.txtPLoacation.MouseState = CCWin.SkinClass.ControlState.Normal;
+            this.txtPLoacation.Multiline = false;
+            this.txtPLoacation.Name = "txtPLoacation";
+            this.txtPLoacation.NormlBack = null;
+            this.txtPLoacation.Padding = new System.Windows.Forms.Padding(5);
+            this.txtPLoacation.ReadOnly = false;
+            this.txtPLoacation.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtPLoacation.Size = new System.Drawing.Size(382, 28);
             // 
             // 
             // 
-            this.skinTextBox2.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinTextBox2.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinTextBox2.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
-            this.skinTextBox2.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox2.SkinTxt.Name = "BaseText";
-            this.skinTextBox2.SkinTxt.Size = new System.Drawing.Size(372, 18);
-            this.skinTextBox2.SkinTxt.TabIndex = 0;
-            this.skinTextBox2.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox2.SkinTxt.WaterText = "";
-            this.skinTextBox2.TabIndex = 5;
-            this.skinTextBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.skinTextBox2.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox2.WaterText = "";
-            this.skinTextBox2.WordWrap = true;
+            this.txtPLoacation.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPLoacation.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPLoacation.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
+            this.txtPLoacation.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.txtPLoacation.SkinTxt.Name = "BaseText";
+            this.txtPLoacation.SkinTxt.Size = new System.Drawing.Size(372, 18);
+            this.txtPLoacation.SkinTxt.TabIndex = 0;
+            this.txtPLoacation.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.txtPLoacation.SkinTxt.WaterText = "";
+            this.txtPLoacation.TabIndex = 5;
+            this.txtPLoacation.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtPLoacation.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.txtPLoacation.WaterText = "";
+            this.txtPLoacation.WordWrap = true;
+            // 
+            // txtPClass
+            // 
+            this.txtPClass.BackColor = System.Drawing.Color.Transparent;
+            this.txtPClass.DownBack = null;
+            this.txtPClass.Icon = null;
+            this.txtPClass.IconIsButton = false;
+            this.txtPClass.IconMouseState = CCWin.SkinClass.ControlState.Normal;
+            this.txtPClass.IsPasswordChat = '\0';
+            this.txtPClass.IsSystemPasswordChar = false;
+            this.txtPClass.Lines = new string[0];
+            this.txtPClass.Location = new System.Drawing.Point(74, 56);
+            this.txtPClass.Margin = new System.Windows.Forms.Padding(0);
+            this.txtPClass.MaxLength = 32767;
+            this.txtPClass.MinimumSize = new System.Drawing.Size(28, 28);
+            this.txtPClass.MouseBack = null;
+            this.txtPClass.MouseState = CCWin.SkinClass.ControlState.Normal;
+            this.txtPClass.Multiline = false;
+            this.txtPClass.Name = "txtPClass";
+            this.txtPClass.NormlBack = null;
+            this.txtPClass.Padding = new System.Windows.Forms.Padding(5);
+            this.txtPClass.ReadOnly = false;
+            this.txtPClass.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtPClass.Size = new System.Drawing.Size(382, 28);
+            // 
+            // 
+            // 
+            this.txtPClass.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPClass.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPClass.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
+            this.txtPClass.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.txtPClass.SkinTxt.Name = "BaseText";
+            this.txtPClass.SkinTxt.Size = new System.Drawing.Size(372, 18);
+            this.txtPClass.SkinTxt.TabIndex = 0;
+            this.txtPClass.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.txtPClass.SkinTxt.WaterText = "";
+            this.txtPClass.TabIndex = 5;
+            this.txtPClass.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtPClass.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.txtPClass.WaterText = "";
+            this.txtPClass.WordWrap = true;
             // 
             // label5
             // 
@@ -304,46 +312,46 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "发 货  地：";
             // 
-            // skinTextBox1
+            // txtPName
             // 
-            this.skinTextBox1.BackColor = System.Drawing.Color.Transparent;
-            this.skinTextBox1.DownBack = null;
-            this.skinTextBox1.Icon = null;
-            this.skinTextBox1.IconIsButton = false;
-            this.skinTextBox1.IconMouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox1.IsPasswordChat = '\0';
-            this.skinTextBox1.IsSystemPasswordChar = false;
-            this.skinTextBox1.Lines = new string[0];
-            this.skinTextBox1.Location = new System.Drawing.Point(74, 20);
-            this.skinTextBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.skinTextBox1.MaxLength = 32767;
-            this.skinTextBox1.MinimumSize = new System.Drawing.Size(28, 28);
-            this.skinTextBox1.MouseBack = null;
-            this.skinTextBox1.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.skinTextBox1.Multiline = false;
-            this.skinTextBox1.Name = "skinTextBox1";
-            this.skinTextBox1.NormlBack = null;
-            this.skinTextBox1.Padding = new System.Windows.Forms.Padding(5);
-            this.skinTextBox1.ReadOnly = false;
-            this.skinTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.skinTextBox1.Size = new System.Drawing.Size(382, 28);
+            this.txtPName.BackColor = System.Drawing.Color.Transparent;
+            this.txtPName.DownBack = null;
+            this.txtPName.Icon = null;
+            this.txtPName.IconIsButton = false;
+            this.txtPName.IconMouseState = CCWin.SkinClass.ControlState.Normal;
+            this.txtPName.IsPasswordChat = '\0';
+            this.txtPName.IsSystemPasswordChar = false;
+            this.txtPName.Lines = new string[0];
+            this.txtPName.Location = new System.Drawing.Point(74, 20);
+            this.txtPName.Margin = new System.Windows.Forms.Padding(0);
+            this.txtPName.MaxLength = 32767;
+            this.txtPName.MinimumSize = new System.Drawing.Size(28, 28);
+            this.txtPName.MouseBack = null;
+            this.txtPName.MouseState = CCWin.SkinClass.ControlState.Normal;
+            this.txtPName.Multiline = false;
+            this.txtPName.Name = "txtPName";
+            this.txtPName.NormlBack = null;
+            this.txtPName.Padding = new System.Windows.Forms.Padding(5);
+            this.txtPName.ReadOnly = false;
+            this.txtPName.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtPName.Size = new System.Drawing.Size(382, 28);
             // 
             // 
             // 
-            this.skinTextBox1.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.skinTextBox1.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.skinTextBox1.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
-            this.skinTextBox1.SkinTxt.Location = new System.Drawing.Point(5, 5);
-            this.skinTextBox1.SkinTxt.Name = "BaseText";
-            this.skinTextBox1.SkinTxt.Size = new System.Drawing.Size(372, 18);
-            this.skinTextBox1.SkinTxt.TabIndex = 0;
-            this.skinTextBox1.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox1.SkinTxt.WaterText = "";
-            this.skinTextBox1.TabIndex = 5;
-            this.skinTextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.skinTextBox1.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.skinTextBox1.WaterText = "";
-            this.skinTextBox1.WordWrap = true;
+            this.txtPName.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtPName.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtPName.SkinTxt.Font = new System.Drawing.Font("微软雅黑", 9.75F);
+            this.txtPName.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.txtPName.SkinTxt.Name = "BaseText";
+            this.txtPName.SkinTxt.Size = new System.Drawing.Size(372, 18);
+            this.txtPName.SkinTxt.TabIndex = 0;
+            this.txtPName.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.txtPName.SkinTxt.WaterText = "";
+            this.txtPName.TabIndex = 5;
+            this.txtPName.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.txtPName.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
+            this.txtPName.WaterText = "";
+            this.txtPName.WordWrap = true;
             // 
             // label4
             // 
@@ -390,6 +398,7 @@
             // 
             // tbappend
             // 
+            this.tbappend.DecimalPlaces = 2;
             this.tbappend.Font = new System.Drawing.Font("微软雅黑", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tbappend.ForeColor = System.Drawing.Color.Gray;
             this.tbappend.Location = new System.Drawing.Point(174, 25);
@@ -399,6 +408,7 @@
             // 
             // tbPostage
             // 
+            this.tbPostage.DecimalPlaces = 2;
             this.tbPostage.Font = new System.Drawing.Font("微软雅黑", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tbPostage.ForeColor = System.Drawing.Color.Gray;
             this.tbPostage.Location = new System.Drawing.Point(43, 25);
@@ -515,32 +525,23 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Tag = "";
-            this.groupBox1.Text = "设置溢价";
+            this.groupBox1.Text = "价格";
             // 
             // txtPrice
             // 
             this.txtPrice.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPrice.DecimalPlaces = 2;
             this.txtPrice.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.txtPrice.ForeColor = System.Drawing.Color.Gray;
             this.txtPrice.Location = new System.Drawing.Point(10, 30);
             this.txtPrice.Maximum = new decimal(new int[] {
-            2000,
+            2000000,
             0,
             0,
             0});
-            this.txtPrice.Minimum = new decimal(new int[] {
-            2000,
-            0,
-            0,
-            -2147483648});
             this.txtPrice.Name = "txtPrice";
             this.txtPrice.Size = new System.Drawing.Size(91, 23);
             this.txtPrice.TabIndex = 3;
-            this.txtPrice.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             // 
             // gbBrand
             // 
@@ -646,7 +647,7 @@
             this.skinTabPage2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTabPage2.Location = new System.Drawing.Point(0, 36);
             this.skinTabPage2.Name = "skinTabPage2";
-            this.skinTabPage2.Size = new System.Drawing.Size(741, 483);
+            this.skinTabPage2.Size = new System.Drawing.Size(838, 483);
             this.skinTabPage2.TabIndex = 1;
             this.skinTabPage2.TabItemImage = null;
             this.skinTabPage2.Text = "SKU信息";
@@ -654,31 +655,31 @@
             // skinTabPage3
             // 
             this.skinTabPage3.BackColor = System.Drawing.Color.White;
-            this.skinTabPage3.Controls.Add(this.htmlEditor1);
+            this.skinTabPage3.Controls.Add(this.htmlEditorDetail);
             this.skinTabPage3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.skinTabPage3.Location = new System.Drawing.Point(0, 36);
             this.skinTabPage3.Name = "skinTabPage3";
-            this.skinTabPage3.Size = new System.Drawing.Size(741, 483);
+            this.skinTabPage3.Size = new System.Drawing.Size(838, 483);
             this.skinTabPage3.TabIndex = 2;
             this.skinTabPage3.TabItemImage = null;
             this.skinTabPage3.Text = "描述信息";
             // 
-            // htmlEditor1
+            // htmlEditorDetail
             // 
-            this.htmlEditor1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.htmlEditor1.BodyInnerHTML = null;
-            this.htmlEditor1.BodyInnerText = null;
-            this.htmlEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.htmlEditor1.EnterToBR = false;
-            this.htmlEditor1.FontSize = WinHtmlEditor.FontSize.Three;
-            this.htmlEditor1.Location = new System.Drawing.Point(0, 0);
-            this.htmlEditor1.Name = "htmlEditor1";
-            this.htmlEditor1.ShowStatusBar = true;
-            this.htmlEditor1.ShowToolBar = true;
-            this.htmlEditor1.ShowWb = true;
-            this.htmlEditor1.Size = new System.Drawing.Size(741, 483);
-            this.htmlEditor1.TabIndex = 0;
-            this.htmlEditor1.WebBrowserShortcutsEnabled = true;
+            this.htmlEditorDetail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.htmlEditorDetail.BodyInnerHTML = null;
+            this.htmlEditorDetail.BodyInnerText = null;
+            this.htmlEditorDetail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.htmlEditorDetail.EnterToBR = false;
+            this.htmlEditorDetail.FontSize = WinHtmlEditor.FontSize.Three;
+            this.htmlEditorDetail.Location = new System.Drawing.Point(0, 0);
+            this.htmlEditorDetail.Name = "htmlEditorDetail";
+            this.htmlEditorDetail.ShowStatusBar = true;
+            this.htmlEditorDetail.ShowToolBar = true;
+            this.htmlEditorDetail.ShowWb = true;
+            this.htmlEditorDetail.Size = new System.Drawing.Size(838, 483);
+            this.htmlEditorDetail.TabIndex = 0;
+            this.htmlEditorDetail.WebBrowserShortcutsEnabled = true;
             // 
             // skinTreeView
             // 
@@ -692,21 +693,48 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.tsBtnSaveAndNext,
+            this.tsBtnSave,
+            this.tsBtnDelete,
+            this.tsBtnOpenUploadFile});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1010, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1107, 25);
             this.toolStrip1.TabIndex = 1;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton1
+            // tsBtnSaveAndNext
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
+            this.tsBtnSaveAndNext.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnSaveAndNext.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnSaveAndNext.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnSaveAndNext.Image")));
+            this.tsBtnSaveAndNext.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnSaveAndNext.Name = "tsBtnSaveAndNext";
+            this.tsBtnSaveAndNext.Size = new System.Drawing.Size(126, 22);
+            this.tsBtnSaveAndNext.Tag = "next";
+            this.tsBtnSaveAndNext.Text = "保存并编辑下一个(&N)";
+            // 
+            // tsBtnSave
+            // 
+            this.tsBtnSave.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnSave.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnSave.Image")));
+            this.tsBtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnSave.Name = "tsBtnSave";
+            this.tsBtnSave.Size = new System.Drawing.Size(51, 22);
+            this.tsBtnSave.Tag = "save";
+            this.tsBtnSave.Text = "保存(&S)";
+            // 
+            // tsBtnDelete
+            // 
+            this.tsBtnDelete.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tsBtnDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnDelete.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnDelete.Image")));
+            this.tsBtnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnDelete.Name = "tsBtnDelete";
+            this.tsBtnDelete.Size = new System.Drawing.Size(53, 22);
+            this.tsBtnDelete.Tag = "save";
+            this.tsBtnDelete.Text = "删除(&D)";
             // 
             // panel2
             // 
@@ -714,14 +742,43 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 544);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1010, 24);
+            this.panel2.Size = new System.Drawing.Size(1107, 24);
             this.panel2.TabIndex = 0;
+            // 
+            // cmsThumImage
+            // 
+            this.cmsThumImage.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiDeleteImage,
+            this.tsmiShowImage});
+            this.cmsThumImage.Name = "cmsThumImage";
+            this.cmsThumImage.Size = new System.Drawing.Size(140, 48);
+            // 
+            // tsmiDeleteImage
+            // 
+            this.tsmiDeleteImage.Name = "tsmiDeleteImage";
+            this.tsmiDeleteImage.Size = new System.Drawing.Size(139, 22);
+            this.tsmiDeleteImage.Text = "删除(&D)";
+            // 
+            // tsmiShowImage
+            // 
+            this.tsmiShowImage.Name = "tsmiShowImage";
+            this.tsmiShowImage.Size = new System.Drawing.Size(139, 22);
+            this.tsmiShowImage.Text = "查看大图(&S)";
+            // 
+            // tsBtnOpenUploadFile
+            // 
+            this.tsBtnOpenUploadFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsBtnOpenUploadFile.Image = ((System.Drawing.Image)(resources.GetObject("tsBtnOpenUploadFile.Image")));
+            this.tsBtnOpenUploadFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsBtnOpenUploadFile.Name = "tsBtnOpenUploadFile";
+            this.tsBtnOpenUploadFile.Size = new System.Drawing.Size(78, 22);
+            this.tsBtnOpenUploadFile.Text = "辅助工具(&O)";
             // 
             // ProductEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1018, 600);
+            this.ClientSize = new System.Drawing.Size(1115, 600);
             this.Controls.Add(this.panel1);
             this.Name = "ProductEditForm";
             this.Text = "商品编辑";
@@ -753,6 +810,7 @@
             this.skinTabPage3.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.cmsThumImage.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -794,14 +852,20 @@
         private System.Windows.Forms.RadioButton rbTypeNew;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private CCWin.SkinControl.SkinTextBox skinTextBox2;
-        private CCWin.SkinControl.SkinTextBox skinTextBox1;
-        private CCWin.SkinControl.SkinTextBox skinTextBox3;
+        private CCWin.SkinControl.SkinTextBox txtPClass;
+        private CCWin.SkinControl.SkinTextBox txtPName;
+        private CCWin.SkinControl.SkinTextBox txtPLoacation;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox3;
-        private WinHtmlEditor.HtmlEditor htmlEditor1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private WinHtmlEditor.HtmlEditor htmlEditorDetail;
+        private System.Windows.Forms.ToolStripButton tsBtnSaveAndNext;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ListView lvThumImages;
+        private System.Windows.Forms.ContextMenuStrip cmsThumImage;
+        private System.Windows.Forms.ToolStripMenuItem tsmiDeleteImage;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowImage;
+        private System.Windows.Forms.ToolStripButton tsBtnSave;
+        private System.Windows.Forms.ToolStripButton tsBtnDelete;
+        private System.Windows.Forms.ToolStripButton tsBtnOpenUploadFile;
     }
 }

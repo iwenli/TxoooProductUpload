@@ -21,7 +21,8 @@ namespace TxoooProductUpload
             Application.SetCompatibleTextRenderingDefault(false);
             if (Update.CheckUpdateTask().Result == null)
             {
-                Application.Run(new MainForm());
+                //Application.Run(new MainForm());
+                Application.Run(new UI.ImageDownload.Crawler(new Service.ServiceContext()));
             }
         }
     }

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using FSLib.Data;
 using CCWin;
 using CCWin.SkinControl;
+using TxoooProductUpload.Service.Entities;
 
 namespace TxoooProductUpload.UI.Forms
 {
@@ -20,6 +21,8 @@ namespace TxoooProductUpload.UI.Forms
         long _classId = 0;  //分类id
         int _proportion = 0; //返现比例 
         string _classNameShow = string.Empty;
+        IEnumerable<ProductClassInfo> _searchResultList;
+        int _searchIndex = 0;
         #endregion
 
         /// <summary>
@@ -44,14 +47,37 @@ namespace TxoooProductUpload.UI.Forms
         void ChangeClassForm_Load(object sender, EventArgs e)
         {
             lbClass1.ItemHeight = lbClass2.ItemHeight = lbClass3.ItemHeight = lbClass4.ItemHeight = 16;
+            lbClass1.DrawItem += ListBox_DrawItem;
+            lbClass2.DrawItem += ListBox_DrawItem;
+            lbClass3.DrawItem += ListBox_DrawItem;
+            lbClass4.DrawItem += ListBox_DrawItem;
 
             InitClassListBoxEvent();
             txtSearch.TextChanged += TxtSearch_TextChanged;
-            btnSearch.Click += BtnSearch_Click;
+            btnSearch.Click += Btn_Click;
+            btnNext.Click += Btn_Click;
+            btnPrev.Click += Btn_Click;
             txtSearch.KeyUp += TxtSearch_KeyUp;
 
             btnOk.Click += BtnOkOrCancel_Click;
             btnCancel.Click += BtnOkOrCancel_Click;
+        }
+
+        /// <summary>
+        /// 重绘ComboBox项间距
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void ListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            var obj = sender as ListBox;
+            if (e.Index < 0)
+            {
+                return;
+            }
+            e.DrawBackground();
+            e.DrawFocusRectangle();
+            e.Graphics.DrawString(obj.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds.X, e.Bounds.Y + 3);
         }
 
         void BtnOkOrCancel_Click(object sender, EventArgs e)
@@ -78,14 +104,67 @@ namespace TxoooProductUpload.UI.Forms
             }
         }
 
-        private void BtnSearch_Click(object sender, EventArgs e)
+        private void Btn_Click(object sender, EventArgs e)
         {
-            SearchClass();
+            var currentObj = sender as SkinButton;
+            switch (currentObj.Name)
+            {
+                case "btnSearch":
+                    SearchClass();
+                    break;
+                case "btnNext":
+                    if (_searchIndex < _searchResultList.Count() - 1)
+                    {
+                        _searchIndex++;
+                        PositionItem(_searchResultList.ElementAt(_searchIndex));
+                    }
+                    break;
+                case "btnPrev":
+                    if (_searchIndex > 0)
+                    {
+                        _searchIndex--;
+                        PositionItem(_searchResultList.ElementAt(_searchIndex));
+                    }
+                    break;
+            }
+            if (_searchResultList == null || _searchResultList.Count() == 0)
+            {
+                btnNext.Enabled = btnPrev.Enabled = false;
+                return;
+            }
+            else
+            {
+                btnPrev.Enabled = btnNext.Enabled = true;
+                if (_searchIndex == 0 && _searchResultList.Count() > 1)
+                {
+                    btnNext.Enabled = true;
+                    btnPrev.Enabled = false;
+                }
+                if (_searchIndex == _searchResultList.Count() - 1 && _searchResultList.Count() > 1)
+                {
+                    btnNext.Enabled = false;
+                    btnPrev.Enabled = true;
+                }
+            }
         }
 
         void SearchClass()
         {
-            var classObj = App.Context.BaseContent.CacheContext.Data.ProductClassList.FirstOrDefault(m => m.ClassName.IndexOf(txtSearch.Text) > -1);
+            _searchResultList = App.Context.BaseContent.CacheContext.Data.ProductClassList.Where(m => m.ClassName.IndexOf(txtSearch.Text) > -1);
+            _searchIndex = 0;
+
+            if (_searchResultList == null || _searchResultList.Count() == 0)
+            {
+                MessageBoxEx.Show("没有类目[{0}]".FormatWith(txtSearch.Text));
+            }
+            else
+            {
+                PositionItem(_searchResultList.ElementAt(_searchIndex));
+            }
+        }
+
+        void PositionItem(ProductClassInfo classObj)
+        {
             if (classObj != null)
             {
                 //先找顶级  parentId= 1 || 3439
@@ -105,9 +184,7 @@ namespace TxoooProductUpload.UI.Forms
                     lbClass2.SelectedItem = class2Obj;
                     lbClass3.SelectedItem = classObj;
                 }
-                return;
             }
-            MessageBoxEx.Show("没有类目[{0}]".FormatWith(txtSearch.Text));
         }
 
         void TxtSearch_TextChanged(object sender, EventArgs e)
