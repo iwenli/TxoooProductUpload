@@ -357,7 +357,7 @@ namespace TxoooProductUpload.Service
         /// <returns></returns>
         public bool UpProducts(List<long> productIds, bool isShow)
         {
-            var stCtx = NetClient.Create<WebResponseResult>(HttpMethod.Get, ApiList.UpProducts,
+            var stCtx = NetClient.Create<WebResponseResult>(HttpMethod.Post, ApiList.UpProducts,
                 data: new { product_ids = string.Join(",", productIds), is_show = Convert.ToInt32(isShow) });
 
             stCtx.Send();

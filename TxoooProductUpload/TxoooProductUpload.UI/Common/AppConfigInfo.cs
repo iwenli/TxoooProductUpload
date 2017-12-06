@@ -97,5 +97,20 @@ namespace TxoooProductUpload.UI.Common
                 return AppConfig.GetItem("ContactAuthorUrl");
             }
         }
+
+        /// <summary>
+        ///  Txooo用户默认头像URL
+        /// </summary>
+        public static string[] DetailImageFilter
+        {
+            set
+            {
+                AppConfig.ModifyItem("TxoooUserDefultHeadPic", string.Join(",", value));
+            }
+            get
+            {
+                return AppConfig.GetItem("TxoooUserDefultHeadPic")?.Split(',');
+            }
+        }
     }
 }

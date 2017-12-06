@@ -226,7 +226,7 @@ namespace TxoooProductUpload.UI.Service
                 {
                     await Task.Delay(100);
                     product.TxoooThumImgList.Add(BaseContent.ImageService.UploadImg(url));
-                    this.LogWarn("图片{0}上传成功".FormatWith(url));
+                    //this.LogWarn("图片{0}上传成功".FormatWith(url));
                 }
                 catch (Exception ex)
                 {
@@ -238,7 +238,17 @@ namespace TxoooProductUpload.UI.Service
                 try
                 {
                     await Task.Delay(100);
-                    product.TxoooDetailImgList.Add(BaseContent.ImageService.UploadImg(url));
+                    var tximg = BaseContent.ImageService.UploadImg(url);
+                    //过滤
+                    if (Common.AppConfigInfo.DetailImageFilter == null
+                        || !Common.AppConfigInfo.DetailImageFilter.Contains(tximg))
+                    {
+                        product.TxoooDetailImgList.Add(tximg);
+                    }
+                    else
+                    {
+                        this.LogFatal("商品{0}匹配到异常显示图片{1}".FormatWith(product.Id, url));
+                    }
                 }
                 catch (Exception ex)
                 {

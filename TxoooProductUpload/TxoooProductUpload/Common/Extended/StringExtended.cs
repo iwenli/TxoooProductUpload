@@ -32,7 +32,7 @@ namespace TxoooProductUpload.Common
         }
 
         /// <summary>
-        /// 将Unicode字符串转为对于的string
+        /// 将Unicode字符串转为对应的string
         /// </summary>
         /// <param name="unicodeStr"></param>
         /// <returns></returns>
