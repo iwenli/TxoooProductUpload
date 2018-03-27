@@ -96,7 +96,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("创业赚钱-商品服务器无法连接");
+                throw new Exception("{0}-商品服务器无法连接".FormatWith(AppConfig.PlatFormName));
             }
             if (!stCtx.Result.success)
             {
@@ -130,7 +130,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("创业赚钱-商品服务器无法连接");
+                throw new Exception("{0}-商品服务器无法连接".FormatWith(AppConfig.PlatFormName));
             }
             if (!stCtx.Result.success)
             {
@@ -253,10 +253,10 @@ namespace TxoooProductUpload.Service
         /// <param name="sourceId"></param>
         /// <param name="sourceType"></param>
         /// <returns></returns>
-        public ProductSourceTxoooInfo GetProductsSourceBySourceId(long sourceId,int sourceType)
+        public ProductSourceTxoooInfo GetProductsSourceBySourceId(long sourceId, int sourceType)
         {
             var stCtx = NetClient.Create<WebResponseResult<ProductSourceTxoooInfo>>(HttpMethod.Post, ApiList.GetProductsSource,
-               data: new { sourceId = sourceId, sourcrType= sourceType });
+               data: new { sourceId = sourceId, sourcrType = sourceType });
 
             stCtx.Send();
             if (!stCtx.IsValid())
@@ -289,7 +289,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+                throw new Exception("{0}-商品服务器无法连接".FormatWith(AppConfig.PlatFormName) + stCtx.Exception.Message);
             }
             if (!stCtx.Result.success)
             {
@@ -317,7 +317,7 @@ namespace TxoooProductUpload.Service
             await stCtx.SendAsync();
             if (!stCtx.IsValid())
             {
-                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+                throw new Exception("{0}-商品服务器无法连接".FormatWith(AppConfig.PlatFormName) + stCtx.Exception.Message);
             }
             if (!stCtx.Result.success)
             {
@@ -340,7 +340,7 @@ namespace TxoooProductUpload.Service
             stCtx.Send();
             if (!stCtx.IsValid())
             {
-                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+                throw new Exception("{0}-商品服务器无法连接".FormatWith(AppConfig.PlatFormName) + stCtx.Exception.Message);
             }
             if (!stCtx.Result.success)
             {
@@ -363,7 +363,7 @@ namespace TxoooProductUpload.Service
             stCtx.Send();
             if (!stCtx.IsValid())
             {
-                throw new Exception("创业赚钱-商品服务器无法连接" + stCtx.Exception.Message);
+                throw new Exception("{0}-商品服务器无法连接".FormatWith(AppConfig.PlatFormName) + stCtx.Exception.Message);
             }
             if (!stCtx.Result.success)
             {

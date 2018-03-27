@@ -23,6 +23,7 @@ namespace TxoooProductUpload.Network
         {
             Setting.JsonDeserializationSetting = new JsonDeserializationSetting();
             Setting.JsonDeserializationSetting.Setting.ContractResolver = new JsonContractResolver();
+            Setting.Headers.Add("un_check_sign_url", DateTime.Now.Day.ToString());//sign跳过
         }
     }
 

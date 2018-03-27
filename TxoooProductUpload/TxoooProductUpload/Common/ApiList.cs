@@ -8,11 +8,12 @@ using TxoooProductUpload.Service.Entities.Web;
 namespace TxoooProductUpload.Common
 {
     /// <summary>
-    /// 创业赚钱接口
+    /// 服务器接口
     /// </summary>
     public class ApiList
     {
         #region 基础
+        private static string _domain = @".7518.cn/";
         private static bool _isTest = false;
         private static bool _isHttps = true;
         private static LoginAsyncResult _token = new LoginAsyncResult();
@@ -27,6 +28,18 @@ namespace TxoooProductUpload.Common
                 _token = value;
             }
             get { return _token; }
+        }
+
+        /// <summary>
+        /// 域名
+        /// </summary>
+        public static string Domain
+        {
+            set
+            {
+                _domain = "." + value + "/";
+            }
+            get { return _domain; }
         }
 
         /// <summary>
@@ -60,8 +73,9 @@ namespace TxoooProductUpload.Common
             get
             {
                 return
-                    (_isHttps ? @"https://" : @"http://") +
-                    (_isTest ? @"apitest.7518.cn/" : @"api.7518.cn/");
+                    (_isHttps ? @"https://" : @"http://")
+                    + (_isTest ? @"apitest" : @"api")
+                    + _domain;
             }
         }
 
@@ -73,8 +87,9 @@ namespace TxoooProductUpload.Common
             get
             {
                 return
-                    (_isHttps ? @"https://" : @"http://") +
-                    (_isTest ? @"apimchtest.7518.cn/" : @"apimch.7518.cn/");
+                    (_isHttps ? @"https://" : @"http://")
+                    + (_isTest ? @"apimchtest" : @"apimch")
+                    + _domain;
             }
         }
 
@@ -85,9 +100,11 @@ namespace TxoooProductUpload.Common
         {
             get
             {
+                //兼容域名testmch.7518.cn || mchtest.93390.cn
                 return
-                    (_isHttps ? @"https://" : @"http://") +
-                    (_isTest ? @"testmch.7518.cn/" : @"mch.7518.cn/");
+                    (_isHttps ? @"https://" : @"http://")
+                    + (_isTest ? _domain.IndexOf("7518") > 0 ? @"testmch" : @"mchtest" : @"mch")
+                    + _domain;
             }
         }
 
@@ -99,8 +116,9 @@ namespace TxoooProductUpload.Common
             get
             {
                 return
-                    (_isHttps ? @"https://" : @"http://") +
-                    (_isTest ? @"11.t.7518.cn/" : @"11.u.7518.cn/");
+                    (_isHttps ? @"https://" : @"http://")
+                    + (_isTest ? @"11.t" : @"11.u")
+                    + _domain;
             }
         }
         /// <summary>
@@ -323,9 +341,26 @@ namespace TxoooProductUpload.Common
 
         #region 个人注册
         /// <summary>
+        /// 根据手机号获取推广码
+        /// 参数：
+        ///     mobile：手机号
+        /// 返回值：
+        ///     {"success":true,"msg":"207732"}
+        /// </summary>
+        public static string GetShareCodeByTxId
+        {
+            get
+            {
+                return HostApp + @"App/Passport.api/GetShareCodeByTxId";
+            }
+        }
+
+        /// <summary>
         /// 验证用户名
         /// 参数：
         ///     regName：用户名（手机号）
+        /// 返回值：
+        ///     {"success":true,"msg":"用户名可用"}
         /// </summary>
         public static string CheckUserName
         {
@@ -339,6 +374,8 @@ namespace TxoooProductUpload.Common
         /// 发送验证码
         /// 参数：
         ///     mobile
+        /// 返回值：
+        ///     {"success":true,"msg":"337A633874387541737150536E645A3939447979687942786C346F3245734F434836554E5870344150766D546F72627636506E5838715339734B423156514E67"}
         /// </summary>
         public static string SendMobile
         {
@@ -364,20 +401,21 @@ namespace TxoooProductUpload.Common
         /// <summary>
         /// 注册，Post
         /// 参数：
-        ///     mobilecode
-        ///     mobile_verify
-        ///     passWord
+        ///     zyl:zyl
+        ///     mobilecode:code
+        ///     mobile_verify:msg
+        ///     Password:
         ///     sharecode：207732|110166
         ///     source：1                //用户来源（1个人推广，2产品推广）
-        ///     source_channel：5        //来源渠道（0浏览器，1微信，2QQ，3微博，4App）
-        ///     app_type：pc
-        ///     app_useragent:{}
+        ///     source_channel：5        //来源渠道（0浏览器，1微信，2QQ，3微博，4App）  5pc
+        ///     app_type：pc-winform
+        ///     app_useragent: {"model":"pc","display":"1.0.2","systemName":"windows","product":"Microsoft ","release":"10","fingerprint":"252D2903-9F0B-42D2-BFC8-B9108B759672","channel":"local","device":"高额返利设备"}
         /// </summary>
-        public static string RegistV2
+        public static string Regist
         {
             get
             {
-                return HostApp + @"App/Passport.api/RegistV2";
+                return HostApp + @"App/Passport.api/RegistV3ForZyl";
             }
         }
         #endregion

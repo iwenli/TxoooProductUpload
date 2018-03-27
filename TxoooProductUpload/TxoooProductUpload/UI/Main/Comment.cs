@@ -69,7 +69,7 @@ namespace TxoooProductUpload.UI.Main
         /// </summary>
         void InitPage1()
         {
-            this.txtUrl.SetHintText("在这里输入要添加评价的创业赚钱商品链接");
+            this.txtUrl.SetHintText("在这里输入要添加评价的商品链接");
             this.txtLog.Focus();
             this.txtJson.TextChanged += (s, e) => { btnAddComments.Enabled = cbIsUploadReviewImg.Enabled = txtJson.Text.Trim().Length > 0; };
             //复制天猫脚本
@@ -202,7 +202,7 @@ namespace TxoooProductUpload.UI.Main
                             {
                                 txtJson.Text = "";
                                 isProcessData = false;
-                            } 
+                            }
                         };
                         _commentDetail.ShowDialog(this);
                         btnAddComments.Enabled = true;
@@ -279,7 +279,7 @@ namespace TxoooProductUpload.UI.Main
             pbHead.Click += async (s, e) =>
             {
                 OpenFileDialog ofdImgHead = new OpenFileDialog();   //显示选择文件对话框 
-                ofdImgHead.Title = "创业赚钱-商家工具";
+                ofdImgHead.Title = AppConfig.PlatFormName + "-商家工具";
                 ofdImgHead.Filter = "图片文件(*.jpg,*.png,*.gif,*.bmp,*.jpeg)|*.jpg;*.png;*.gif;*.bmp;*jpeg";
                 ofdImgHead.FilterIndex = 2;
                 ofdImgHead.RestoreDirectory = true;
@@ -332,7 +332,7 @@ namespace TxoooProductUpload.UI.Main
             {
                 OpenFileDialog ofdReviewImage = new OpenFileDialog();   //显示选择文件对话框
                 ofdReviewImage.Multiselect = true;
-                ofdReviewImage.Title = "创业赚钱-商家工具";
+                ofdReviewImage.Title = AppConfig.PlatFormName + "-商家工具";
                 ofdReviewImage.Filter = "图片文件(*.jpg,*.png,*.gif,*.bmp,*.jpeg)|*.jpg;*.png;*.gif;*.bmp;*jpeg";
                 ofdReviewImage.FilterIndex = 1;
                 ofdReviewImage.RestoreDirectory = true;

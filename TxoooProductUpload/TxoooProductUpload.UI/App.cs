@@ -10,6 +10,7 @@ using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.UI.Common;
 using TxoooProductUpload.UI.Forms.SubForms;
 using TxoooProductUpload.UI.Forms;
+using TxoooProductUpload.UI.Forms.Login;
 
 namespace TxoooProductUpload.UI
 {
@@ -40,7 +41,8 @@ namespace TxoooProductUpload.UI
                     Context = Service.ServiceContext.Instance;
                     //TxoooProductUpload.UI.Main.MainForm()
                     Application.Run(new LoginForm());
-                   // Application.Run(new ApplyForm());
+                    //Application.Run(new RegistForm()); 
+                    // Application.Run(new ApplyForm());
                     // Application.Run(new ProductManageForm());
                     //Application.Run(new CrawlProductsForm());
                 }

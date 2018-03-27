@@ -93,7 +93,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             var allCount = ProductCache.WaitUploadImageList.Count;
             if (allCount <= 0) return;
 
-            AppendLogWarning("[全局]开始上传图片到图片创业赚钱服务器...");
+            AppendLogWarning("[全局]开始上传图片到图片服务器...");
             AppendLogWarning("[全局]上传线程{0}个...", taskCount);
             _waitUploadImageList = new List<ProductSourceInfo>();
             _waitUploadImageList.AddRange(ProductCache.WaitUploadImageList);

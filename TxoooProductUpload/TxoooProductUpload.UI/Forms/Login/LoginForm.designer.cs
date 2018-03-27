@@ -48,11 +48,10 @@ namespace TxoooProductUpload.UI
         private void InitializeComponent() {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
-            CCWin.CmSysButton cmSysButton3 = new CCWin.CmSysButton();
+            CCWin.CmSysButton cmSysButton1 = new CCWin.CmSysButton();
             this.pnlTx = new CCWin.SkinControl.SkinPanel();
             this.pnlHeadPic = new CCWin.SkinControl.SkinPanel();
             this.btnDuoId = new CCWin.SkinControl.SkinButton();
-            this.btnSw = new CCWin.SkinControl.SkinButton();
             this.btnLogin = new CCWin.SkinControl.SkinButton();
             this.chkRemember = new CCWin.SkinControl.SkinCheckBox();
             this.btnFindPwd = new CCWin.SkinControl.SkinButton();
@@ -63,6 +62,7 @@ namespace TxoooProductUpload.UI
             this.txtId = new CCWin.SkinControl.SkinTextBox();
             this.chkIsTest = new CCWin.SkinControl.SkinCheckBox();
             this.toolShow = new System.Windows.Forms.ToolTip(this.components);
+            this.btnSw = new CCWin.SkinControl.SkinButton();
             this.notify = new System.Windows.Forms.NotifyIcon(this.components);
             this.NotifyMenu = new CCWin.SkinControl.SkinContextMenuStrip();
             this.tsShow = new System.Windows.Forms.ToolStripMenuItem();
@@ -139,24 +139,6 @@ namespace TxoooProductUpload.UI
             this.btnDuoId.TabIndex = 14;
             this.toolShow.SetToolTip(this.btnDuoId, "多帐号登录");
             this.btnDuoId.UseVisualStyleBackColor = false;
-            // 
-            // btnSw
-            // 
-            this.btnSw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnSw.BackColor = System.Drawing.Color.Transparent;
-            this.btnSw.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(21)))), ((int)(((byte)(26)))));
-            this.btnSw.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.btnSw.DownBack = ((System.Drawing.Image)(resources.GetObject("btnSw.DownBack")));
-            this.btnSw.DrawType = CCWin.SkinControl.DrawStyle.Img;
-            this.btnSw.Location = new System.Drawing.Point(399, 301);
-            this.btnSw.Margin = new System.Windows.Forms.Padding(0);
-            this.btnSw.MouseBack = ((System.Drawing.Image)(resources.GetObject("btnSw.MouseBack")));
-            this.btnSw.Name = "btnSw";
-            this.btnSw.NormlBack = ((System.Drawing.Image)(resources.GetObject("btnSw.NormlBack")));
-            this.btnSw.Size = new System.Drawing.Size(24, 24);
-            this.btnSw.TabIndex = 15;
-            this.toolShow.SetToolTip(this.btnSw, "二维码登录");
-            this.btnSw.UseVisualStyleBackColor = false;
             // 
             // btnLogin
             // 
@@ -369,11 +351,11 @@ namespace TxoooProductUpload.UI
             this.txtId.SkinTxt.Size = new System.Drawing.Size(161, 20);
             this.txtId.SkinTxt.TabIndex = 0;
             this.txtId.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.txtId.SkinTxt.WaterText = "创业赚钱注册手机号码";
+            this.txtId.SkinTxt.WaterText = "注册手机号";
             this.txtId.TabIndex = 0;
             this.txtId.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.txtId.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
-            this.txtId.WaterText = "创业赚钱注册手机号码";
+            this.txtId.WaterText = "注册手机号";
             this.txtId.WordWrap = true;
             this.txtId.Leave += new System.EventHandler(this.txtId_Leave);
             this.txtId.MouseLeave += new System.EventHandler(this.txtId_MouseLeave);
@@ -400,6 +382,24 @@ namespace TxoooProductUpload.UI
             this.chkIsTest.Text = "测试环境";
             this.chkIsTest.UseVisualStyleBackColor = false;
             this.chkIsTest.CheckedChanged += new System.EventHandler(this.chkIsTest_CheckedChanged);
+            // 
+            // btnSw
+            // 
+            this.btnSw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnSw.BackColor = System.Drawing.Color.Transparent;
+            this.btnSw.BaseColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(21)))), ((int)(((byte)(26)))));
+            this.btnSw.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.btnSw.DownBack = ((System.Drawing.Image)(resources.GetObject("btnSw.DownBack")));
+            this.btnSw.DrawType = CCWin.SkinControl.DrawStyle.Img;
+            this.btnSw.Location = new System.Drawing.Point(399, 301);
+            this.btnSw.Margin = new System.Windows.Forms.Padding(0);
+            this.btnSw.MouseBack = ((System.Drawing.Image)(resources.GetObject("btnSw.MouseBack")));
+            this.btnSw.Name = "btnSw";
+            this.btnSw.NormlBack = ((System.Drawing.Image)(resources.GetObject("btnSw.NormlBack")));
+            this.btnSw.Size = new System.Drawing.Size(24, 24);
+            this.btnSw.TabIndex = 15;
+            this.toolShow.SetToolTip(this.btnSw, "二维码登录");
+            this.btnSw.UseVisualStyleBackColor = false;
             // 
             // notify
             // 
@@ -670,18 +670,18 @@ namespace TxoooProductUpload.UI
             this.ShowDrawIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            cmSysButton3.Bounds = new System.Drawing.Rectangle(340, 0, 30, 30);
-            cmSysButton3.BoxState = CCWin.ControlBoxState.Normal;
-            cmSysButton3.Location = new System.Drawing.Point(340, 0);
-            cmSysButton3.Name = "SysSet";
-            cmSysButton3.OwnerForm = this;
-            cmSysButton3.Size = new System.Drawing.Size(30, 30);
-            cmSysButton3.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonDown")));
-            cmSysButton3.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonMouse")));
-            cmSysButton3.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton3.SysButtonNorml")));
-            cmSysButton3.ToolTip = "设置";
+            cmSysButton1.Bounds = new System.Drawing.Rectangle(340, 0, 30, 30);
+            cmSysButton1.BoxState = CCWin.ControlBoxState.Normal;
+            cmSysButton1.Location = new System.Drawing.Point(340, 0);
+            cmSysButton1.Name = "SysSet";
+            cmSysButton1.OwnerForm = this;
+            cmSysButton1.Size = new System.Drawing.Size(30, 30);
+            cmSysButton1.SysButtonDown = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonDown")));
+            cmSysButton1.SysButtonMouse = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonMouse")));
+            cmSysButton1.SysButtonNorml = ((System.Drawing.Image)(resources.GetObject("cmSysButton1.SysButtonNorml")));
+            cmSysButton1.ToolTip = "设置";
             this.SysButtonItems.AddRange(new CCWin.CmSysButton[] {
-            cmSysButton3});
+            cmSysButton1});
             this.Text = "";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.FrmLogin_Load);
@@ -703,7 +703,6 @@ namespace TxoooProductUpload.UI
         private CCWin.SkinControl.SkinPanel pnlTx;
         private CCWin.SkinControl.SkinPanel pnlHeadPic;
         private CCWin.SkinControl.SkinButton btnDuoId;
-        private CCWin.SkinControl.SkinButton btnSw;
         private CCWin.SkinControl.SkinButton btnLogin;
         private CCWin.SkinControl.SkinCheckBox chkRemember;
         private CCWin.SkinControl.SkinButton btnFindPwd;
@@ -733,6 +732,7 @@ namespace TxoooProductUpload.UI
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem ItemInVisble;
         private CCWin.SkinControl.SkinContextMenuStrip MenuState;
+        private CCWin.SkinControl.SkinButton btnSw;
     }
 }
 

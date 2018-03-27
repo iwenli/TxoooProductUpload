@@ -387,7 +387,8 @@ namespace TxoooProductUpload.Entities.Product
             }
             else
             {
-                return "https://0.{0}.7518.cn/shop.html?id={1}".FormatWith(isTest ? "t" : "u", TxoooId);
+
+                return "https://11.{0}{1}shop.html?id={2}".FormatWith(isTest ? "t" : "u", Common.ApiList.Domain, TxoooId);
             }
         }
         #endregion

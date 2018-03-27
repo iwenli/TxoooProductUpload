@@ -90,7 +90,6 @@ namespace TxoooProductUpload.Service
             LoginInfo = null;
             NetClient = new NetClient();
             IsLogined = false;
-
         }
 
 
@@ -139,7 +138,7 @@ namespace TxoooProductUpload.Service
             var realNameCtx = NetClient.Create<WebResponseResult<MchInfo>>(
                                                      HttpMethod.Get,
                                                     ApiList.GetMchStateInfo,
-                                                    "https://0.u.7518.cn/",
+                                                    "https://0.u" + ApiList.Domain,
                                                     _token
                 );
             await realNameCtx.SendAsync();
@@ -203,7 +202,7 @@ namespace TxoooProductUpload.Service
             var realNameCtx = NetClient.Create<WebResponseResult<MchInfo>>(
                                                      HttpMethod.Get,
                                                     ApiList.GetMchStateInfo,
-                                                    "https://0.u.7518.cn/",
+                                                    "https://0.u" + ApiList.Domain,
                                                     _token
                 );
             await realNameCtx.SendAsync();

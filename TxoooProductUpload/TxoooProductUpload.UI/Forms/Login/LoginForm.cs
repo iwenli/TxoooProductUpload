@@ -14,6 +14,7 @@ using TxoooProductUpload.UI.Service.Entities;
 using TxoooProductUpload.UI.Common.Const;
 using TxoooProductUpload.Common;
 using CCWin.SkinControl;
+using TxoooProductUpload.UI.Forms.MinForms;
 
 namespace TxoooProductUpload.UI
 {
@@ -22,7 +23,7 @@ namespace TxoooProductUpload.UI
         public LoginForm()
         {
             InitializeComponent();
-
+            new SelectPlatform().ShowDialog(this);  //先选择平台
             //捕捉登录状态变化事件，在登录状态发生变化的时候重设登录状态
             App.Context.BaseContent.Session.IsLoginedChanged += async (s, e) => await LoginedChanged();
             FormClosing += (s, e) =>
@@ -85,7 +86,6 @@ namespace TxoooProductUpload.UI
             {
                 _loginIp = await App.Context.BaseContent.CommonService.GetIp();
             });
-
         }
         #endregion
 
@@ -346,7 +346,7 @@ namespace TxoooProductUpload.UI
                 Application.Exit();//退出整个应用程序。（无法退出单独开启的线程）
                 Application.ExitThread();//释放所有线程
             }
-            　
+
         }
         #endregion
 
@@ -504,7 +504,7 @@ namespace TxoooProductUpload.UI
             chkRemember.Checked = _loginUser.RememberPwd;
         }
         #endregion
-        
+
         /// <summary>
         /// 登录状态变化
         /// </summary>
@@ -512,7 +512,7 @@ namespace TxoooProductUpload.UI
         /// <param name="e"></param>
         async Task LoginedChanged()
         {
-            
+
             if (InvokeRequired)
             {
                 Invoke(new Action(async () => { await LoginedChanged(); }));

@@ -9,6 +9,14 @@ namespace TxoooProductUpload.Common
     public static class AppConfig
     {
         /// <summary>
+        ///  平台名称
+        /// </summary>
+        public static string PlatFormName
+        {
+            set; get;
+        }
+
+        /// <summary>
         /// 是否记住密码
         /// </summary>
         public static bool IsRemember

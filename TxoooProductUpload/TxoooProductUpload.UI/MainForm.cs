@@ -16,6 +16,7 @@ using Iwenli.Text;
 using System.Threading.Tasks;
 using Iwenli;
 using TxoooProductUpload.UI.Forms.SubForms;
+using TxoooProductUpload.Common;
 
 namespace TxoooProductUpload.UI
 {
@@ -43,7 +44,9 @@ namespace TxoooProductUpload.UI
         public MainForm()
         {
             InitializeComponent();
-            Text = AppInfo.AssemblyTitle + string.Format(" V{0}    PowerBy:{1}"
+            Text = AppConfig.PlatFormName
+                + "-"
+                + AppInfo.AssemblyTitle + string.Format(" V{0} PowerBy:{1}"
                 , AppInfo.AssemblyVersion.Substring(0, AppInfo.AssemblyVersion.LastIndexOf('.'))
                 , AppInfo.AUTHOR);
             stCompany.Text = "版权:" + AppInfo.AssemblyCompany;

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using TxoooProductUpload.Service.Entities;
 using TxoooProductUpload.UI.Common;
 using TxoooProductUpload.UI.Common.Const;
+using TxoooProductUpload.UI.Forms.Login;
 
 namespace TxoooProductUpload.UI.Service
 {
@@ -107,10 +108,11 @@ namespace TxoooProductUpload.UI.Service
         /// <returns></returns>
         public void RegisterAsync()
         {
-            Task.Run(() =>
-            {
-                Utils.OpenUrl(AppConfigInfo.RegisterUrl, true);
-            });
+            new RegistForm().Show();
+            //Task.Run(() =>
+            //{
+            //    Utils.OpenUrl(AppConfigInfo.RegisterUrl, true);
+            //});
         }
         /// <summary>
         /// 找回密码

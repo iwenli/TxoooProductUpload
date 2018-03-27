@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -73,6 +74,35 @@ namespace TxoooProductUpload.UI.Common
                     _randomMinValue = Convert.ToInt32(AppConfig.GetItem("RandomMinValue") ?? "1000");
                 }
                 return _randomMinValue;
+            }
+        }
+
+        static Dictionary<string, string> _hosts = null;
+        /// <summary>
+        /// 支持的域名配置
+        /// </summary>
+        public static Dictionary<string, string> Hosts
+        {
+            get
+            {
+                if (_hosts == null)
+                {
+                    _hosts = new Dictionary<string, string>();
+                    var _hostStr = AppConfig.GetItem("Hosts") ?? null;
+                    if (_hostStr != null)
+                    {
+                        var _hostArr = _hostStr.Split(',');
+                        foreach (var host in _hostArr)
+                        {
+                            var _arr = host.Split('|');
+                            if (_arr.Length == 2)
+                            {
+                                _hosts.Add(_arr[0], _arr[1]);
+                            }
+                        }
+                    }
+                }
+                return _hosts;
             }
         }
     }

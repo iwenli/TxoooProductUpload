@@ -13,10 +13,6 @@ namespace TxoooProductUpload.Common
     public class ConstParams
     {
         #region Const
-        ///// <summary>
-        ///// 软件名称
-        ///// </summary>
-        //public const string AssemblyTitle = @"创业赚钱-商家工具";
         /// <summary>
         /// 作者
         /// </summary>

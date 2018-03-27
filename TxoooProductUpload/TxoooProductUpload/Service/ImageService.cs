@@ -90,7 +90,7 @@ namespace TxoooProductUpload.Service
             var imgUrl = await UploadFileForByteAsync(imageStream);
             if (imgUrl == "Error" || imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
             {
-                throw new Exception("图片上传到创业赚钱失败!");
+                throw new Exception(string.Format("图片上传到{0}服务器失败!", AppConfig.PlatFormName));
             }
             #region DB记录
             try
@@ -134,7 +134,7 @@ namespace TxoooProductUpload.Service
             var imgUrl = await UploadFileForByteAsync(image.ToBytes(), image.GetExtension());
             if (imgUrl == "Error" || imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
             {
-                throw new Exception("图片上传到创业赚钱失败!");
+                throw new Exception(string.Format("图片上传到{0}服务器失败!", AppConfig.PlatFormName));
             }
             return imgUrl;
         }
@@ -218,7 +218,7 @@ namespace TxoooProductUpload.Service
             var imgUrl = UploadFileForUrl(url);
             if (imgUrl == "Error" || imgUrl.IsNullOrEmpty() || !_txoooImgReg.IsMatch(imgUrl))
             {
-                throw new Exception("图片{0}上传到创业赚钱服务器失败!".FormatWith(url));
+                throw new Exception("图片{0}上传到{1}服务器失败!".FormatWith(url, AppConfig.PlatFormName));
             }
             return imgUrl;
         }
@@ -280,7 +280,7 @@ namespace TxoooProductUpload.Service
             }
             catch (Exception ex)
             {
-                throw new Exception("下载图片{0}异常001[远程服务器未响应]，请重试！".FormatWith(url), ex);
+                throw new Exception("下载图片{0}异常001[{1}服务器未响应]，请重试！".FormatWith(url, AppConfig.PlatFormName), ex);
             }
         }
 

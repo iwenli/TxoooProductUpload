@@ -43,7 +43,7 @@ namespace TxoooProductUpload.UI
             this.Name = "FormBase";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "创业赚钱";
+            this.Text = AppConfig.PlatFormName;
             this.ResumeLayout(false);
 
         }

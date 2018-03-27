@@ -46,24 +46,17 @@
       <HintPath>lib\CSkin.dll</HintPath>
     </Reference>
     <Reference Include="FSLib.Extension, Version=1.4.3.0, Culture=neutral, PublicKeyToken=61d6a007a0eb6994, processorArchitecture=MSIL">
-      <HintPath>..\packages\extension.fishlee.net.1.4.3.0\lib\net45\FSLib.Extension.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\extension.fishlee.net.1.4.5\lib\net45\FSLib.Extension.dll</HintPath>
     </Reference>
-    <Reference Include="FSLib.Network, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eb0741d7f117d5c6, processorArchitecture=MSIL">
-      <HintPath>..\packages\network.fishlee.net.2.2.2.0\lib\net45\FSLib.Network.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.5.1.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.5.1\lib\Net45\HtmlAgilityPack.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="HtmlAgilityPack, Version=1.7.2.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.7.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Iwenli, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Iwenli.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SimpleUpdater, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c532149a76b9a64b, processorArchitecture=MSIL">
       <HintPath>..\packages\fishlee.net.simpleupdater.4.3.0.0\lib\net45\SimpleUpdater.dll</HintPath>
@@ -118,6 +111,18 @@
     </Compile>
     <Compile Include="Forms\ChangeClassForm.Designer.cs">
       <DependentUpon>ChangeClassForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Login\RegistForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Login\RegistForm.Designer.cs">
+      <DependentUpon>RegistForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MinForms\SelectPlatform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MinForms\SelectPlatform.Designer.cs">
+      <DependentUpon>SelectPlatform.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\SetSearchKeyForm.cs">
       <SubType>Form</SubType>
@@ -242,7 +247,10 @@
     </Compile>
     <Compile Include="Service\Cache\ProductCache\ProductCacheContext.cs" />
     <Compile Include="Service\Cache\ProductCache\ProductCacheData.cs" />
+    <Compile Include="Service\Cache\ReisterCache\RegisterCacheContext.cs" />
+    <Compile Include="Service\Cache\ReisterCache\RegisterCahceData.cs" />
     <Compile Include="Service\Entities\LoginListInfo.cs" />
+    <Compile Include="Service\Entities\RegisterInfo.cs" />
     <Compile Include="Service\ServiceContext.cs" />
     <Compile Include="Test\MainForm.cs">
       <SubType>Form</SubType>
@@ -287,6 +295,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangeClassForm.resx">
       <DependentUpon>ChangeClassForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Login\RegistForm.resx">
+      <DependentUpon>RegistForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MinForms\SelectPlatform.resx">
+      <DependentUpon>SelectPlatform.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SetSearchKeyForm.resx">
       <DependentUpon>SetSearchKeyForm.cs</DependentUpon>
