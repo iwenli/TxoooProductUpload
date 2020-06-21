@@ -385,6 +385,67 @@
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
+    <None Include="bin\Debug\cef.pak" />
+    <None Include="bin\Debug\cef_100_percent.pak" />
+    <None Include="bin\Debug\cef_200_percent.pak" />
+    <None Include="bin\Debug\cef_extensions.pak" />
+    <None Include="bin\Debug\devtools_resources.pak" />
+    <None Include="bin\Debug\icudtl.dat" />
+    <None Include="bin\Debug\locales\am.pak" />
+    <None Include="bin\Debug\locales\ar.pak" />
+    <None Include="bin\Debug\locales\bg.pak" />
+    <None Include="bin\Debug\locales\bn.pak" />
+    <None Include="bin\Debug\locales\ca.pak" />
+    <None Include="bin\Debug\locales\cs.pak" />
+    <None Include="bin\Debug\locales\da.pak" />
+    <None Include="bin\Debug\locales\de.pak" />
+    <None Include="bin\Debug\locales\el.pak" />
+    <None Include="bin\Debug\locales\en-GB.pak" />
+    <None Include="bin\Debug\locales\en-US.pak" />
+    <None Include="bin\Debug\locales\es-419.pak" />
+    <None Include="bin\Debug\locales\es.pak" />
+    <None Include="bin\Debug\locales\et.pak" />
+    <None Include="bin\Debug\locales\fa.pak" />
+    <None Include="bin\Debug\locales\fi.pak" />
+    <None Include="bin\Debug\locales\fil.pak" />
+    <None Include="bin\Debug\locales\fr.pak" />
+    <None Include="bin\Debug\locales\gu.pak" />
+    <None Include="bin\Debug\locales\he.pak" />
+    <None Include="bin\Debug\locales\hi.pak" />
+    <None Include="bin\Debug\locales\hr.pak" />
+    <None Include="bin\Debug\locales\hu.pak" />
+    <None Include="bin\Debug\locales\id.pak" />
+    <None Include="bin\Debug\locales\it.pak" />
+    <None Include="bin\Debug\locales\ja.pak" />
+    <None Include="bin\Debug\locales\kn.pak" />
+    <None Include="bin\Debug\locales\ko.pak" />
+    <None Include="bin\Debug\locales\lt.pak" />
+    <None Include="bin\Debug\locales\lv.pak" />
+    <None Include="bin\Debug\locales\ml.pak" />
+    <None Include="bin\Debug\locales\mr.pak" />
+    <None Include="bin\Debug\locales\ms.pak" />
+    <None Include="bin\Debug\locales\nb.pak" />
+    <None Include="bin\Debug\locales\nl.pak" />
+    <None Include="bin\Debug\locales\pl.pak" />
+    <None Include="bin\Debug\locales\pt-BR.pak" />
+    <None Include="bin\Debug\locales\pt-PT.pak" />
+    <None Include="bin\Debug\locales\ro.pak" />
+    <None Include="bin\Debug\locales\ru.pak" />
+    <None Include="bin\Debug\locales\sk.pak" />
+    <None Include="bin\Debug\locales\sl.pak" />
+    <None Include="bin\Debug\locales\sr.pak" />
+    <None Include="bin\Debug\locales\sv.pak" />
+    <None Include="bin\Debug\locales\sw.pak" />
+    <None Include="bin\Debug\locales\ta.pak" />
+    <None Include="bin\Debug\locales\te.pak" />
+    <None Include="bin\Debug\locales\th.pak" />
+    <None Include="bin\Debug\locales\tr.pak" />
+    <None Include="bin\Debug\locales\uk.pak" />
+    <None Include="bin\Debug\locales\vi.pak" />
+    <None Include="bin\Debug\locales\zh-CN.pak" />
+    <None Include="bin\Debug\locales\zh-TW.pak" />
+    <None Include="bin\Debug\natives_blob.bin" />
+    <None Include="bin\Debug\snapshot_blob.bin" />
     <None Include="Properties\DataSources\TxoooProductUpload.Common.MchCache+MchType.datasource" />
     <None Include="Properties\DataSources\TxoooProductUpload.Entities.Resporse.Txooo.ManageProductInfo.datasource" />
     <None Include="wl.config">
@@ -483,6 +544,14 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="bin\Debug\Wave.dll" />
+    <Content Include="bin\Debug\d3dcompiler_43.dll" />
+    <Content Include="bin\Debug\d3dcompiler_47.dll" />
+    <Content Include="bin\Debug\libcef.dll" />
+    <Content Include="bin\Debug\libEGL.dll" />
+    <Content Include="bin\Debug\libGLESv2.dll" />
+    <Content Include="bin\Debug\plugins\pepflashplayer.dll" />
+    <Content Include="bin\Debug\widevinecdmadapter.dll" />
+    <Content Include="bin\Debug\wow_helper.exe" />
     <Content Include="icon.ico" />
     <Content Include="lib\cef\d3dcompiler_43.dll" />
     <Content Include="lib\cef\d3dcompiler_47.dll" />
@@ -533,7 +602,9 @@
     <Content Include="Skin\FormSkin\蔚蓝风车.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="lib\Wave.dll" />
+    <EmbeddedResource Include="lib\Wave.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Resources\BaiduShurufa_2014-8-2_16-32-58.png" />
     <None Include="Resources\icon.ico" />
     <None Include="Resources\_icon.ico" />

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TxoooProductUpload", "TxoooProductUpload\TxoooProductUpload.csproj", "{2DC377B9-A78D-4ED1-AC1E-A61BDD040853}"
 EndProject
@@ -19,8 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinHtmlEditor", "WinHtmlEdi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{8C96E7FA-33C7-42D5-9ACE-DC4EF86CE65C}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
 		..\files\mchapi.h = ..\files\mchapi.h
 		..\files\personalapi.h = ..\files\personalapi.h
+		..\README.md = ..\README.md
 		..\files\updateList.md = ..\files\updateList.md
 	EndProjectSection
 EndProject
@@ -248,5 +250,8 @@ Global
 		{703FF300-34B9-48D4-A5D6-E741F48D5F95} = {81FD9098-2108-4AA9-947C-929A00677911}
 		{679AF14D-8FF5-4608-BFF8-EC1A7DED04A4} = {81FD9098-2108-4AA9-947C-929A00677911}
 		{311984DF-EB92-4B01-B4AD-C7E73A13E271} = {81FD9098-2108-4AA9-947C-929A00677911}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {220B7F8C-D025-4F95-B02C-82C821276E87}
 	EndGlobalSection
 EndGlobal
