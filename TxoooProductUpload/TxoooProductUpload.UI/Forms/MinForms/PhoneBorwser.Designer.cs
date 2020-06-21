@@ -56,7 +56,7 @@
             this.webBrowser.Location = new System.Drawing.Point(0, 0);
             this.webBrowser.Name = "webBrowser";
             this.webBrowser.Size = new System.Drawing.Size(325, 544);
-            this.webBrowser.StartUrl = "0.u.7518.cn";
+            this.webBrowser.StartUrl = "";
             this.webBrowser.TabIndex = 1;
             // 
             // cms

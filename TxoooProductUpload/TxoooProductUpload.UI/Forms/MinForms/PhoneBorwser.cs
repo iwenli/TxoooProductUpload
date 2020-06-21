@@ -18,7 +18,7 @@ namespace TxoooProductUpload.UI
     /// </summary>
     public partial class PhoneBorwser : SkinMain
     {
-        string _url = "https://0.u.7518.cn";
+        string _url = "https://m.jd.com/";
 
         string _loadUrl = string.Empty;
 
