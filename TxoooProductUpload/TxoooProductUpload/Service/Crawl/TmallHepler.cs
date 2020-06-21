@@ -39,7 +39,37 @@ namespace TxoooProductUpload.Service.Crawl
             if (document == null) return list;
             try
             {
+                var productNodeList = document.GetElementbyId("J_ItemList").SelectNodes(".//div[starts-with(@class,'product ')]");
+                if (productNodeList != null)
+                {
+                    var count = productNodeList.Count;
+                    foreach (HtmlNode categoryNode in productNodeList)
+                    {
+                        if (count-- == 0) break;
 
+                        try
+                        {
+                            var idStr = categoryNode.Attributes["data-id"].Value;
+                            if (!string.IsNullOrEmpty(idStr))
+                            {
+                                var id = Convert.ToInt64(idStr);
+                                if (list.Exists(m => m.Id == id)) { continue; }
+                                ProductSourceInfo product = new ProductSourceInfo(id);
+                                product.SourceType = SourceType.Tmall;
+                                product.FirstImg = categoryNode.SelectSingleNode(".//div/div[1]/a/img").Attributes["src"].Value;//*[@id="J_ItemList"]/div[48]
+                                product.ShowPrice = Convert.ToDouble(
+                                    categoryNode.SelectSingleNode(".//div/p[1]/em").Attributes["title"].Value.Trim().Replace("¥", "") ?? "0");
+                                product.ProductName = categoryNode.SelectSingleNode(".//div/p[2]/a").Attributes["title"]?.Value.Trim();
+
+
+                                product.UserNick = product.ShopName = categoryNode.SelectSingleNode(".//div/div[3]/a").InnerText.Trim();
+                                product.UserId = 0;
+                                list.Add(product);
+                            }
+                        }
+                        catch { }
+                    }
+                }
             }
             catch (Exception ex)
             {

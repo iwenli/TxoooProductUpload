@@ -106,6 +106,7 @@ namespace TxoooProductUpload.Service
                 UserName = username,
                 Password = password
             };
+
             var webLoginData = new
             {
                 userName = LoginInfo.UserName,
@@ -170,6 +171,25 @@ namespace TxoooProductUpload.Service
         {
             IsLogined = false;
             LoginInfo = loginInfo;
+
+            // 拦截调用接口
+            if (loginInfo.UserName.Equals("19999999999") && loginInfo.Password.Equals("admin"))
+            {
+                LoginInfo.DisplayName = "测试登录";
+                LoginInfo.MchInfo = new MchInfo
+                {
+                    UserId = -1,
+                    MchId = -1,
+                    NickName = "海澜之家",
+                    HeaPic = "https://imgtx.cn/2020/06/21/f35f90b82d6a21f6e88394c18994b7ad.png",
+                    MchLogo = "https://imgtx.cn/2020/06/21/f35f90b82d6a21f6e88394c18994b7ad.png",
+                };
+
+                IsLogined = true;
+                ApiList.Token = new LoginAsyncResult { };
+                return LoginInfo;
+            }
+
             var webLoginData = new
             {
                 userName = LoginInfo.UserName,

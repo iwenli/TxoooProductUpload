@@ -25,27 +25,32 @@ namespace TxoooProductUpload.Service
         public async Task<IpInfo> GetIp()
         {
             var ipReg = new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", RegexOptions.IgnoreCase);
+            var addressReg = new Regex(@"[\u4E00-\u9FA5]+");
             var url = @"http://1212.ip138.com/ic.asp";
             url = @"http://www.ip168.com/json.do?view=myipaddress";
+            url = "http://ip.catr.cn/";
+            url = "https://ip.cn/";
             var ctx = NetClient.Create<string>(HttpMethod.Get, url, allowAutoRedirect: true);
             await ctx.SendAsync();
             if (!ctx.IsValid())
             {
                 throw new Exception("请求未能提交" + url);
             }
-            var info = new Regex(@"(?<=<center>).+?(?=</center>)").Match(ctx.Result).Value;
+            var info = new Regex(@"(?<=<div class=""well"").+?(?=</div>)").Match(ctx.Result).Value;
             var ip = new IpInfo();
             ip.Ip = ipReg.Match(info).Value;
-            var index = info.LastIndexOf("：");
-            if (index > -1)
-            {
-                var city = info.Substring(index + 1).Split(' ');
-                ip.Address = city[0];
-                if (city.Length == 2)
-                {
-                    ip.Type = city[1];
-                }
-            }
+            ip.Address = addressReg.Matches(info)[2].Value;
+            ip.Type = addressReg.Matches(info)[3].Value;
+            //var index = info.LastIndexOf("：");
+            //if (index > -1)
+            //{
+            //    var city = info.Substring(index + 1).Split(' ');
+            //    ip.Address = city[0];
+            //    if (city.Length == 2)
+            //    {
+            //        ip.Type = city[1];
+            //    }
+            //}
             return ip;
         }
 

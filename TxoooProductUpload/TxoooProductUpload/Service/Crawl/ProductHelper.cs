@@ -116,6 +116,8 @@ namespace TxoooProductUpload.Service.Crawl
                         return _tmallHelper.GetProductbyHtml(document);
                     case CrawlType.TmallStore:
                         return _tmallHelper.GetProductListFormStore(document);
+                    case CrawlType.TmallSearch:
+                        return _tmallHelper.GetProductListFormSearch(document);
                 }
             }
             catch (Exception ex)

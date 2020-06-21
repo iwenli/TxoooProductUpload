@@ -84,7 +84,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             //webBrowser.Location = new System.Drawing.Point(0, 31);
             //webBrowser.Name = "webBrowser";
             //webBrowser.Size = new System.Drawing.Size(992, 320);
-            _webBrowser.StartUrl = "www.taobao.com";
+            _webBrowser.StartUrl = "www.tmall.com";
             //webBrowser.TabIndex = 127;
             skinSplitContainer1.Panel1.Controls.Add(_webBrowser);
 
@@ -118,9 +118,13 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             {
                 _crawlType = CrawlType.TmallItem;
             }
-            else if (url.IndexOf("tmall.com/search") > 1 || url.IndexOf("tmall.com/category") > 1)
+            else if (url.IndexOf("tmall.com/search.htm") > 1 )
             {
                 _crawlType = CrawlType.TmallStore;
+            }
+            else if ( url.IndexOf("tmall.com/search_product.htm") > 1)
+            {
+                _crawlType = CrawlType.TmallSearch;
             }
             else
             {
@@ -132,6 +136,7 @@ namespace TxoooProductUpload.UI.Forms.SubForms
             {
                 case CrawlType.TaoBaoSearch:
                 case CrawlType.TmallStore:
+                case CrawlType.TmallSearch:
                     tsBtnAutoAll.Enabled = tsBtnPageProducts.Enabled = true;
                     break;
                 case CrawlType.TaoBaoItem:
